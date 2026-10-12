@@ -1,0 +1,16 @@
+time_h,value
+# Digitized from Song R et al. Vet Immunol Immunopathol 2012;146(2):143-149
+#   doi:10.1016/j.vetimm.2012.02.008 (PMID 22424937), Figure 4b: serum IL-6
+#   (EXP group, red) over 48 h after 1 mg/kg LPS in a canine endotoxemia model.
+# value = IL-6 in pg/mL (figure is ng/mL; multiplied x1000 to match model units).
+# x-axis is categorical (0,1,3,6,12,24,48 h). t=3 h set to the paper's reported
+#   peak 1.89 ng/mL (=1890 pg/mL); others read off the figure (+/- ~50 pg/mL).
+# QUALITATIVE / cross-species validation: compare Tpeak (~3 h) and decay shape,
+#   not absolute magnitude (use normalized RMSE / R2). Per registry notes.
+0,200
+1,620
+3,1890
+6,1570
+12,780
+24,270
+48,220

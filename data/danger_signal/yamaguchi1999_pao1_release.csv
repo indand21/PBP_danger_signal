@@ -1,0 +1,11 @@
+# Yamaguchi S et al. Jpn J Antibiot 1999;52(1):41-56 (PMID 10202687)
+# P. aeruginosa PAO1. Free LPS (ng/mL) and matched viable counts.
+# series: free_lps_ng_mL | log10_cfu_mL | filament_fraction
+# concentration_xMIC: use the nominal multiple of MIC; "pksim" for the
+#   pharmacokinetic autosimulation arm.
+# RECORD IN THE COMMENTS BELOW BEFORE DIGITIZING (every per-CFU yield scales off it):
+#   inoculum_cfu_per_mL =
+#   assay_volume_mL     =
+#   lps_assay           =
+#   mic_mg_L            = (per agent)
+agent,concentration_xMIC,time_h,series,value

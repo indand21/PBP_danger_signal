@@ -1,0 +1,92 @@
+# ============================================================================
+# QSP Model Configuration File
+# ============================================================================
+# This file contains all configurable parameters for the QSP antibiotic model.
+# Edit values here instead of modifying source code.
+
+# ============================================================================
+# BACTERIAL DYNAMICS PARAMETERS
+# ============================================================================
+bacteria:
+  k_growth: 0.5              # per hour, intrinsic growth rate
+  B_max: 1.0e9               # CFU/mL, carrying capacity
+  k_pers: 0.01               # per hour, transition to persisters
+  mu_mut: 1.0e-6             # mutation rate per cell per generation (SCV emergence)
+  k_repair: 0.3              # per hour, damage repair rate (cidal mechanism)
+  MIC_baseline: 1.0          # mg/L, baseline MIC for susceptible strain
+
+# ============================================================================
+# IMMUNE DYNAMICS PARAMETERS
+# ============================================================================
+immune:
+  N_eff_0: 1.0e7             # baseline neutrophils/macrophages per mL
+  k_prod: 0.5                # per hour, immune recruitment rate
+  EC50_immune: 1.0e5         # CFU/mL, half-max for immune recruitment
+  k_deg_immune: 0.05         # per hour, immune cell degradation
+  k_kill_base: 1.0e-8        # per mL per hour, baseline immune killing capacity
+
+# ============================================================================
+# CYTOKINE/INFLAMMATION PARAMETERS
+# ============================================================================
+cytokine:
+  k_IL6_prod: 4.0            # pg/mL/hour per 10^6 CFU, baseline production
+  alpha_static: 1.0          # relative cytokine production by static drugs
+  alpha_cidal: 3.0           # relative cytokine production by cidal drugs (TLR9-mediated)
+  k_IL6_clear: 0.2           # per hour, IL-6 degradation
+  TNF_IL6_ratio: 0.3         # TNF produced as fraction of IL-6
+
+# ============================================================================
+# PHARMACODYNAMIC MECHANISM PARAMETERS
+# ============================================================================
+pharmacodynamics:
+  static:
+    EC50: 1.0                # mg/L, half-maximal inhibitory concentration
+    hill_coefficient: 1.0    # Hill coefficient for static inhibition
+
+  cidal:
+    damage50: 3.0            # Damage threshold for 50% killing
+    hill_coefficient: 2.0    # Hill coefficient for damage-effect relationship
+    kill_rate: 3.0           # Damage-dependent killing rate coefficient
+    direct_kill_rate: 8.0    # Direct saturable killing rate coefficient
+    dmg_rate: 12.0           # Damage accumulation rate (proportional to C_effect)
+    concentration_dependent: true  # Enable concentration-dependent killing
+
+# ============================================================================
+# PERSISTER DYNAMICS PARAMETERS
+# ============================================================================
+persister:
+  immune_kill_factor: 0.1    # Persister immune kill rate relative to replicating
+  reactivation_rate: 0.05    # per hour, spontaneous reactivation to replicating
+
+# ============================================================================
+# SCV (SMALL COLONY VARIANT) PARAMETERS
+# ============================================================================
+scv:
+  mutation_threshold: 0.3    # H_static below this triggers mutation
+  immune_kill_factor: 0.05   # SCV immune kill rate relative to replicating
+
+# ============================================================================
+# SIMULATION PARAMETERS
+# ============================================================================
+simulation:
+  default_t_span: [0, 96]    # Default simulation duration (hours)
+  max_step: 0.1              # Maximum ODE solver step size
+  rtol: 1.0e-6               # Relative tolerance for ODE solver
+  atol: 1.0e-8               # Absolute tolerance for ODE solver
+  default_method: "RK45"     # Default integration method (RK45 or BDF)
+
+# ============================================================================
+# CLINICAL ENDPOINT THRESHOLDS
+# ============================================================================
+clinical:
+  eradication_threshold: 100.0        # CFU/mL, clinical success threshold
+  microbiologic_threshold_log: 3.0    # Log10 reduction for microbiologic success
+  resistance_threshold_fraction: 0.10 # SCV fraction for resistance emergence
+  toxicity_threshold_IL6: 500.0       # pg/mL, inflammatory toxicity threshold
+
+# ============================================================================
+# PK MODEL DEFAULTS
+# ============================================================================
+pk_defaults:
+  effect_site_model: true    # Whether to model effect-site compartment
+  equilibration_rate: 0.1    # Rate constant for effect-site equilibration

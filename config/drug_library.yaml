@@ -1,0 +1,96 @@
+# ============================================================================
+# Drug Library Configuration
+# ============================================================================
+# PK parameters for available antibiotics in the QSP framework
+# All parameters are per-kg normalized (scale with patient weight)
+
+# Clearance: L/h total population value for a typical adult
+# Volumes: L/kg
+# Q: L/h total inter-compartmental clearance
+# Ka: per hour (oral absorption, 0 = IV only)
+# Kp: tissue penetration coefficient (effect-site / central AUC ratio)
+
+drugs:
+  doxycycline:
+    name: "Doxycycline"
+    class: "static"
+    route: "oral"
+    CL: 1.8                    # L/h apparent CL/F, AUC/half-life corrected
+    Vc: 0.6                    # L/kg
+    Vp: 1.2                    # L/kg
+    Q: 5.0                     # L/h
+    Ka: 1.3                    # per hour
+    Kp: 0.7                    # lung penetration ratio
+    standard_dose_mg: 100      # mg
+    standard_interval_hours: 12
+    standard_infusion_min: 30
+
+  meropenem:
+    name: "Meropenem"
+    class: "cidal"
+    route: "IV"
+    CL: 15.0                   # L/h (renally cleared)
+    Vc: 0.25                   # L/kg
+    Vp: 0.15                   # L/kg
+    Q: 8.0                     # L/h
+    Ka: 0.0                    # IV only
+    Kp: 0.4                    # lung penetration ratio
+    standard_dose_mg: 1000     # mg
+    standard_interval_hours: 8
+    standard_infusion_min: 30
+
+  linezolid:
+    name: "Linezolid"
+    class: "static"
+    route: "IV_PO"
+    CL: 5.0                    # L/h
+    Vc: 0.65                   # L/kg
+    Vp: 0.35                   # L/kg
+    Q: 4.0                     # L/h
+    Ka: 0.4                    # per hour (if oral)
+    Kp: 0.75                   # lung penetration ratio (good)
+    standard_dose_mg: 600      # mg
+    standard_interval_hours: 12
+    standard_infusion_min: 120
+
+  ciprofloxacin:
+    name: "Ciprofloxacin"
+    class: "cidal"
+    route: "oral"
+    CL: 22.0                   # L/h
+    Vc: 2.0                    # L/kg (large Vd)
+    Vp: 1.0                    # L/kg
+    Q: 10.0                    # L/h
+    Ka: 0.8                    # per hour
+    Kp: 0.6                    # moderate lung penetration
+    standard_dose_mg: 500      # mg
+    standard_interval_hours: 12
+    standard_infusion_min: 60
+
+  vancomycin:
+    name: "Vancomycin"
+    class: "cidal"
+    route: "IV"
+    CL: 4.0                    # L/h
+    Vc: 0.5                    # L/kg
+    Vp: 0.3                    # L/kg
+    Q: 2.5                     # L/h
+    Ka: 0.0                    # IV only
+    Kp: 0.25                   # moderate lung penetration
+    standard_dose_mg: 1000     # mg
+    standard_interval_hours: 12
+    standard_infusion_min: 120
+
+  tigecycline:
+    name: "Tigecycline"
+    class: "static"
+    route: "IV"
+    CL: 3.5                    # L/h
+    Vc: 2.5                    # L/kg (very large Vd)
+    Vp: 0.5                    # L/kg
+    Q: 1.0                     # L/h
+    Ka: 0.0                    # IV only
+    Kp: 1.8                    # excellent tissue penetration
+    standard_dose_mg: 50       # mg
+    standard_interval_hours: 12
+    standard_infusion_min: 60

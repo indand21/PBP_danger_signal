@@ -1,0 +1,156 @@
+{
+ "_comment": "Curve-level external-validation datasets. Citations from literature search (2026-06). CSVs are digitized by the user from the cited figures (see README.md). 'validation' role = held out from model building and counts toward reported metrics; 'calibration' = context only. Digitize from the open-access PMC links where available.",
+ "datasets": [
+  {
+   "id": "meropenem_pk_1g",
+   "kind": "pk",
+   "drug": "meropenem",
+   "drug_class": "cidal",
+   "role": "validation",
+   "csv": "meropenem_pk_1g.csv",
+   "y_unit": "mg/L",
+   "y_space": "linear",
+   "organism": null,
+   "source": "Abulfathi AA et al. Front Pharmacol 2021;12:637618. doi:10.3389/fphar.2021.637618 (PMID 34267655). Anchor absolute scale with FDA label / Drusano & Hutchison 1995 (1 g IV: Cmax ~54.8 mg/L, AUC ~77 mg.h/L, t1/2 ~1 h).",
+   "notes": "Digitize Fig 1 (meropenem plasma conc-time, 1 g IV x3/day arm, 8-h intensive sampling). Validates 2-compartment PK layer. Targets: RMSE < 0.15 log10 mg/L; Cmax ratio within +/-20%; AUC0-8h within +/-15%. Reported popPK estimates: CL 11.8 L/h, Q 3.26 L/h, Vc 14.2 L, Vp 3.12 L.",
+   "scenario": {
+    "dose_mg": 1000,
+    "interval_hours": 8,
+    "n_doses": 1,
+    "infusion_min": 30,
+    "weight_kg": 70
+   }
+  },
+  {
+   "id": "doxycycline_pk_200mg",
+   "kind": "pk",
+   "drug": "doxycycline",
+   "drug_class": "static",
+   "role": "validation",
+   "csv": "doxycycline_pk_200mg.csv",
+   "y_unit": "mg/L",
+   "y_space": "linear",
+   "organism": null,
+   "source": "Agwuh KN & MacGowan A. J Antimicrob Chemother 2006;58(2):256-265. doi:10.1093/jac/dkl224 (review with oral doxycycline conc-time; 200 mg oral: Cmax ~3-5 mg/L at ~2-3 h, t1/2 ~16-18 h).",
+   "notes": "Digitize a 200 mg oral-dose plasma conc-time profile. Validates oral absorption (Ka) + slow disposition. Targets: Tmax within ~1 h, Cmax ratio +/-25%, RMSE in mg/L. NOTE current model t1/2 is far shorter than doxycycline's ~18 h (CL=5,Vc=0.6/kg) -- this dataset is expected to expose that and motivate a PK refit.",
+   "scenario": {
+    "dose_mg": 200,
+    "interval_hours": 12,
+    "n_doses": 1,
+    "infusion_min": 0,
+    "weight_kg": 70
+   }
+  },
+  {
+   "id": "meropenem_timekill",
+   "kind": "timekill",
+   "drug": "meropenem",
+   "drug_class": "cidal",
+   "role": "validation",
+   "csv": "meropenem_timekill.csv",
+   "y_unit": "log10 CFU/mL",
+   "y_space": "log10",
+   "organism": "P. aeruginosa ATCC-27853",
+   "source": "Nussbaumer-Proll A et al. Front Pharmacol 2022;13:840692. doi:10.3389/fphar.2022.840692 (PMID 35431957; open access PMC9010652).",
+   "notes": "Digitized from Fig 2A (P. aeruginosa ATCC-27853, MIC=1 mg/L), 4xMIC curve. The '40% T>MIC' arm is a SINGLE CONTINUOUS constant-concentration exposure for 9.6 h, then meropenem is removed by centrifugation. Only the on-drug window (0,2,9.6 h) is kept as a valid constant-exposure time-kill; the 24 h post-removal regrowth point is excluded (drug washout, which a constant-C model cannot/should-not fit). concentration_mgL = 4xMIC = 4.0 mg/L. Inoculum digitized at t=0 ~10^5 CFU/mL in CAMHB. immune=0 (broth). Target: RMSE < 0.5 log10 CFU/mL; ~2 log kill by ~9.6 h at 4xMIC.",
+   "scenario": {
+    "concentration_mgL": 4.0,
+    "initial_burden": 100000.0,
+    "initial_persister": 100.0,
+    "initial_scv": 0.0,
+    "immune": 0.0,
+    "mic_multiple": 4.0
+   }
+  },
+  {
+   "id": "doxycycline_timekill",
+   "kind": "timekill",
+   "drug": "doxycycline",
+   "drug_class": "static",
+   "role": "validation",
+   "csv": "doxycycline_timekill.csv",
+   "y_unit": "log10 CFU/mL",
+   "y_space": "log10",
+   "organism": "S. pseudintermedius (Maaland) / S. aureus ATCC-25923 (Cunha)",
+   "source": "Maaland MG et al. J Clin Microbiol 2013;51(11):3547-3554. doi:10.1128/JCM.01498-13 (PMID 23966509; open access PMC3889732). Alt: Cunha BA et al. Clin Microbiol Infect 2000;6(5):270-273. doi:10.1046/j.1469-0691.2000.00058-2.x.",
+   "notes": "Digitized from Maaland Fig 2a (Doxycycline), representative S. pseudintermedius isolate, 8xMIC curve. concentration_mgL = 8 x MIC50 (0.063) = 0.5 mg/L. Bacteriostatic: ~1 log net reduction at 24 h (treated 2x-16x curves cluster within ~0.3 log). Target: RMSE < 0.5 log10 CFU; net kill at 24 h must stay < 3 log (model must NOT predict bactericidal). Digitized t=0 inoculum ~5e5.",
+   "scenario": {
+    "concentration_mgL": 0.5,
+    "initial_burden": 500000.0,
+    "initial_persister": 100.0,
+    "initial_scv": 0.0,
+    "immune": 0.0,
+    "mic_multiple": 8.0
+   }
+  },
+  {
+   "id": "sepsis_il6_kinetics",
+   "kind": "cytokine",
+   "drug": "meropenem",
+   "drug_class": "cidal",
+   "role": "validation",
+   "csv": "sepsis_il6_kinetics.csv",
+   "y_unit": "pg/mL",
+   "y_space": "linear",
+   "organism": null,
+   "source": "Song R et al. Vet Immunol Immunopathol 2012;146(2):143-149. doi:10.1016/j.vetimm.2012.02.008 (PMID 22424937; canine LPS endotoxemia, clean digitizable kinetics). Human cross-ref: Damas P et al. Ann Surg 1992;215(4):356-362 (PMID 1558416).",
+   "notes": "Digitize Song Fig IL-6 time course (0-24 h post 1 mg/kg LPS). CONVERT ng/mL to pg/mL (x1000) so units match the model. Reported: IL-6 peak 1.89 ng/mL at 3 h; TNF peak 1.11 ng/mL at 1 h; both decay by 8-12 h. QUALITATIVE validation -- compare Tpeak (within ~2 h) and decay shape; use normalized RMSE / R2 rather than absolute magnitude (cross-species).",
+   "scenario": {
+    "dose_mg": 1000,
+    "interval_hours": 8,
+    "n_doses": 12,
+    "infusion_min": 30,
+    "initial_burden": 1000000.0,
+    "immune": 10000000.0,
+    "marker": "IL6",
+    "weight_kg": 70
+   }
+  },
+  {
+   "id": "meropenem_neutropenic_thigh",
+   "kind": "dose_response",
+   "drug": "meropenem",
+   "drug_class": "cidal",
+   "role": "validation",
+   "csv": "meropenem_neutropenic_thigh.csv",
+   "y_unit": "Delta-log10 CFU (24 h, vs inoculum)",
+   "y_space": "log10",
+   "organism": "A. baumannii (neutropenic mouse thigh)",
+   "source": "Sabet M et al. Antimicrob Agents Chemother 2020;64(4):e02388-19. doi:10.1128/AAC.02388-19 (PMID 31988101; PMC7179318). Stasis 17.3% fT>MIC, 1-log kill 26.0% fT>MIC.",
+   "notes": "Index-driven (Approach A): neutropenic host (N_eff=0, no recruitment), effective MIC = constant-conc 24h stasis concentration, %fT>MIC swept by varying dose at fixed interval/PK. Digitize Sabet Table 3 / dose-response fig as (%fT>MIC, Delta-log10 CFU). Success: model stasis threshold within ~5-10 pp of 17.3%; monotonic sigmoidal kill curve.",
+   "scenario": {
+    "index": "ft_mic",
+    "interval_hours": 6,
+    "t_end": 24,
+    "initial_burden": 1000000.0,
+    "infusion_min": 30,
+    "weight_kg": 70,
+    "n_grid": 18
+   }
+  },
+  {
+   "id": "doxycycline_neutropenic_thigh",
+   "kind": "dose_response",
+   "drug": "doxycycline",
+   "drug_class": "static",
+   "role": "validation",
+   "csv": "doxycycline_neutropenic_thigh.csv",
+   "y_unit": "Delta-log10 CFU (24 h, vs inoculum)",
+   "y_space": "log10",
+   "organism": "CA-MRSA (neutropenic mouse thigh)",
+   "source": "LaPlante KL et al. Antimicrob Agents Chemother 2008;52(6):2156-2162. doi:10.1128/AAC.01046-07 (PMID 18411321; PMC2415789). In-vivo bacteriostatic; fAUC/MIC ~24-25 for stasis only.",
+   "notes": "Index-driven (Approach A): neutropenic host, index = fAUC/MIC. Digitize LaPlante Table 3 / Fig 3 as (fAUC/MIC, Delta-log10 CFU). Key validation: model must show NO net kill (Delta-log10 >= 0) at any achievable exposure, confirming immune-dependence of bacteriostasis.",
+   "scenario": {
+    "index": "fauc_mic",
+    "interval_hours": 12,
+    "t_end": 24,
+    "initial_burden": 1000000.0,
+    "infusion_min": 0,
+    "weight_kg": 70,
+    "n_grid": 18,
+    "static_stasis_eps": 0.1
+   }
+  }
+ ],
+ "_note": "The dose_response (neutropenic-thigh PK/PD index) mode is implemented in external_validation.py (Approach A, index-driven). See DOSE_RESPONSE_SCOPE.md. The two datasets above await digitization of Sabet 2020 and LaPlante 2008."
+}

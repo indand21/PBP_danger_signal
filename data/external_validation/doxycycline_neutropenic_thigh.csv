@@ -1,0 +1,16 @@
+index,delta_log10_cfu
+# fAUC/MIC vs 24h Delta-log10 CFU; LaPlante 2008 (PMC2415789), doxycycline arm,
+#   neutropenic mouse thigh (in vivo), CA-MRSA. Delta = log10 CFU/thigh at 24 h minus inoculum.
+# Read from TABLES (exact, not figure-digitized):
+#   - Doxycycline free AUC0-24 = 20.37 ug.h/ml (Table 2, human-simulated exposure).
+#   - Doxycycline MICs (Table 1): MW2 0.25; R2507 4; R2529 4 ug/ml.
+#   - 24 h in-vivo Delta-log10 (Table 3 + Results text): MW2 -1.2 (susceptible);
+#     R2507 +0.62; R2529 +0.66 (both iMLSB, high-MIC -> net growth).
+#   index = fAUC0-24 / MIC.
+# Single regimen (100 mg/kg q12h) x 3 strains => 3 points; fAUC/MIC varies via strain MIC.
+# Pattern: bacteriostatic -- max kill ~1.2 log even at fAUC/MIC ~82; NEVER bactericidal
+#   (>=3 log). Stasis (Delta=0) falls between fAUC/MIC ~5 and ~82, consistent with the
+#   doxycycline fAUC/MIC ~24-25-for-stasis anchor. The model must reproduce: no >=3-log kill.
+81.5,-1.2
+5.1,0.62
+5.1,0.66

@@ -1,0 +1,18 @@
+[
+  {
+    "static":{
+      "k_growth":0.5553956898,
+      "EC50_static":1.0037938997,
+      "hill_static":0.8016243509,
+      "objective_value":0.0764940266
+    },
+    "cidal":{
+      "k_growth":0.2,
+      "k_dmg":0.3202969749,
+      "k_repair":0.05,
+      "Damage50":11.6717095528,
+      "objective_value":5.4074497467
+    },
+    "timestamp":"2025-12-05T22:19:47.982552"
+  }
+]

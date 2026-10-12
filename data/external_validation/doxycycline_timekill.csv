@@ -1,0 +1,15 @@
+time_h,value
+# Digitized from Maaland MG et al. J Clin Microbiol 2014;52(1):90-98
+#   doi:10.1128/JCM.01498-13 (PMID 23966509; PMC3889732), Figure 2a (Doxycycline),
+#   representative S. pseudintermedius canine isolate, 24-h time-kill.
+# Curve digitized: 8xMIC (registry scenario 0.5 mg/L = 8 x MIC50 0.063 mg/L).
+# value = log10 CFU/mL. Decade gridlines 1E+00..1E+07 read at ~40 px/decade.
+# Bacteriostatic: ~1 log net reduction at 24 h (treated curves 2x-16x cluster
+#   within ~0.3 log; markers small/gray, so ~+/-0.3 log uncertainty). The point of
+#   this dataset is that the model must NOT predict bactericidal (>=3 log) kill.
+0,5.7
+2,5.2
+4,5.1
+6,5.0
+8,5.0
+24,4.6

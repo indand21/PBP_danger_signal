@@ -1,0 +1,91 @@
+{
+ "_comment": "Danger-signal (endotoxin/DAMP release) datasets for the danger-signal study (docs/danger_signal_study/DESIGN.md). Kept in a SEPARATE registry from data/external_validation/registry.json so that adding these kinds cannot break the validated external-validation run, which raises on unknown kinds. They merge into that engine in Phase 2, once a 'ds_release' predictor exists. Only digitized CSVs enter the repository -- never the source PDFs or figure screenshots. Values under 'anchors' are quantities stated in the published ABSTRACT (retrieved via PubMed) and serve as a correctness check on the digitization: if a digitized curve disagrees with its anchor, the digitization is wrong.",
+ "datasets": [
+  {
+   "id": "yamaguchi1999_pao1_release",
+   "kind": "ds_release",
+   "role": "calibration",
+   "organism": "P. aeruginosa PAO1",
+   "agents": ["isepamicin", "piperacillin", "ceftazidime", "imipenem"],
+   "csv": "yamaguchi1999_pao1_release.csv",
+   "source": "Yamaguchi S, Sato S, Toriya M, Tsuji A. Jpn J Antibiot 1999;52(1):41-56. PMID 10202687 (in Japanese; figures are language-independent).",
+   "priority": 1,
+   "why": "The ONLY identified source reporting absolute free LPS (ng/mL) together with matched viable counts AND a pharmacokinetic autosimulation (regimen-level) arm, for four agents spanning three mechanisms. It is therefore the primary Y_lysis calibration set and the only source that can also check a regimen-level prediction.",
+   "extract": [
+    "For each agent and each concentration (1/4x, 1x MIC and any others shown): free LPS (ng/mL) vs time over 0-8 h.",
+    "The MATCHED viable count (log10 CFU/mL) vs time for the same condition. Without the matched count the yield per CFU killed is not identifiable -- this pairing is the whole reason this paper is priority 1.",
+    "The pharmacokinetic autosimulation arm: free LPS and viable count vs time over 0-8 h for each agent, plus the simulated concentration-time profile if given.",
+    "CRITICAL: the starting inoculum (CFU/mL) and the assay volume, from the Methods. Every per-CFU yield in the study scales directly off this number; the pilot currently assumes 1e8 CFU/mL.",
+    "The LPS assay used and its standard (Limulus/LAL vs ELISA; EU/mL vs ng/mL conversion, if stated)."
+   ],
+   "anchors": {
+    "free_LPS_ng_mL_at_1xMIC": {"isepamicin_6h": 28.0, "isepamicin_6h_sd": 2.0,
+                                "piperacillin_4h": 515.0, "ceftazidime_4h": 493.0},
+    "qualitative": [
+     "At 1/4 x MIC, piperacillin and ceftazidime did NOT reduce colony counts and induced MORE free LPS release than at 1x MIC -- the kill-independent (filamentation) pathway.",
+     "Imipenem: rapid killing with less LPS release; free LPS rose at 8 h with regrowth.",
+     "Total LPS released over 8 h in the PK simulation: isepamicin < imipenem < ceftazidime < piperacillin."
+    ]
+   },
+   "notes": "Japanese-language journal, 1999 -- likely requires an interlibrary request. If the full text proves unobtainable, the abstract anchors above still fix three absolute yields and the full qualitative ordering, which is enough for a reduced Layer-1 fit; record that substitution explicitly as a limitation."
+  },
+  {
+   "id": "jackson1992_pa_release",
+   "kind": "ds_release",
+   "role": "validation",
+   "organism": "P. aeruginosa (smooth- and rough-LPS mutant isolates)",
+   "agents": ["ceftazidime", "imipenem"],
+   "csv": "jackson1992_pa_release.csv",
+   "source": "Jackson JJ, Kropp H. J Infect Dis 1992;165(6):1033-41. doi:10.1093/infdis/165.6.1033 (PMID 1583320).",
+   "priority": 1,
+   "why": "Held-out Layer-1 validation: a different laboratory, assay and LPS phenotype from Yamaguchi, and the source of the direct observation that sub-MIC ceftazidime induces filamentation and LPS release WITHOUT significant lysis. Also carries a mouse-lethality readout of the filtrates, which links released danger signal to an in-vivo consequence.",
+   "extract": [
+    "Free LPS vs time (0-8 h) for ceftazidime and imipenem, at sub-MIC, 1x, 2x and 50x MIC, for BOTH the smooth- and rough-LPS isolates.",
+    "Matched colony counts for the same conditions (the paper reports imipenem reducing counts ~2 log more than ceftazidime at 2 h at sub-MIC levels).",
+    "The mouse lethality of culture filtrates (LD50 or percentage mortality) against the measured endotoxin concentration.",
+    "Starting inoculum and assay volume from the Methods.",
+    "MICs of both agents for both isolates (the abstract states they are equivalent)."
+   ],
+   "anchors": {
+    "ceftazidime_over_imipenem_free_LPS_fold": [10.0, 40.0],
+    "window_h": [4.0, 8.0],
+    "temperature_C": 35.0,
+    "qualitative": [
+     "Sub-MIC ceftazidime induced filamentation and LPS release without significant bacterial lysis.",
+     "LPS released at sub-MIC ceftazidime matched the amounts at 1x, 2x and 50x MIC, and exceeded imipenem at up to 100x its MIC.",
+     "Filtrate lethality in mice tracked the in-vitro endotoxin results."
+    ]
+   },
+   "notes": "Held out from all fitting. The 10-40x ratio is the single most important number in the study: it is the effect size the whole hypothesis rests on, and it is measured between two BACTERICIDAL agents with equivalent MICs -- which is what makes the cidal/static classification the wrong axis."
+  },
+  {
+   "id": "haudek2003_lps_cytokine",
+   "kind": "ds_cytokine",
+   "role": "calibration",
+   "organism": "Papio (baboon), in vivo",
+   "agents": ["E. coli LPS"],
+   "csv": "haudek2003_lps_cytokine.csv",
+   "source": "Haudek SB, Natmessnig BE, Furst W, Bahrami S, Schlag G, Redl H. Shock 2003;20(5):431-6. doi:10.1097/01.shk.0000090843.66556.74 (PMID 14560107).",
+   "priority": 2,
+   "why": "Sets the Layer-2 operating range: an LPS dose-response spanning ~6 orders of magnitude (1 mg, 0.1 mg and 4 ng per kg) with TNF, IL-6 and IL-8 kinetics AND measured LPS clearance. The acceptance test that the cytokine layer is not saturated can only be made quantitative against a dose-response of this span.",
+   "extract": [
+    "TNF, IL-6 and IL-8 (pg/mL) vs time for EACH of the three bolus doses, plus the 1.5 mg/kg 30-min infusion arm.",
+    "The measured plasma LPS clearance curve -- this is the k_ds the pilot currently takes from a 3 min half-life assumption.",
+    "Baseline (pre-challenge) cytokine concentrations, needed for the IL6_baseline parameter."
+   ],
+   "anchors": {
+    "doses_per_kg": ["1 mg", "0.1 mg", "4 ng", "1.5 mg over 30 min (infusion)"],
+    "qualitative": [
+     "Cytokine, haemodynamic and haematologic kinetics resembled human endotoxemia QUALITATIVELY.",
+     "Baboons required an ~1e4-fold HIGHER initial LPS dose than humans to develop the same manifestations."
+    ]
+   },
+   "notes": "SPECIES-SCALE CAVEAT, and it is the important one: the paper itself reports that baboons need ~1e4x the human LPS dose. The Hill SHAPE (slope, span, kinetics) may be taken from this paper, but DS50 must NOT be taken from it on an absolute human scale. The pilot anchors DS50 on human experimental endotoxemia instead (4 ng/kg IV ~= 93 pg/mL plasma, a clear but submaximal response) and treats 30-1000 pg/mL as the uncertainty range. A human whole-blood or monocyte LPS-TNF concentration-response is the better absolute anchor and should be added as a separate Layer-2 dataset."
+  }
+ ],
+ "_schema": {
+  "ds_release": "Long-format CSV: agent,concentration_xMIC,time_h,series,value. series in {free_lps_ng_mL, cell_associated_lps_ng_mL, log10_cfu_mL, filament_fraction}. One row per digitized point. Blank/# lines ignored, so a header-only stub reports NO_DATA.",
+  "ds_cytokine": "Long-format CSV: dose_label,time_h,series,value. series in {lps_pg_mL, TNF_pg_mL, IL6_pg_mL, IL8_pg_mL}."
+ },
+ "_note": "Phase 1 pilot status: the modelling half of the pilot is complete and both stop-gates passed WITHOUT these data (see docs/danger_signal_study/PHASE1_PILOT.md and results/danger_signal/pilot_acceptance.json), using yields derived from the published abstracts. These CSVs turn abstract-derived point anchors into fitted curves with uncertainty, which is what Phase 3 needs."
+ }

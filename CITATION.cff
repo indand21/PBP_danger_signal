@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+title: >-
+  PBP_danger_signal: a within-host QSP model of the danger-signal cost of
+  antibiotic killing
+message: If you use this software, please cite it as below.
+type: software
+license: MIT
+repository-code: https://github.com/indand21/PBP_danger_signal
+authors:
+  - given-names: Anand
+    family-names: Srinivasan
+    affiliation: >-
+      Department of Pharmacology, All India Institute of Medical Sciences,
+      Bhubaneswar, India
+    email: anandsrinivasan@aiimsbhubaneswar.edu.in
+  - given-names: Abhishek
+    family-names: Anil
+    affiliation: >-
+      Department of Pharmacology, All India Institute of Medical Sciences,
+      Bhubaneswar, India
+  - given-names: Archana
+    family-names: AS
+    affiliation: >-
+      Department of Pharmacology, All India Institute of Medical Sciences,
+      Bhubaneswar, India

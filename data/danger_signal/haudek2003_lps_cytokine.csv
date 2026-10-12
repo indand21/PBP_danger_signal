@@ -1,0 +1,8 @@
+# Haudek SB et al. Shock 2003;20(5):431-6 (PMID 14560107)
+# Baboon endotoxemia LPS dose-response.
+# SPECIES-SCALE CAVEAT: the paper reports baboons need ~1e4x the human LPS
+# dose for equivalent manifestations. Use this for the Hill SHAPE and the
+# cytokine/LPS kinetics ONLY -- not for an absolute human DS50.
+# dose_label: 1mg_per_kg | 0.1mg_per_kg | 4ng_per_kg | 1.5mg_per_kg_30min_inf
+# series: lps_pg_mL | TNF_pg_mL | IL6_pg_mL | IL8_pg_mL
+dose_label,time_h,series,value

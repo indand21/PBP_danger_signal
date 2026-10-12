@@ -1,0 +1,24 @@
+time_h,value
+# Meropenem 1 g IV (30-min infusion) plasma concentration-time profile.
+# Source: Abulfathi AA et al. Front Pharmacol 2021;12:637618
+#   doi:10.3389/fphar.2021.637618 (PMID 34267655; PMC8275874).
+# value = plasma meropenem concentration in mg/L.
+#
+# PROVENANCE: the paper's Figure 1 is an INDIVIDUAL-level spaghetti plot of all
+#   patients across 4 arms (1g/2g/3g), with the y-axis spanning 0-250 mg/L so the
+#   1g arm is compressed into the lower band and not cleanly single-curve
+#   digitizable. Instead this profile is RECONSTRUCTED from the paper's published
+#   2-compartment popPK point estimates (CL 11.8 L/h, Q 3.26 L/h, Vc 14.2 L,
+#   Vp 3.12 L) simulated for a 1 g / 30-min infusion. Cross-checks: Cmax 55.1 mg/L
+#   (lit. 1g ~54.8), AUC0-8 84 mg.h/L (lit. ~77), terminal t1/2 1.23 h (lit. ~1) --
+#   and the reconstructed peak matches the figure's blue "1 g tds" band.
+# Sampling at the study's 8-h intensive PK times.
+0,0.0
+0.5,55.1
+1,34.3
+1.5,22.5
+2,15.5
+3,7.9
+4,4.3
+6,1.4
+8,0.4

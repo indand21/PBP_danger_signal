@@ -1,0 +1,399 @@
+{
+ "meta": {
+  "mic_effect_site_mgL": 0.4011257788776577,
+  "t_end_h": 48.0,
+  "V_focus_mL": 10.0,
+  "agents": {
+   "ceftazidime": {
+    "drug": "ceftazidime",
+    "dose_mg": 2000.0,
+    "interval_h": 8.0,
+    "n_doses": 6,
+    "inf_min": 30,
+    "Y": 4.93,
+    "Yf": 1.5
+   },
+   "imipenem": {
+    "drug": "meropenem",
+    "dose_mg": 1000.0,
+    "interval_h": 8.0,
+    "n_doses": 6,
+    "inf_min": 30,
+    "Y": 0.25,
+    "Yf": 0.0
+   }
+  }
+ },
+ "tnf_calibration": {
+  "TNF_IL6_ratio": 2.2399877435595843,
+  "k_TNF_clear": 1.0454660019780506,
+  "pred_TNF_peak": [
+   71.58558740147075,
+   231.5789938363749
+  ],
+  "obs_TNF_peak": [
+   66.49,
+   249.35
+  ],
+  "pred_t_peak_TNF_h": [
+   1.055,
+   1.055
+  ],
+  "obs_t_peak_TNF_h": 1.0,
+  "max_rel_error": 0.07663689880389168
+ },
+ "ordinal_validation": {
+  "results": [
+   {
+    "name": "prins1995_urosepsis",
+    "evaluated": true,
+    "source": "Prins JM, van Agtmael MA, Kuijper EJ, van Deventer SJ, Speelman P. J Infect Dis 1995;172(3):886-91",
+    "doi": "10.1093/infdis/172.3.886",
+    "n": 30,
+    "expected_order": [
+     "imipenem",
+     "ceftazidime"
+    ],
+    "predicted_order": [
+     "imipenem",
+     "ceftazidime"
+    ],
+    "scores": {
+     "imipenem": 27.567275062167003,
+     "ceftazidime": 4513.9844330011765
+    },
+    "pass": true,
+    "caveat": "The cytokine difference was NOT statistically significant (P > .05) at n=30, so this supports direction only. The 10-40% figure is the magnitude bound used separately."
+   },
+   {
+    "name": "simpson2000_melioidosis",
+    "evaluated": true,
+    "source": "Simpson AJ, Opal SM, Angus BJ, Prins JM, Palardy JE, Parejo NA, Chaowagul W, White NJ. J Infect Dis 2000;181(3):1014-9",
+    "doi": "10.1086/315306",
+    "n": 68,
+    "expected_order": [
+     "imipenem",
+     "ceftazidime"
+    ],
+    "predicted_order": [
+     "imipenem",
+     "ceftazidime"
+    ],
+    "scores": {
+     "imipenem": 27.567275062167003,
+     "ceftazidime": 4513.9844330011765
+    },
+    "pass": true,
+    "caveat": "ENDOTOXIN ONLY. Reading the paper's tables (see SIMPSON_2000_TABLES) shows the cytokine arm does not support the model and numerically trends the other way: ceftazidime's median peak IL-6 was LOWER than imipenem's (291.9 vs 594.8 pg/mL; P = .36), and peak cytokines did not correlate with peak endotoxin (IL-6 r = .23, P = .18). Earlier phases of this project cited this study as supporting the direction in 'endotoxin and cytokines'; that was wrong and is corrected here. The endotoxin difference also did NOT translate into a survival difference, so the model must never be read as predicting mortality."
+   },
+   {
+    "name": "prins1995_whole_blood",
+    "evaluated": true,
+    "source": "Prins JM, Kuijper EJ, Mevissen ML, Speelman P, van Deventer SJ. Infect Immun 1995;63(6):2236-42",
+    "doi": "10.1128/iai.63.6.2236-2242.1995",
+    "n": null,
+    "expected_order": [
+     "imipenem",
+     "ceftazidime"
+    ],
+    "predicted_order": [
+     "imipenem",
+     "ceftazidime"
+    ],
+    "scores": {
+     "imipenem": 27.567275062167003,
+     "ceftazidime": 4513.9844330011765
+    },
+    "pass": true,
+    "caveat": "Closed ex-vivo system with no danger-signal clearance, so only the ordering transfers, not the absolute concentrations."
+   }
+  ],
+  "n_evaluated": 3,
+  "n_passed": 3,
+  "all_pass": true
+ },
+ "agent_predictions": {
+  "ceftazidime": {
+   "DS_peak_pg_mL": 23.67002009254868,
+   "AUC_DS_pg_h_mL": 13.664345701511573,
+   "AUC_DS_excess_pg_h_mL": 13.664345701511573,
+   "DS_excess_peak_pg_mL": 23.67002009254868,
+   "IL6_peak_pg_mL": 594.142264041311,
+   "AUC_IL6_pg_h_mL": 4753.984433001176,
+   "AUC_IL6_excess_pg_h_mL": 4513.9844330011765,
+   "TNF_peak_pg_mL": 677.5213176242004,
+   "saturation_peak": 0.012707321964836954,
+   "saturation_mean": 0.0001752178830621135,
+   "filament_fraction_of_release": 0.0007317397131610427
+  },
+  "imipenem": {
+   "DS_peak_pg_mL": 1.2203566476865315,
+   "AUC_DS_pg_h_mL": 0.6972921329387587,
+   "AUC_DS_excess_pg_h_mL": 0.6972921329387587,
+   "DS_excess_peak_pg_mL": 1.2203566476865315,
+   "IL6_peak_pg_mL": 8.597747553134079,
+   "AUC_IL6_pg_h_mL": 267.567275062167,
+   "AUC_IL6_excess_pg_h_mL": 27.567275062167003,
+   "TNF_peak_pg_mL": 4.139474623178447,
+   "saturation_peak": 7.988325225624094e-05,
+   "saturation_mean": 1.0861329383167674e-06,
+   "filament_fraction_of_release": 0.0
+  }
+ },
+ "sub_mic_check": {
+  "prins_source": {
+   "source": "Prins JM, Kuijper EJ, Mevissen ML, Speelman P, van Deventer SJ. Infect Immun 1995;63(6):2236-42",
+   "doi": "10.1128/iai.63.6.2236-2242.1995",
+   "reports": "At 0.5x MIC the differences between antibiotics in endotoxin and cytokine levels were small, with levels comparable to untreated cultures.",
+   "model_must_predict": "sub-MIC exposure produces little cytokine induction relative to an untreated control, and little separation between agents",
+   "bears_on": "Phase 1 concluded that the sub-MIC filamentation pathway contributes <=1% of danger-signal release at conventional exposures. This is independent corroboration from a different readout (cytokine induction rather than release kinetics) and a different laboratory."
+  },
+  "conflict": {
+   "prins_e_coli": "at 0.5x MIC, endotoxin and cytokines comparable to untreated; small differences between agents",
+   "jackson_kropp_p_aeruginosa": "sub-MIC ceftazidime released LPS matching the amounts at 1-50x MIC, without significant lysis",
+   "model_behaviour": "reproduces Jackson & Kropp (Y_filament anchored on P. aeruginosa)",
+   "implication": "Y_filament is bounded above by Prins and is plausibly organism-dependent; unresolved",
+   "affects_phase1_conclusion": false,
+   "why_not": "the Phase 1 in-vivo result is limited by sub-MIC WINDOW TIME, not by release per cell, and survived a 10-fold increase in Y_filament"
+  },
+  "levels": {
+   "0.5x MIC": {
+    "ceftazidime": {
+     "DS_peak_pg_mL": 261.9406796471197,
+     "AUC_DS_pg_h_mL": 1134.2510137019322,
+     "AUC_DS_excess_pg_h_mL": 1134.2510137019322,
+     "DS_excess_peak_pg_mL": 261.9406796471197,
+     "IL6_peak_pg_mL": 155221.49850838727,
+     "AUC_IL6_pg_h_mL": 387047.0889234917,
+     "AUC_IL6_excess_pg_h_mL": 387007.08892349165,
+     "TNF_peak_pg_mL": 128000.3727170604,
+     "saturation_peak": 0.4421288549959813,
+     "saturation_mean": 0.21782939031789209,
+     "filament_fraction_of_release": 0.8785309602686333,
+     "B_rep_final": 731542098.8366029,
+     "log10_change": 0.8642393239901567
+    },
+    "imipenem": {
+     "DS_peak_pg_mL": 1.6134727740713535,
+     "AUC_DS_pg_h_mL": 6.9866313715504615,
+     "AUC_DS_excess_pg_h_mL": 6.9866313715504615,
+     "DS_excess_peak_pg_mL": 1.6134727740713535,
+     "IL6_peak_pg_mL": 41.94841578302716,
+     "AUC_IL6_pg_h_mL": 121.69895574774478,
+     "AUC_IL6_excess_pg_h_mL": 81.69895574774476,
+     "TNF_peak_pg_mL": 32.93505632961497,
+     "saturation_peak": 0.00012891327605330885,
+     "saturation_mean": 5.22426942740878e-05,
+     "filament_fraction_of_release": 0.0,
+     "B_rep_final": 731542098.8366029,
+     "log10_change": 0.8642393239901567
+    }
+   },
+   "5x MIC": {
+    "ceftazidime": {
+     "DS_peak_pg_mL": 241.081298232049,
+     "AUC_DS_pg_h_mL": 140.41200969341588,
+     "AUC_DS_excess_pg_h_mL": 140.41200969341588,
+     "DS_excess_peak_pg_mL": 241.081298232049,
+     "IL6_peak_pg_mL": 22261.088553789225,
+     "AUC_IL6_pg_h_mL": 123658.94886261341,
+     "AUC_IL6_excess_pg_h_mL": 123618.94886261341,
+     "TNF_peak_pg_mL": 25432.586545867416,
+     "saturation_peak": 0.4073914250192096,
+     "saturation_mean": 0.02424098122017162,
+     "filament_fraction_of_release": 0.0009579701068899217,
+     "B_rep_final": 5611.900485675431,
+     "log10_change": -4.25089003880284
+    },
+    "imipenem": {
+     "DS_peak_pg_mL": 12.213509004748028,
+     "AUC_DS_pg_h_mL": 7.113460290453664,
+     "AUC_DS_excess_pg_h_mL": 7.113460290453664,
+     "DS_excess_peak_pg_mL": 12.213509004748028,
+     "IL6_peak_pg_mL": 193.51898937726114,
+     "AUC_IL6_pg_h_mL": 1088.555275456879,
+     "AUC_IL6_excess_pg_h_mL": 1048.5552754568791,
+     "TNF_peak_pg_mL": 216.5688103222767,
+     "saturation_peak": 0.00412369157643247,
+     "saturation_mean": 0.00020507498410057002,
+     "filament_fraction_of_release": 0.0,
+     "B_rep_final": 5611.900485675431,
+     "log10_change": -4.25089003880284
+    }
+   },
+   "50x MIC": {
+    "ceftazidime": {
+     "DS_peak_pg_mL": 242.22888135428423,
+     "AUC_DS_pg_h_mL": 140.07019842813287,
+     "AUC_DS_excess_pg_h_mL": 140.07019842813287,
+     "DS_excess_peak_pg_mL": 242.22888135428423,
+     "IL6_peak_pg_mL": 22245.675985354796,
+     "AUC_IL6_pg_h_mL": 123579.06748525615,
+     "AUC_IL6_excess_pg_h_mL": 123539.06748525615,
+     "TNF_peak_pg_mL": 25428.890987087623,
+     "saturation_peak": 0.4093579556780524,
+     "saturation_mean": 0.024220740624082193,
+     "filament_fraction_of_release": 1.222068871774045e-06,
+     "B_rep_final": 5504.252861186028,
+     "log10_change": -4.259301623156392
+    },
+    "imipenem": {
+     "DS_peak_pg_mL": 12.283426398461412,
+     "AUC_DS_pg_h_mL": 7.102940962377646,
+     "AUC_DS_excess_pg_h_mL": 7.102940962377646,
+     "DS_excess_peak_pg_mL": 12.283426398461412,
+     "IL6_peak_pg_mL": 194.1559786004599,
+     "AUC_IL6_pg_h_mL": 1092.1517211596613,
+     "AUC_IL6_excess_pg_h_mL": 1052.1517211596613,
+     "TNF_peak_pg_mL": 217.40904869995353,
+     "saturation_peak": 0.004164066497906019,
+     "saturation_mean": 0.0002057416254135273,
+     "filament_fraction_of_release": 0.0,
+     "B_rep_final": 5504.252861186028,
+     "log10_change": -4.259301623156392
+    }
+   }
+  },
+  "caz_0.5x_over_50x_AUC_DS": 8.097732611436921
+ },
+ "magnitude_test": {
+  "bound": {
+   "source": "Prins JM, van Agtmael MA, Kuijper EJ, van Deventer SJ, Speelman P. J Infect Dis 1995;172(3):886-91",
+   "doi": "10.1093/infdis/172.3.886",
+   "observed_cytokine_rise_pct": [
+    10.0,
+    40.0
+   ],
+   "window_h": 4.0,
+   "comparator": "no rise in the imipenem arm",
+   "significance": "P > .05 (not significant at n=30)",
+   "interpretation": "The ceftazidime-attributable cytokine rise in treated gram-negative urosepsis is a modest fraction of the patient's pre-treatment level, not a multi-fold increase."
+  },
+  "attributable_IL6_peak_pg_mL": 589.142264041311,
+  "implied_pretreatment_IL6_low_pg_mL": 1472.8556601032774,
+  "implied_pretreatment_IL6_high_pg_mL": 5891.42264041311,
+  "sepsis_IL6_range_pg_mL": [
+   100.0,
+   2000.0
+  ],
+  "overlaps_observed_sepsis_range": true,
+  "overlap_fraction_of_implied_interval": 0.1193021045614565,
+  "marginal": true,
+  "verdict": "marginally consistent, biased high",
+  "over_predicts": false,
+  "under_predicts": false,
+  "required_scale_correction": 1.0
+ },
+ "scale_invariance": {
+  "cells": [
+   {
+    "focus_scale": 0.01,
+    "V_focus_mL": 0.1,
+    "ratio_AUC_IL6": 165.1430290058369,
+    "caz_attributable_peak_pg_mL": 0.22181069539378573,
+    "rank_invariant": true,
+    "consensus": [
+     "imipenem",
+     "ceftazidime"
+    ]
+   },
+   {
+    "focus_scale": 0.1,
+    "V_focus_mL": 1.0,
+    "ratio_AUC_IL6": 165.116154252016,
+    "caz_attributable_peak_pg_mL": 11.478741690424727,
+    "rank_invariant": true,
+    "consensus": [
+     "imipenem",
+     "ceftazidime"
+    ]
+   },
+   {
+    "focus_scale": 1.0,
+    "V_focus_mL": 10.0,
+    "ratio_AUC_IL6": 163.74430997701745,
+    "caz_attributable_peak_pg_mL": 589.142264041311,
+    "rank_invariant": true,
+    "consensus": [
+     "imipenem",
+     "ceftazidime"
+    ]
+   },
+   {
+    "focus_scale": 10.0,
+    "V_focus_mL": 100.0,
+    "ratio_AUC_IL6": 117.26481928466957,
+    "caz_attributable_peak_pg_mL": 21753.7793947571,
+    "rank_invariant": true,
+    "consensus": [
+     "imipenem",
+     "ceftazidime"
+    ]
+   }
+  ],
+  "ratio_spread": 1.4082913359115763
+ },
+ "yield_uncertainty": {
+  "ratio_range": [
+   3.5,
+   7.0
+  ],
+  "cells": [
+   {
+    "yield_ratio": 3.5,
+    "Y_imipenem_fg_per_CFU": 1.4085714285714286,
+    "ratio_AUC_DS": 3.4780448515041336,
+    "ratio_AUC_IL6": 8.465566988912007,
+    "ordinal_holds": true
+   },
+   {
+    "yield_ratio": 7.0,
+    "Y_imipenem_fg_per_CFU": 0.7042857142857143,
+    "ratio_AUC_DS": 6.956091243106364,
+    "ratio_AUC_IL6": 27.753143359150553,
+    "ordinal_holds": true
+   }
+  ]
+ },
+ "layer1_held_out": {
+  "fit_source": "Trautmann M, Heinemann M, Zick R, Moricke A, Seidelmann M, Berger D. J Antimicrob Chemother 1998;41(2):163-9",
+  "fit_assay": "LPS capture ELISA, monoclonal anti-O18; detection limit 2 ng/mL; verified free of antibiotic interference (their table I)",
+  "fit_ratio": 6.888888888888889,
+  "held_out_source": "Jackson JJ, Kropp H. J Infect Dis 1992;165:1033-41",
+  "held_out_interval": [
+   10.0,
+   40.0
+  ],
+  "within_interval": false,
+  "ordering_preserved": true,
+  "confounds": [
+   "assay (monoclonal ELISA vs Limulus)",
+   "organism (E. coli vs P. aeruginosa)"
+  ],
+  "interpretation": "magnitude fails, ordering transfers; the assay difference is the most likely explanation and is supported by three independent estimates landing at 3.5-7x"
+ },
+ "per_cfu_yield_check": {
+  "yamaguchi_fg_per_cfu_assumed_inoculum": 4.93,
+  "trautmann_naive_fg_per_cfu_measured_inoculum": 1240.0,
+  "single_cell_lps_content_fg": [
+   60.0,
+   120.0
+  ],
+  "conclusion": "absolute per-CFU yield is unidentified without matched growth curves; ratios are unaffected"
+ },
+ "unvalidated": [
+  "Layer-1 ABSOLUTE per-CFU yields (section 6c). The held-out RATIO test has now been run non-circularly against Trautmann and the ordering transfers, but the absolute yield per CFU killed remains unidentified: Yamaguchi implies 4.93 fg/CFU over an ASSUMED inoculum while Trautmann over its measured inoculum naively implies 1240, which exceeds a whole cell's LPS content. Resolving it needs Trautmann's figure 1 growth curves digitized. No conclusion in this study depends on the absolute value.",
+  "Absolute magnitude: bounded only by Prins' relative figure, and the model currently over-predicts it (section 4). Needs the focus volume and translocation fraction to be anchored on something measured.",
+  "Agent-specific kill kinetics: both arms still share one kill function, though Jackson & Kropp report imipenem reducing counts ~2 log more than ceftazidime at 2 h at sub-MIC concentrations.",
+  "Local versus plasma danger signal: Ernst 1999 found imipenem improving every rat lung-injury measure over aztreonam WITHOUT a plasma-endotoxin difference, which a single plasma compartment cannot represent.",
+  "Outcome: Simpson 2000 found a significant endotoxin difference and NO mortality difference. The model predicts inflammatory exposure and must not be presented as predicting survival."
+ ],
+ "summary": {
+  "ordinal_pass": true,
+  "sub_mic_status": "open conflict between held-out sources",
+  "magnitude_verdict": "marginally consistent, biased high",
+  "magnitude_pass": true,
+  "scale_invariant": true,
+  "yield_robust": true
+ }
+}

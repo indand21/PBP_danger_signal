@@ -1,0 +1,23 @@
+time_h,value
+# Digitized from Nussbaumer-Proll A et al. Front Pharmacol 2022;13:840692
+#   (PMID 35431957; PMC9010652), Figure 2A.
+# Panel A: P. aeruginosa ATCC-27853, MIC = 1 mg/L, "continuous 40% T>MIC".
+# Curve digitized: 4xMIC (filled down-triangle). value = log10 CFU/mL.
+#
+# WHY ONLY 0-9.6 h: per the paper's methods, the 40% T>MIC arm is a SINGLE
+#   CONTINUOUS exposure to a CONSTANT meropenem concentration (4xMIC) for 9.6 h,
+#   after which the drug is removed by centrifugation (meropenem-free period),
+#   which drives the regrowth seen at 24 h. The validation engine integrates the
+#   PD ODE at a CONSTANT concentration (predict_timekill), so only the on-drug
+#   window (0 -> 9.6 h) is a valid constant-exposure time-kill. The 24 h
+#   post-removal regrowth point is intentionally EXCLUDED (it reflects drug
+#   washout, which the constant-concentration model cannot and should not fit).
+#
+# Concentration: MIC = 1 mg/L (stated in panel A) => 4xMIC = 4.0 mg/L; set
+#   scenario.concentration_mgL = 4.0 in registry.json (done).
+# Calibration: x t=0 @ col382, 33.35 px/h; y decades rows 601(1e1)->307(1e10),
+#   32.67 px/decade (verified vs printed 10^n labels; cross-checked against the
+#   isolable 1xMIC and 16xMIC markers). ~+/-0.3 log10 uncertainty.
+0,5.0
+2,4.6
+9.6,3.0

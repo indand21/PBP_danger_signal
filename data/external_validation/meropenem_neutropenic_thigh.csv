@@ -1,0 +1,54 @@
+index,delta_log10_cfu
+# %fT>MIC vs 24h Delta-log10 CFU; Sabet 2020 (PMC7179318) Fig 7 (all 6 A. baumannii strains)
+# meropenem, neutropenic mouse thigh. Delta = log10 CFU/thigh at 24 h minus 0-h inoculum.
+# Digitized from the pooled 6-strain scatter (representative sample of the cloud, ~+/-0.3 log,
+#   +/-2 %fT>MIC reading uncertainty). Embedded published fit (R2=0.74): stasis 16.7,
+#   1-log kill 26.8, 2-log kill 41.6 %fT>MIC -- the digitized central tendency reproduces these
+#   (crosses 0 near ~17-20%, -1 near ~27%, -2 near ~42%).
+0,2.6
+0,2.0
+0,1.5
+0,1.0
+5,2.3
+5,1.7
+5,1.4
+9,1.5
+10,1.2
+10,0.3
+10,-0.1
+10,-0.7
+13,1.5
+14,0.3
+14,-0.4
+18,1.4
+19,0.8
+20,0.0
+20,-0.4
+20,-1.0
+20,-1.3
+24,0.6
+25,-0.4
+25,-1.5
+25,-2.1
+29,0.0
+30,-0.8
+30,-1.5
+30,-2.4
+30,-3.0
+34,-0.4
+35,-1.3
+35,-2.4
+40,-0.8
+40,-1.8
+40,-2.7
+46,-1.3
+46,-2.6
+46,-3.4
+50,-1.5
+50,-2.5
+50,-3.4
+58,-2.1
+58,-4.0
+67,-2.2
+68,-2.8
+70,-2.6

@@ -1,0 +1,50 @@
+# Configuration Template for QSP Simulations
+# YAML format (can be loaded with yaml.load() or similar)
+
+# Scenario definition
+scenario:
+  name: "pneumonia_immunocompetent"
+  organism: "E. coli"
+  infection_site: "lung"
+  host_phenotype: "immunocompetent"
+
+# Patient parameters
+patient:
+  weight_kg: 70
+  creatinine_clearance_ml_min: 90
+  age_years: 45
+
+# Initial conditions
+initial_conditions:
+  B_rep_CFU_mL: 1.0e6
+  B_pers_CFU_mL: 1.0e3
+  B_SCV_CFU_mL: 0
+  N_eff: 1.0e7
+  Damage: 0
+  IL6_pg_mL: 10
+  TNF_pg_mL: 5
+
+# Drug and dosing
+drug:
+  name: "meropenem"
+  class: "cidal"  # or "static"
+
+dosing:
+  dose_mg: 1000
+  interval_hours: 8
+  n_doses: 12
+  infusion_duration_min: 30
+
+# Simulation parameters
+simulation:
+  t_start_hours: 0
+  t_end_hours: 96
+  method: "RK45"  # or "BDF" for stiff systems
+  dense_output: false
+
+# Output
+output:
+  save_trajectories: true
+  save_summary_stats: true
+  generate_figures: true
+  output_dir: "./results/"

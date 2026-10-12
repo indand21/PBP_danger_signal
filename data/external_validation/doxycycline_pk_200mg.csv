@@ -1,0 +1,24 @@
+time_h,value
+# Doxycycline 200 mg oral single-dose plasma concentration-time profile.
+# Source: Agwuh KN & MacGowan A. J Antimicrob Chemother 2006;58(2):256-265
+#   doi:10.1093/jac/dkl224 (PMID 16816396).
+# value = plasma doxycycline concentration in mg/L.
+#
+# PROVENANCE: this paper is a REVIEW and contains NO concentration-time figure
+#   (only parameter tables). This profile is therefore RECONSTRUCTED from the
+#   review's Table 2 representative 200 mg oral single-dose parameters
+#   (Cmax ~5 mg/L, tmax ~2.6 h, t1/2 ~13-16 h, AUC ~90-113 mg.h/L) using a
+#   1-compartment first-order-absorption model (ka 1.34/h, ke 0.046/h => t1/2 15 h),
+#   scaled to Cmax 5.0 at tmax 2.6 h; AUC0-24 = 80 mg.h/L.
+# The long t1/2 (elevated 24 h tail) is the point: it should expose that the
+#   model's current doxycycline t1/2 is far too short (per registry notes).
+0,0.00
+0.5,2.72
+1,4.05
+2,4.93
+3,4.98
+4,4.83
+6,4.42
+8,4.03
+12,3.35
+24,1.93

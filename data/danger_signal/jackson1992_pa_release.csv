@@ -1,0 +1,11 @@
+# Jackson JJ, Kropp H. J Infect Dis 1992;165(6):1033-41 (PMID 1583320)
+# P. aeruginosa, smooth- and rough-LPS mutant isolates; 35 C.
+# HELD OUT from all fitting -- Layer-1 validation set.
+# series: free_lps_ng_mL | log10_cfu_mL | filament_fraction | mouse_mortality_pct
+# isolate: smooth | rough
+# RECORD BEFORE DIGITIZING:
+#   inoculum_cfu_per_mL =
+#   assay_volume_mL     =
+#   lps_assay           =
+#   mic_mg_L            = (ceftazidime, imipenem -- abstract states they are equivalent)
+agent,isolate,concentration_xMIC,time_h,series,value
