@@ -31,7 +31,7 @@ from src.analysis.cytokine_calibration import (  # noqa: E402
     calibrate_family, calibrate_tnf,
 )
 from src.analysis.danger_signal import (  # noqa: E402
-    YIELD_ANCHORS_FG_PER_CFU, simulate_danger_signal, summarize,
+    FINAL_YIELDS_FG_PER_CFU, simulate_danger_signal, summarize,
 )
 from src.analysis.held_out_validation import (  # noqa: E402
     AGENT_EFFECT_ESTIMATES, PRINS_1995_CLINICAL, PRINS_MAGNITUDE_BOUND,
@@ -40,7 +40,7 @@ from src.analysis.held_out_validation import (  # noqa: E402
 )
 from src.analysis.injury_layer import check_rank_invariance  # noqa: E402
 from src.core.parameters import (  # noqa: E402
-    get_default_parameters, get_drug_pk_parameters,
+    get_default_parameters, get_drug_pd_parameters, get_drug_pk_parameters,
 )
 from src.core.pd_model import create_ode_system  # noqa: E402
 from src.core.pk_models import DosingRegimen, TwoCompartmentPKModel  # noqa: E402
@@ -60,11 +60,11 @@ Y_FILAMENT_CAZ = 1.5
 AGENTS = {
     "ceftazidime": dict(drug="ceftazidime", dose_mg=2000.0, interval_h=8.0,
                         n_doses=6, inf_min=30,
-                        Y=YIELD_ANCHORS_FG_PER_CFU["ceftazidime"],
+                        Y=FINAL_YIELDS_FG_PER_CFU["ceftazidime"],
                         Yf=Y_FILAMENT_CAZ),
     "imipenem": dict(drug="meropenem", dose_mg=1000.0, interval_h=8.0,
                      n_doses=6, inf_min=30,
-                     Y=YIELD_ANCHORS_FG_PER_CFU["imipenem"], Yf=0.0),
+                     Y=FINAL_YIELDS_FG_PER_CFU["imipenem"], Yf=0.0),
 }
 
 # Agent-effect interval. REVISED in Phase 5b: three independent measurements
@@ -90,10 +90,14 @@ def solve_bacteria(spec):
                         start_time=0, n_doses=spec["n_doses"],
                         infusion_duration_min=spec["inf_min"])
     pd = create_ode_system(get_default_parameters())
+    # Kp is a total-concentration partition; only unbound drug acts. C_eff
+    # below is the FREE effect-site concentration (see S1.1).
+    fu = get_drug_pd_parameters(spec["drug"]).fraction_unbound
     r = run_simulation(pkm, reg, pd, dict(IC), t_span=(0, T_END),
-                       drug_class="cidal", weight_kg=WEIGHT)
+                       drug_class="cidal", weight_kg=WEIGHT,
+                       fraction_unbound=fu)
     _, B_total = r.get_bacterial_burden()
-    C_eff = r.get_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
+    C_eff = r.get_free_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
     return dict(t=r.t, B_rep=r.y[:, r.state_names.index("B_rep")], C_eff=C_eff,
                 kill=np.asarray(pd.cidal_kill_rate(C_eff), dtype=float),
                 net_log10=float(np.log10(max(B_total[-1], 1e-6) / B_total[0])))
@@ -181,24 +185,32 @@ def main():
     scores, details = {}, {}
     for name, spec in AGENTS.items():
         _, s = ds_run(drivers[name], p_ref, spec["Y"], spec["Yf"])
-        scores[name] = s["AUC_IL6_excess_pg_h_mL"]
+        # Score on the REPORTED endpoint. Every constraint here reports
+        # endotoxin; feeding them modelled IL-6 compared a study's measured
+        # quantity with a different model quantity.
+        scores[name] = s["AUC_DS_pg_h_mL"]
         details[name] = s
         print(f"  {name:12s} AUC_DS {s['AUC_DS_pg_h_mL']:8.2f} pg.h/mL   "
               f"attributable IL-6 peak {s['IL6_peak_pg_mL'] - p_ref.IL6_baseline:8.1f} pg/mL   "
               f"AUC_IL6 {s['AUC_IL6_excess_pg_h_mL']:9.1f}")
-    ev = evaluate_all(scores)
+    ev = evaluate_all(scores, endpoint="AUC_DS_pg_h_mL")
     print()
     for r in ev["results"]:
         if not r.get("evaluated"):
             print(f"  {r['name']:26s} NOT EVALUATED: {r['reason']}")
             continue
+        sep = ", ".join(f"{p['lower']}->{p['higher']} "
+                        f"{p['relative_separation']:+.3f}"
+                        for p in r["separations"])
         print(f"  {r['name']:26s} n={str(r['n']):>4s}  expected "
               f"{r['expected_order']}  predicted {r['predicted_order']}  "
-              f"-> {'PASS' if r['pass'] else 'FAIL'}")
+              f"-> {r['verdict'].upper()}")
+        print(f"       endpoint {r['model_endpoint']}; separation {sep}")
         print(f"       {r['doi']}")
         if r["caveat"]:
             print(f"       caveat: {r['caveat']}")
-    print(f"\n  ordinal validation: {ev['n_passed']}/{ev['n_evaluated']} pass")
+    print(f"\n  ordinal validation: {ev['n_passed']}/{ev['n_evaluated']} pass, "
+          f"{ev['n_failed']} fail, {ev['n_inconclusive']} inconclusive")
     payload["ordinal_validation"] = ev
     payload["agent_predictions"] = details
 
@@ -314,25 +326,37 @@ def main():
             out, s = ds_run(drivers[name], p_ref, spec["Y"], spec["Yf"],
                             v_focus=V_FOCUS * scale)
             row[name] = (out, s)
-        ratio = (row["ceftazidime"][1]["AUC_IL6_excess_pg_h_mL"]
-                 / row["imipenem"][1]["AUC_IL6_excess_pg_h_mL"])
+        # The REPORTED endpoint is attributable AUC_DS. The IL-6 ratio is kept
+        # alongside it only for continuity with Phase 2; it must not be the
+        # number quoted for a danger-signal claim.
+        ratio = (row["ceftazidime"][1]["AUC_DS_pg_h_mL"]
+                 / row["imipenem"][1]["AUC_DS_pg_h_mL"])
+        ratio_il6 = (row["ceftazidime"][1]["AUC_IL6_excess_pg_h_mL"]
+                     / row["imipenem"][1]["AUC_IL6_excess_pg_h_mL"])
         caz_peak = row["ceftazidime"][1]["IL6_peak_pg_mL"] - p_ref.IL6_baseline
         rk = check_rank_invariance({k: v[0] for k, v in row.items()},
                                    metric="peak")
         inv.append({"focus_scale": scale, "V_focus_mL": V_FOCUS * scale,
-                    "ratio_AUC_IL6": ratio,
+                    "ratio_AUC_DS": ratio,
+                    "ratio_AUC_IL6": ratio_il6,
                     "caz_attributable_peak_pg_mL": caz_peak,
                     "rank_invariant": rk["invariant"],
                     "consensus": rk["consensus_ranking"]})
         print(f"  V_focus {V_FOCUS*scale:8.2f} mL   CAZ attributable peak "
-              f"{caz_peak:9.1f} pg/mL   IL-6 ratio {ratio:8.2f}x   "
+              f"{caz_peak:9.1f} pg/mL   AUC_DS ratio {ratio:8.2f}x   "
               f"rank invariant {rk['invariant']}")
-    ratios = [r["ratio_AUC_IL6"] for r in inv]
+    ratios = [r["ratio_AUC_DS"] for r in inv]
     spread = max(ratios) / min(ratios)
     print(f"\n  ratio varies by {spread:.2f}x across a 1000-fold change in focus volume;")
     print("  the ranking is unchanged throughout. So the magnitude uncertainty")
     print("  does NOT propagate into the ordinal claim -- which is the claim made.")
-    payload["scale_invariance"] = {"cells": inv, "ratio_spread": spread}
+    payload["scale_invariance"] = {
+        "cells": inv, "ratio_spread": spread,
+        "endpoint": "AUC_DS_pg_h_mL (attributable danger-signal exposure)",
+        "ratio_spread_il6_not_reported": (
+            max(r["ratio_AUC_IL6"] for r in inv)
+            / min(r["ratio_AUC_IL6"] for r in inv)),
+    }
 
     # -------------------------------------- 6. yield uncertainty
     print("\n" + "=" * 74)
@@ -344,7 +368,7 @@ def main():
     print("  6.9x, Prins whole-blood TNF 3.5x, Simpson in-patient 5.0x. Jackson")
     print("  & Kropp's 10-40x is a Limulus outlier. Both ends reported.")
     unc = []
-    y_caz = YIELD_ANCHORS_FG_PER_CFU["ceftazidime"]
+    y_caz = FINAL_YIELDS_FG_PER_CFU["ceftazidime"]
     for r in YIELD_RATIO_RANGE:
         y_ipm = y_caz / r
         _, s_caz = ds_run(drivers["ceftazidime"], p_ref, y_caz, Y_FILAMENT_CAZ)
@@ -359,11 +383,12 @@ def main():
               f"attributable IL-6 ratio {ratio_il6:9.2f}x   "
               f"ordinal holds: {ratio_il6 > 1.0}")
     print("\n  The ordinal conclusion holds across the whole reported interval.")
-    print("  The IL-6 ratio spans "
-          f"{min(u['ratio_AUC_IL6'] for u in unc):.0f}-"
-          f"{max(u['ratio_AUC_IL6'] for u in unc):.0f}x, which is the range that "
-          "should be reported")
-    print("  -- never a single fold-change.")
+    print("  The reported endpoint is attributable AUC_DS, whose ratio spans "
+          f"{min(u['ratio_AUC_DS'] for u in unc):.1f}-"
+          f"{max(u['ratio_AUC_DS'] for u in unc):.1f}x")
+    print("  -- that is the range to report, never a single fold-change. The")
+    print("  IL-6 ratios above belong to the dropped cytokine layer and must")
+    print("  NOT be quoted for a danger-signal claim.")
     payload["yield_uncertainty"] = {"ratio_range": list(YIELD_RATIO_RANGE),
                                     "cells": unc}
 
@@ -502,6 +527,11 @@ def main():
         "yield_robust": bool(all(u["ordinal_holds"] for u in unc)),
     }
 
+    from src.utils.provenance import provenance
+    payload["provenance"] = provenance(
+        endpoint="AUC_DS_pg_h_mL (attributable danger-signal exposure)",
+        solver={"bacterial": "RK45 rtol 1e-6 atol 1e-8 max_step 0.1 h",
+                "danger_signal": "LSODA rtol 1e-6 atol 1e-9 max_step 0.1 h"})
     with open(OUT, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=1, default=str)
     print(f"\nwrote {OUT}")

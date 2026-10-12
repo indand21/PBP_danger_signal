@@ -60,6 +60,112 @@ class TestOrdinalConstraints:
         assert not ev["all_pass"]
 
 
+class TestTiesAreNotPasses:
+    """The external review (R5) found that identical predictions scored 3/3:
+    Python's sort is stable, so a tie preserved the expected input order and
+    was read as a correct prediction. A criterion that cannot distinguish
+    'right' from 'said nothing' does not validate anything."""
+
+    def test_a_tie_does_not_pass(self):
+        res = PRINS_1995_CLINICAL.evaluate({"imipenem": 1.0, "ceftazidime": 1.0})
+        assert not res["pass"]
+
+    def test_a_tie_is_reported_as_inconclusive(self):
+        res = PRINS_1995_CLINICAL.evaluate({"imipenem": 1.0, "ceftazidime": 1.0})
+        assert res["verdict"] == "inconclusive"
+
+    def test_a_separation_below_tolerance_is_inconclusive(self):
+        """Floating-point noise is not a prediction."""
+        res = PRINS_1995_CLINICAL.evaluate(
+            {"imipenem": 1.0, "ceftazidime": 1.0 + 1e-12})
+        assert res["verdict"] == "inconclusive"
+
+    def test_a_clear_separation_passes(self):
+        res = PRINS_1995_CLINICAL.evaluate({"imipenem": 1.0, "ceftazidime": 5.0})
+        assert res["verdict"] == "pass" and res["pass"]
+
+    def test_a_reversal_fails_rather_than_being_inconclusive(self):
+        res = PRINS_1995_CLINICAL.evaluate({"imipenem": 5.0, "ceftazidime": 1.0})
+        assert res["verdict"] == "fail" and not res["pass"]
+
+    def test_evaluate_all_scores_no_passes_for_identical_predictions(self):
+        """The exact case the review reported."""
+        ev = evaluate_all({"imipenem": 1.0, "ceftazidime": 1.0})
+        assert ev["n_passed"] == 0
+        assert not ev["all_pass"]
+        assert ev["n_inconclusive"] == ev["n_evaluated"]
+
+
+class TestSourceUseLedger:
+    """R5: three studies were described as 'entirely held out' while two of
+    them had been used to choose the 3.5-7x yield interval. Selecting a
+    parameter from a study is model development, whatever the mechanism."""
+
+    def test_ledger_covers_every_ordinal_constraint(self):
+        from src.analysis.held_out_validation import SOURCE_USE_LEDGER
+        keys = {e["doi"] for e in SOURCE_USE_LEDGER}
+        for c in ORDINAL_CONSTRAINTS:
+            assert c.doi in keys, f"{c.name} missing from the ledger"
+
+    def test_every_entry_declares_recognised_roles(self):
+        from src.analysis.held_out_validation import (
+            SOURCE_ROLES, SOURCE_USE_LEDGER,
+        )
+        for e in SOURCE_USE_LEDGER:
+            assert e["roles"], f"{e['doi']} declares no role"
+            for r in e["roles"]:
+                assert r in SOURCE_ROLES, f"unknown role {r}"
+
+    def test_a_source_used_for_parameter_selection_is_not_independent(self):
+        """The property that was previously violated."""
+        from src.analysis.held_out_validation import SOURCE_USE_LEDGER
+        for e in SOURCE_USE_LEDGER:
+            if "parameter_selection" in e["roles"]:
+                assert "untouched_evaluation" not in e["roles"], (
+                    f"{e['doi']} cannot both set a parameter and be an "
+                    "untouched test of that parameter")
+
+    def test_the_yield_interval_sources_are_marked_as_used(self):
+        from src.analysis.held_out_validation import SOURCE_USE_LEDGER
+        used = {e["doi"] for e in SOURCE_USE_LEDGER
+                if "parameter_selection" in e["roles"]}
+        # Prins whole blood and Simpson both informed the 3.5-7x interval.
+        assert "10.1128/iai.63.6.2236-2242.1995" in used
+        assert "10.1086/315306" in used
+
+    def test_no_source_is_claimed_as_untouched(self):
+        """Nothing in this repository is a prospective holdout; the ledger
+        must not imply one exists."""
+        from src.analysis.held_out_validation import SOURCE_USE_LEDGER
+        assert not [e for e in SOURCE_USE_LEDGER
+                    if "untouched_evaluation" in e["roles"]]
+
+
+class TestConstraintEndpointScoping:
+    """R5 also found Phase 3 feeding modelled IL-6 to every constraint,
+    including Simpson, whose reported quantity is endotoxin alone."""
+
+    def test_every_constraint_declares_the_model_endpoint_it_tests(self):
+        for c in ORDINAL_CONSTRAINTS:
+            assert c.model_endpoint, f"{c.name} must name its model endpoint"
+
+    def test_simpson_is_scored_on_danger_signal_not_cytokine(self):
+        assert SIMPSON_2000_MELIOIDOSIS.model_endpoint == "AUC_DS_pg_h_mL"
+
+    def test_scoring_on_the_wrong_endpoint_is_not_evaluated(self):
+        res = SIMPSON_2000_MELIOIDOSIS.evaluate(
+            {"imipenem": 1.0, "ceftazidime": 5.0},
+            endpoint="AUC_IL6_excess_pg_h_mL")
+        assert not res["evaluated"]
+        assert "endpoint" in res["reason"]
+
+    def test_scoring_on_the_declared_endpoint_is_evaluated(self):
+        res = SIMPSON_2000_MELIOIDOSIS.evaluate(
+            {"imipenem": 1.0, "ceftazidime": 5.0},
+            endpoint="AUC_DS_pg_h_mL")
+        assert res["evaluated"] and res["pass"]
+
+
 class TestMagnitudeBound:
     def test_implied_baseline_inverts_the_percentage(self):
         """If therapy adds 100 pg/mL and that is a 10-40% rise, the

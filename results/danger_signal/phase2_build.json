@@ -252,9 +252,9 @@
    {
     "DS50": 300.0,
     "agent": "ceftazidime",
-    "DS_peak_pg_mL": 23.66970636620212,
-    "IL6_peak_pg_mL": 594.1402834329264,
-    "saturation_peak": 0.012707036956750333,
+    "DS_peak_pg_mL": 23.72800609278536,
+    "IL6_peak_pg_mL": 594.3295493687517,
+    "saturation_peak": 0.01276004345019433,
     "below_saturation": true,
     "engaged": true,
     "pass": true,
@@ -266,9 +266,9 @@
    {
     "DS50": 300.0,
     "agent": "meropenem",
-    "DS_peak_pg_mL": 1.2203556906097364,
-    "IL6_peak_pg_mL": 8.597739504183199,
-    "saturation_peak": 7.988314488505893e-05,
+    "DS_peak_pg_mL": 1.2227413084200371,
+    "IL6_peak_pg_mL": 8.5986849421192,
+    "saturation_peak": 8.015096580407183e-05,
     "below_saturation": true,
     "engaged": true,
     "pass": true,
@@ -280,9 +280,9 @@
    {
     "DS50": 1000.0,
     "agent": "ceftazidime",
-    "DS_peak_pg_mL": 23.669681073430304,
-    "IL6_peak_pg_mL": 594.9649116286871,
-    "saturation_peak": 0.0022782397384961033,
+    "DS_peak_pg_mL": 23.727961190124773,
+    "IL6_peak_pg_mL": 595.0738710219322,
+    "saturation_peak": 0.002287339569931165,
     "below_saturation": true,
     "engaged": true,
     "pass": true,
@@ -294,9 +294,9 @@
    {
     "DS50": 1000.0,
     "agent": "meropenem",
-    "DS_peak_pg_mL": 1.220356045134478,
-    "IL6_peak_pg_mL": 9.668600206670089,
-    "saturation_peak": 1.847045564654394e-05,
+    "DS_peak_pg_mL": 1.2227426274932864,
+    "IL6_peak_pg_mL": 9.669353377712712,
+    "saturation_peak": 1.8529176348075945e-05,
     "below_saturation": true,
     "engaged": true,
     "pass": true,
@@ -308,9 +308,9 @@
    {
     "DS50": 3000.0,
     "agent": "ceftazidime",
-    "DS_peak_pg_mL": 23.669688166671005,
-    "IL6_peak_pg_mL": 595.7436980850891,
-    "saturation_peak": 0.0004619716563339334,
+    "DS_peak_pg_mL": 23.72800396893986,
+    "IL6_peak_pg_mL": 595.7315800561595,
+    "saturation_peak": 0.0004637772337039464,
     "below_saturation": true,
     "engaged": true,
     "pass": true,
@@ -322,9 +322,9 @@
    {
     "DS50": 3000.0,
     "agent": "meropenem",
-    "DS_peak_pg_mL": 1.2203576161992353,
-    "IL6_peak_pg_mL": 10.240375629413775,
-    "saturation_peak": 4.193249623986131e-06,
+    "DS_peak_pg_mL": 1.2227421924425266,
+    "IL6_peak_pg_mL": 10.239398827574206,
+    "saturation_peak": 4.2062518204815535e-06,
     "below_saturation": true,
     "engaged": true,
     "pass": true,
@@ -336,9 +336,9 @@
    {
     "DS50": 10000.0,
     "agent": "ceftazidime",
-    "DS_peak_pg_mL": 23.669697111769604,
-    "IL6_peak_pg_mL": 600.8696770619306,
-    "saturation_peak": 0.00014923636825625125,
+    "DS_peak_pg_mL": 23.72799362842644,
+    "IL6_peak_pg_mL": 601.0506655496172,
+    "saturation_peak": 0.00014977215602572945,
     "below_saturation": true,
     "engaged": true,
     "pass": true,
@@ -350,9 +350,9 @@
    {
     "DS50": 10000.0,
     "agent": "meropenem",
-    "DS_peak_pg_mL": 1.220361446985731,
-    "IL6_peak_pg_mL": 12.758660612226794,
-    "saturation_peak": 1.9843872465053806e-06,
+    "DS_peak_pg_mL": 1.2227418760539632,
+    "IL6_peak_pg_mL": 12.761225157641675,
+    "saturation_peak": 1.990029788653327e-06,
     "below_saturation": true,
     "engaged": true,
     "pass": true,
@@ -370,9 +370,9 @@
    {
     "DS50": 300.0,
     "monotone": true,
-    "dynamic_range": 2604.1659553329982,
+    "dynamic_range": 2604.1298868088647,
     "dynamic_range_ok": true,
-    "max_step_fraction_of_span": 0.2264521343928462,
+    "max_step_fraction_of_span": 0.22644615984991684,
     "no_step_function": true,
     "pass": true,
     "thresholds": {
@@ -383,9 +383,9 @@
    {
     "DS50": 1000.0,
     "monotone": true,
-    "dynamic_range": 1767.1736046636383,
+    "dynamic_range": 1767.1750778735286,
     "dynamic_range_ok": true,
-    "max_step_fraction_of_span": 0.22003389896830858,
+    "max_step_fraction_of_span": 0.22003463149598335,
     "no_step_function": true,
     "pass": true,
     "thresholds": {
@@ -396,9 +396,9 @@
    {
     "DS50": 3000.0,
     "monotone": true,
-    "dynamic_range": 1484.3387371552735,
+    "dynamic_range": 1484.3402413248134,
     "dynamic_range_ok": true,
-    "max_step_fraction_of_span": 0.21606823516215715,
+    "max_step_fraction_of_span": 0.21607158847722086,
     "no_step_function": true,
     "pass": true,
     "thresholds": {
@@ -409,9 +409,9 @@
    {
     "DS50": 10000.0,
     "monotone": true,
-    "dynamic_range": 820.4995582003311,
+    "dynamic_range": 820.5009808708152,
     "dynamic_range_ok": true,
-    "max_step_fraction_of_span": 0.2006247202832721,
+    "max_step_fraction_of_span": 0.20062424822680636,
     "no_step_function": true,
     "pass": true,
     "thresholds": {
@@ -424,118 +424,134 @@
  },
  "agent_comparison": {
   "300.0": {
-   "ratio_AUC_DS": 19.59626836301358,
-   "ratio_AUC_IL6_excess": 163.74404578382746,
+   "ratio_AUC_DS": 19.596241936743937,
+   "ratio_AUC_IL6_excess": 163.76413441947946,
    "agents": {
     "ceftazidime": {
-     "DS_peak_pg_mL": 23.66970636620212,
-     "AUC_DS_pg_h_mL": 13.66431342959479,
-     "IL6_peak_pg_mL": 594.1402834329264,
-     "AUC_IL6_pg_h_mL": 4753.964789600011,
-     "AUC_IL6_excess_pg_h_mL": 4513.9647896000115,
-     "TNF_peak_pg_mL": 156.63026311472737,
-     "saturation_peak": 0.012707036956750333,
-     "saturation_mean": 0.00017521722128266027,
-     "filament_fraction_of_release": 0.0007317397131610427
+     "DS_peak_pg_mL": 23.72800609278536,
+     "AUC_DS_pg_h_mL": 13.666051174263796,
+     "AUC_DS_excess_pg_h_mL": 13.666051174263796,
+     "DS_excess_peak_pg_mL": 23.72800609278536,
+     "IL6_peak_pg_mL": 594.3295493687517,
+     "AUC_IL6_pg_h_mL": 4755.287986785626,
+     "AUC_IL6_excess_pg_h_mL": 4515.287986785626,
+     "TNF_peak_pg_mL": 156.67102781885703,
+     "saturation_peak": 0.01276004345019433,
+     "saturation_mean": 0.0001466874075727728,
+     "filament_fraction_of_release": 0.0008136990056124962
     },
     "meropenem": {
-     "DS_peak_pg_mL": 1.2203556906097364,
-     "AUC_DS_pg_h_mL": 0.6972916055479783,
-     "IL6_peak_pg_mL": 8.597739504183199,
-     "AUC_IL6_pg_h_mL": 267.56719957658356,
-     "AUC_IL6_excess_pg_h_mL": 27.567199576583587,
-     "TNF_peak_pg_mL": 0.9565076287430483,
-     "saturation_peak": 7.988314488505893e-05,
-     "saturation_mean": 1.0861308499329916e-06,
+     "DS_peak_pg_mL": 1.2227413084200371,
+     "AUC_DS_pg_h_mL": 0.6973812233170721,
+     "AUC_DS_excess_pg_h_mL": 0.6973812233170721,
+     "DS_excess_peak_pg_mL": 1.2227413084200371,
+     "IL6_peak_pg_mL": 8.5986849421192,
+     "AUC_IL6_pg_h_mL": 267.57189785658306,
+     "AUC_IL6_excess_pg_h_mL": 27.571897856583064,
+     "TNF_peak_pg_mL": 0.9567270798344933,
+     "saturation_peak": 8.015096580407183e-05,
+     "saturation_mean": 8.368053899914296e-07,
      "filament_fraction_of_release": 0.0
     }
    }
   },
   "1000.0": {
-   "ratio_AUC_DS": 19.596258903811883,
-   "ratio_AUC_IL6_excess": 126.3561089719838,
+   "ratio_AUC_DS": 19.59628986414397,
+   "ratio_AUC_IL6_excess": 126.3708326270003,
    "agents": {
     "ceftazidime": {
-     "DS_peak_pg_mL": 23.669681073430304,
-     "AUC_DS_pg_h_mL": 13.664316608301014,
-     "IL6_peak_pg_mL": 594.9649116286871,
-     "AUC_IL6_pg_h_mL": 4395.894475286507,
-     "AUC_IL6_excess_pg_h_mL": 4155.894475286508,
-     "TNF_peak_pg_mL": 159.6708328295437,
-     "saturation_peak": 0.0022782397384961033,
-     "saturation_mean": 3.263569635033038e-05,
-     "filament_fraction_of_release": 0.0007317397131610427
+     "DS_peak_pg_mL": 23.727961190124773,
+     "AUC_DS_pg_h_mL": 13.666055214886676,
+     "AUC_DS_excess_pg_h_mL": 13.666055214886676,
+     "DS_excess_peak_pg_mL": 23.727961190124773,
+     "IL6_peak_pg_mL": 595.0738710219322,
+     "AUC_IL6_pg_h_mL": 4397.0454645137,
+     "AUC_IL6_excess_pg_h_mL": 4157.0454645137,
+     "TNF_peak_pg_mL": 159.6589401495814,
+     "saturation_peak": 0.002287339569931165,
+     "saturation_mean": 2.7193105594602854e-05,
+     "filament_fraction_of_release": 0.0008136990056124962
     },
     "meropenem": {
-     "DS_peak_pg_mL": 1.220356045134478,
-     "AUC_DS_pg_h_mL": 0.6972921043436009,
-     "IL6_peak_pg_mL": 9.668600206670089,
-     "AUC_IL6_pg_h_mL": 272.89033279908904,
-     "AUC_IL6_excess_pg_h_mL": 32.890332799089045,
-     "TNF_peak_pg_mL": 1.2636320622220814,
-     "saturation_peak": 1.847045564654394e-05,
-     "saturation_mean": 2.6228978861024375e-07,
+     "DS_peak_pg_mL": 1.2227426274932864,
+     "AUC_DS_pg_h_mL": 0.6973797238982439,
+     "AUC_DS_excess_pg_h_mL": 0.6973797238982439,
+     "DS_excess_peak_pg_mL": 1.2227426274932864,
+     "IL6_peak_pg_mL": 9.669353377712712,
+     "AUC_IL6_pg_h_mL": 272.8956087262933,
+     "AUC_IL6_excess_pg_h_mL": 32.89560872629329,
+     "TNF_peak_pg_mL": 1.2632347550089928,
+     "saturation_peak": 1.8529176348075945e-05,
+     "saturation_mean": 2.008616601280203e-07,
      "filament_fraction_of_release": 0.0
     }
    }
   },
   "3000.0": {
-   "ratio_AUC_DS": 19.596247109424112,
-   "ratio_AUC_IL6_excess": 112.7229730663391,
+   "ratio_AUC_DS": 19.596278731087143,
+   "ratio_AUC_IL6_excess": 112.73563638429505,
    "agents": {
     "ceftazidime": {
-     "DS_peak_pg_mL": 23.669688166671005,
-     "AUC_DS_pg_h_mL": 13.6643092630405,
-     "IL6_peak_pg_mL": 595.7436980850891,
-     "AUC_IL6_pg_h_mL": 4295.553004036638,
-     "AUC_IL6_excess_pg_h_mL": 4055.553004036639,
-     "TNF_peak_pg_mL": 160.7864295126845,
-     "saturation_peak": 0.0004619716563339334,
-     "saturation_mean": 6.739968280150375e-06,
-     "filament_fraction_of_release": 0.0007317397131610427
+     "DS_peak_pg_mL": 23.72800396893986,
+     "AUC_DS_pg_h_mL": 13.666044760885198,
+     "AUC_DS_excess_pg_h_mL": 13.666044760885198,
+     "DS_excess_peak_pg_mL": 23.72800396893986,
+     "IL6_peak_pg_mL": 595.7315800561595,
+     "AUC_IL6_pg_h_mL": 4296.652475228078,
+     "AUC_IL6_excess_pg_h_mL": 4056.6524752280775,
+     "TNF_peak_pg_mL": 160.77643129949246,
+     "saturation_peak": 0.0004637772337039464,
+     "saturation_mean": 5.60406750121461e-06,
+     "filament_fraction_of_release": 0.0008136990056124962
     },
     "meropenem": {
-     "DS_peak_pg_mL": 1.2203576161992353,
-     "AUC_DS_pg_h_mL": 0.6972921491926453,
-     "IL6_peak_pg_mL": 10.240375629413775,
-     "AUC_IL6_pg_h_mL": 275.9780521549045,
-     "AUC_IL6_excess_pg_h_mL": 35.97805215490446,
-     "TNF_peak_pg_mL": 1.4263397550683528,
-     "saturation_peak": 4.193249623986131e-06,
-     "saturation_mean": 6.070789796210392e-08,
+     "DS_peak_pg_mL": 1.2227421924425266,
+     "AUC_DS_pg_h_mL": 0.6973795866255801,
+     "AUC_DS_excess_pg_h_mL": 0.6973795866255801,
+     "DS_excess_peak_pg_mL": 1.2227421924425266,
+     "IL6_peak_pg_mL": 10.239398827574206,
+     "AUC_IL6_pg_h_mL": 275.98376347829975,
+     "AUC_IL6_excess_pg_h_mL": 35.98376347829976,
+     "TNF_peak_pg_mL": 1.425808027569335,
+     "saturation_peak": 4.2062518204815535e-06,
+     "saturation_mean": 4.637675798373902e-08,
      "filament_fraction_of_release": 0.0
     }
    }
   },
   "10000.0": {
-   "ratio_AUC_DS": 19.596218483004268,
-   "ratio_AUC_IL6_excess": 76.77960309643295,
+   "ratio_AUC_DS": 19.59633355744773,
+   "ratio_AUC_IL6_excess": 76.78730412056483,
    "agents": {
     "ceftazidime": {
-     "DS_peak_pg_mL": 23.669697111769604,
-     "AUC_DS_pg_h_mL": 13.6643079587424,
-     "IL6_peak_pg_mL": 600.8696770619306,
-     "AUC_IL6_pg_h_mL": 4268.86032576756,
-     "AUC_IL6_excess_pg_h_mL": 4028.86032576756,
-     "TNF_peak_pg_mL": 162.6446008526465,
-     "saturation_peak": 0.00014923636825625125,
-     "saturation_mean": 2.3262900908036605e-06,
-     "filament_fraction_of_release": 0.0007317397131610427
+     "DS_peak_pg_mL": 23.72799362842644,
+     "AUC_DS_pg_h_mL": 13.66607736067056,
+     "AUC_DS_excess_pg_h_mL": 13.66607736067056,
+     "DS_excess_peak_pg_mL": 23.72799362842644,
+     "IL6_peak_pg_mL": 601.0506655496172,
+     "AUC_IL6_pg_h_mL": 4269.864914818785,
+     "AUC_IL6_excess_pg_h_mL": 4029.864914818784,
+     "TNF_peak_pg_mL": 162.7349092701353,
+     "saturation_peak": 0.00014977215602572945,
+     "saturation_mean": 1.92133649493249e-06,
+     "filament_fraction_of_release": 0.0008136990056124962
     },
     "meropenem": {
-     "DS_peak_pg_mL": 1.220361446985731,
-     "AUC_DS_pg_h_mL": 0.6972931012477436,
-     "IL6_peak_pg_mL": 12.758660612226794,
-     "AUC_IL6_pg_h_mL": 292.473054864681,
-     "AUC_IL6_excess_pg_h_mL": 52.47305486468103,
-     "TNF_peak_pg_mL": 2.117537050873285,
-     "saturation_peak": 1.9843872465053806e-06,
-     "saturation_mean": 3.070873223529375e-08,
+     "DS_peak_pg_mL": 1.2227418760539632,
+     "AUC_DS_pg_h_mL": 0.6973792990718239,
+     "AUC_DS_excess_pg_h_mL": 0.6973792990718239,
+     "DS_excess_peak_pg_mL": 1.2227418760539632,
+     "IL6_peak_pg_mL": 12.761225157641675,
+     "AUC_IL6_pg_h_mL": 292.4808750739762,
+     "AUC_IL6_excess_pg_h_mL": 52.48087507397625,
+     "TNF_peak_pg_mL": 2.1189345525124073,
+     "saturation_peak": 1.990029788653327e-06,
+     "saturation_mean": 2.3291160910750145e-08,
      "filament_fraction_of_release": 0.0
     }
    }
   },
-  "delta_net_log10_kill": -0.21355872339785975
+  "delta_net_log10_kill": -0.2155206366141944
  },
  "layer3": {
   "300.0": {
@@ -577,14 +593,14 @@
    },
    "saturation": {
     "ceftazidime": {
-     "max_x_over_ref": 5.891402834329264,
-     "hill1_peak_occupancy": 0.8548916637090873,
-     "hill2_peak_occupancy": 0.9719955631444239
+     "max_x_over_ref": 5.893295493687517,
+     "hill1_peak_occupancy": 0.8549315054148278,
+     "hill2_peak_occupancy": 0.9720130444324434
     },
     "meropenem": {
-     "max_x_over_ref": 0.03597739504183199,
-     "hill1_peak_occupancy": 0.03472797303688199,
-     "hill2_peak_occupancy": 0.0012926997184428465
+     "max_x_over_ref": 0.035986849421192006,
+     "hill1_peak_occupancy": 0.03473678207527242,
+     "hill2_peak_occupancy": 0.0012933783373391924
     }
    }
   },
@@ -627,14 +643,14 @@
    },
    "saturation": {
     "ceftazidime": {
-     "max_x_over_ref": 5.899649116286871,
-     "hill1_peak_occupancy": 0.8550650934350468,
-     "hill2_peak_occupancy": 0.9720716103869687
+     "max_x_over_ref": 5.900738710219322,
+     "hill1_peak_occupancy": 0.8550879779697936,
+     "hill2_peak_occupancy": 0.9720816356741429
     },
     "meropenem": {
-     "max_x_over_ref": 0.046686002066700885,
-     "hill1_peak_occupancy": 0.04460363659637992,
-     "hill2_peak_occupancy": 0.0021748425396039546
+     "max_x_over_ref": 0.04669353377712712,
+     "hill1_peak_occupancy": 0.04461051135820774,
+     "hill2_peak_occupancy": 0.0021755427908961714
     }
    }
   },
@@ -677,14 +693,14 @@
    },
    "saturation": {
     "ceftazidime": {
-     "max_x_over_ref": 5.907436980850892,
-     "hill1_peak_occupancy": 0.8552285018636804,
-     "hill2_peak_occupancy": 0.9721431487568576
+     "max_x_over_ref": 5.907315800561594,
+     "hill1_peak_occupancy": 0.8552259620272906,
+     "hill2_peak_occupancy": 0.9721420376956232
     },
     "meropenem": {
-     "max_x_over_ref": 0.052403756294137745,
-     "hill1_peak_occupancy": 0.04979434554535298,
-     "hill2_peak_occupancy": 0.0027386329667527204
+     "max_x_over_ref": 0.052393988275742064,
+     "hill1_peak_occupancy": 0.04978552600968878,
+     "hill2_peak_occupancy": 0.002737614898631552
     }
    }
   },
@@ -727,14 +743,14 @@
    },
    "saturation": {
     "ceftazidime": {
-     "max_x_over_ref": 5.958696770619306,
-     "hill1_peak_occupancy": 0.8562949309384834,
-     "hill2_peak_occupancy": 0.972607293072499
+     "max_x_over_ref": 5.960506655496172,
+     "hill1_peak_occupancy": 0.8563322974182666,
+     "hill2_peak_occupancy": 0.9726234705768423
     },
     "meropenem": {
-     "max_x_over_ref": 0.07758660612226795,
-     "hill1_peak_occupancy": 0.07200034380667183,
-     "hill2_peak_occupancy": 0.005983661712162727
+     "max_x_over_ref": 0.07761225157641675,
+     "hill1_peak_occupancy": 0.07202242871949478,
+     "hill2_peak_occupancy": 0.005987594352614155
     }
    }
   },
@@ -791,19 +807,19 @@
    },
    "saturation": {
     "low_yield": {
-     "max_x_over_ref": 0.035804897791207345,
-     "hill1_peak_occupancy": 0.03456722194262565,
-     "hill2_peak_occupancy": 0.0012803493099232557
+     "max_x_over_ref": 0.035811442651270384,
+     "hill1_peak_occupancy": 0.03457332210928966,
+     "hill2_peak_occupancy": 0.001280816829151285
     },
     "mid_yield": {
-     "max_x_over_ref": 0.4606802115900777,
-     "hill1_peak_occupancy": 0.3153874530062861,
-     "hill2_peak_occupancy": 0.17507149021379836
+     "max_x_over_ref": 0.46076341723308617,
+     "hill1_peak_occupancy": 0.31542644879883697,
+     "hill2_peak_occupancy": 0.17512366091960993
     },
     "high_yield": {
-     "max_x_over_ref": 5.8841851756827035,
-     "hill1_peak_occupancy": 0.8547395262503481,
-     "hill2_peak_occupancy": 0.9719287491324572
+     "max_x_over_ref": 5.885306393532694,
+     "hill1_peak_occupancy": 0.8547631807730022,
+     "hill2_peak_occupancy": 0.971939143794863
     }
    }
   }
@@ -815,16 +831,33 @@
   ],
   "arms": {
    "ceftazidime": {
-    "DS_peak_pg_mL": 23.66970636620212,
-    "fraction_of_time_in_calibrated_range": 0.034653465346534656,
+    "DS_peak_pg_mL": 23.72800609278536,
+    "fraction_of_time_in_calibrated_range": 0.025688073394495414,
     "peak_within_calibrated_range": true
    },
    "meropenem": {
-    "DS_peak_pg_mL": 1.2203556906097364,
+    "DS_peak_pg_mL": 1.2227413084200371,
     "fraction_of_time_in_calibrated_range": 0.0,
     "peak_within_calibrated_range": true
    }
   }
  },
- "phase2_pass": true
+ "phase2_pass": true,
+ "provenance": {
+  "git_head": "fd78c39b0b1572aa0e3181a3d5c46359ccd5c425",
+  "git_dirty": true,
+  "python": "3.12.4",
+  "numpy": "2.4.6",
+  "scipy": "1.15.3",
+  "numpy_scipy_supported": true,
+  "platform": "win32",
+  "final_yields_fg_per_CFU": {
+   "piperacillin": 5.15,
+   "ceftazidime": 4.93,
+   "isepamicin": 0.28,
+   "imipenem": 0.986,
+   "meropenem": 0.986
+  },
+  "note": "historical phase; retained for the record"
+ }
 }

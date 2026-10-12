@@ -55,7 +55,7 @@ from src.analysis.held_out_validation import (  # noqa: E402
     PRINS_MAGNITUDE_BOUND, SIMPSON_2000_TABLES,
 )
 from src.core.parameters import (  # noqa: E402
-    get_default_parameters, get_drug_pk_parameters,
+    get_default_parameters, get_drug_pd_parameters, get_drug_pk_parameters,
 )
 from src.core.pd_model import create_ode_system  # noqa: E402
 from src.core.pk_models import DosingRegimen, TwoCompartmentPKModel  # noqa: E402
@@ -83,9 +83,12 @@ def solve_bacteria(spec):
     reg = DosingRegimen(dose_mg=spec["dose_mg"], interval_hours=8.0,
                         start_time=0, n_doses=6, infusion_duration_min=30)
     pd = create_ode_system(get_default_parameters())
+    # Kp is a total-concentration partition; only unbound drug acts.
+    fu = get_drug_pd_parameters(spec["drug"]).fraction_unbound
     r = run_simulation(pkm, reg, pd, dict(IC), t_span=(0, T_END),
-                       drug_class="cidal", weight_kg=WEIGHT)
-    C = r.get_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
+                       drug_class="cidal", weight_kg=WEIGHT,
+                       fraction_unbound=fu)
+    C = r.get_free_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
     return dict(t=r.t, B_rep=r.y[:, r.state_names.index("B_rep")], C_eff=C,
                 kill=np.asarray(pd.cidal_kill_rate(C), dtype=float))
 
@@ -377,6 +380,9 @@ def main():
                              "simpson_measured_peak_ratio": measured,
                              "yield_interval_implied": [9.9, 39.8]},
     }
+    from src.utils.provenance import provenance
+    payload["provenance"] = provenance(
+        note="historical phase; retained for the record")
     with open(OUT, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=1, default=str)
     print(f"\nwrote {OUT}")

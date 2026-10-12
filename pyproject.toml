@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pbp-danger-signal"
-version = "1.0.0"
+version = "1.1.0"
 description = "Within-host QSP model of the danger-signal cost of antibiotic killing, with PBP-specific release yields"
 readme = "README.md"
 license = {text = "MIT"}
@@ -32,11 +32,23 @@ dependencies = [
     "matplotlib>=3.7",
     "pyyaml>=6.0",
     "SALib>=1.4.8,<1.5",
+    # src/utils/provenance.py reads SciPy's declared NumPy range through it.
+    "packaging>=23.0",
 ]
 
 [project.optional-dependencies]
 ml = ["scikit-learn>=1.2"]
 dev = ["pytest>=7.0", "pytest-cov>=4.0"]
+all = ["pbp-danger-signal[ml,dev]"]
+
+[project.scripts]
+qsp = "cli:main"
+
+[tool.setuptools]
+# cli.py is a top-level module, not a package, so the discovery below does
+# not find it. Without this the installed `qsp` entry point fails with
+# ImportError.
+py-modules = ["cli"]
 
 [tool.setuptools.packages.find]
 where = ["."]

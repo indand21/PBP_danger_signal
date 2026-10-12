@@ -43,28 +43,65 @@ class OrdinalConstraint:
     expected_order: Sequence[str]
     quantities: Sequence[str]
     caveat: str = ""
+    #: The model quantity this observation may legitimately be compared with.
+    #: A study reporting endotoxin must not be scored against modelled
+    #: cytokine, and vice versa.
+    model_endpoint: str = "AUC_DS_pg_h_mL"
+    #: Relative separation required before a direction counts as predicted.
+    #: Below this the arms are indistinguishable and the test is inconclusive,
+    #: never a pass: a criterion that scores "no discrimination" as success
+    #: cannot validate anything.
+    min_separation: float = 1e-6
 
-    def evaluate(self, scores: Dict[str, float]) -> Dict[str, object]:
+    def evaluate(self, scores: Dict[str, float],
+                 endpoint: Optional[str] = None) -> Dict[str, object]:
         """Check the model's ranking against the reported direction.
 
         ``scores`` maps arm label to the model's predicted inflammatory
-        quantity (higher = more inflammatory).
+        quantity (higher = more inflammatory). ``endpoint`` names the model
+        quantity supplied; if given it must match ``model_endpoint``.
+
+        The verdict is ``pass`` only when every adjacent pair separates in the
+        reported direction by more than ``min_separation``; ``fail`` when any
+        pair separates the other way; otherwise ``inconclusive``.
         """
+        if endpoint is not None and endpoint != self.model_endpoint:
+            return {"name": self.name, "evaluated": False,
+                    "reason": f"wrong endpoint: this source reports "
+                              f"{self.model_endpoint}, was given {endpoint}"}
         missing = [a for a in self.expected_order if a not in scores]
         if missing:
             return {"name": self.name, "evaluated": False,
                     "reason": f"no model prediction for {missing}"}
-        predicted = sorted(self.expected_order, key=lambda a: scores[a])
+
+        pairs, reversed_, tied = [], False, False
+        for lo, hi in zip(self.expected_order, self.expected_order[1:]):
+            a, b = float(scores[lo]), float(scores[hi])
+            scale = max(abs(a), abs(b), np.finfo(float).tiny)
+            sep = (b - a) / scale
+            pairs.append({"lower": lo, "higher": hi,
+                          "relative_separation": float(sep)})
+            if sep <= -self.min_separation:
+                reversed_ = True
+            elif sep < self.min_separation:
+                tied = True
+
+        verdict = "fail" if reversed_ else ("inconclusive" if tied else "pass")
         return {
             "name": self.name,
             "evaluated": True,
             "source": self.source,
             "doi": self.doi,
             "n": self.n,
+            "model_endpoint": self.model_endpoint,
             "expected_order": list(self.expected_order),
-            "predicted_order": list(predicted),
+            "predicted_order": sorted(self.expected_order,
+                                      key=lambda a: scores[a]),
             "scores": {a: scores[a] for a in self.expected_order},
-            "pass": bool(list(predicted) == list(self.expected_order)),
+            "separations": pairs,
+            "min_separation": self.min_separation,
+            "verdict": verdict,
+            "pass": verdict == "pass",
             "caveat": self.caveat,
         }
 
@@ -314,8 +351,8 @@ def check_magnitude_consistency(attributable_peak_pg_ml: float,
 #: study, one assay, one organism, five agents, two exposure levels, with a
 #: measured inoculum.
 TRAUTMANN_1998 = {
-    "source": "Trautmann M, Heinemann M, Zick R, Moricke A, Seidelmann M, "
-              "Berger D. J Antimicrob Chemother 1998;41(2):163-9",
+    "source": "Trautmann M, Zick R, Rukavina T, Cross AS, Marre R. "
+              "J Antimicrob Chemother 1998;41(2):163-9",
     "doi": "10.1093/jac/41.2.163",
     "organism": "E. coli Bort (O18)",
     "assay": "LPS capture ELISA, monoclonal anti-O18; detection limit 2 ng/mL; "
@@ -441,14 +478,86 @@ ORDINAL_CONSTRAINTS: List[OrdinalConstraint] = [
     PRINS_1995_CLINICAL, SIMPSON_2000_MELIOIDOSIS, PRINS_1995_WHOLE_BLOOD,
 ]
 
+#: The ways a published source can enter this project. The distinction that
+#: matters is between a source that shaped the model and one that tested it:
+#: a study used to choose a parameter cannot also be an independent test of
+#: that parameter, even when no optimizer was run.
+SOURCE_ROLES = (
+    "structure_selection",    # motivated a mechanism or compartment
+    "parameter_anchor",       # supplied an absolute value
+    "parameter_selection",    # used to choose or narrow a parameter interval
+    "calibration",            # entered a fitting objective
+    "model_revision",         # caused a structural or parameter change
+    "ordinal_corroboration",  # its reported DIRECTION is compared with the model
+    "magnitude_bound",        # bounds a magnitude the model must not exceed
+    "untouched_evaluation",   # never consulted before the model was frozen
+)
 
-def evaluate_all(scores: Dict[str, float]) -> Dict[str, object]:
+#: How each source was actually used. Written after the external review found
+#: the manuscript describing three studies as "entirely held out" while two of
+#: them had been used to select the 3.5-7x yield interval in Phase 5b. No
+#: entry carries 'untouched_evaluation': this project has no prospective
+#: holdout, and the ledger must not imply otherwise.
+SOURCE_USE_LEDGER = [
+    {
+        "doi": "10.1093/infdis/172.3.886",
+        "short": "Prins 1995, urosepsis (clinical)",
+        "roles": ["ordinal_corroboration", "magnitude_bound"],
+        "note": "Direction and the 10-40% cytokine-rise bound. Its cytokine "
+                "difference was not statistically significant at n=30, so it "
+                "supports direction only.",
+    },
+    {
+        "doi": "10.1128/iai.63.6.2236-2242.1995",
+        "short": "Prins 1995, whole blood (ex vivo)",
+        "roles": ["parameter_selection", "ordinal_corroboration",
+                  "structure_selection"],
+        "note": "Its 3.5x whole-blood TNF ratio is one of the three estimates "
+                "that set the 3.5-7x interval, and its sub-MIC result bounds "
+                "Y_filament. Reusing it as an ordinal check is corroboration, "
+                "not independent validation.",
+    },
+    {
+        "doi": "10.1086/315306",
+        "short": "Simpson 2000, melioidosis (randomized)",
+        "roles": ["parameter_selection", "ordinal_corroboration"],
+        "note": "Its 4.97x in-patient endotoxin ratio is one of the three "
+                "estimates that set the 3.5-7x interval. Endotoxin only: its "
+                "cytokine arm trends the other way and it found no mortality "
+                "difference.",
+    },
+    {
+        "doi": "10.1093/jac/41.2.163",
+        "short": "Trautmann 1998 (in vitro ELISA)",
+        "roles": ["parameter_selection", "ordinal_corroboration"],
+        "note": "Its 6.9x ELISA ratio is the third estimate behind the "
+                "3.5-7x interval.",
+    },
+    {
+        "doi": "10.1093/infdis/165.6.1033",
+        "short": "Jackson & Kropp 1992 (Limulus)",
+        "roles": ["parameter_anchor", "structure_selection",
+                  "model_revision"],
+        "note": "Set the original low-yield anchor and motivated the "
+                "kill-independent sub-MIC pathway. Its 10-40x Limulus "
+                "interval was retired in Phase 5b as an assay outlier, which "
+                "is itself a model revision driven by this source.",
+    },
+]
+
+
+def evaluate_all(scores: Dict[str, float],
+                 endpoint: Optional[str] = None) -> Dict[str, object]:
     """Evaluate every ordinal constraint against one set of model scores."""
-    results = [c.evaluate(scores) for c in ORDINAL_CONSTRAINTS]
+    results = [c.evaluate(scores, endpoint=endpoint)
+               for c in ORDINAL_CONSTRAINTS]
     done = [r for r in results if r.get("evaluated")]
     return {
         "results": results,
         "n_evaluated": len(done),
-        "n_passed": sum(1 for r in done if r["pass"]),
-        "all_pass": bool(done and all(r["pass"] for r in done)),
+        "n_passed": sum(1 for r in done if r["verdict"] == "pass"),
+        "n_failed": sum(1 for r in done if r["verdict"] == "fail"),
+        "n_inconclusive": sum(1 for r in done
+                              if r["verdict"] == "inconclusive"),
+        "all_pass": bool(done and all(r["verdict"] == "pass" for r in done)),
     }

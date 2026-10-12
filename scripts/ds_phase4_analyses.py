@@ -13,7 +13,7 @@ here rather than the original wording being honoured mechanically:
     susceptibility x exposure map, which is where the divergence actually lives.
 
 Phase 3 also fixed the reporting discipline, which this script follows: every
-agent comparison is reported as a RANKING plus a RANGE over the measured yield
+agent comparison is reported as a RANKING plus a RANGE over the assumed yield
 interval, never as a single fold-change, and no survival claim is made.
 
 Analysis 3 is the centrepiece and is done properly here for the first time:
@@ -36,18 +36,19 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.analysis.cytokine_calibration import calibrate_family, calibrate_tnf  # noqa: E402
 from src.analysis.danger_signal import (  # noqa: E402
-    YIELD_ANCHORS_FG_PER_CFU, simulate_danger_signal, summarize,
+    FINAL_YIELD_RATIO, FINAL_YIELDS_FG_PER_CFU, check_release_mass_balance,
+    simulate_danger_signal, summarize,
 )
 from src.analysis.held_out_validation import (  # noqa: E402
     AGENT_EFFECT_ESTIMATES,
 )
 from src.analysis.injury_layer import check_rank_invariance  # noqa: E402
 from src.core.parameters import (  # noqa: E402
-    get_default_parameters, get_drug_pk_parameters,
+    get_default_parameters, get_drug_pd_parameters, get_drug_pk_parameters,
 )
 from src.core.pd_model import create_ode_system  # noqa: E402
 from src.core.pk_models import DosingRegimen, TwoCompartmentPKModel  # noqa: E402
-from src.core.simulation import run_simulation  # noqa: E402
+from src.core.simulation import SimulationResult, run_simulation  # noqa: E402
 
 OUT = os.path.join("results", "danger_signal", "phase4_analyses.json")
 
@@ -57,6 +58,9 @@ IC = dict(B_rep=1e7, B_pers=1e4, B_SCV=0, N_eff=1e7,
           Damage=0, IL6=10, TNF=5, PAMP=0, D_host=0)
 V_FOCUS = 10.0
 Y_FILAMENT_CAZ = 1.5
+#: Total starting burden, CFU/mL, used to express cumulative killing relative
+#: to the burden initially present.
+B_TOTAL_0 = IC["B_rep"] + IC["B_pers"] + IC["B_SCV"]
 # Agent-effect interval. REVISED in Phase 5b: three independent measurements
 # (Trautmann ELISA in vitro 6.9x, Prins whole-blood TNF 3.5x, Simpson
 # in-patient plasma endotoxin 4.97x) agree on 3.5-7x. The 10-40x this
@@ -68,8 +72,8 @@ YIELD_RATIO_RANGE = AGENT_EFFECT_ESTIMATES["recommended_interval"]
 # difference in inflammatory cost comes from the yield alone. Ceftazidime is
 # PBP-3 (filamenting, high yield); meropenem is PBP-2 (fast lysis, low yield).
 AGENT_PK = {"ceftazidime": "ceftazidime", "meropenem": "meropenem"}
-AGENT_YIELD = {"ceftazidime": YIELD_ANCHORS_FG_PER_CFU["ceftazidime"],
-               "meropenem": YIELD_ANCHORS_FG_PER_CFU["meropenem"]}
+AGENT_YIELD = {"ceftazidime": FINAL_YIELDS_FG_PER_CFU["ceftazidime"],
+               "meropenem": FINAL_YIELDS_FG_PER_CFU["meropenem"]}
 AGENT_FILAMENT = {"ceftazidime": Y_FILAMENT_CAZ, "meropenem": 0.0}
 
 MIC_EFFECT = None
@@ -101,13 +105,21 @@ def simulate(agent, dose_mg, interval_h, n_doses, params=None, mic=None,
     reg = DosingRegimen(dose_mg=dose_mg, interval_hours=interval_h, start_time=0,
                         n_doses=n_doses, infusion_duration_min=inf_min)
     pd = create_ode_system(params or get_default_parameters())
+    # Kp is a total-concentration partition, so only the unbound fraction
+    # acts. Binding is applied once, inside run_simulation; C_eff below is
+    # the FREE concentration, and every index and the kill rate use it.
+    fu = get_drug_pd_parameters(AGENT_PK[agent]).fraction_unbound
     r = run_simulation(pkm, reg, pd, dict(IC), t_span=(0, t_end),
-                       drug_class="cidal", weight_kg=WEIGHT)
-    C_eff = r.get_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
+                       drug_class="cidal", weight_kg=WEIGHT,
+                       fraction_unbound=fu)
+    C_eff_total = r.get_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
+    C_eff = r.get_free_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
     m = mic if mic is not None else MIC_EFFECT
-    above = (C_eff > m).astype(float)
-    dt = np.diff(r.t)
-    ft = float(np.sum(0.5 * (above[:-1] + above[1:]) * dt) / (r.t[-1] - r.t[0]) * 100)
+    # Interpolate each MIC crossing rather than count grid points above it.
+    # Counting is first-order in the solver's step size, so the doses solved
+    # to hit a %fT>MIC target used to move whenever the solver's grid did.
+    ft = float(100.0 * SimulationResult._time_above_threshold(r.t, C_eff, m)
+               / (r.t[-1] - r.t[0]))
     _, B_total = r.get_bacterial_burden()
     B_rep = r.y[:, r.state_names.index("B_rep")]
     kill = np.asarray(pd.cidal_kill_rate(C_eff), dtype=float)
@@ -116,7 +128,8 @@ def simulate(agent, dose_mg, interval_h, n_doses, params=None, mic=None,
     # in analysis 4.
     from scipy.integrate import trapezoid
     killed = float(trapezoid(kill * B_rep, r.t))
-    return dict(t=r.t, B_rep=B_rep, C_eff=C_eff, kill=kill, mic=m,
+    return dict(t=r.t, B_rep=B_rep, C_eff=C_eff, C_eff_total=C_eff_total,
+                fraction_unbound=fu, kill=kill, mic=m,
                 fT=ft, cum_killed_cfu_per_mL=killed,
                 net_log10=float(np.log10(max(B_total[-1], 1e-6) / B_total[0])),
                 fAUC_MIC=float(trapezoid(C_eff, r.t) / m / (t_end / 24.0)),
@@ -146,7 +159,7 @@ def dose_for_target_ft(agent, target_ft, interval_h, n_doses, mic=None,
 
 
 def yield_range_ratio(sim_hi, sim_lo):
-    """Agent cost ratio at both ends of the measured yield interval."""
+    """Agent cost ratio at both ends of the assumed yield range."""
     y_caz = AGENT_YIELD["ceftazidime"]
     out = []
     for r in YIELD_RATIO_RANGE:
@@ -164,30 +177,33 @@ def yield_range_ratio(sim_hi, sim_lo):
 # --------------------------------------------------------------------------
 def analysis1_yield_table():
     """Agent-specific danger-signal yield table, with uncertainty."""
+    y_caz = FINAL_YIELDS_FG_PER_CFU["ceftazidime"]
+    carbapenem_interval = [round(y_caz / YIELD_RATIO_RANGE[1], 2),
+                           round(y_caz / YIELD_RATIO_RANGE[0], 2)]
     rows = [
         dict(agent="piperacillin", pbp="PBP-3", morphology="filamentation",
-             Y_lysis_fg_per_CFU=5.15, interval=None,
+             Y_lysis_fg_per_CFU=FINAL_YIELDS_FG_PER_CFU["piperacillin"],
+             interval=None,
              basis="Yamaguchi 1999: 515 ng/mL free LPS at 1x MIC, 4 h, / 1e8 CFU/mL"),
         dict(agent="ceftazidime", pbp="PBP-3", morphology="filamentation",
-             Y_lysis_fg_per_CFU=4.93, interval=None,
+             Y_lysis_fg_per_CFU=y_caz, interval=None,
              basis="Yamaguchi 1999: 493 ng/mL free LPS at 1x MIC, 4 h, / 1e8 CFU/mL"),
         dict(agent="imipenem", pbp="PBP-2", morphology="spheroplast, rapid lysis",
-             Y_lysis_fg_per_CFU=round(4.93 / 5.0, 2),
-             interval=[round(4.93 / YIELD_RATIO_RANGE[1], 2),
-                       round(4.93 / YIELD_RATIO_RANGE[0], 2)],
+             Y_lysis_fg_per_CFU=round(FINAL_YIELDS_FG_PER_CFU["imipenem"], 2),
+             interval=carbapenem_interval,
              basis="REVISED in Phase 5b to 3.5-7x, from Trautmann 1998 (ELISA, "
                    "6.9x), Prins 1995 (whole-blood TNF, 3.5x) and Simpson "
                    "2000 (in patients, 5.0x). Jackson & Kropp's Limulus "
                    "10-40x at "
                    "equivalent MICs; interval derived from the ceftazidime anchor"),
         dict(agent="meropenem", pbp="PBP-2", morphology="spheroplast, rapid lysis",
-             Y_lysis_fg_per_CFU=round(4.93 / 5.0, 2),
-             interval=[round(4.93 / YIELD_RATIO_RANGE[1], 2),
-                       round(4.93 / YIELD_RATIO_RANGE[0], 2)],
+             Y_lysis_fg_per_CFU=round(FINAL_YIELDS_FG_PER_CFU["meropenem"], 2),
+             interval=carbapenem_interval,
              basis="assigned imipenem's value (also PBP-2, also a low releaser "
                    "per Trautmann 1998); pending digitization"),
         dict(agent="isepamicin", pbp="none (ribosomal)", morphology="-",
-             Y_lysis_fg_per_CFU=0.28, interval=None,
+             Y_lysis_fg_per_CFU=FINAL_YIELDS_FG_PER_CFU["isepamicin"],
+             interval=None,
              basis="Yamaguchi 1999: 28 +/- 2 ng/mL at 1x MIC, 6 h, / 1e8 CFU/mL"),
     ]
     caveats = [
@@ -206,10 +222,15 @@ def analysis1_yield_table():
             "differ several-fold. The PBP-3 cephalosporins (ceftazidime, "
             "piperacillin) sit about 3.5-7x above the PBP-2 carbapenems at "
             "equivalent MICs, while the bactericidal aminoglycoside isepamicin "
-            "sits at the same low end as the carbapenems (its value comes from "
-            "Yamaguchi's absolute measurement, the carbapenems' from the "
-            "revised ratio, so the two are not strictly commensurable). Yield "
-            "therefore tracks the "
+            "sits LOWER still -- but that gap is not interpretable: "
+            "isepamicin's value is an absolute per-CFU measurement from "
+            "Yamaguchi, while the carbapenems' is derived from the assumed "
+            "agent ratio applied to the ceftazidime anchor, so the two are "
+            "not commensurable and their 3.5x separation is an artefact of "
+            "combining differently derived quantities on one axis. What the "
+            "aminoglycoside establishes is only that a bactericidal agent "
+            "with no PBP target is not a high releaser. Yield therefore "
+            "tracks the "
             "molecular target, not the bactericidal/bacteriostatic class -- "
             "which does not even vary across this table.")
     mechanism = (
@@ -283,7 +304,7 @@ def const_exposure(C_mult, Y, Yf, t_end=8.0, n=1600, B=1e8):
 
 
 def analysis3_matched_exposure(targets=(40.0, 60.0, 80.0, 95.0)):
-    """Matched %fT>MIC: equal exposure and equal killing, divergent cost."""
+    """Matched %fT>MIC: equal exposure, near-equal killing, divergent cost."""
     rows = []
     for target in targets:
         entry = {"target_fT_pct": target, "arms": {}}
@@ -305,6 +326,12 @@ def analysis3_matched_exposure(targets=(40.0, 60.0, 80.0, 95.0)):
                 "AUC_IL6_excess_pg_h_mL": s["AUC_IL6_excess_pg_h_mL"],
                 "IL6_peak_pg_mL": s["IL6_peak_pg_mL"],
                 "saturation_peak": s["saturation_peak"],
+                "cum_killed_cfu_per_mL": sim["cum_killed_cfu_per_mL"],
+                # Cumulative killing divided by the starting burden. Values
+                # above 1 show that killed biomass is NOT bounded by the
+                # burden initially present: growth replenishes it.
+                "killed_over_initial_burden": (sim["cum_killed_cfu_per_mL"]
+                                               / B_TOTAL_0),
             }
         if not ok:
             continue
@@ -314,10 +341,12 @@ def analysis3_matched_exposure(targets=(40.0, 60.0, 80.0, 95.0)):
                                                       sims["meropenem"])
         rows.append(entry)
     return {"rows": rows,
-            "claim": "At matched %fT>MIC the two agents achieve the same "
-                     "bacterial killing, and the PBP-3 agent imposes the "
+            "claim": "At matched %fT>MIC the two agents achieve nearly equal "
+                     "bacterial killing (see kill_difference_log10 per row; "
+                     "matching exposure does not guarantee equal killing when "
+                     "profile shapes differ), and the PBP-3 agent imposes the "
                      "higher danger-signal cost. The ratio is reported as a "
-                     "range over the measured 3.5-7x yield interval."}
+                     "range over the assumed 3.5-7x yield range."}
 
 
 def analysis4_cost_index():
@@ -329,11 +358,19 @@ def analysis4_cost_index():
     regimen library spanning both agents, four intervals and a range of doses.
     """
     lib = []
+    residuals = []
     for agent in ("ceftazidime", "meropenem"):
         for interval, n in ((6.0, 8), (8.0, 6), (12.0, 4), (24.0, 2)):
             for dose in (125.0, 250.0, 500.0, 1000.0, 2000.0, 4000.0):
                 sim = simulate(agent, dose, interval, n)
-                _, s = ds_cost(sim, agent=agent)
+                out, s = ds_cost(sim, agent=agent)
+                # The identity that explains the proposed index's near-perfect
+                # correlation, checked on every regimen rather than asserted.
+                q = replace(P_REF, Y_lysis=AGENT_YIELD[agent],
+                            Y_filament=AGENT_FILAMENT[agent],
+                            V_focus_mL=V_FOCUS)
+                residuals.append(
+                    abs(check_release_mass_balance(out, q)["relative_residual"]))
                 lib.append({
                     "agent": agent, "dose_mg": dose, "interval_h": interval,
                     "fT_pct": sim["fT"], "fAUC_MIC": sim["fAUC_MIC"],
@@ -386,11 +423,28 @@ def analysis4_cost_index():
     return {
         "library": lib, "candidates": perf, "within_agent_spearman": within,
         "n_regimens": len(lib),
+        "mass_balance_identity": {
+            "statement": "k_ds * AUC_D = a * [Y_lysis * int(kill*B_rep dt) + "
+                         "Y_filament * int(phi*B_rep dt)] - [D(T) - D(0)], "
+                         "with D the attributable danger signal and a the "
+                         "common focus/translocation conversion factor",
+            "max_abs_relative_residual": float(max(residuals)),
+            "n_regimens_checked": len(residuals),
+            "consequence": "The proposed yield-weighted killed-biomass index "
+                           "is the leading term of the right-hand side, so "
+                           "its near-perfect rank correlation with AUC_DS is "
+                           "an algebraic consequence of the compartment's "
+                           "mass balance, NOT independent evidence of "
+                           "predictive performance. Its practical value is "
+                           "that it needs only a standard PK/PD simulation "
+                           "and a yield table.",
+        },
         "interpretation":
             "Across agents, the established efficacy indices rank inflammatory "
             "cost poorly or perversely, because they are agent-blind: two "
-            "regimens with the same %fT>MIC differ several-fold in cost (3.6-7.6x) "
-            "depending only on which agent delivers that exposure. "
+            "regimens with the same %fT>MIC differ several-fold in cost "
+            "(see analysis3 for the range) depending only on which agent "
+            "delivers that exposure. "
             "Weighting cumulative killed biomass by the agent's yield recovers "
             "the ranking using only a standard PK/PD simulation plus a yield "
             "table, which is the practical proposal.",
@@ -470,34 +524,73 @@ def analysis5_divergence_map(mic_factors=(1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0),
 
     # Below stasis the burden grows, so there is far more biomass to kill and a
     # sustained kill-regrowth turnover. That is where cost explodes.
+    # Failing vs controlled therapy, reported PER AGENT. Pooling the two
+    # agents mixes a 5x yield difference into a within-agent comparison, so
+    # the per-agent ratios are the primary numbers and the pooled one is
+    # reported only for continuity with earlier phases.
     failing, controlled = [], []
-    for c in cells:
-        for agent in ("ceftazidime", "meropenem"):
+    by_agent = {}
+    for agent in ("ceftazidime", "meropenem"):
+        f_a, c_a = [], []
+        for c in cells:
             a = c.get(agent)
             if not a:
                 continue
-            (failing if a["net_log10_change"] > 0 else controlled).append(
-                a["cost_AUC_DS"])
+            (f_a if a["net_log10_change"] > 0 else c_a).append(a["cost_AUC_DS"])
+        failing.extend(f_a)
+        controlled.extend(c_a)
+        by_agent[agent] = {
+            "n_arms_populated": sum(1 for c in cells if c.get(agent)),
+            "n_failing": len(f_a), "n_controlled": len(c_a),
+            "median_cost_failing": float(np.median(f_a)) if f_a else None,
+            "median_cost_controlled": float(np.median(c_a)) if c_a else None,
+            "failing_over_controlled_fold": (float(np.median(f_a))
+                                             / float(np.median(c_a))
+                                             if f_a and c_a else None),
+        }
+
+    n_possible = len(mic_factors) * len(targets)
+    coverage = {
+        "n_cells": len(cells),
+        "n_possible_arms_per_agent": n_possible,
+        "populated_arms": {a: by_agent[a]["n_arms_populated"]
+                           for a in by_agent},
+        "note": "Arms are skipped where the dose solving the exposure target "
+                "falls outside the 10-16000 mg search bracket, so the map is "
+                "not fully populated and the summaries below are over the "
+                "arms that exist, not over the full grid.",
+    }
 
     return {
         "cells": cells, "divergent_steps": divergence,
         "n_divergent": len(divergence),
         "within_agent_flatness": flatness,
         "cost_span_above_stasis_fold": [min(spans), max(spans)] if spans else None,
+        "coverage": coverage,
+        "by_agent": by_agent,
         "median_cost_failing_therapy": float(np.median(failing)) if failing else None,
         "median_cost_controlled_therapy": (float(np.median(controlled))
                                            if controlled else None),
+        "pooling_caveat":
+            "The pooled failing/controlled medians mix both agents and so "
+            "carry the yield difference as well as the exposure effect. The "
+            "per-agent figures in 'by_agent' are the ones to report.",
         "interpretation":
-            "NO divergent step was found anywhere on the map: raising exposure "
-            "never raised inflammatory cost. Two regimes explain it. ABOVE "
-            "stasis, cost is nearly FLAT in exposure (a few percent across a "
-            "32-fold dose range), because cumulative killed biomass is bounded "
-            "by the burden that is present -- you can only kill what is there, "
-            "so how fast you kill it barely matters. BELOW stasis, therapy "
+            "NO divergent step was found anywhere on the AVAILABLE arms of "
+            "this map: raising exposure never raised inflammatory cost in any "
+            "evaluated step. Two regimes explain it. ABOVE stasis, cost is "
+            "nearly FLAT in exposure, because rapid control leaves little "
+            "kill-regrowth turnover: almost all of the cumulative killing is "
+            "of the burden already present, so how fast it is killed barely "
+            "matters. This is a REGIME-SPECIFIC explanation, not a general "
+            "bound -- cumulative killed biomass is NOT bounded by the "
+            "starting burden in a growing population; see "
+            "analysis3.killed_over_initial_burden, which exceeds 1. BELOW "
+            "stasis, therapy "
             "fails, the burden grows, and sustained kill-regrowth turnover "
-            "makes cost explode by orders of magnitude. The practical reading "
-            "is that there is no within-agent trade-off to exploit: "
-            "under-dosing is bad for both objectives at once.",
+            "makes cost rise by orders of magnitude. The practical reading is "
+            "that no within-agent trade-off appeared in the scenarios "
+            "evaluated: under-dosing is bad for both objectives at once.",
         "hypothesis_amendment":
             "This FALSIFIES the clause in DESIGN.md section 1 that 'the regimen "
             "that maximizes bacterial killing is not necessarily the one that "
@@ -508,10 +601,14 @@ def analysis5_divergence_map(mic_factors=(1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0),
             "agent. The hypothesis survives in its agent-comparison form and "
             "must be restated in that form.",
         "caveat":
-            "At the 20% fT>MIC cells the cytokine layer reaches occupancy "
-            "~0.82, i.e. it is saturating, so the magnitude of the "
-            "failing-therapy cost is NOT interpretable there -- only its "
-            "direction. See PHASE2_BUILD.md on the validity ceiling.",
+            "The reported endpoint is attributable AUC_DS, which is an "
+            "upstream LINEAR compartment and so has no mathematical "
+            "saturation ceiling; the receptor-occupancy ceiling noted in "
+            "PHASE2_BUILD.md bounds the (unreported) cytokine layer only. "
+            "The empirical limits of the danger-signal layer at "
+            "failing-therapy burdens are separate and remain unvalidated, so "
+            "the MAGNITUDE of the failing-therapy cost should be read as "
+            "indicative and its DIRECTION as the result.",
     }
 
 
@@ -641,7 +738,7 @@ def main():
     print("     data contradict it (open conflict, Phase 3).")
 
     print("\n" + "=" * 74)
-    print("ANALYSIS 3 -- matched %fT>MIC: equal killing, divergent cost")
+    print("ANALYSIS 3 -- matched %fT>MIC: near-equal killing, divergent cost")
     print("=" * 74)
     a3 = analysis3_matched_exposure()
     for e in a3["rows"]:
@@ -713,7 +810,7 @@ def main():
                      {k: v for k, v in ref.items() if k != "params"},
                  "yield_ratio_range": list(YIELD_RATIO_RANGE),
                  "reporting_rule": "agent comparisons are reported as a ranking "
-                                   "plus a range over the measured 3.5-7x yield "
+                                   "plus a range over the assumed 3.5-7x yield "
                                    "interval; no single fold-change and no "
                                    "survival claim"},
         "analysis1_yield_table": a1,
@@ -723,6 +820,12 @@ def main():
         "analysis5_divergence_map": a5,
         "analysis6_predictions": a6,
     }
+    from src.utils.provenance import provenance
+    payload["provenance"] = provenance(
+        endpoint="AUC_DS_pg_h_mL (attributable danger-signal exposure)",
+        exposure_index="%fT>MIC by crossing interpolation on the solver grid",
+        solver={"bacterial": "RK45 rtol 1e-6 atol 1e-8 max_step 0.1 h",
+                "danger_signal": "LSODA rtol 1e-6 atol 1e-9 max_step 0.1 h"})
     with open(OUT, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=1, default=str)
     print(f"\nwrote {OUT}")

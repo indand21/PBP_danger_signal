@@ -39,7 +39,7 @@ from src.analysis.danger_signal import (  # noqa: E402
     YIELD_ANCHORS_FG_PER_CFU,
 )
 from src.core.parameters import (  # noqa: E402
-    get_default_parameters, get_drug_pk_parameters,
+    get_default_parameters, get_drug_pd_parameters, get_drug_pk_parameters,
 )
 from src.core.pd_model import create_ode_system  # noqa: E402
 from src.core.pk_models import DosingRegimen, TwoCompartmentPKModel  # noqa: E402
@@ -161,11 +161,14 @@ def solve_bacteria(spec, params=None):
                         start_time=0, n_doses=spec["n_doses"],
                         infusion_duration_min=spec["inf_min"])
     pd = create_ode_system(params or get_default_parameters())
+    # Kp is a total-concentration partition; only unbound drug acts.
+    fu = get_drug_pd_parameters(spec["drug"]).fraction_unbound
     r = run_simulation(pkm, reg, pd, dict(IC), t_span=(0, T_END),
-                       drug_class="cidal", weight_kg=WEIGHT)
+                       drug_class="cidal", weight_kg=WEIGHT,
+                       fraction_unbound=fu)
     t = r.t
     B_rep = r.y[:, r.state_names.index("B_rep")]
-    C_eff = r.get_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
+    C_eff = r.get_free_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
     kill = np.asarray(pd.cidal_kill_rate(C_eff), dtype=float)
     _, B_total = r.get_bacterial_burden()
     mic = spec.get("mic", MIC_EFFECT)
@@ -457,6 +460,9 @@ def main():
                            "section 4; grid statistics are diagnostics only"),
         stop_gate_pass=gate,
     )
+    from src.utils.provenance import provenance
+    payload["provenance"] = provenance(
+        note="historical phase; retained for the record")
     with open(OUT, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=1)
     print(f"\nwrote {OUT}")

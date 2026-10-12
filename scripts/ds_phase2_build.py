@@ -40,7 +40,7 @@ from src.analysis.injury_layer import (  # noqa: E402
     InjuryParameters, check_rank_invariance, saturation_diagnostics,
 )
 from src.core.parameters import (  # noqa: E402
-    get_default_parameters, get_drug_pk_parameters,
+    get_default_parameters, get_drug_pd_parameters, get_drug_pk_parameters,
 )
 from src.core.pd_model import create_ode_system  # noqa: E402
 from src.core.pk_models import DosingRegimen, TwoCompartmentPKModel  # noqa: E402
@@ -79,10 +79,13 @@ def solve_bacteria(spec):
                         start_time=0, n_doses=spec["n_doses"],
                         infusion_duration_min=spec["inf_min"])
     pd = create_ode_system(get_default_parameters())
+    # Kp is a total-concentration partition; only unbound drug acts.
+    fu = get_drug_pd_parameters(spec["drug"]).fraction_unbound
     r = run_simulation(pkm, reg, pd, dict(IC), t_span=(0, T_END),
-                       drug_class="cidal", weight_kg=WEIGHT)
+                       drug_class="cidal", weight_kg=WEIGHT,
+                       fraction_unbound=fu)
     t = r.t
-    C_eff = r.get_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
+    C_eff = r.get_free_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
     above = (C_eff > MIC_EFFECT).astype(float)
     dt = np.diff(t)
     ft = float(np.sum(0.5 * (above[:-1] + above[1:]) * dt) / (t[-1] - t[0]) * 100)
@@ -347,6 +350,9 @@ def main():
     print("=" * 74)
     payload["phase2_pass"] = gate
 
+    from src.utils.provenance import provenance
+    payload["provenance"] = provenance(
+        note="historical phase; retained for the record")
     with open(OUT, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=1, default=str)
     print(f"\nwrote {OUT}")

@@ -1,0 +1,64 @@
+{
+ "driver": "constant burden 1e7 CFU/mL, kill switched on/off on an 8 h cycle, 24 h horizon",
+ "identity": "k_ds * AUC_D = integral(src dt) - [D(T) - D(0)]",
+ "grids": [
+  {
+   "n_points": 300,
+   "dt_h": 0.0802675585284281,
+   "abs_relative_residual": 0.0001410656331849751
+  },
+  {
+   "n_points": 600,
+   "dt_h": 0.04006677796327212,
+   "abs_relative_residual": 3.56529039300884e-05,
+   "reduction_vs_previous": 3.9566379631120654
+  },
+  {
+   "n_points": 1200,
+   "dt_h": 0.020016680567139282,
+   "abs_relative_residual": 8.930348660199244e-06,
+   "reduction_vs_previous": 3.992330567000835
+  },
+  {
+   "n_points": 2400,
+   "dt_h": 0.010004168403501459,
+   "abs_relative_residual": 2.1903080777079497e-06,
+   "reduction_vs_previous": 4.077211215668079
+  },
+  {
+   "n_points": 4800,
+   "dt_h": 0.005001041883725776,
+   "abs_relative_residual": 5.487748612547202e-07,
+   "reduction_vs_previous": 3.991268974493518
+  },
+  {
+   "n_points": 9600,
+   "dt_h": 0.0025002604437962287,
+   "abs_relative_residual": 1.2295618880937394e-07,
+   "reduction_vs_previous": 4.463173969270611
+  }
+ ],
+ "coarsest_residual": 0.0001410656331849751,
+ "finest_residual": 1.2295618880937394e-07,
+ "refinement_factor": 32.0,
+ "interpretation": "The residual falls by about four per doubling, i.e. at second order, which is the expected behaviour of the trapezoidal quadrature used for the areas. The residual is therefore discretization error, not a defect in the identity.",
+ "provenance": {
+  "git_head": "fd78c39b0b1572aa0e3181a3d5c46359ccd5c425",
+  "git_dirty": true,
+  "python": "3.12.4",
+  "numpy": "2.4.6",
+  "scipy": "1.15.3",
+  "numpy_scipy_supported": true,
+  "platform": "win32",
+  "final_yields_fg_per_CFU": {
+   "piperacillin": 5.15,
+   "ceftazidime": 4.93,
+   "isepamicin": 0.28,
+   "imipenem": 0.986,
+   "meropenem": 0.986
+  },
+  "solver": {
+   "danger_signal": "LSODA rtol 1e-6 atol 1e-9 max_step 0.1 h"
+  }
+ }
+}

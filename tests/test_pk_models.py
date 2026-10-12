@@ -66,21 +66,25 @@ class TestTwoCompartmentPKModel:
         dA = model.ode_rhs(0, A, infusion_rate=100)
         assert dA[0] > 0  # Central compartment increases
 
-    def test_ode_rhs_conservation(self):
-        """Verify mass change is consistent with model physics."""
+    @pytest.mark.xfail(strict=True, reason=(
+        "Known defect (external review R3): ode_rhs does not conserve drug. "
+        "The study no longer uses it -- see test_pk_representation.py -- but "
+        "the legacy therapy modules still do. strict=True makes this test "
+        "FAIL the suite the moment the defect is fixed, so the marker is "
+        "removed rather than left to rot."))
+    def test_ode_rhs_conserves_drug_without_input_or_clearance(self):
+        """With CL = 0, no infusion and no absorption, drug only moves between
+        compartments, so total central + peripheral drug must be constant.
+
+        The previous version of this test checked only that the peripheral
+        derivative reproduced its own formula, and its comment called the
+        imbalance 'a known quirk'. It therefore passed on the defect."""
         model = TwoCompartmentPKModel(
             CL=0, Vc=1000, Vp=500, Q=2.0, Ka=0.0, Kp=0.4
         )
         A = np.array([1000, 500, 0, 0])
         dA = model.ode_rhs(0, A)
-        # With no clearance and no infusion, total mass in central+peripheral
-        # changes based on the asymmetry in transfer rates
-        # dA_c/dt includes: -Q/60*A_c/Vc + Q/60*A_p/Vp
-        # dA_p/dt includes: +Q/60*A_c/Vp - Q/60*A_p/Vp (note: both over Vp)
-        # The asymmetry is a known quirk of the model
-        # Just verify the calculation is self-consistent
-        expected_dA1 = (model.Q / 60.0) * (A[0] - A[1]) / model.Vp
-        assert abs(dA[1] - expected_dA1) < 1e-10
+        assert abs(dA[0] + dA[1]) < 1e-9
 
     def test_get_ode_indices(self):
         model = TwoCompartmentPKModel(

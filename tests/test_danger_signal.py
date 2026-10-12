@@ -215,3 +215,173 @@ class TestKillRateSharedWithPDModel:
         implied_kill = growth - to_pers - dydt[0]
         assert implied_kill == pytest.approx(
             float(pd_model.cidal_kill_rate(C)) * 1e6, rel=1e-9)
+
+
+class TestReleaseMassBalance:
+    """R8: the yield-weighted killed-biomass index correlates near-perfectly
+    with the modelled endpoint because the two are linked by the compartment's
+    own mass balance, not because the index was discovered to predict it. The
+    identity is
+
+        k_ds * AUC_D = a * [Y_lysis * int(K dt) + Y_filament * int(F dt)]
+                       - [D(T) - D(0)]
+
+    with D the attributable danger signal and a the common conversion factor.
+    Stating it is what turns a suspicious correlation into an explanation."""
+
+    def test_identity_holds_on_a_simulation(self):
+        from src.analysis.danger_signal import check_release_mass_balance
+        d = _driver(kill_rate=0.8, B=1e7)
+        p = DangerSignalParameters(Y_lysis=4.93, Y_filament=1.5,
+                                   V_focus_mL=10.0)
+        out = simulate_danger_signal(d["t"], d["B_rep"], d["kill"],
+                                     d["C_eff"], 1.0, p)
+        mb = check_release_mass_balance(out, p)
+        assert abs(mb["relative_residual"]) < 1e-3
+
+    def test_identity_reports_its_three_terms(self):
+        from src.analysis.danger_signal import check_release_mass_balance
+        d = _driver()
+        p = DangerSignalParameters(Y_lysis=4.93, Y_filament=0.0)
+        out = simulate_danger_signal(d["t"], d["B_rep"], d["kill"],
+                                     d["C_eff"], 1.0, p)
+        mb = check_release_mass_balance(out, p)
+        for k in ("cleared", "released", "boundary_term",
+                  "relative_residual"):
+            assert k in mb
+
+    def test_boundary_term_is_small_when_signal_has_decayed(self):
+        """The approximation the manuscript relies on: when terminal residual
+        signal is negligible, cleared danger signal equals total release."""
+        from src.analysis.danger_signal import check_release_mass_balance
+        d = _driver(t_end=24.0, kill_rate=0.8)
+        p = DangerSignalParameters(Y_lysis=4.93, Y_filament=0.0)
+        out = simulate_danger_signal(d["t"], d["B_rep"], d["kill"],
+                                     d["C_eff"], 1.0, p)
+        mb = check_release_mass_balance(out, p)
+        assert abs(mb["boundary_term"]) < 0.01 * abs(mb["released"])
+
+    def test_residual_converges_at_second_order(self):
+        """The manuscript attributes the 4e-3 library residual to quadrature
+        rather than to a defect in the identity. That attribution is only
+        honest if refining the grid shrinks it at the expected rate."""
+        from src.analysis.danger_signal import check_release_mass_balance
+        p = DangerSignalParameters(Y_lysis=4.93, Y_filament=1.5,
+                                   V_focus_mL=10.0)
+        res = []
+        for n in (300, 600, 1200, 2400):
+            t = np.linspace(0.0, 24.0, n)
+            on = (np.sin(2 * np.pi * t / 8.0) > 0).astype(float)
+            out = simulate_danger_signal(t, np.full(n, 1e7), 0.8 * on,
+                                         4.0 * on + 0.1, 1.0, p)
+            res.append(abs(check_release_mass_balance(out, p)
+                           ["relative_residual"]))
+        # Each doubling of the grid should cut the residual by about four.
+        for coarse, fine in zip(res, res[1:]):
+            assert coarse / fine > 3.0, f"convergence stalled: {res}"
+
+    def test_attributable_auc_is_proportional_to_yield(self):
+        """The identity's immediate consequence, and the reason the ratio of
+        two agents' costs is the ratio of their yields when filamentation is
+        absent."""
+        from src.analysis.danger_signal import check_release_mass_balance
+        d = _driver(kill_rate=0.8)
+        aucs = []
+        for y in (1.0, 5.0):
+            p = DangerSignalParameters(Y_lysis=y, Y_filament=0.0)
+            out = simulate_danger_signal(d["t"], d["B_rep"], d["kill"],
+                                         d["C_eff"], 1.0, p)
+            aucs.append(check_release_mass_balance(out, p)["cleared"])
+        assert aucs[1] / aucs[0] == pytest.approx(5.0, rel=1e-3)
+
+
+def _load_script(name):
+    """Import a scripts/ module without running its main()."""
+    import importlib.util
+    import pathlib
+    path = pathlib.Path(__file__).resolve().parent.parent / "scripts" / f"{name}.py"
+    spec = importlib.util.spec_from_file_location(name, path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+class TestExposureMatchingIsGridRobust:
+    """Phase 4 solves each agent's dose to hit a %fT>MIC target. It computed
+    %fT>MIC by counting solver time points above the MIC, which is first-order
+    in the grid spacing, so the matched doses -- and every result downstream --
+    moved whenever the solver placed its points differently. Removing the
+    non-conserving PK states from the solver (review R3) changed the grid and
+    exposed this: the 95% meropenem dose moved from 9600 to 9324 mg."""
+
+    @staticmethod
+    def _exact_ft(agent, dose, mic, interval=8.0, n=6, inf_h=0.5, t_end=48.0):
+        """Time above MIC from the analytical one-compartment profile.
+
+        Kp is a total-concentration partition, so the free concentration --
+        the one the reported index is defined on -- is fu times it.
+        """
+        from src.core.parameters import (
+            get_drug_pd_parameters, get_drug_pk_parameters,
+        )
+        fu = get_drug_pd_parameters(agent).fraction_unbound
+        p = get_drug_pk_parameters(agent)
+        Vc = p.Vc * 70.0
+        k = p.CL / Vc
+        R = dose / inf_h
+        t = np.linspace(0.0, t_end, 960001)
+        C = np.zeros_like(t)
+        for td in np.arange(n) * interval:
+            tau = t - td
+            peak = R / (k * Vc) * (1 - np.exp(-k * inf_h))
+            C += np.where(tau <= 0, 0.0,
+                          np.where(tau <= inf_h,
+                                   R / (k * Vc) * (1 - np.exp(-k * tau)),
+                                   peak * np.exp(-k * (tau - inf_h))))
+        return 100.0 * np.mean(fu * p.Kp * C > mic)
+
+    @pytest.mark.parametrize("agent, dose", [("meropenem", 225.0),
+                                             ("meropenem", 9324.0),
+                                             ("ceftazidime", 300.0)])
+    def test_reported_ft_matches_the_analytical_value(self, agent, dose):
+        mod = _load_script("ds_phase4_analyses")
+        mic = 0.4011
+        sim = mod.simulate(agent, dose, 8.0, 6, mic=mic)
+        assert sim["fT"] == pytest.approx(self._exact_ft(agent, dose, mic),
+                                          abs=0.03)
+
+
+class TestFinalYieldConfiguration:
+    """The external review (R1) found the reported yield table and the
+    analyses describing different models: the table carried the revised
+    3.5-7x interval while analyses 4-5 still ran on the Phase 1 19.7x anchors.
+    These tests pin one authoritative configuration and check every reporting
+    script uses it."""
+
+    def test_final_ratio_sits_inside_the_revised_interval(self):
+        from src.analysis.danger_signal import FINAL_YIELDS_FG_PER_CFU
+        from src.analysis.held_out_validation import AGENT_EFFECT_ESTIMATES
+        lo, hi = AGENT_EFFECT_ESTIMATES["recommended_interval"]
+        for agent in ("imipenem", "meropenem"):
+            r = (FINAL_YIELDS_FG_PER_CFU["ceftazidime"]
+                 / FINAL_YIELDS_FG_PER_CFU[agent])
+            assert lo <= r <= hi
+
+    def test_ceftazidime_keeps_its_measured_anchor(self):
+        from src.analysis.danger_signal import FINAL_YIELDS_FG_PER_CFU
+        assert (FINAL_YIELDS_FG_PER_CFU["ceftazidime"]
+                == YIELD_ANCHORS_FG_PER_CFU["ceftazidime"])
+
+    @pytest.mark.parametrize("script, carbapenem", [
+        ("ds_phase3_validate", "imipenem"),
+        ("ds_phase4_analyses", "meropenem"),
+    ])
+    def test_reporting_scripts_use_the_final_yields(self, script, carbapenem):
+        from src.analysis.danger_signal import FINAL_YIELDS_FG_PER_CFU
+        mod = _load_script(script)
+        if hasattr(mod, "AGENT_YIELD"):
+            used = mod.AGENT_YIELD
+        else:
+            used = {k: v["Y"] for k, v in mod.AGENTS.items()}
+        assert used["ceftazidime"] == FINAL_YIELDS_FG_PER_CFU["ceftazidime"]
+        assert used[carbapenem] == FINAL_YIELDS_FG_PER_CFU[carbapenem]

@@ -65,6 +65,28 @@ YIELD_ANCHORS_FG_PER_CFU = {
     # assigned imipenem's value pending digitization.
     "meropenem": 0.25,
 }
+# NOTE: the carbapenem entries above are the PHASE 1 anchors, giving a 19.7x
+# agent ratio. The pilot and Phase 2 results were produced with them and are
+# kept on that basis. They are NOT the final model -- see FINAL_YIELDS below.
+
+#: Nominal ceftazidime:carbapenem yield ratio of the FINAL model. Phase 5b
+#: revised the agent effect to 3.5-7x from three independent measurements
+#: (Trautmann ELISA 6.9x, Prins whole-blood TNF 3.5x, Simpson in-patient
+#: 4.97x), retiring the Jackson & Kropp Limulus 10-40x as an assay outlier.
+#: The midpoint of that interval is used for every nominal analysis; the
+#: interval itself is swept wherever an uncertainty range is reported.
+FINAL_YIELD_RATIO = 5.0
+
+#: The single authoritative yield configuration for the danger-signal study.
+#: Every reported analysis and figure must take its yields from here, so that
+#: the parameter table and the numerical results describe the same model.
+FINAL_YIELDS_FG_PER_CFU = {
+    "piperacillin": YIELD_ANCHORS_FG_PER_CFU["piperacillin"],
+    "ceftazidime": YIELD_ANCHORS_FG_PER_CFU["ceftazidime"],
+    "isepamicin": YIELD_ANCHORS_FG_PER_CFU["isepamicin"],
+    "imipenem": YIELD_ANCHORS_FG_PER_CFU["ceftazidime"] / FINAL_YIELD_RATIO,
+    "meropenem": YIELD_ANCHORS_FG_PER_CFU["ceftazidime"] / FINAL_YIELD_RATIO,
+}
 
 #: Plasma volume of a 70 kg adult, L.
 PLASMA_VOLUME_L = 3.0
@@ -415,6 +437,11 @@ def integrate_ds_cytokine(
     sol = solve_ivp(rhs, (t[0], t[-1]), [DS0, p.T0, 0.0, p.IL6_baseline, 0.0],
                     t_eval=t, method="LSODA", max_step=0.1,
                     rtol=1e-6, atol=1e-9)
+    # Checked BEFORE the clipping below, which would otherwise hide an
+    # undershoot. Row 0 is plasma danger signal, the reported endpoint.
+    from src.core.simulation import check_integration
+    check_integration(sol, t_end=t[-1], where="danger-signal layer",
+                      nonnegative_rows=[0])
     DS = np.maximum(sol.y[0], 0.0)
     return (DS, sol.y[3], sol.y[4], hill_occupancy(DS, p),
             np.clip(sol.y[1], 0.0, 1.0))
@@ -425,6 +452,53 @@ def _interp(t: np.ndarray, y: np.ndarray) -> Callable[[float], float]:
     def f(tt: float) -> float:
         return float(np.interp(tt, t, y, left=y[0], right=y[-1]))
     return f
+
+
+def check_release_mass_balance(
+    out: Dict[str, np.ndarray],
+    params: Optional["DangerSignalParameters"] = None,
+) -> Dict[str, float]:
+    """Verify the danger-signal compartment's mass balance on a simulation.
+
+    With ``D = DS - DS_baseline`` the therapy-attributable signal, the
+    compartment obeys ``D' = src(t) - k_ds * D``, so over ``[0, T]``
+
+        k_ds * integral(D dt) = integral(src dt) - [D(T) - D(0)]
+        \\_____cleared_____/    \\___released___/   \\_boundary_term_/
+
+    and ``integral(src dt)`` is the yield-weighted cumulative killed biomass
+    plus the filamentation term, times a common conversion factor. The
+    near-perfect rank correlation between the proposed index and the modelled
+    endpoint is this identity, not an empirical finding; reporting the
+    residual keeps that explicit and catches an integration failure.
+
+    Returns the three terms, their residual, and the residual relative to the
+    released quantity.
+    """
+    from scipy.integrate import trapezoid
+
+    p = params or DangerSignalParameters()
+    t = np.asarray(out["t"], dtype=float)
+    D = np.asarray(out["DS"], dtype=float) - p.DS_baseline
+
+    # release_lysis/release_filament are ng/h over the focus; undo the ng
+    # scaling and apply the same conversion the integrator used.
+    to_conc = 1e-6 / p.V_ds_L * p.translocation_fraction
+    src = (np.asarray(out["release_lysis"], dtype=float)
+           + np.asarray(out["release_filament"], dtype=float)) * 1e6 * to_conc
+
+    cleared = float(p.k_ds_clear * trapezoid(D, t))
+    released = float(trapezoid(src, t))
+    boundary = float(D[-1] - D[0])
+    residual = released - boundary - cleared
+    scale = max(abs(released), np.finfo(float).tiny)
+    return {
+        "cleared": cleared,
+        "released": released,
+        "boundary_term": boundary,
+        "residual": float(residual),
+        "relative_residual": float(residual / scale),
+    }
 
 
 def summarize(out: Dict[str, np.ndarray]) -> Dict[str, float]:

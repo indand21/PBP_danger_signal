@@ -118,6 +118,17 @@ class SimulationResult:
 
         return C_effects
 
+    def get_free_effect_site_concentration(self, pk_model=None,
+                                           weight_kg: float = 70.0) -> np.ndarray:
+        """Unbound effect-site concentration, mg/L.
+
+        ``fu`` times the total. This is the concentration that drove killing
+        and the one the reported free-drug indices are computed from.
+        """
+        fu = self.params.get('_fraction_unbound', 1.0)
+        return fu * self.get_effect_site_concentration(pk_model=pk_model,
+                                                       weight_kg=weight_kg)
+
     @staticmethod
     def _time_above_threshold(t: np.ndarray, values: np.ndarray, threshold: float) -> float:
         """Integrate time above a threshold with linear crossing interpolation.
@@ -176,6 +187,45 @@ class SimulationResult:
         }
 
 
+def check_integration(sol, t_end: float, where: str,
+                      nonnegative_rows=None, neg_rel_tol: float = 1e-9,
+                      neg_abs_tol: float = 1e-3) -> None:
+    """Refuse an integration that did not complete or is not physical.
+
+    Raises RuntimeError, naming the layer, if the solver reported failure,
+    stopped before ``t_end``, produced non-finite states, or drove any row in
+    ``nonnegative_rows`` (population states) materially below zero.
+
+    "Materially" means below ``-max(neg_abs_tol, neg_rel_tol * scale)``.
+    Clipping in the right-hand side keeps states near zero rather than
+    exactly at it, so small undershoot is integration noise: rounding level
+    on a large state, and of order 1e-5 on a state that is itself zero (a
+    zero inoculum gave -3e-5 CFU/mL). The absolute floor of 1e-3 state units
+    -- a thousandth of an organism per mL, or of a pg/mL -- sits well above
+    that noise and far below anything physical.
+
+    Added after an external review (R11) found failed integrations being
+    returned with only a printed warning, and the danger-signal layer reading
+    solver output without checking success at all.
+    """
+    if not sol.success:
+        raise RuntimeError(f"{where}: integration did not succeed "
+                           f"({getattr(sol, 'message', 'no message')})")
+    t = np.asarray(sol.t, dtype=float)
+    if t.size == 0 or abs(t[-1] - t_end) > 1e-9 * max(1.0, abs(t_end)):
+        reached = t[-1] if t.size else float("nan")
+        raise RuntimeError(f"{where}: integration stopped at t = {reached:g}, "
+                           f"before the requested end t = {t_end:g}")
+    y = np.asarray(sol.y, dtype=float)
+    if not np.all(np.isfinite(y)):
+        raise RuntimeError(f"{where}: non-finite state values in the solution")
+    for row in (nonnegative_rows or []):
+        lo, scale = float(np.min(y[row])), float(np.max(np.abs(y[row])))
+        if lo < -max(neg_abs_tol, neg_rel_tol * scale):
+            raise RuntimeError(f"{where}: state row {row} went negative "
+                               f"(min {lo:.3g} on a scale of {scale:.3g})")
+
+
 def run_simulation(
     pk_model,
     regimen,
@@ -188,6 +238,7 @@ def run_simulation(
     dense_output=False,
     method='RK45',
     pd_parameters=None,
+    fraction_unbound: Optional[float] = None,
 ) -> SimulationResult:
     """
     Run a complete QSP simulation (PK coupled to bacterial PD)
@@ -245,8 +296,44 @@ def run_simulation(
     # Elimination rate constant: CL (L/h) / Vc (L) = per hour
     k_elim = CL_val / Vc_val  # per hour
 
+    # PK REPRESENTATION. This is a ONE-compartment model: elimination at
+    # k = CL/Vc, solved analytically from the dosing history, with the
+    # effect-site concentration taken as Kp times the central concentration.
+    # Vp and Q are accepted by the PK model but do not enter. The drug states
+    # in the result are filled from this same solution after integration
+    # (see below), so the concentration that drives killing and the amounts
+    # the result exports cannot disagree. Previously four "two-compartment"
+    # ODE states were integrated alongside from pk_model.ode_rhs, which does
+    # not conserve drug; they were exported but never drove killing.
+
+    # BINDING CONVENTION. Kp is a TOTAL-concentration partition, so only the
+    # unbound fraction of the effect-site concentration is pharmacologically
+    # active. fu is applied in exactly one place, to the concentration that
+    # drives killing; get_effect_site_concentration() still returns the total,
+    # so get_pkpd_indices() multiplying by fu is not a second application.
+    # Default 1.0 reproduces the behaviour of callers predating this.
+    if fraction_unbound is not None:
+        fu_val = float(fraction_unbound)
+    elif pd_parameters is not None:
+        fu_val = float(getattr(pd_parameters, 'fraction_unbound', 1.0))
+    else:
+        fu_val = 1.0
+    if not 0 < fu_val <= 1:
+        raise ValueError("fraction_unbound must be in (0, 1]")
+
+    def absorption_amount_analytical(t):
+        """Drug remaining in the oral absorption depot, mg (zero for IV)."""
+        if not is_oral:
+            return 0.0
+        return float(sum(regimen.dose_mg * np.exp(-Ka_val * (t - td))
+                         for td in regimen.get_dose_times() if t > td))
+
     def get_C_effect_analytical(t):
-        """Compute effect-site concentration analytically from dosing history."""
+        """Effect-site concentration, mg/L: Kp times the central value."""
+        return Kp_val * central_conc_analytical(t)
+
+    def central_conc_analytical(t):
+        """Central concentration, mg/L, from the one-compartment solution."""
         C_total = 0.0
         dose_times = regimen.get_dose_times()
         inf_duration_h = regimen.infusion_duration_min / 60.0
@@ -285,20 +372,23 @@ def run_simulation(
 
             C_total += C
 
-        return Kp_val * C_total  # already in mg/L if Vc is in L
+        return C_total  # mg/L, since Vc is in L
 
     def combined_rhs(t, y):
         """ODE function for PK + PD"""
 
-        # Get current infusion rate from regimen (only for IV infusion PK state)
-        inf_rate = regimen.get_infusion_rate(t)
+        # The drug states carry no dynamics here: PK is solved analytically,
+        # and they are filled from that solution after integration. Keeping
+        # their derivatives at zero also keeps them out of the adaptive
+        # solver's error control, which the old non-conserving states shared
+        # with the bacterial states.
+        pk_dydt = np.zeros(4)
 
-        # PK dynamics (update PK state for completeness, but use analytical C)
-        pk_state = y[0:4]
-        pk_dydt = pk_model.ode_rhs(t, pk_state, infusion_rate=inf_rate)
-
-        # Use analytical concentration (robust for both IV and oral)
-        C_effect = get_C_effect_analytical(t)
+        # Only unbound drug acts. Kp is a TOTAL-concentration partition, so
+        # the free effect-site concentration is fu times it, and this is the
+        # single place binding is applied; get_effect_site_concentration()
+        # deliberately still returns the total.
+        C_effect = fu_val * get_C_effect_analytical(t)
 
         # PD dynamics
         pd_state = y[4:13]  # 9 PD states (incl. PAMP and D_host)
@@ -306,23 +396,36 @@ def run_simulation(
                                drug_class=drug_class, is_static=(drug_class=='static'))
 
         dydt = np.concatenate([pk_dydt, pd_dydt])
+        # A non-finite derivative must stop the run here. Left to the solver,
+        # NaN derivatives at the first step give RK45 a NaN step size, every
+        # exit test then compares false, and solve_ivp never returns.
+        if not np.all(np.isfinite(dydt)):
+            raise RuntimeError(f"bacterial PD (run_simulation): non-finite "
+                               f"derivative at t = {t:g}")
         return dydt
 
     # Solve ODE with error handling and adaptive stepping
-    try:
-        sol = solve_ivp(combined_rhs, t_span, y0, method=method,
-                        dense_output=dense_output, max_step=0.1,
-                        rtol=1e-6, atol=1e-8)
-
-        if not sol.success:
-            print(f"Warning: ODE solver did not converge successfully. Message: {sol.message}")
-    except Exception as e:
-        print(f"Error in ODE integration: {e}")
-        raise
+    sol = solve_ivp(combined_rhs, t_span, y0, method=method,
+                    dense_output=dense_output, max_step=0.1,
+                    rtol=1e-6, atol=1e-8)
+    # Fail loudly rather than return a partial or non-finite trajectory. Rows
+    # 4-7 are the bacterial subpopulations and immune effectors.
+    check_integration(sol, t_end=t_span[1], where="bacterial PD (run_simulation)",
+                      nonnegative_rows=[4, 5, 6, 7])
 
     # Extract results
     t = sol.t
-    y = sol.y.T  # transpose to (n_times, n_states)
+    y = np.array(sol.y.T)  # (n_times, n_states); a copy, so sol is untouched
+
+    # Drug states, from the one-compartment solution that drove killing.
+    # There is no peripheral compartment and no effect-site AMOUNT (the
+    # effect site is an instantaneous partition, Kp * C_central), so those
+    # two states are identically zero; get_effect_site_concentration()
+    # returns the effect-site concentration.
+    y[:, 0] = [Vc_val * central_conc_analytical(tt) for tt in t]
+    y[:, 1] = 0.0
+    y[:, 2] = [absorption_amount_analytical(tt) for tt in t]
+    y[:, 3] = 0.0
 
     state_names = ['A_central', 'A_peripheral', 'A_absorption', 'A_effect',
                    'B_rep', 'B_pers', 'B_SCV', 'N_eff', 'Damage', 'IL6', 'TNF', 'PAMP',
@@ -334,9 +437,9 @@ def run_simulation(
     # above (the calibrated kill lives in the pd_model / BacterialParameters).
     result_params = {'drug_class': drug_class, 'weight': weight_kg,
                      '_CL_val': CL_val, '_Vc_val': Vc_val, '_Kp_val': Kp_val,
-                     '_Ka_val': Ka_val, '_regimen': regimen}
+                     '_Ka_val': Ka_val, '_regimen': regimen,
+                     '_fraction_unbound': fu_val}
     if pd_parameters is not None:
         result_params['_mic'] = getattr(pd_parameters, 'mic', None)
-        result_params['_fraction_unbound'] = getattr(pd_parameters, 'fraction_unbound', 1.0)
 
     return SimulationResult(t, y, state_names, result_params)

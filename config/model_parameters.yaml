@@ -1,6 +1,16 @@
 # ============================================================================
 # QSP Model Configuration File
 # ============================================================================
+# NOT THE ACTIVE CONFIGURATION FOR THE DANGER-SIGNAL STUDY.
+# This file is read only by the legacy src/utils/config_manager.py. The
+# danger-signal study takes its parameters from the dataclass defaults in
+# src/core/parameters.py, and its yields from FINAL_YIELDS_FG_PER_CFU in
+# src/analysis/danger_signal.py. The bactericidal section below documents an
+# OLDER damage-driven killing formulation (damage50, dmg_rate, kill_rate);
+# the study uses a saturating Hill kill (k_kill_max, kill_C50, kill_hill)
+# that does not appear here. Editing this file does not change any reported
+# result. See config/README.md.
+#
 # This file contains all configurable parameters for the QSP antibiotic model.
 # Edit values here instead of modifying source code.
 

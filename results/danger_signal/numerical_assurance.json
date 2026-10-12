@@ -1,0 +1,81 @@
+{
+ "analytical_benchmark": {
+  "step": {
+   "max_relative_error": 5.41201918853321e-07,
+   "auc_relative_error": 1.7989522429391743e-09,
+   "peak_pg_mL": 0.3597122302158253
+  },
+  "on_off_8h": {
+   "max_relative_error": 0.00691815449828514,
+   "auc_relative_error": 8.291340458929764e-05,
+   "peak_pg_mL": 0.35971223021552345
+  },
+  "interpretation": "For a smooth (step) source the integrator matches the closed-form solution to ~5e-7 pointwise. For the on/off source the pointwise maximum is larger (~7e-3) and occurs AT the switch instants only: the integrator interpolates the source linearly between grid points whereas the reference switches instantaneously, so the two differ over one grid interval at each edge. That is a difference in how a discontinuous forcing is represented, not accumulated integration error, which is why the area under the curve -- the reported quantity -- agrees to ~8e-5. No reported result is a pointwise value at a switch instant."
+ },
+ "tolerance_tightening": {
+  "tightening_factor": 0.001,
+  "default": {
+   "bacterial_RK45": {
+    "rtol": 1e-06,
+    "atol": 1e-08
+   },
+   "danger_signal_LSODA": {
+    "rtol": 1e-06,
+    "atol": 1e-09
+   }
+  },
+  "rows": [
+   {
+    "target_fT_pct": 40.0,
+    "kill_difference_default": 0.09844568091318973,
+    "kill_difference_tight": 0.09844590281110088,
+    "abs_change_kill_difference": 2.2189791115678759e-07,
+    "rel_change_ratio_low": 9.377958078944416e-05,
+    "rel_change_ratio_high": 9.264996859599219e-05
+   },
+   {
+    "target_fT_pct": 60.0,
+    "kill_difference_default": 0.041432942010570795,
+    "kill_difference_tight": 0.0414328803905355,
+    "abs_change_kill_difference": 6.162003529652793e-08,
+    "rel_change_ratio_low": 0.0006575589999277107,
+    "rel_change_ratio_high": 0.0006582755294816411
+   },
+   {
+    "target_fT_pct": 80.0,
+    "kill_difference_default": 0.020844261492502625,
+    "kill_difference_tight": 0.02084419544835736,
+    "abs_change_kill_difference": 6.604414526378832e-08,
+    "rel_change_ratio_low": 0.0009917763796142025,
+    "rel_change_ratio_high": 0.0009931604008138078
+   },
+   {
+    "target_fT_pct": 95.0,
+    "kill_difference_default": 0.013475516981793945,
+    "kill_difference_tight": 0.013475492641942033,
+    "abs_change_kill_difference": 2.43398519117477e-08,
+    "rel_change_ratio_low": 0.0003864259469140188,
+    "rel_change_ratio_high": 0.0003856048186378972
+   }
+  ],
+  "max_abs_change_kill_difference": 2.2189791115678759e-07,
+  "max_rel_change_cost_ratio": 0.0009931604008138078
+ },
+ "provenance": {
+  "git_head": "fd78c39b0b1572aa0e3181a3d5c46359ccd5c425",
+  "git_dirty": true,
+  "python": "3.12.4",
+  "numpy": "2.4.6",
+  "scipy": "1.15.3",
+  "numpy_scipy_supported": true,
+  "platform": "win32",
+  "final_yields_fg_per_CFU": {
+   "piperacillin": 5.15,
+   "ceftazidime": 4.93,
+   "isepamicin": 0.28,
+   "imipenem": 0.986,
+   "meropenem": 0.986
+  },
+  "solver_note": "see 'default' and 'tightening_factor' above"
+ }
+}

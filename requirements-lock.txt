@@ -1,0 +1,23 @@
+# Exact versions for reproducing the danger-signal study's results.
+#
+#   python -m venv .venv
+#   .venv\Scripts\python -m pip install -r requirements-lock.txt   (Windows)
+#   .venv/bin/python -m pip install -r requirements-lock.txt       (POSIX)
+#
+# Verified with Python 3.12.4: the full test suite passes and the committed
+# files in results/danger_signal/ regenerate from this environment (each file
+# records the versions it was produced with in its "provenance" block).
+#
+# SciPy is pinned to 1.15.3, the version whose integrators produced the
+# reported results. NumPy is pinned to 2.4.6, the newest release inside
+# SciPy 1.15.3's supported range (>=1.23.5,<2.5). An earlier development
+# environment ran NumPy 2.5.2 against this SciPy, outside that range; SciPy
+# warns at import in that configuration.
+numpy==2.4.6
+scipy==1.15.3
+pandas==2.3.3
+matplotlib==3.10.8
+PyYAML==6.0.2
+SALib==1.4.8
+packaging==25.0
+pytest==9.0.3

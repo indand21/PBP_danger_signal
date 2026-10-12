@@ -8,9 +8,15 @@ from typing import Callable, Dict, Tuple
 
 class TwoCompartmentPKModel:
     """
-    Two-compartment linear PK model with optional effect-site compartment
+    PK parameter container, plus a legacy two-compartment ODE.
 
-    Dynamics:
+    Despite the name, run_simulation() treats this as a ONE-compartment model:
+    it uses CL, Vc, Ka and Kp in an analytical solution, and Vp and Q do not
+    enter. The ODE in ode_rhs() is known to be defective -- see its docstring
+    -- and the equations below describe what it was intended to do, not what
+    it does.
+
+    Intended dynamics:
         dA_c/dt = -CL/Vc * A_c - Q/Vc * (A_c - A_p) + Input
         dA_p/dt = Q/Vc * A_c - Q/Vp * A_p
         dA_e/dt = Kp * (C_c - C_e)  [if effect_site_model=True]
@@ -69,6 +75,21 @@ class TwoCompartmentPKModel:
     def ode_rhs(self, t: float, A: np.ndarray, infusion_rate: float = 0.0) -> np.ndarray:
         """
         Right-hand side of PK ODE for state vector A = [A_c, A_p, A_a, A_e]
+
+        WARNING -- KNOWN DEFECTIVE, NOT USED BY THE DANGER-SIGNAL STUDY.
+        These equations do not conserve drug. The central equation applies
+        CL and Q to the amount A_c without dividing by Vc, while the
+        peripheral equation divides by Vp, so the distribution fluxes do not
+        cancel and the system can create drug with no input (an external
+        review measured +12.8 mg/h for A_c = 100 mg, A_p = 50 mg). The /60
+        factors also assume mL/min, which run_simulation() does not use.
+
+        run_simulation() no longer calls this method: it uses an analytical
+        one-compartment solution and derives its drug states from that (see
+        tests/test_pk_representation.py). The legacy combination- and
+        sequential-therapy modules still call it to drive killing, so fixing
+        it would change their outputs; that is deliberately left as an open
+        decision rather than changed silently.
 
         Parameters:
             t: time (hour)

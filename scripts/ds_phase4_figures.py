@@ -3,7 +3,7 @@
 Reads results/danger_signal/phase4_analyses.json (so figures and numbers cannot
 drift) and writes docs/danger_signal_study/figures/.
 
-Every agent comparison is drawn with the measured 3.5-7x yield interval as a band
+Every agent comparison is drawn with the assumed 3.5-7x yield range as a band
 or a range, per the Phase 3 reporting rule: the claim is a ranking plus a range,
 never a single fold-change.
 """
@@ -64,7 +64,10 @@ def fig1_yield_table(d):
     ax.set_xlabel("danger-signal yield per CFU killed (fg/CFU)")
     handles = [plt.Line2D([], [], color=c, marker="o", ls="", ms=6) for c in
                ("#c0392b", "#2471a3", "#7f8c8d")]
-    ax.legend(handles, ["PBP-3 (cephalosporins)", "PBP-2 (carbapenems)",
+    # "PBP-3" rather than "cephalosporins": the red group includes
+    # piperacillin, which is a penicillin, so the class label was wrong.
+    ax.legend(handles, ["PBP-3-specific (cephalosporin, penicillin)",
+                        "PBP-2-specific (carbapenems)",
                         "ribosomal (aminoglycoside)"], frameon=False,
               fontsize=7.5, loc="lower right")
     ax.set_title("Every agent here is bactericidal, yet yields differ "
@@ -74,7 +77,7 @@ def fig1_yield_table(d):
 
 
 def fig2_matched_exposure(d):
-    """Matched %fT>MIC: identical killing, divergent inflammatory cost."""
+    """Matched %fT>MIC: near-equal killing, divergent inflammatory cost."""
     rows = d["analysis3_matched_exposure"]["rows"]
     t = [r["target_fT_pct"] for r in rows]
     caz_kill = [r["arms"]["ceftazidime"]["net_log10_change"] for r in rows]
@@ -89,7 +92,7 @@ def fig2_matched_exposure(d):
     a1.axhline(0.0, color="k", lw=0.6, ls=":")
     a1.set_xlabel("matched exposure target (% fT>MIC)")
     a1.set_ylabel("48 h net change (log$_{10}$ CFU)")
-    a1.set_title("Killing is matched by construction", fontsize=8.5)
+    a1.set_title("Killing is nearly equal at matched exposure", fontsize=8.5)
     a1.legend(fontsize=7.5, loc="upper right", frameon=True, framealpha=1.0,
               edgecolor="none")
 
@@ -103,7 +106,7 @@ def fig2_matched_exposure(d):
     a2.set_title("Inflammatory cost is not", fontsize=8.5)
     a2.set_ylim(0.6, 30)
     a2.text(0.03, 0.97,
-            "shaded band = 3.5-7x measured yield interval;\n"
+            "shaded band = assumed 3.5-7x yield range;\n"
             "the ratio is reported as a RANGE, never a single value",
             transform=a2.transAxes, fontsize=7, va="top", color="#555555")
     _save(fig, "fig2_matched_exposure")
@@ -146,11 +149,20 @@ def fig3_cost_index(d):
     a2.set_xlabel("% fT>MIC")
     a2.set_ylabel("inflammatory cost\n(attributable AUC$_{DS}$, pg·h/mL)")
     a2.set_title("Same exposure, two different costs", fontsize=8.5)
-    a2.set_ylim(0.2, 60)
+    # Limits derived from the data, with headroom: a hard-coded upper bound
+    # silently clipped the highest-cost regimen in an earlier version.
+    # The extra room below the lowest point is for the annotation, which would
+    # otherwise be drawn over the low-cost meropenem cluster.
+    _c = [r["cost_AUC_DS"] for r in lib if r["cost_AUC_DS"] > 0]
+    a2.set_ylim(min(_c) * 0.22, max(_c) * 1.6)
     a2.legend(frameon=False, fontsize=7.5, loc="upper right")
+    # The quoted range is read from analysis 3 rather than hard-coded, so the
+    # annotation cannot drift from the data it describes.
+    _r = [x["ratio_AUC_DS"] for e in d["analysis3_matched_exposure"]["rows"]
+          for x in e["cost_ratio_range"]]
     a2.text(0.03, 0.04,
             "at matched %fT>MIC the two agents differ by\n"
-            "several-fold in cost (range 3.5-7.6x)",
+            f"several-fold in cost (range {min(_r):.1f}-{max(_r):.1f}x)",
             transform=a2.transAxes, fontsize=7, ha="left", va="bottom",
             color="#555555")
     _save(fig, "fig3_cost_index")
@@ -182,17 +194,23 @@ def fig4_exposure_response(d):
     a1.set_title("Cost falls with exposure, then flattens", fontsize=8.5)
     a1.set_ylim(1, 1e5)
     a1.legend(frameon=False, fontsize=6.5, ncol=2, loc="upper right")
+    # Worded to match the manuscript: rescaling potency and re-solving the
+    # dose preserves C/C50 in a linear PK system, so the superposition is
+    # largely a consequence of how susceptibility is represented.
     a1.text(0.03, 0.04,
-            "all susceptibility curves SUPERIMPOSE:\n"
-            "cost tracks exposure, not MIC",
+            "susceptibility curves superimpose, largely by\n"
+            "construction (potency and dose rescale together)",
             transform=a1.transAxes, fontsize=7, va="bottom", color="#555555")
     a2.axhline(0.0, color="k", lw=0.7, ls=":")
     a2.set_xlabel("exposure target (% fT>MIC)")
     a2.set_ylabel("48 h net change (log$_{10}$ CFU)")
     a2.set_title("Stasis boundary (dotted)", fontsize=8.5)
+    cov = a5.get("coverage", {}).get("populated_arms", {})
     fig.text(0.5, -0.04,
-             "No exposure increase anywhere on the map raised inflammatory "
-             "cost: under-dosing is bad for both objectives at once.",
+             "No evaluated exposure increase raised inflammatory cost "
+             f"(ceftazidime arms shown; {cov.get('ceftazidime', '?')} of "
+             f"{a5.get('coverage', {}).get('n_possible_arms_per_agent', '?')} "
+             "populated - missing points lie outside the dose bracket).",
              ha="center", fontsize=7.5, color="#555555")
     _save(fig, "fig4_exposure_response")
 
