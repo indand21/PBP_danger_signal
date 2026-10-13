@@ -129,6 +129,34 @@ def test_effective_mic_positive():
     assert mic > 0 and np.isfinite(mic)
 
 
+def test_effective_mic_is_the_true_stasis_concentration():
+    """The returned concentration must actually produce stasis.
+
+    It used to be a linear interpolation of the crossing across one step of a
+    25-point geometric grid spanning 0.01-100 mg/L. Each step is a factor of
+    1.47, so the answer was systematically about 4% off: it disagreed with the
+    two other effective-MIC calculations in the repository, and it scaled the
+    MIC-normalised exposures of the curve-level validation. Checking the
+    returned value against the quantity it is defined as, rather than against
+    a stored number, is what makes this independent of the grid.
+    """
+    from src.analysis.external_validation import (
+        _delta_log10_const_conc, _neutropenic_params)
+    from src.core.pd_model import BacterialPopulationODE
+
+    scenario = {"initial_burden": 1e6}
+    mic = effective_mic("cidal", scenario)
+    pd_model = BacterialPopulationODE(_neutropenic_params())
+    delta = _delta_log10_const_conc(pd_model, mic, "cidal", 1e6)
+    # Stasis is delta == 0; the solver is run to a tight tolerance, so this is
+    # a real check and not a restatement of the tolerance.
+    assert abs(delta) < 1e-3, f"effective_mic {mic} gives delta-log10 {delta}"
+
+    # And it must bracket: 5% either side has to straddle stasis.
+    assert _delta_log10_const_conc(pd_model, mic * 0.95, "cidal", 1e6) > 0
+    assert _delta_log10_const_conc(pd_model, mic * 1.05, "cidal", 1e6) < 0
+
+
 def test_dose_response_cidal_kills_and_is_monotonic():
     ig, dg, mic = dose_response_curve(_dr("meropenem", "cidal", "ft_mic"))
     assert mic > 0

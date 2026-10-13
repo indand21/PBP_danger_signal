@@ -44,6 +44,7 @@ from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 from scipy.integrate import solve_ivp, trapezoid
+from scipy.optimize import brentq
 
 from src.core.parameters import (get_default_parameters,
                                  get_drug_pk_parameters,
@@ -338,6 +339,19 @@ def effective_mic(drug_class: str, scenario: Dict) -> float:
     host. For cidal drugs stasis is Delta-log10 = 0 (a true zero-crossing); for
     static drugs, which asymptote to but never cross stasis, it is the
     concentration where Delta-log10 falls to a small epsilon (default 0.1).
+
+    The coarse grid below only BRACKETS the crossing; the value is then solved
+    for continuously. Returning the grid's linear interpolation instead, as
+    this function used to, carried a systematic error of about 4%: 25 points
+    spread geometrically over 0.01-100 mg/L step by a factor of 1.47, and
+    interpolating Delta-log10 linearly in log C across a step that wide is not
+    accurate. That error went straight into the MIC-normalised exposures of
+    the curve-level validation, and it made this function disagree with the
+    two other effective-MIC calculations in the repository
+    (``scripts/model_qualification.effective_mic`` and
+    ``scripts/ds_phase4_analyses.effect_site_mic``), both of which already
+    solved continuously. The three now agree to within the 0.006% their
+    slightly different initial states imply.
     """
     params = _neutropenic_params()
     pd_model = BacterialPopulationODE(params)
@@ -347,11 +361,16 @@ def effective_mic(drug_class: str, scenario: Dict) -> float:
                       scenario.get("mic_search_hi", 100.0),
                       scenario.get("mic_search_n", 25))
     deltas = np.array([_delta_log10_const_conc(pd_model, C, drug_class, b0) for C in Cs])
+
+    def excess(log_c):
+        return _delta_log10_const_conc(
+            pd_model, float(np.exp(log_c)), drug_class, b0) - target
+
     # deltas decrease as C increases; find the crossing of `target`.
     for i in range(1, len(Cs)):
         if deltas[i - 1] >= target >= deltas[i]:
-            log_c = np.interp(target, [deltas[i], deltas[i - 1]],
-                              [np.log(Cs[i]), np.log(Cs[i - 1])])
+            log_c = brentq(excess, np.log(Cs[i - 1]), np.log(Cs[i]),
+                           xtol=1e-8, rtol=1e-12)
             return float(np.exp(log_c))
     # fallback: closest point to target
     return float(Cs[int(np.argmin(np.abs(deltas - target)))])

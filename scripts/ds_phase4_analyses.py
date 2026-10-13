@@ -642,6 +642,47 @@ def analysis5_divergence_map(mic_factors=(1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0),
     }
 
 
+def stasis_thresholds():
+    """%fT>MIC at which 48 h net kill is zero, per agent, in two hosts.
+
+    Quoted in the manuscript and S2.2 and, until now, stored in no results
+    file: it was reproducible only by running a helper script by hand, so the
+    consistency audit could not check it and it could drift silently. It is
+    recorded here for the same reason every other quoted number is.
+
+    Both hosts are reported because they answer different questions. The
+    immunocompetent one is this study's own scenario. The immune-free one is
+    the condition Craig's neutropenic-animal thresholds were measured in, so
+    it is the only one his 30-40% band can be compared against.
+    """
+    out = {}
+    for label, params in (("immunocompetent", None),
+                          ("immune_free", immune_free_parameters())):
+        rows = {}
+        for agent in ("ceftazidime", "meropenem"):
+            def net(d):
+                return simulate(agent, d, 8.0, 6, params=params)["net_log10"]
+
+            lo, hi = 10.0, 60000.0
+            if net(lo) < 0 or net(hi) > 0:
+                rows[agent] = {"evaluated": False,
+                               "reason": "no stasis crossing inside the dose bracket"}
+                continue
+            dose = float(brentq(net, lo, hi, xtol=0.5))
+            sim = simulate(agent, dose, 8.0, 6, params=params)
+            rows[agent] = {"evaluated": True,
+                           "stasis_dose_mg_q8h": dose,
+                           "stasis_fT_pct": float(sim["fT"]),
+                           "net_log10_at_stasis": float(sim["net_log10"])}
+        out[label] = rows
+    out["note"] = ("A competent host needs less drug to hold the organism "
+                   "static, so the immunocompetent thresholds are the lower "
+                   "pair. Craig reports 30-40% fT>MIC for cephalosporins in "
+                   "neutropenic animals; the comparable figures here are the "
+                   "immune-free ones.")
+    return out
+
+
 def analysis6_predictions(a3, a4):
     """Falsifiable predictions and the experiment that would test them."""
     best = max(a4["candidates"], key=lambda k: abs(a4["candidates"][k]["spearman_rho"]))
@@ -834,6 +875,18 @@ def main():
         print(f"      quantitative: {p['quantitative']}")
         print(f"      falsified if: {p['falsified_if']}")
 
+    print("\n" + "=" * 74)
+    print("STASIS THRESHOLDS -- %fT>MIC at zero net kill")
+    print("=" * 74)
+    st = stasis_thresholds()
+    for host in ("immunocompetent", "immune_free"):
+        for agent, r in st[host].items():
+            if r.get("evaluated"):
+                print(f"  {host:16s} {agent:13s} {r['stasis_dose_mg_q8h']:8.1f} mg q8h"
+                      f"  ->  {r['stasis_fT_pct']:5.2f}% fT>MIC")
+            else:
+                print(f"  {host:16s} {agent:13s} not evaluated: {r['reason']}")
+
     payload = {
         "meta": {"mic_effect_site_mgL": MIC_EFFECT, "t_end_h": T_END,
                  "V_focus_mL": V_FOCUS, "layer2_reference":
@@ -849,6 +902,7 @@ def main():
         "analysis4_cost_index": a4,
         "analysis5_divergence_map": a5,
         "analysis6_predictions": a6,
+        "stasis_thresholds": st,
     }
     from src.utils.provenance import provenance
     payload["provenance"] = provenance(

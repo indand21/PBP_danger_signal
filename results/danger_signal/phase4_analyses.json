@@ -2059,8 +2059,39 @@
    "falsified_if": "n/a; recorded so the model is not over-read."
   }
  ],
+ "stasis_thresholds": {
+  "immunocompetent": {
+   "ceftazidime": {
+    "evaluated": true,
+    "stasis_dose_mg_q8h": 53.99390484861254,
+    "stasis_fT_pct": 21.63326552738847,
+    "net_log10_at_stasis": 0.006702773759392468
+   },
+   "meropenem": {
+    "evaluated": true,
+    "stasis_dose_mg_q8h": 127.06740101583891,
+    "stasis_fT_pct": 20.52180356912815,
+    "net_log10_at_stasis": -0.000555790704113131
+   }
+  },
+  "immune_free": {
+   "ceftazidime": {
+    "evaluated": true,
+    "stasis_dose_mg_q8h": 90.45045142171205,
+    "stasis_fT_pct": 33.63948712823465,
+    "net_log10_at_stasis": 0.0060895933777684015
+   },
+   "meropenem": {
+    "evaluated": true,
+    "stasis_dose_mg_q8h": 265.1413093144352,
+    "stasis_fT_pct": 32.217471804697,
+    "net_log10_at_stasis": -0.0014410109540257084
+   }
+  },
+  "note": "A competent host needs less drug to hold the organism static, so the immunocompetent thresholds are the lower pair. Craig reports 30-40% fT>MIC for cephalosporins in neutropenic animals; the comparable figures here are the immune-free ones."
+ },
  "provenance": {
-  "git_head": "e5c633e912b961f41dc3f9afa7225d35ecde74ba",
+  "git_head": "6a593c75d0f4d74b87d9364330abb15b8b9c6062",
   "git_dirty": true,
   "python": "3.12.4",
   "numpy": "2.4.6",

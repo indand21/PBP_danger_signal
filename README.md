@@ -36,8 +36,11 @@ an earlier version of this file overstated it:
   (`scripts/ds_bacterial_refit.py`, written to
   `results/danger_signal/bacterial_refit.json`). The half-maximal
   concentration is **anchored rather than fitted**: killing depends on
-  concentration only through the ratio `C/kill_C50`, so MIC-normalised data
-  cannot identify it, and it is instead set so that the model's broth stasis
+  concentration only through the ratio `C/kill_C50`, so expressing an exposure
+  in multiples of the model's own effective MIC cancels it exactly - the
+  objective moves 5e-10 log10 over a 120-fold range, which is zero to machine
+  precision - and MIC-normalised data therefore cannot identify it. It is
+  instead set so that the model's broth stasis
   concentration equals the calibration isolate's measured MIC of 1 mg/L. The
   Hill exponent is not identified either - the fit prefers 8 and cannot
   separate that from the 4 in use - and that one choice decides the residual
@@ -75,6 +78,20 @@ that condition: it zeroes the homeostatic target and the recruited increment
 together. A zeroed initial condition alone is **not** enough, since
 homeostasis refills it - see `immune_free_parameters` in
 `src/core/parameters.py` and the tests in `tests/test_immune_layer.py`.
+
+The three places that compute an effective MIC now agree to 0.003%. One of
+them used to interpolate the stasis crossing on a 25-point grid and was about
+4% high; because the kill function is steep near stasis, holding that
+concentration for 24 h gave a net change of -0.52 log10 CFU rather than the
+zero the quantity is defined as. It now solves continuously, and the test in
+`tests/test_external_validation.py` checks the returned value against the
+definition rather than against a stored number.
+
+The stasis threshold depends on the host, so both are recorded under
+`stasis_thresholds` in `results/danger_signal/phase4_analyses.json`:
+about 22% fT>MIC (ceftazidime) and 21% (meropenem) in an immunocompetent
+host, and 34% and 32% with the effector pool off, which is the condition the
+published neutropenic-animal thresholds were measured in.
 
 Measuring the half-maximal concentration rather than anchoring it is the
 outstanding piece of work on the bacterial layer: it needs a time-kill
@@ -155,7 +172,7 @@ this repository.
 python -m pytest -q
 ```
 
-544 tests pass, covering the pharmacokinetic conventions and the conservation
+545 tests pass, covering the pharmacokinetic conventions and the conservation
 of drug mass, the bacterial dynamics, mass conservation across the persister
 and small-colony-variant switches, the danger-signal layer and its
 mass-balance identity, the immune layer's units, fixed points and
