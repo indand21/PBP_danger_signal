@@ -128,7 +128,7 @@ python scripts/ds_phase5_tolerance.py    # endotoxin-tolerance term (ships disab
 python scripts/ds_phase4_figures.py      # figures, read back from the stored JSON
 ```
 
-Three further stages write their own JSON alongside the pipeline's without
+Five further stages write their own JSON alongside the pipeline's without
 feeding into it:
 
 ```bash
@@ -136,7 +136,23 @@ python scripts/ds_numerical_assurance.py       # analytical benchmark, tolerance
 python scripts/ds_mass_balance_convergence.py  # order of the mass-balance residual
 python scripts/ds_structural_sensitivity.py    # kill-parameter and immune-layer variants
 python scripts/ds_bacterial_refit.py           # bacterial-layer fit and identifiability
+python scripts/ds_validation_targets.py        # curve-level validation vs registry targets
+python scripts/ds_pk_refit.py                  # pharmacokinetic fit (not adopted)
 ```
+
+`ds_validation_targets.py` scores the digitized curves against the numeric
+acceptance targets recorded in `data/external_validation/registry.json`, which
+were previously computed by nothing. **Three of those targets are currently
+not met** and the script says so rather than failing quietly: the meropenem
+plasma RMSE and AUC, and the neutropenic-thigh stasis threshold, which the
+model places near 36% fT>MIC against a published 17.3%.
+
+`ds_pk_refit.py` fits the two identifiable pharmacokinetic parameters to the
+digitized plasma curve and meets all three of its targets, but **changes no
+default**: adopting it is a revision of the model and is left to the author.
+Running it also shows that the thigh threshold is *not* a pharmacokinetic
+problem — the refit leaves it where it was — so the two failures have
+different causes, one in the PK layer and one in the bacterial layer.
 
 `ds_bacterial_refit.py` reports the fit the bacterial parameters come from
 and the profiles behind the identifiability statements above; it changes no

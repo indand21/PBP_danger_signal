@@ -1,0 +1,92 @@
+{
+ "what_is_identifiable": "The PK layer is one-compartment in use: run_simulation reads CL, Vc, Ka and Kp, and Vp and Q do not enter. Only CL and Vc are fitted; Vp and Q are left at their current values because they are inert.",
+ "meropenem": {
+  "basis": "fitted to the digitised plasma curve",
+  "dataset": "meropenem_pk_1g",
+  "source": "Abulfathi AA et al. Front Pharmacol 2021;12:637618",
+  "current": {
+   "CL_L_per_h": 15.0,
+   "Vc_L_per_kg": 0.25,
+   "Vc_L_at_70kg": 17.5,
+   "rmse_log10": 0.33932924451336166,
+   "rmse_target_met": false,
+   "cmax_relative_error": -0.1664636079032591,
+   "cmax_target_met": true,
+   "auc_0_8h_relative_error": -0.20739631771200595,
+   "auc_target_met": false,
+   "terminal_half_life_h": 0.8084999999999998
+  },
+  "fitted": {
+   "CL_L_per_h": 12.1567845846836,
+   "Vc_L_per_kg": 0.2703082522942597,
+   "Vc_L_at_70kg": 18.921577660598178,
+   "rmse_log10": 0.04791401637863991,
+   "rmse_target_met": true,
+   "cmax_relative_error": -0.17981491180849474,
+   "cmax_target_met": true,
+   "auc_0_8h_relative_error": -0.024528925735914475,
+   "auc_target_met": true,
+   "terminal_half_life_h": 1.0786284175270517
+  },
+  "observed_terminal_half_life_h": 1.1522963379567348,
+  "published_popPK_for_comparison": {
+   "CL_L_per_h": 11.8,
+   "V1_L": 14.2,
+   "Q_L_per_h": 3.26,
+   "V2_L": 3.12,
+   "note": "Abulfathi's own two-compartment estimates, recorded in the registry. Not directly comparable to a one-compartment Vc, but the steady-state volume 17.3 L is the relevant scale."
+  },
+  "mouton_review_for_comparison": {
+   "Vss_L": 21.0,
+   "t_half_h": 1.0,
+   "source": "Mouton & van den Anker 1995, Clin Pharmacokinet 28:275-286"
+  }
+ },
+ "ceftazidime": {
+  "basis": "ANCHORED to the cited source, not fitted: this repository holds no digitised ceftazidime curve",
+  "source": "Leroy A et al. Antimicrob Agents Chemother 1984;25:638-642 (PMID 6375562), normal subjects n=5",
+  "measured": {
+   "t_half_h": 1.57,
+   "apparent_Vd_L_per_kg": 0.23,
+   "central_volume_L_per_kg": 0.127,
+   "protein_binding_pct": 17
+  },
+  "current": {
+   "CL_L_per_h": 7.0,
+   "Vc_L_per_kg": 0.17,
+   "implied_t_half_h": 1.1781000000000001
+  },
+  "anchored": {
+   "CL_L_per_h": 7.0,
+   "Vc_L_per_kg": 0.22655122655122656,
+   "implied_t_half_h": 1.57,
+   "note": "V = CL * t_half / ln 2 at the measured half-life; lands at 0.227 L/kg against Leroy's apparent Vd of 0.230"
+  }
+ },
+ "summary": {
+  "meropenem_targets_met_before": 1,
+  "meropenem_targets_met_after": 3,
+  "caveat": "A one-compartment model cannot reproduce a biexponential profile. If the fitted curve still misses a target, that is the structure failing, not the parameters, and the fix is a real two-compartment solution rather than a better search."
+ },
+ "provenance": {
+  "git_head": "77d477412caf32297da1f37025defcbfb36f231b",
+  "git_dirty": false,
+  "python": "3.12.4",
+  "numpy": "2.4.6",
+  "scipy": "1.15.3",
+  "numpy_scipy_supported": true,
+  "platform": "win32",
+  "final_yields_fg_per_CFU": {
+   "piperacillin": 5.15,
+   "ceftazidime": 4.93,
+   "isepamicin": 0.28,
+   "imipenem": 0.986,
+   "meropenem": 0.986
+  },
+  "endpoint": "plasma concentration, mg/L",
+  "exposure_index": "log10 RMSE against the digitised curve",
+  "solver": {
+   "pk": "analytic one-compartment with effect site"
+  }
+ }
+}

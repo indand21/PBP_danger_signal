@@ -1,0 +1,84 @@
+{
+ "targets_restated_from": {
+  "meropenem_pk_1g": "Targets: RMSE < 0.15 log10 mg/L; Cmax ratio within +/-20%; AUC0-8h within +/-15%.",
+  "meropenem_neutropenic_thigh": "Success: model stasis threshold within ~5-10 pp of 17.3%; monotonic sigmoidal kill curve."
+ },
+ "datasets": {
+  "meropenem_pk_1g": {
+   "rmse_log10": {
+    "value": 0.33932924451336166,
+    "target": "< 0.15",
+    "met": false
+   },
+   "cmax_relative_error": {
+    "value": -0.1664636079032591,
+    "target": "within +/-0.20",
+    "met": true
+   },
+   "auc_0_8h_relative_error": {
+    "value": -0.20739631771200595,
+    "target": "within +/-0.15",
+    "met": false
+   },
+   "terminal_half_life_h": {
+    "observed": 1.1522963379567348,
+    "model": 0.8084999999999998,
+    "note": "not a registry target; recorded because the two targets above both follow from it"
+   },
+   "predicted_over_observed": [
+    null,
+    0.8335363920967409,
+    0.8834558208839882,
+    0.8773446496584785,
+    0.8296498621501455,
+    0.6907915861012999,
+    0.5385837698120162,
+    0.29791258891462014,
+    0.18778118434465738
+   ]
+  },
+  "meropenem_neutropenic_thigh": {
+   "effective_mic_mgL": 0.7704817512908506,
+   "model_stasis_fT_pct": 35.887168928074786,
+   "published_stasis_fT_pct": 17.3,
+   "gap_percentage_points": 18.587168928074785,
+   "target": "within 5-10 percentage points of 17.3",
+   "met": false,
+   "model_1log_fT_pct": 43.044236212659854,
+   "published_1log_fT_pct": 26.0,
+   "monotone": true,
+   "published_source": "Sabet M et al. Antimicrob Agents Chemother 2020; stasis, 1-log and 2-log at 17.3, 26.0 and 41.7 %24-h fT>MIC"
+  }
+ },
+ "summary": {
+  "n_targets_not_met": 3,
+  "not_met": [
+   "meropenem_pk_1g.rmse_log10",
+   "meropenem_pk_1g.auc_0_8h_relative_error",
+   "meropenem_neutropenic_thigh"
+  ],
+  "interpretation": "Both failures run in the same direction -- the model needs more exposure than the data do -- and both follow from a terminal half-life that is too short, so the plasma profile decays faster than observed and the time spent above any threshold is understated."
+ },
+ "provenance": {
+  "git_head": "b9ae2ea7e4fcfce6a6d59dbf87055c08389c55c9",
+  "git_dirty": true,
+  "python": "3.12.4",
+  "numpy": "2.4.6",
+  "scipy": "1.15.3",
+  "numpy_scipy_supported": true,
+  "platform": "win32",
+  "final_yields_fg_per_CFU": {
+   "piperacillin": 5.15,
+   "ceftazidime": 4.93,
+   "isepamicin": 0.28,
+   "imipenem": 0.986,
+   "meropenem": 0.986
+  },
+  "endpoint": "curve-level validation against registry acceptance targets",
+  "exposure_index": "%fT>MIC for the dose-response; plasma mg/L for the PK",
+  "solver": {
+   "pk": "analytic two-compartment with effect site",
+   "bacterial": "LSODA rtol 1e-6 atol 1e-8 max_step 0.2 h"
+  }
+ }
+}

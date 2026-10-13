@@ -318,8 +318,17 @@ def get_drug_pk_parameters(drug_name: str) -> PKParameters:
     Vc and Vp are per-kg in L/kg (scaled by patient weight in simulation).
 
     References:
-        Meropenem: Drusano 1995 (CL 9-15 L/h, Vd ~0.3 L/kg, t1/2 ~1 h)
-        Ceftazidime: Leroy 1984 / Nix 1991 (CL 6-8 L/h, Vd ~0.25 L/kg, t1/2 ~1.8 h)
+        Meropenem: Mouton & van den Anker 1995, Clin Pharmacokinet 28:275-286
+            (Vss ~21 L = 0.30 L/kg at 70 kg, t1/2 ~1 h, Cmax ~30 mg/L after
+            1 g IV; CL 9-15 L/h). NOTE: Vc + Vp below is 0.40 L/kg, above the
+            cited 0.30 -- see S2.1 and the PK validation result in S3.
+        Ceftazidime: Leroy 1984, AAC 25:638-642 (PMID 6375562; normal
+            subjects n=5: t1/2 1.57 h, central volume 0.127 L/kg, apparent
+            Vd 0.230 L/kg, protein binding 17%). fraction_unbound = 0.90 below
+            follows the product label, NOT Leroy, whose 17% implies 0.83.
+            "Nix 1991" was cited here for disposition in error: that paper
+            (AAC 35:1947 and 1953) is on tissue penetration and belongs to
+            Kp, where it is now cited.
         Doxycycline: Agwuh & MacGowan 2006 (CL 3-8 L/h, Vd 0.5-1.0 L/kg)
         Linezolid: Blevins 2003 (CL 3-6 L/h, Vd 0.6-0.8 L/kg)
         Ciprofloxacin: Lettieri 1992 (CL 15-30 L/h, Vd 2.0 L/kg)
@@ -356,18 +365,20 @@ def get_drug_pk_parameters(drug_name: str) -> PKParameters:
         )
     elif drug_name.lower() == 'ceftazidime':
         # IV ceftazidime: 1-2 g q8h
-        # Literature (Leroy 1984; Nix 1991; FDA label): CL 6-8 L/h with normal
-        # renal function, Vd(ss) ~0.21-0.28 L/kg, t1/2 ~1.6-2.0 h, protein
-        # binding ~10%. 1 g IV 30 min infusion gives Cmax ~65-80 mg/L.
+        # Literature (Leroy 1984; FDA label): CL 6-8 L/h with normal renal
+        # function, Vd(ss) ~0.21-0.28 L/kg, t1/2 ~1.6-2.0 h. 1 g IV 30 min
+        # infusion gives Cmax ~65-80 mg/L. Protein binding ~10% is the
+        # LABEL value; Leroy measured 17%. Kp below is where Nix 1991
+        # (tissue penetration) belongs.
         # Required for the danger-signal study as the PBP-3 (high-yield)
         # comparator against meropenem/imipenem (PBP-2).
         return PKParameters(
             CL=7.0,        # L/h (total; literature 6-8 L/h)
-            Vc=0.17,       # L/kg (central; Vd(ss) ~0.25 L/kg including peripheral)
-            Vp=0.09,       # L/kg
+            Vc=0.17,       # L/kg (central; Leroy 1984 measured 0.127 L/kg)
+            Vp=0.09,       # L/kg (Vc + Vp = 0.26, inside Leroy's 0.230 +/- range)
             Q=5.0,         # L/h (estimated)
             Ka=0.0,        # IV only
-            Kp=0.5         # tissue penetration ratio
+            Kp=0.5         # tissue penetration ratio (Nix 1991, AAC 35:1947/1953)
         )
     elif drug_name.lower() == 'linezolid':
         # IV/PO linezolid: 600 mg q12h
