@@ -19,10 +19,40 @@ class BacterialParameters:
     scv_switch_midpoint: float = 0.3  # static-inhibition level at half-max SCV emergence
     scv_switch_width: float = 0.05    # sigmoid width; smaller = sharper
     # Saturating (time-dependent) bactericidal kill: rate plateaus at k_kill_max,
-    # half-maximal at kill_C50 (effect-site mg/L), setting the effective MIC ~1 mg/L
-    # plasma. Replaces the earlier over-potent, concentration-dependent kill.
-    k_kill_max: float = 3.0   # per hour, maximum bactericidal kill rate
-    kill_C50: float = 0.6     # mg/L effect-site, concentration at half-max kill
+    # half-maximal at kill_C50 (effect-site mg/L). Replaces the earlier
+    # over-potent, concentration-dependent kill.
+    #
+    # REFITTED 2026-10-13 (review R7) by scripts/ds_bacterial_refit.py, which
+    # also records what the data can and cannot identify. Previously
+    # k_kill_max = 3.0, kill_C50 = 0.6, neither fitted, with a comment
+    # claiming kill_C50 "sets the effective MIC ~1 mg/L"; it set it to 0.40,
+    # and that sentence is what made an assumed parameter read as a
+    # calibrated one.
+    #
+    #   k_kill_max  the value the two digitized datasets return (meropenem
+    #               time-kill n=3, neutropenic-thigh dose-response n=47). The
+    #               objective is flat between about 1.1 and 2.2, so the digits
+    #               past the second are not meaningful; the exact grid value
+    #               is kept only so the fit is reproducible.
+    #   kill_C50    NOT identifiable from the kill data, for two independent
+    #               reasons: the kill rate depends on concentration only
+    #               through C/kill_C50, and the model's effective MIC is
+    #               exactly proportional to kill_C50, so MIC-normalised data
+    #               cannot see it; and at the 4xMIC exposure of the time-kill
+    #               a steep Hill saturates, so even absolute-unit data are
+    #               flat in it from 0.1 to about 5 mg/L. It is therefore
+    #               pinned by the calibration isolate's MEASURED MIC of
+    #               1 mg/L (P. aeruginosa ATCC-27853): the model's broth
+    #               stasis concentration is that same quantity, and since
+    #               stasis is proportional to kill_C50 the requirement is a
+    #               closed form, not a search. It costs 0.001 log10 RMSE.
+    #   kill_hill   kept at 4. The formal optimum is 8, but the data cannot
+    #               separate the two (0.05 log10 RMSE), and the residual kill
+    #               difference between agents depends on this exponent -- 0.10
+    #               log10 at hill 8 against 0.23 at hill 4 -- so the choice is
+    #               stated rather than fitted. See the Limitations.
+    k_kill_max: float = 1.5874010519681996  # per hour, max bactericidal kill
+    kill_C50: float = 0.936   # mg/L effect-site, concentration at half-max kill
     kill_hill: float = 4.0    # Hill coefficient (steep onset near MIC -> time-dependence)
     # Path B: maximal direct bacteriostatic-associated kill rate (per hour), scaled
     # by target engagement (1 - H_static). 0 = original growth-inhibition-only

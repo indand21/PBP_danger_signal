@@ -1,0 +1,1046 @@
+{
+ "question": "Can kill_C50 be identified, and what do the data give?",
+ "stage1_identifiability": {
+  "at": {
+   "k_kill_max": 3.0,
+   "kill_hill": 4.0,
+   "k_growth": 0.5
+  },
+  "rows": [
+   {
+    "kill_C50": 0.1,
+    "rmse_mic_normalised": 0.9179860255778235,
+    "rmse_absolute": 0.9386403914530423
+   },
+   {
+    "kill_C50": 0.1194,
+    "rmse_mic_normalised": 0.9214629086433124,
+    "rmse_absolute": 0.9386399829760248
+   },
+   {
+    "kill_C50": 0.1426,
+    "rmse_mic_normalised": 0.9170568645362176,
+    "rmse_absolute": 0.9386391511014385
+   },
+   {
+    "kill_C50": 0.1702,
+    "rmse_mic_normalised": 0.9221486445031867,
+    "rmse_absolute": 0.9386374670657488
+   },
+   {
+    "kill_C50": 0.2032,
+    "rmse_mic_normalised": 0.9168332485745256,
+    "rmse_absolute": 0.9386340418403735
+   },
+   {
+    "kill_C50": 0.2427,
+    "rmse_mic_normalised": 0.9225382380038043,
+    "rmse_absolute": 0.9386270598863057
+   },
+   {
+    "kill_C50": 0.2898,
+    "rmse_mic_normalised": 0.9173054072107056,
+    "rmse_absolute": 0.9386128812167017
+   },
+   {
+    "kill_C50": 0.346,
+    "rmse_mic_normalised": 0.9225334087861414,
+    "rmse_absolute": 0.9385840843171092
+   },
+   {
+    "kill_C50": 0.4131,
+    "rmse_mic_normalised": 0.9182652830977349,
+    "rmse_absolute": 0.9385255699841
+   },
+   {
+    "kill_C50": 0.4932,
+    "rmse_mic_normalised": 0.9219162387319056,
+    "rmse_absolute": 0.9384066984785376
+   },
+   {
+    "kill_C50": 0.5889,
+    "rmse_mic_normalised": 0.919393289811502,
+    "rmse_absolute": 0.9381649727084304
+   },
+   {
+    "kill_C50": 0.6,
+    "rmse_mic_normalised": 0.9186665948747963,
+    "rmse_absolute": 0.9381280747151112
+   },
+   {
+    "kill_C50": 0.7032,
+    "rmse_mic_normalised": 0.9202521506060555,
+    "rmse_absolute": 0.9376735058986005
+   },
+   {
+    "kill_C50": 0.8396,
+    "rmse_mic_normalised": 0.9204702014674585,
+    "rmse_absolute": 0.93667535880256
+   },
+   {
+    "kill_C50": 1.0025,
+    "rmse_mic_normalised": 0.9180971308522623,
+    "rmse_absolute": 0.9346472245363948
+   },
+   {
+    "kill_C50": 1.197,
+    "rmse_mic_normalised": 0.9213927954066893,
+    "rmse_absolute": 0.9305293976073109
+   },
+   {
+    "kill_C50": 1.4292,
+    "rmse_mic_normalised": 0.917104554202971,
+    "rmse_absolute": 0.9221807948312665
+   },
+   {
+    "kill_C50": 1.7065,
+    "rmse_mic_normalised": 0.9220976309650609,
+    "rmse_absolute": 0.9053003350922207
+   },
+   {
+    "kill_C50": 2.0376,
+    "rmse_mic_normalised": 0.9168220689096345,
+    "rmse_absolute": 0.8714474750306331
+   },
+   {
+    "kill_C50": 2.4329,
+    "rmse_mic_normalised": 0.9225187046647867,
+    "rmse_absolute": 0.8050521064294763
+   },
+   {
+    "kill_C50": 2.9049,
+    "rmse_mic_normalised": 0.9172445035519898,
+    "rmse_absolute": 0.682152809036452
+   },
+   {
+    "kill_C50": 3.4684,
+    "rmse_mic_normalised": 0.9225530880440161,
+    "rmse_absolute": 0.48148128972994897
+   },
+   {
+    "kill_C50": 4.1413,
+    "rmse_mic_normalised": 0.918172863262819,
+    "rmse_absolute": 0.2125393070780863
+   },
+   {
+    "kill_C50": 4.9448,
+    "rmse_mic_normalised": 0.9220045701300199,
+    "rmse_absolute": 0.344035450718466
+   },
+   {
+    "kill_C50": 5.9041,
+    "rmse_mic_normalised": 0.9192940334397525,
+    "rmse_absolute": 1.12580965769669
+   },
+   {
+    "kill_C50": 7.0495,
+    "rmse_mic_normalised": 0.9204552256881047,
+    "rmse_absolute": 1.701474215160401
+   },
+   {
+    "kill_C50": 8.4172,
+    "rmse_mic_normalised": 0.9203819239356261,
+    "rmse_absolute": 2.0324618057993287
+   },
+   {
+    "kill_C50": 10.0502,
+    "rmse_mic_normalised": 0.9182135593626795,
+    "rmse_absolute": 2.2080364566285002
+   },
+   {
+    "kill_C50": 12.0,
+    "rmse_mic_normalised": 0.9213212450723475,
+    "rmse_absolute": 2.2976509268051415
+   }
+  ],
+  "summary": {
+   "c50_range_fold": 120.0,
+   "mic_normalised_rmse_span": 0.005731019134381676,
+   "absolute_rmse_span": 2.0851116197270554
+  }
+ },
+ "stage1b_noise_floor": {
+  "thigh_within_bin": {
+   "bin_width_5_pct": {
+    "usable_bins": 13,
+    "irreducible_rmse_log10": 0.7262320865110966
+   },
+   "bin_width_10_pct": {
+    "usable_bins": 7,
+    "irreducible_rmse_log10": 0.7683930513073673
+   },
+   "bin_width_15_pct": {
+    "usable_bins": 5,
+    "irreducible_rmse_log10": 0.9070911273660592
+   }
+  },
+  "thigh_straight_line": {
+   "rmse_log10": 0.9394169945283032,
+   "r2": 0.6957252241737983,
+   "published_r2": 0.74,
+   "slope_per_pct": -0.07433035769620738,
+   "intercept": 1.3521799165565571
+  },
+  "timekill_n": 3,
+  "timekill_digitisation_log10": 0.3
+ },
+ "fit_a_c50_free": {
+  "best": [
+   {
+    "k_kill_max": 1.59,
+    "kill_hill": 6.0,
+    "kill_C50": 2.0376,
+    "g_vitro": 0.9,
+    "g_vivo": 0.15,
+    "rmse_timekill": 0.11576474743193836,
+    "rmse_thigh": 0.8535413888064154,
+    "objective": 0.48465306811917686
+   },
+   {
+    "k_kill_max": 1.5944,
+    "kill_hill": 6.0,
+    "kill_C50": 2.0376,
+    "g_vitro": 0.9,
+    "g_vivo": 0.15,
+    "rmse_timekill": 0.1159900995018661,
+    "rmse_thigh": 0.853669305154589,
+    "objective": 0.4848297023282276
+   },
+   {
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "kill_C50": 0.1,
+    "g_vitro": 0.7,
+    "g_vivo": 0.15,
+    "rmse_timekill": 0.11581108048279004,
+    "rmse_thigh": 0.8539620699520573,
+    "objective": 0.4848865752174236
+   },
+   {
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "kill_C50": 0.1194,
+    "g_vitro": 0.7,
+    "g_vivo": 0.15,
+    "rmse_timekill": 0.11581108048282011,
+    "rmse_thigh": 0.8539620699520573,
+    "objective": 0.48488657521743866
+   },
+   {
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "kill_C50": 0.1426,
+    "g_vitro": 0.7,
+    "g_vivo": 0.15,
+    "rmse_timekill": 0.11581108048294417,
+    "rmse_thigh": 0.8539620699520573,
+    "objective": 0.4848865752175007
+   },
+   {
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "kill_C50": 0.1702,
+    "g_vitro": 0.7,
+    "g_vivo": 0.15,
+    "rmse_timekill": 0.11581108048345724,
+    "rmse_thigh": 0.8539620699520573,
+    "objective": 0.48488657521775724
+   },
+   {
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "kill_C50": 0.2032,
+    "g_vitro": 0.7,
+    "g_vivo": 0.15,
+    "rmse_timekill": 0.1158110804855741,
+    "rmse_thigh": 0.8539620699520573,
+    "objective": 0.4848865752188157
+   },
+   {
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "kill_C50": 0.2427,
+    "g_vitro": 0.7,
+    "g_vivo": 0.15,
+    "rmse_timekill": 0.11581108049431374,
+    "rmse_thigh": 0.8539620699520573,
+    "objective": 0.4848865752231855
+   }
+  ],
+  "n_rows": 4176
+ },
+ "fit_b_c50_pinned_by_measured_mic": {
+  "best": [
+   {
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "kill_C50": 0.991098427771974,
+    "g_vitro": 0.7,
+    "g_vivo": 0.15,
+    "stasis_ratio": 1.008981521893882,
+    "rmse_timekill": 0.11581201465598016,
+    "rmse_thigh": 0.8539620699520573,
+    "objective": 0.4848870423040187
+   },
+   {
+    "k_kill_max": 1.351,
+    "kill_hill": 10.0,
+    "kill_C50": 0.9928722578565481,
+    "g_vitro": 0.7,
+    "g_vivo": 0.15,
+    "stasis_ratio": 1.0071789115740222,
+    "rmse_timekill": 0.11581113930309477,
+    "rmse_thigh": 0.8561376896312289,
+    "objective": 0.48597441446716183
+   },
+   {
+    "k_kill_max": 1.59,
+    "kill_hill": 6.0,
+    "kill_C50": 0.9568663075591259,
+    "g_vitro": 0.9,
+    "g_vivo": 0.15,
+    "stasis_ratio": 1.0450780763207181,
+    "rmse_timekill": 0.11910317661730863,
+    "rmse_thigh": 0.8535413888064154,
+    "objective": 0.486322282711862
+   },
+   {
+    "k_kill_max": 1.5944,
+    "kill_hill": 6.0,
+    "kill_C50": 0.9578797527648578,
+    "g_vitro": 0.9,
+    "g_vivo": 0.15,
+    "stasis_ratio": 1.0439723745215042,
+    "rmse_timekill": 0.12004699373527297,
+    "rmse_thigh": 0.853669305154589,
+    "objective": 0.486858149444931
+   },
+   {
+    "k_kill_max": 1.351,
+    "kill_hill": 6.0,
+    "kill_C50": 0.9881488126235203,
+    "g_vitro": 0.7,
+    "g_vivo": 0.15,
+    "stasis_ratio": 1.0119933224885582,
+    "rmse_timekill": 0.11582624348704569,
+    "rmse_thigh": 0.8581714372616103,
+    "objective": 0.486998840374328
+   },
+   {
+    "k_kill_max": 1.8816,
+    "kill_hill": 5.0,
+    "kill_C50": 0.8932839164277281,
+    "g_vitro": 1.2,
+    "g_vivo": 0.15,
+    "stasis_ratio": 1.119464910998323,
+    "rmse_timekill": 0.11747053224323369,
+    "rmse_thigh": 0.8620620634023108,
+    "objective": 0.48976629782277226
+   },
+   {
+    "k_kill_max": 1.59,
+    "kill_hill": 8.0,
+    "kill_C50": 0.9674721440817592,
+    "g_vitro": 0.9,
+    "g_vivo": 0.2,
+    "stasis_ratio": 1.0336214909310009,
+    "rmse_timekill": 0.11916536654485867,
+    "rmse_thigh": 0.8605491616904044,
+    "objective": 0.48985726411763153
+   },
+   {
+    "k_kill_max": 1.5944,
+    "kill_hill": 8.0,
+    "kill_C50": 0.9682404513374039,
+    "g_vitro": 0.9,
+    "g_vivo": 0.2,
+    "stasis_ratio": 1.0328013032493402,
+    "rmse_timekill": 0.120116683204023,
+    "rmse_thigh": 0.8606004245011833,
+    "objective": 0.4903585538526032
+   }
+  ],
+  "n_rows": 144
+ },
+ "profiles": {
+  "fit_a_over_kill_C50": [
+   {
+    "kill_C50": 0.1,
+    "objective": 0.4848865752174236,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00023350709824676574
+   },
+   {
+    "kill_C50": 0.1194,
+    "objective": 0.48488657521743866,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00023350709826180926
+   },
+   {
+    "kill_C50": 0.1426,
+    "objective": 0.4848865752175007,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00023350709832387073
+   },
+   {
+    "kill_C50": 0.1702,
+    "objective": 0.48488657521775724,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00023350709858038776
+   },
+   {
+    "kill_C50": 0.2032,
+    "objective": 0.4848865752188157,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00023350709963881888
+   },
+   {
+    "kill_C50": 0.2427,
+    "objective": 0.4848865752231855,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.0002335071040086567
+   },
+   {
+    "kill_C50": 0.2898,
+    "objective": 0.4848865752432762,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00023350712409936358
+   },
+   {
+    "kill_C50": 0.346,
+    "objective": 0.4848865753161351,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00023350719695824917
+   },
+   {
+    "kill_C50": 0.4131,
+    "objective": 0.48488657562498927,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00023350750581241364
+   },
+   {
+    "kill_C50": 0.4932,
+    "objective": 0.4848865769001548,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00023350878097794237
+   },
+   {
+    "kill_C50": 0.5889,
+    "objective": 0.4848865821715821,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00023351405240523704
+   },
+   {
+    "kill_C50": 0.6,
+    "objective": 0.4848865832898141,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00023351517063724403
+   },
+   {
+    "kill_C50": 0.7032,
+    "objective": 0.48488660395523103,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00023353583605417727
+   },
+   {
+    "kill_C50": 0.8396,
+    "objective": 0.4848866939403161,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00023362582113922725
+   },
+   {
+    "kill_C50": 1.0025,
+    "objective": 0.48488706632435197,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00023399820517511216
+   },
+   {
+    "kill_C50": 1.197,
+    "objective": 0.48488861461804744,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00023554649887058687
+   },
+   {
+    "kill_C50": 1.4292,
+    "objective": 0.48489517839175467,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00024211027257781126
+   },
+   {
+    "kill_C50": 1.7065,
+    "objective": 0.48492518713864907,
+    "k_kill_max": 1.351,
+    "kill_hill": 8.0,
+    "excess_over_best": 0.00027211901947221673
+   },
+   {
+    "kill_C50": 2.0376,
+    "objective": 0.48465306811917686,
+    "k_kill_max": 1.59,
+    "kill_hill": 6.0,
+    "excess_over_best": 0.0
+   },
+   {
+    "kill_C50": 2.4329,
+    "objective": 0.4863541225596786,
+    "k_kill_max": 1.351,
+    "kill_hill": 10.0,
+    "excess_over_best": 0.0017010544405017258
+   },
+   {
+    "kill_C50": 2.9049,
+    "objective": 0.4860203037257036,
+    "k_kill_max": 1.59,
+    "kill_hill": 6.0,
+    "excess_over_best": 0.00136723560652674
+   },
+   {
+    "kill_C50": 3.4684,
+    "objective": 0.48707481674600506,
+    "k_kill_max": 1.351,
+    "kill_hill": 6.0,
+    "excess_over_best": 0.002421748626828202
+   },
+   {
+    "kill_C50": 4.1413,
+    "objective": 0.4971394216019013,
+    "k_kill_max": 2.2206,
+    "kill_hill": 5.0,
+    "excess_over_best": 0.012486353482724422
+   },
+   {
+    "kill_C50": 4.9448,
+    "objective": 0.5052500386615212,
+    "k_kill_max": 3.0929,
+    "kill_hill": 4.0,
+    "excess_over_best": 0.02059697054234433
+   },
+   {
+    "kill_C50": 5.9041,
+    "objective": 0.5129049289922403,
+    "k_kill_max": 4.3078,
+    "kill_hill": 3.0,
+    "excess_over_best": 0.028251860873063417
+   },
+   {
+    "kill_C50": 7.0495,
+    "objective": 0.5159601081067128,
+    "k_kill_max": 6.0,
+    "kill_hill": 3.0,
+    "excess_over_best": 0.03130703998753592
+   },
+   {
+    "kill_C50": 8.4172,
+    "objective": 0.5734434263239994,
+    "k_kill_max": 6.0,
+    "kill_hill": 2.0,
+    "excess_over_best": 0.0887903582048225
+   },
+   {
+    "kill_C50": 10.0502,
+    "objective": 0.6038703632770983,
+    "k_kill_max": 6.0,
+    "kill_hill": 2.0,
+    "excess_over_best": 0.11921729515792145
+   },
+   {
+    "kill_C50": 12.0,
+    "objective": 0.7643730321654164,
+    "k_kill_max": 6.0,
+    "kill_hill": 1.0,
+    "excess_over_best": 0.27971996404623956
+   }
+  ],
+  "fit_a_over_k_kill_max": [
+   {
+    "k_kill_max": 0.5,
+    "objective": 1.0918967363002499,
+    "kill_hill": 10.0,
+    "kill_C50": 0.1,
+    "excess_over_best": 0.607243668181073
+   },
+   {
+    "k_kill_max": 0.5901,
+    "objective": 0.9255700283346002,
+    "kill_hill": 10.0,
+    "kill_C50": 0.1,
+    "excess_over_best": 0.44091696021542337
+   },
+   {
+    "k_kill_max": 0.6964,
+    "objective": 0.7585463799730733,
+    "kill_hill": 10.0,
+    "kill_C50": 0.1,
+    "excess_over_best": 0.2738933118538964
+   },
+   {
+    "k_kill_max": 0.8219,
+    "objective": 0.6109985672013136,
+    "kill_hill": 10.0,
+    "kill_C50": 0.1,
+    "excess_over_best": 0.12634549908213677
+   },
+   {
+    "k_kill_max": 0.97,
+    "objective": 0.5242917583470096,
+    "kill_hill": 10.0,
+    "kill_C50": 2.4329,
+    "excess_over_best": 0.03963869022783273
+   },
+   {
+    "k_kill_max": 1.1447,
+    "objective": 0.4933113442512301,
+    "kill_hill": 10.0,
+    "kill_C50": 0.1,
+    "excess_over_best": 0.008658276132053222
+   },
+   {
+    "k_kill_max": 1.351,
+    "objective": 0.4848865752174236,
+    "kill_hill": 8.0,
+    "kill_C50": 0.1,
+    "excess_over_best": 0.00023350709824676574
+   },
+   {
+    "k_kill_max": 1.59,
+    "objective": 0.48465306811917686,
+    "kill_hill": 6.0,
+    "kill_C50": 2.0376,
+    "excess_over_best": 0.0
+   },
+   {
+    "k_kill_max": 1.5944,
+    "objective": 0.4848297023282276,
+    "kill_hill": 6.0,
+    "kill_C50": 2.0376,
+    "excess_over_best": 0.00017663420905073002
+   },
+   {
+    "k_kill_max": 1.8816,
+    "objective": 0.4888720071808814,
+    "kill_hill": 5.0,
+    "kill_C50": 1.7065,
+    "excess_over_best": 0.004218939061704563
+   },
+   {
+    "k_kill_max": 2.2206,
+    "objective": 0.49239271602229345,
+    "kill_hill": 5.0,
+    "kill_C50": 2.9049,
+    "excess_over_best": 0.007739647903116598
+   },
+   {
+    "k_kill_max": 2.6207,
+    "objective": 0.5006507589137198,
+    "kill_hill": 4.0,
+    "kill_C50": 4.1413,
+    "excess_over_best": 0.01599769079454294
+   },
+   {
+    "k_kill_max": 3.0,
+    "objective": 0.5041004151692128,
+    "kill_hill": 4.0,
+    "kill_C50": 4.1413,
+    "excess_over_best": 0.019447347050035924
+   },
+   {
+    "k_kill_max": 3.0929,
+    "objective": 0.5052500386615212,
+    "kill_hill": 4.0,
+    "kill_C50": 4.9448,
+    "excess_over_best": 0.02059697054234433
+   },
+   {
+    "k_kill_max": 3.6502,
+    "objective": 0.5200162309615126,
+    "kill_hill": 4.0,
+    "kill_C50": 4.9448,
+    "excess_over_best": 0.03536316284233576
+   },
+   {
+    "k_kill_max": 4.3078,
+    "objective": 0.5129049289922403,
+    "kill_hill": 3.0,
+    "kill_C50": 5.9041,
+    "excess_over_best": 0.028251860873063417
+   },
+   {
+    "k_kill_max": 5.084,
+    "objective": 0.5129705375057935,
+    "kill_hill": 3.0,
+    "kill_C50": 5.9041,
+    "excess_over_best": 0.02831746938661661
+   },
+   {
+    "k_kill_max": 6.0,
+    "objective": 0.5159601081067128,
+    "kill_hill": 3.0,
+    "kill_C50": 7.0495,
+    "excess_over_best": 0.03130703998753592
+   }
+  ],
+  "fit_b_over_k_kill_max": [
+   {
+    "k_kill_max": 0.5,
+    "objective": 1.0918971560772373,
+    "kill_hill": 10.0,
+    "kill_C50": 0.9603846504080299,
+    "excess_over_best": 0.6070101137732186
+   },
+   {
+    "k_kill_max": 0.5901,
+    "objective": 0.9255705742711928,
+    "kill_hill": 10.0,
+    "kill_C50": 0.9967515573414488,
+    "excess_over_best": 0.44068353196717414
+   },
+   {
+    "k_kill_max": 0.6964,
+    "objective": 0.7585472974070216,
+    "kill_hill": 10.0,
+    "kill_C50": 1.028346347291861,
+    "excess_over_best": 0.27366025510300296
+   },
+   {
+    "k_kill_max": 0.8219,
+    "objective": 0.6109995400900382,
+    "kill_hill": 10.0,
+    "kill_C50": 1.0570141061520708,
+    "excess_over_best": 0.12611249778601952
+   },
+   {
+    "k_kill_max": 0.97,
+    "objective": 0.5245054709690151,
+    "kill_hill": 10.0,
+    "kill_C50": 1.0837440904242732,
+    "excess_over_best": 0.03961842866499643
+   },
+   {
+    "k_kill_max": 1.1447,
+    "objective": 0.4933114304631748,
+    "kill_hill": 10.0,
+    "kill_C50": 1.0258343918403638,
+    "excess_over_best": 0.008424388159156138
+   },
+   {
+    "k_kill_max": 1.351,
+    "objective": 0.4848870423040187,
+    "kill_hill": 8.0,
+    "kill_C50": 0.991098427771974,
+    "excess_over_best": 0.0
+   },
+   {
+    "k_kill_max": 1.59,
+    "objective": 0.486322282711862,
+    "kill_hill": 6.0,
+    "kill_C50": 0.9568663075591259,
+    "excess_over_best": 0.001435240407843319
+   },
+   {
+    "k_kill_max": 1.5944,
+    "objective": 0.486858149444931,
+    "kill_hill": 6.0,
+    "kill_C50": 0.9578797527648578,
+    "excess_over_best": 0.0019711071409123093
+   },
+   {
+    "k_kill_max": 1.8816,
+    "objective": 0.48976629782277226,
+    "kill_hill": 5.0,
+    "kill_C50": 0.8932839164277281,
+    "excess_over_best": 0.004879255518753567
+   },
+   {
+    "k_kill_max": 2.2206,
+    "objective": 0.5719338179696932,
+    "kill_hill": 4.0,
+    "kill_C50": 0.9605871284795818,
+    "excess_over_best": 0.08704677566567454
+   },
+   {
+    "k_kill_max": 2.6207,
+    "objective": 0.6756703006933694,
+    "kill_hill": 4.0,
+    "kill_C50": 1.0433510119765057,
+    "excess_over_best": 0.19078325838935073
+   },
+   {
+    "k_kill_max": 3.0,
+    "objective": 0.7703179012829127,
+    "kill_hill": 4.0,
+    "kill_C50": 1.1069125417289962,
+    "excess_over_best": 0.285430858978894
+   },
+   {
+    "k_kill_max": 3.0929,
+    "objective": 0.7821208593331963,
+    "kill_hill": 1.0,
+    "kill_C50": 9.314827831122399,
+    "excess_over_best": 0.2972338170291776
+   },
+   {
+    "k_kill_max": 3.6502,
+    "objective": 0.7751258026307194,
+    "kill_hill": 1.0,
+    "kill_C50": 11.173423821204686,
+    "excess_over_best": 0.2902387603267007
+   },
+   {
+    "k_kill_max": 4.3078,
+    "objective": 0.8369377363443946,
+    "kill_hill": 1.0,
+    "kill_C50": 7.6199115709569325,
+    "excess_over_best": 0.3520506940403759
+   },
+   {
+    "k_kill_max": 5.084,
+    "objective": 0.8464923506777998,
+    "kill_hill": 1.0,
+    "kill_C50": 9.173089320986437,
+    "excess_over_best": 0.36160530837378113
+   },
+   {
+    "k_kill_max": 6.0,
+    "objective": 0.8608724428509553,
+    "kill_hill": 1.0,
+    "kill_C50": 11.006004900626413,
+    "excess_over_best": 0.37598540054693663
+   }
+  ]
+ },
+ "intervals": {
+  "note": "range of the parameter whose objective stays within each threshold (log10 RMSE) of the best fit; the figures' own digitisation error is 0.3 log10",
+  "grid_span": {
+   "kill_C50": [
+    0.1,
+    12.0
+   ],
+   "k_kill_max": [
+    0.5,
+    6.0
+   ]
+  },
+  "fit_a_kill_C50": {
+   "within_0.02": [
+    0.1,
+    4.1413
+   ],
+   "within_0.05": [
+    0.1,
+    7.0495
+   ],
+   "within_0.1": [
+    0.1,
+    8.4172
+   ],
+   "within_0.3": [
+    0.1,
+    12.0
+   ]
+  },
+  "fit_a_k_kill_max": {
+   "within_0.02": [
+    1.1447,
+    3.0
+   ],
+   "within_0.05": [
+    0.97,
+    6.0
+   ],
+   "within_0.1": [
+    0.97,
+    6.0
+   ],
+   "within_0.3": [
+    0.6964,
+    6.0
+   ]
+  },
+  "fit_b_k_kill_max": {
+   "within_0.02": [
+    1.1447,
+    1.8816
+   ],
+   "within_0.05": [
+    0.97,
+    1.8816
+   ],
+   "within_0.1": [
+    0.97,
+    2.2206
+   ],
+   "within_0.3": [
+    0.6964,
+    3.6502
+   ]
+  }
+ },
+ "argmin_stability": {
+  "note": "The objective surface is flat enough that the reported argmin is not a stable quantity, while the objective VALUE is. Running this script under NumPy 2.5.2 rather than the pinned 2.4.6, with everything else identical, moved the fit A optimum from (1.351, hill 8, C50 0.100) to (1.590, hill 6, C50 2.038) while the objective moved by 4.8e-4. Quote the objective and the profiles, not the argmin's coordinates.",
+  "objective_reproducibility": 0.0005
+ },
+ "boundary_check": {
+  "note": "an optimum on a grid edge is not an optimum",
+  "fit_a_best_kill_hill": 6.0,
+  "fit_b_best_kill_hill": 8.0,
+  "kill_hill_grid": [
+   1.0,
+   10.0
+  ],
+  "fit_a_hill_on_boundary": false,
+  "fit_b_hill_on_boundary": false,
+  "fit_a_k_on_boundary": false,
+  "fit_b_k_on_boundary": false
+ },
+ "parameters_in_use": {
+  "k_kill_max": 3.0,
+  "kill_C50": 0.6,
+  "kill_hill": 4.0,
+  "nearest_grid_row": {
+   "k_kill_max": 3.0,
+   "kill_hill": 4.0,
+   "kill_C50": 0.6,
+   "g_vitro": 1.2,
+   "g_vivo": 0.15,
+   "rmse_timekill": 0.6605571732287795,
+   "rmse_thigh": 0.8877072389795206,
+   "objective": 0.77413220610415
+  },
+  "excess_over_fit_a_best": 0.28947913798497316
+ },
+ "inputs": {
+  "timekill": {
+   "id": "meropenem_timekill",
+   "used_in": "absolute mg/L",
+   "concentration_mgL": 4.0,
+   "isolate_mic_mgL": 1.0,
+   "n": 3,
+   "source": "Nussbaumer-Proll 2022 Front Pharmacol 13:840692 Fig 2A"
+  },
+  "thigh": {
+   "id": "meropenem_neutropenic_thigh",
+   "used_in": "%fT>MIC vs model effective MIC",
+   "n": 47,
+   "source": "Sabet 2020 AAC 64(4):e02388-19 Fig 7"
+  },
+  "mic_anchor": {
+   "value_mgL": 1.0,
+   "role": "pins the concentration scale in fit B",
+   "model_counterpart": "24 h stasis concentration, broth growth, no immune effectors, 5e5 CFU/mL inoculum"
+  }
+ },
+ "grids": {
+  "k_kill_max": [
+   0.5,
+   0.5901,
+   0.6964,
+   0.8219,
+   0.97,
+   1.1447,
+   1.351,
+   1.59,
+   1.5944,
+   1.8816,
+   2.2206,
+   2.6207,
+   3.0,
+   3.0929,
+   3.6502,
+   4.3078,
+   5.084,
+   6.0
+  ],
+  "kill_hill": [
+   1.0,
+   2.0,
+   3.0,
+   4.0,
+   5.0,
+   6.0,
+   8.0,
+   10.0
+  ],
+  "kill_C50": [
+   0.1,
+   0.1194,
+   0.1426,
+   0.1702,
+   0.2032,
+   0.2427,
+   0.2898,
+   0.346,
+   0.4131,
+   0.4932,
+   0.5889,
+   0.6,
+   0.7032,
+   0.8396,
+   1.0025,
+   1.197,
+   1.4292,
+   1.7065,
+   2.0376,
+   2.4329,
+   2.9049,
+   3.4684,
+   4.1413,
+   4.9448,
+   5.9041,
+   7.0495,
+   8.4172,
+   10.0502,
+   12.0
+  ],
+  "g_vitro": [
+   0.3,
+   0.5,
+   0.7,
+   0.9,
+   1.2
+  ],
+  "g_vivo": [
+   0.15,
+   0.2,
+   0.25,
+   0.3,
+   0.35,
+   0.4,
+   0.5
+  ]
+ },
+ "provenance": {
+  "git_head": "313f1c41feb8efe0b3b30157fb6d25b7a3a07475",
+  "git_dirty": true,
+  "python": "3.12.4",
+  "numpy": "2.4.6",
+  "scipy": "1.15.3",
+  "numpy_scipy_supported": true,
+  "platform": "win32",
+  "final_yields_fg_per_CFU": {
+   "piperacillin": 5.15,
+   "ceftazidime": 4.93,
+   "isepamicin": 0.28,
+   "imipenem": 0.986,
+   "meropenem": 0.986
+  },
+  "endpoint": "log10 CFU RMSE across two datasets",
+  "note": "bacterial-layer refit with kill_C50 identified (review R7)"
+ }
+}

@@ -21,28 +21,48 @@ preparation; the manuscript itself is not part of this repository.
 | Injury | used only to test whether a ranking is invariant across seven monotone maps; no injury magnitude is ever reported |
 
 No parameter in the pharmacokinetic or bacterial layer is tuned to a
-danger-signal result: both were fixed before the danger-signal layer was
-built and were not subsequently adjusted. Their calibration status is not
-uniform, though, and an earlier version of this file overstated it:
+danger-signal result. Both were fixed before the danger-signal layer was
+built, and while the bacterial layer was later refitted (see below), its
+objective is a root-mean-square error in log10 CFU and contains no
+danger-signal quantity. Their calibration status is not uniform, though, and
+an earlier version of this file overstated it:
 
 - The **pharmacokinetic** layer is fitted to published concentration-time
   data. Ceftazidime's resulting half-life, 1.18 h, is shorter than the
   reported 1.6-2.0 h; that is a consequence of the one-compartment
   simplification this study uses.
-- In the **bacterial** layer, the Hill exponent agrees with a fit to a
-  meropenem time-kill curve and a neutropenic-thigh dose-response, but the
-  maximum kill rate in use is higher than that fit returns, and the
-  half-maximal concentration was never fitted at all, because the fit was
-  MIC-normalised. These parameters are therefore assumed, not identified.
+- The **bacterial** layer's maximum kill rate is fitted to a meropenem
+  time-kill curve and a neutropenic-thigh dose-response
+  (`scripts/ds_bacterial_refit.py`, written to
+  `results/danger_signal/bacterial_refit.json`). The half-maximal
+  concentration is **anchored rather than fitted**: killing depends on
+  concentration only through the ratio `C/kill_C50`, so MIC-normalised data
+  cannot identify it, and it is instead set so that the model's broth stasis
+  concentration equals the calibration isolate's measured MIC of 1 mg/L. The
+  Hill exponent is not identified either - the fit prefers 8 and cannot
+  separate that from the 4 in use - and that one choice decides the residual
+  kill difference between the two agents: 0.10 log10 CFU at 8 against the
+  0.24 reported at 4. The larger is reported.
 - The **immune** layer's recruitment term is not on the effector state's
   scale, so it behaves as a decaying pool rather than a recruited response.
+  This is the largest remaining structural defect, and it matters more at the
+  refitted kill rate than it did before: slower drug killing leaves immune
+  killing a larger share of the total, so a mis-scaled immune layer has more
+  leverage.
 
-`scripts/ds_structural_sensitivity.py` recomputes the whole analysis at the
-fitted kill rate and under three immune-layer extremes and writes the
-comparison to `results/danger_signal/structural_sensitivity.json`, so what
-does and does not depend on these choices can be read off directly rather
-than taken on trust. Refitting the bacterial layer against data that also
-constrain the half-maximal concentration is the outstanding piece of work.
+`scripts/ds_structural_sensitivity.py` recomputes the whole analysis under
+six variants - the study as reported, the parameters it ran on before the
+bacterial layer was refitted, the refit's own formal optimum, and three
+immune-layer extremes - and writes the comparison to
+`results/danger_signal/structural_sensitivity.json`, so what does and does
+not depend on these choices can be read off directly rather than taken on
+trust. The agent ranking holds in every one.
+
+Measuring the half-maximal concentration rather than anchoring it is the
+outstanding piece of work on the bacterial layer: it needs a time-kill
+exposure near that concentration, where the Hill function is sensitive to
+it. `data/external_validation/WPD_SETUP.md` holds the digitisation protocol
+for the figure such a curve would come from.
 
 ## Installation
 
@@ -73,14 +93,23 @@ python scripts/ds_phase5_tolerance.py    # endotoxin-tolerance term (ships disab
 python scripts/ds_phase4_figures.py      # figures, read back from the stored JSON
 ```
 
-Numerical assurance and structural sensitivity, each writing its own JSON
-alongside the pipeline's:
+Three further stages write their own JSON alongside the pipeline's without
+feeding into it:
 
 ```bash
 python scripts/ds_numerical_assurance.py       # analytical benchmark, tolerance study
 python scripts/ds_mass_balance_convergence.py  # order of the mass-balance residual
-python scripts/ds_structural_sensitivity.py    # kill rate and immune-layer variants
+python scripts/ds_structural_sensitivity.py    # kill-parameter and immune-layer variants
+python scripts/ds_bacterial_refit.py           # bacterial-layer fit and identifiability
 ```
+
+`ds_bacterial_refit.py` reports the fit the bacterial parameters come from
+and the profiles behind the identifiability statements above; it changes no
+parameter itself. Its objective and its profiles reproduce, but its argmin
+does not: the surface is flat enough that changing only the NumPy version
+relocates the optimum while the objective moves under 1e-3. The argmin's
+coordinates are therefore not quoted anywhere, and the parameters in use are
+not read off it - `argmin_stability` in its output records this.
 
 Two further entry points cover the layers underneath:
 
@@ -139,11 +168,13 @@ accompanying manuscript.
 
 ## Uncalibrated parameters
 
-Two parameters are not identified by the available data and are reported as
-such: the infection focus volume and the fraction of locally released signal
-that reaches the circulation. They move absolute levels by about two orders of
-magnitude. Results are therefore reported as rankings and as ranges, never as
-absolute magnitudes or point estimates.
+Two parameters of the danger-signal layer are not identified by the available
+data and are reported as such: the infection focus volume and the fraction of
+locally released signal that reaches the circulation. They move absolute
+levels by about two orders of magnitude. Results are therefore reported as
+rankings and as ranges, never as absolute magnitudes or point estimates. The
+bacterial layer's half-maximal concentration and Hill exponent are not
+identified either, for the separate reasons given above.
 
 The per-CFU yields themselves come from three published studies that measured
 different estimands, so the range they span is an **assumed scenario range**,

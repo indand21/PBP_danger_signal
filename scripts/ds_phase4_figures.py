@@ -78,7 +78,10 @@ def fig1_yield_table(d):
 
 def fig2_matched_exposure(d):
     """Matched %fT>MIC: near-equal killing, divergent inflammatory cost."""
-    rows = d["analysis3_matched_exposure"]["rows"]
+    # Targets that no dose inside the search bracket can reach are recorded
+    # with evaluated=False rather than dropped; they have no arms to plot.
+    rows = [r for r in d["analysis3_matched_exposure"]["rows"]
+            if r.get("evaluated", True)]
     t = [r["target_fT_pct"] for r in rows]
     caz_kill = [r["arms"]["ceftazidime"]["net_log10_change"] for r in rows]
     mero_kill = [r["arms"]["meropenem"]["net_log10_change"] for r in rows]
@@ -159,7 +162,7 @@ def fig3_cost_index(d):
     # The quoted range is read from analysis 3 rather than hard-coded, so the
     # annotation cannot drift from the data it describes.
     _r = [x["ratio_AUC_DS"] for e in d["analysis3_matched_exposure"]["rows"]
-          for x in e["cost_ratio_range"]]
+          if e.get("evaluated", True) for x in e["cost_ratio_range"]]
     a2.text(0.03, 0.04,
             "at matched %fT>MIC the two agents differ by\n"
             f"several-fold in cost (range {min(_r):.1f}-{max(_r):.1f}x)",

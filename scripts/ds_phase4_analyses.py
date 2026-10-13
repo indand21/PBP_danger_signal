@@ -146,8 +146,18 @@ def ds_cost(sim, agent=None, Y=None, Yf=None, v_focus=V_FOCUS):
 
 
 def dose_for_target_ft(agent, target_ft, interval_h, n_doses, mic=None,
-                       lo=10.0, hi=16000.0):
-    """Solve for the dose achieving a target %fT>MIC."""
+                       lo=10.0, hi=60000.0):
+    """Solve for the dose achieving a target %fT>MIC.
+
+    ``hi`` is a search bracket, not a clinical limit. It was 16 g, which
+    silently excluded the 95% target once the bacterial-layer refit raised
+    the effective MIC from 0.40 to 0.77 mg/L and roughly doubled every
+    matched dose: the required meropenem dose rose to about 18.6 g and the
+    row vanished from the table without a record. The bracket is now wide
+    enough to contain any dose the targets can require; whether a dose is
+    administrable is a separate judgement, made in the dose table itself,
+    where rows above the 6 g/day usual maximum are marked.
+    """
     def err(d):
         return simulate(agent, d, interval_h, n_doses, mic=mic)["fT"] - target_ft
     try:
@@ -334,7 +344,15 @@ def analysis3_matched_exposure(targets=(40.0, 60.0, 80.0, 95.0)):
                                                / B_TOTAL_0),
             }
         if not ok:
+            # Record it. Dropping the row silently changed the table's shape
+            # without saying so when the refit pushed the 95% target past
+            # the old 16 g search bracket.
+            rows.append({"target_fT_pct": target, "evaluated": False,
+                         "reason": "no dose inside the search bracket "
+                                   "achieves this %fT>MIC for both agents",
+                         "bracket_mg": [10.0, 60000.0]})
             continue
+        entry["evaluated"] = True
         a, b = entry["arms"]["ceftazidime"], entry["arms"]["meropenem"]
         entry["kill_difference_log10"] = a["net_log10_change"] - b["net_log10_change"]
         entry["cost_ratio_range"] = yield_range_ratio(sims["ceftazidime"],

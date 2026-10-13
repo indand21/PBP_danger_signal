@@ -131,6 +131,8 @@ def tolerance_check():
     def evaluate():
         rows = []
         for e in stored["analysis3_matched_exposure"]["rows"]:
+            if not e.get("evaluated", True):
+                continue
             sims = {a: p4.simulate(a, e["arms"][a]["dose_mg"], 8.0, 6)
                     for a in ("ceftazidime", "meropenem")}
             ratios = p4.yield_range_ratio(sims["ceftazidime"],

@@ -27,42 +27,42 @@
   "rows": [
    {
     "target_fT_pct": 40.0,
-    "kill_difference_default": 0.09844568091318973,
-    "kill_difference_tight": 0.09844590281110088,
-    "abs_change_kill_difference": 2.2189791115678759e-07,
-    "rel_change_ratio_low": 9.377958078944416e-05,
-    "rel_change_ratio_high": 9.264996859599219e-05
+    "kill_difference_default": 0.2386532954920404,
+    "kill_difference_tight": 0.23865341118188987,
+    "abs_change_kill_difference": 1.1568984947807337e-07,
+    "rel_change_ratio_low": 0.0010903825762513116,
+    "rel_change_ratio_high": 0.0010895382392406335
    },
    {
     "target_fT_pct": 60.0,
-    "kill_difference_default": 0.041432942010570795,
-    "kill_difference_tight": 0.0414328803905355,
-    "abs_change_kill_difference": 6.162003529652793e-08,
-    "rel_change_ratio_low": 0.0006575589999277107,
-    "rel_change_ratio_high": 0.0006582755294816411
+    "kill_difference_default": 0.027572224463081163,
+    "kill_difference_tight": 0.02757213016218829,
+    "abs_change_kill_difference": 9.430089287221222e-08,
+    "rel_change_ratio_low": 2.0313810302729442e-05,
+    "rel_change_ratio_high": 2.0822194059006e-05
    },
    {
     "target_fT_pct": 80.0,
-    "kill_difference_default": 0.020844261492502625,
-    "kill_difference_tight": 0.02084419544835736,
-    "abs_change_kill_difference": 6.604414526378832e-08,
-    "rel_change_ratio_low": 0.0009917763796142025,
-    "rel_change_ratio_high": 0.0009931604008138078
+    "kill_difference_default": 0.010389246940842867,
+    "kill_difference_tight": 0.010389203823006898,
+    "abs_change_kill_difference": 4.311783596833152e-08,
+    "rel_change_ratio_low": 0.0005128703895526977,
+    "rel_change_ratio_high": 0.0005133785865358338
    },
    {
     "target_fT_pct": 95.0,
-    "kill_difference_default": 0.013475516981793945,
-    "kill_difference_tight": 0.013475492641942033,
-    "abs_change_kill_difference": 2.43398519117477e-08,
-    "rel_change_ratio_low": 0.0003864259469140188,
-    "rel_change_ratio_high": 0.0003856048186378972
+    "kill_difference_default": 0.008266203594986532,
+    "kill_difference_tight": 0.008266180806909773,
+    "abs_change_kill_difference": 2.2788076758928355e-08,
+    "rel_change_ratio_low": 8.39012097630508e-05,
+    "rel_change_ratio_high": 8.447649053621527e-05
    }
   ],
-  "max_abs_change_kill_difference": 2.2189791115678759e-07,
-  "max_rel_change_cost_ratio": 0.0009931604008138078
+  "max_abs_change_kill_difference": 1.1568984947807337e-07,
+  "max_rel_change_cost_ratio": 0.0010903825762513116
  },
  "provenance": {
-  "git_head": "fd78c39b0b1572aa0e3181a3d5c46359ccd5c425",
+  "git_head": "313f1c41feb8efe0b3b30157fb6d25b7a3a07475",
   "git_dirty": true,
   "python": "3.12.4",
   "numpy": "2.4.6",

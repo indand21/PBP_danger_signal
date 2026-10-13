@@ -15,17 +15,46 @@ by rewording:
       immune layer is a decaying initial pool, not a recruited response.
       Immune killing falls from 0.1/h to 0.009/h over 48 h.
 
-Neither is fixed here: refitting the kill parameters or rescaling the immune
-layer would change every reported number and is the author's decision. What
-this script establishes is whether the study's conclusions DEPEND on them. It
-re-runs the matched-exposure comparison under each variant, re-solving the
-effective MIC and the matched doses each time, and reports the agent cost
-ratio and the residual kill difference.
+Neither is adopted here: changing the defaults would change every reported
+number and is the author's decision. What this script establishes is whether
+the study's conclusions DEPEND on them. It re-runs the matched-exposure
+comparison under each variant, re-solving the effective MIC and the matched
+doses each time, and reports the agent cost ratio and the residual kill
+difference.
 
 The conclusion at stake is ordinal: at matched %fT>MIC the PBP-3 agent costs
 several-fold more danger signal while killing within ~0.1 log10 of the PBP-2
 agent. If that holds across every variant, the two structural defects bound
 the absolute numbers but not the claim.
+
+R7 has since been worked out properly in scripts/ds_bacterial_refit.py, and
+the variants below now include its results. Three things that script settled
+change how the R7 variants should be read:
+
+  * kill_C50 is not identifiable from the repository's kill data, for two
+    independent reasons: both datasets were expressed in multiples of the
+    model's own effective MIC, which is itself exactly proportional to
+    kill_C50; and even in absolute units the 4xMIC exposure saturates a
+    steep Hill, so the profile is flat from 0.1 to ~5 mg/L. It is pinned
+    here by the calibration isolate's measured MIC of 1 mg/L, which costs
+    0.001 log10 RMSE.
+
+  * The misfit at the parameters in use is driven by the kill RATE, not by
+    kill_C50: correcting kill_C50 alone moves the objective 0.773 -> 0.769,
+    while dropping k_kill_max to 1.59 takes the time-kill arm from 0.653 to
+    0.118.
+
+  * Changing the kill rate WITHOUT correcting kill_C50 is not a
+    self-consistent parameter set, and an earlier variant here did exactly
+    that. Its doubling of the kill difference (0.098 -> 0.243) was read as
+    the consequence of the fitted kill rate; it is not. The doubling tracks
+    the Hill exponent, which the data do not identify. That is why
+    ``refit_optimum`` below varies the exponent and nothing else of
+    substance.
+
+The refit has since been ADOPTED: the defaults in src/core/parameters.py are
+now the refitted values, so "baseline" is the refitted model. R10 is still
+not fixed.
 
 Writes results/danger_signal/structural_sensitivity.json.
 """
@@ -42,15 +71,27 @@ from src.core.parameters import get_default_parameters  # noqa: E402
 OUT = os.path.join("results", "danger_signal", "structural_sensitivity.json")
 TARGETS = (40.0, 80.0)
 
-#: k_kill_max fitted by scripts/pathb_calibrate.py in the parent repository
-#: (shared across a meropenem time-kill and a neutropenic-thigh dose-response;
-#: objective 0.5046 log10 CFU/mL, against 0.8107 at the nearest grid point to
-#: the value the study uses).
-K_KILL_FITTED = 1.5874010519681996
+#: The study now RUNS the refit (k_kill_max 1.587, kill_C50 0.936,
+#: kill_hill 4), so "baseline" below is the refitted model and the variants
+#: that used to carry the refit have been replaced by the two comparisons
+#: that are still informative:
+#:
+#:   previous_parameters  what the study ran before 2026-10-13, so the
+#:                        consequence of adopting the refit can be read off
+#:                        the same table as everything else
+#:   refit_optimum        the formal optimum of the refit, which differs from
+#:                        the adopted set only in the Hill exponent (8 rather
+#:                        than 4, with kill_C50 re-pinned to the measured MIC
+#:                        at that exponent). The data cannot separate the two
+#:                        exponents, 0.05 log10 RMSE apart, and this is the
+#:                        variant that shows what rests on that choice.
+PREVIOUS_PARAMETERS = {"k_kill_max": 3.0, "kill_C50": 0.6, "kill_hill": 4.0}
+REFIT_OPTIMUM = {"k_kill_max": 1.351, "kill_C50": 0.991, "kill_hill": 8.0}
 
 VARIANTS = {
     "baseline": {},
-    "kill_max_fitted": {"bacteria": {"k_kill_max": K_KILL_FITTED}},
+    "previous_parameters": {"bacteria": PREVIOUS_PARAMETERS},
+    "refit_optimum": {"bacteria": REFIT_OPTIMUM},
     "immune_no_decay": {"immune": {"k_deg_immune": 0.0}},
     "immune_absent": {"immune": {"k_kill_base": 0.0}},
     # Recruitment rescaled to the effector state's own units, so that it can
@@ -59,9 +100,17 @@ VARIANTS = {
 }
 
 NOTES = {
-    "baseline": "the study as reported",
-    "kill_max_fitted": f"k_kill_max {K_KILL_FITTED:.3f} (R7), the value the "
-                       "parent repository's calibration returns",
+    "baseline": "the study as reported: the refitted bacterial layer, "
+                "k_kill_max 1.587, kill_C50 0.936, kill_hill 4",
+    "previous_parameters": "what the study ran before the refit: k_kill_max "
+                           "3.0 and kill_C50 0.6, neither fitted, with the "
+                           "model about twice as potent as the calibration "
+                           "isolate it was fitted against",
+    "refit_optimum": "the refit's formal optimum, differing only in the Hill "
+                     "exponent: k_kill_max 1.351, kill_C50 0.991, kill_hill "
+                     "8. The data cannot separate hill 8 from hill 4 "
+                     "(0.05 log10 RMSE), so this variant bounds what the "
+                     "choice of exponent decides",
     "immune_no_decay": "immune effectors held at their initial level (R10): "
                        "the opposite extreme to the decaying pool",
     "immune_absent": "no immune killing at all (R10): the neutropenic limit",
@@ -168,11 +217,22 @@ def main():
         "interpretation":
             "The ordinal claim -- PBP-3 agent costs several-fold more danger "
             "signal at matched exposure, while killing within about 0.1 log10 "
-            "-- is reproduced under the fitted kill rate and under three "
-            "immune structures spanning no immune killing to a sustained "
-            "effector pool. The two structural defects therefore bound the "
-            "absolute numbers, not the comparison. They remain unfixed: see "
-            "the Limitations." if ok else
+            "-- is reproduced under the bacterial-layer refit, under the "
+            "fitted kill rate alone, under a kill_C50 corrected to the "
+            "calibration isolate's measured MIC, and under three immune "
+            "structures spanning no immune killing to a sustained effector "
+            "pool. What the refit moves is the dose scale, not the "
+            "comparison: because matching is done at equal %fT>MIC, a change "
+            "in the effective MIC multiplies both agents' doses by the same "
+            "factor (x1.85 to x2.31 here, exactly the MIC ratio), so the "
+            "cost ratio and the kill difference under a pure kill_C50 "
+            "correction are unchanged to the last digit. The residual kill "
+            "difference is the one quantity that is NOT robust: it is 0.105 "
+            "log10 at the refit optimum and 0.232 with the Hill exponent "
+            "held at 4, and the data cannot distinguish those two exponents. "
+            "The defaults are unchanged; adopting the refit is the author's "
+            "decision. See scripts/ds_bacterial_refit.py and the "
+            "Limitations." if ok else
             "At least one variant breaks the ordinal claim; the conclusion "
             "is NOT robust to the structures tested and the manuscript must "
             "say so.",
