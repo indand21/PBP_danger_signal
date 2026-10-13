@@ -1104,6 +1104,36 @@
     "yield_weighted_kill": 0.9999999999999999
    }
   },
+  "cost_offset_at_matched_index": {
+   "index": "fT_pct",
+   "note": "cost ratio ceftazidime/meropenem at matched %fT>MIC, by log-interpolating each agent's cost against the index over the range the two libraries share. One yield configuration, so this is narrower than analysis 3's span, which also propagates the assumed yield range.",
+   "overlap_fT_pct": [
+    13.569602943535726,
+    96.90142751437116
+   ],
+   "ratio_at_matched_index": [
+    2.8070250621380177,
+    6.344438013943993
+   ],
+   "evaluated_at_fT_pct": [
+    13.569602943535726,
+    27.458240372008298,
+    41.34687780048087,
+    55.235515228953446,
+    69.12415265742601,
+    83.01279008589859,
+    96.90142751437116
+   ],
+   "ratios": [
+    2.8070250621380177,
+    3.9394364135998092,
+    6.344438013943993,
+    5.6001910090174265,
+    4.984743586862937,
+    5.004847604259029,
+    5.064608861939076
+   ]
+  },
   "n_regimens": 48,
   "mass_balance_identity": {
    "statement": "k_ds * AUC_D = a * [Y_lysis * int(kill*B_rep dt) + Y_filament * int(phi*B_rep dt)] - [D(T) - D(0)], with D the attributable danger signal and a the common focus/translocation conversion factor",
@@ -2091,7 +2121,7 @@
   "note": "A competent host needs less drug to hold the organism static, so the immunocompetent thresholds are the lower pair. Craig reports 30-40% fT>MIC for cephalosporins in neutropenic animals; the comparable figures here are the immune-free ones."
  },
  "provenance": {
-  "git_head": "6a593c75d0f4d74b87d9364330abb15b8b9c6062",
+  "git_head": "170b5e880d8b1fc58ffef986a1b8e02ea929a663",
   "git_dirty": true,
   "python": "3.12.4",
   "numpy": "2.4.6",

@@ -450,8 +450,44 @@ def analysis4_cost_index():
             x = np.array([r[key] for r in sub])
             rho, _ = spearmanr(x, c)
             within[agent][key] = float(rho)
+    # The decisive quantity is not a correlation but the vertical offset
+    # between the two agents' cost-versus-%fT>MIC curves: how much more the
+    # PBP-3 agent costs at the SAME index value. Quoted in the manuscript and
+    # the cover letter and, until now, computed only by a helper run by hand,
+    # so nothing tied it to the library it comes from.
+    offset = {"index": "fT_pct", "note":
+              "cost ratio ceftazidime/meropenem at matched %fT>MIC, by "
+              "log-interpolating each agent's cost against the index over the "
+              "range the two libraries share. One yield configuration, so this "
+              "is narrower than analysis 3's span, which also propagates the "
+              "assumed yield range."}
+    per_agent = {}
+    for agent in ("ceftazidime", "meropenem"):
+        sub = sorted((r for r in lib if r["agent"] == agent),
+                     key=lambda r: r["fT_pct"])
+        per_agent[agent] = (np.array([r["fT_pct"] for r in sub]),
+                            np.array([r["cost_AUC_DS"] for r in sub]))
+    lo = max(v[0].min() for v in per_agent.values())
+    hi = min(v[0].max() for v in per_agent.values())
+    if hi > lo:
+        grid = np.linspace(lo, hi, 7)
+        ratios = []
+        for g in grid:
+            vals = {a: float(np.exp(np.interp(g, x, np.log(c))))
+                    for a, (x, c) in per_agent.items()}
+            ratios.append(vals["ceftazidime"] / vals["meropenem"])
+        offset.update({
+            "overlap_fT_pct": [float(lo), float(hi)],
+            "ratio_at_matched_index": [float(min(ratios)), float(max(ratios))],
+            "evaluated_at_fT_pct": [float(g) for g in grid],
+            "ratios": [float(r) for r in ratios],
+        })
+    else:
+        offset["evaluated"] = False
+        offset["reason"] = "the two agents' index ranges do not overlap"
     return {
         "library": lib, "candidates": perf, "within_agent_spearman": within,
+        "cost_offset_at_matched_index": offset,
         "n_regimens": len(lib),
         "mass_balance_identity": {
             "statement": "k_ds * AUC_D = a * [Y_lysis * int(kill*B_rep dt) + "
