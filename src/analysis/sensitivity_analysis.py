@@ -48,7 +48,11 @@ DEFAULT_SA_BOUNDS: Dict[str, List[float]] = {
     "k_repair":   [0.01, 0.5],      # per hour
 
     # Immune parameters
-    "k_prod":          [0.1, 2.0],       # per hour
+    # Admissible band for the recruited plateau: 1 is homeostasis with no
+    # recruitment, and above about 5 the immune system alone controls an
+    # untreated infection (see ImmuneParameters). Not identified by any data
+    # here, so it is swept over its whole band.
+    "recruit_fold_max": [1.0, 5.0],      # x N_eff_0
     "EC50_immune":     [1e4, 1e6],       # CFU/mL
     "k_deg_immune":    [0.01, 0.2],      # per hour
     "k_kill_base":     [1e-9, 1e-7],     # per mL per hour
@@ -80,7 +84,7 @@ _PARAM_MAP = {
     "k_pers":          ("bacteria", "k_pers"),
     "mu_mut":          ("bacteria", "mu_mut"),
     "k_repair":        ("bacteria", "k_repair"),
-    "k_prod":          ("immune", "k_prod"),
+    "recruit_fold_max": ("immune", "recruit_fold_max"),
     "EC50_immune":     ("immune", "EC50_immune"),
     "k_deg_immune":    ("immune", "k_deg_immune"),
     "k_kill_base":     ("immune", "k_kill_base"),

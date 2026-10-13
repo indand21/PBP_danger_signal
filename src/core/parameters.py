@@ -3,6 +3,7 @@ Parameter definitions and default values for QSP model
 """
 
 import numpy as np
+import dataclasses
 from dataclasses import dataclass
 from typing import Dict
 
@@ -67,11 +68,53 @@ class BacterialParameters:
 
 @dataclass
 class ImmuneParameters:
-    """Immune effector dynamics"""
-    N_eff_0: float = 1e7  # baseline neutrophils/macrophages per mL
-    k_prod: float = 0.5  # per hour, immune recruitment rate
+    """Immune effector dynamics.
+
+    The pool is homeostatic and burden-recruited:
+
+        dN/dt = k_deg_immune * (target(B) - N)
+        target(B) = N_eff_0 * (1 + (recruit_fold_max - 1) * B/(EC50_immune + B))
+
+    so production is ``k_deg_immune * target`` in cells/mL/h -- the effector
+    state's own units -- and the fixed points are N_eff_0 with no infection
+    and ``recruit_fold_max * N_eff_0`` at saturating burden. Setting
+    N_eff_0 = 0 makes the host neutropenic exactly: the baseline and the
+    recruited increment both vanish, so N stays at zero for all time. That is
+    how the neutropenic-thigh calibration condition is imposed (see
+    ``src/analysis/external_validation._neutropenic_params``).
+
+    REPAIRED 2026-10-13 (review R10). The previous recruitment term was
+
+        recruit = k_prod * B/(EC50_immune + B)        # k_prod = 0.5
+
+    which is a rate constant multiplying a dimensionless saturation, so it
+    carried units of 1/h where the equation needs cells/mL/h. Against a loss
+    of k_deg_immune * N_eff_0 = 5e5 cells/mL/h it was six orders of magnitude
+    too small -- the largest pool it could sustain was 10 cells/mL -- so the
+    layer was a decaying initial pool, not a recruited response: effectors
+    fell to 9% of baseline by 48 h and the immune kill rate with them, from
+    0.100 to 0.009 /h, independently of bacterial burden. ``k_prod`` is gone
+    rather than rescaled, because the fold-rise is the quantity with a
+    meaning: tying it to N_eff_0 keeps a reduced-baseline host correctly
+    scaled instead of recruiting every host to the same absolute plateau.
+
+    recruit_fold_max is NOT identified by any data in this repository. Both
+    calibration datasets are immune-free by construction (a broth time-kill
+    and a *neutropenic* thigh model), so nothing here constrains it, and the
+    whole layer is illustrative -- see the entries in
+    ``src/analysis/provenance.py``. Its admissible band is bounded above by
+    the study's own premise rather than by data: at a plateau above about
+    5 x N_eff_0 the immune system alone controls an untreated infection
+    (72 h burden 5.09 against 8.90 log10 CFU at fold 7), which would
+    contradict modelling infections that need antibiotics and would stop the
+    failing-therapy arm failing. The default sits mid-band, and
+    ``scripts/ds_structural_sensitivity.py`` runs the band's ends and the old
+    decaying pool.
+    """
+    N_eff_0: float = 1e7  # cells/mL, homeostatic effector level (0 = neutropenic)
+    recruit_fold_max: float = 3.0  # x N_eff_0, plateau at saturating burden
     EC50_immune: float = 1e5  # CFU/mL, half-max for immune recruitment
-    k_deg_immune: float = 0.05  # per hour, immune cell degradation
+    k_deg_immune: float = 0.05  # per hour, effector turnover (also the response rate)
     k_kill_base: float = 1e-8  # per mL per hour, baseline immune killing capacity
 
 @dataclass
@@ -240,6 +283,32 @@ def get_default_parameters() -> Dict:
         'damage': HostDamageParameters(),
         # Drug-specific PK will be loaded separately
     }
+
+def immune_free_parameters(params: Dict = None) -> Dict:
+    """Parameters with the effector pool switched off (in-vitro or neutropenic).
+
+    Sets ``N_eff_0 = 0``, which zeroes the homeostatic target and the
+    recruited increment together, so the pool decays to exactly zero and
+    stays there. Callers should also start ``N_eff`` at zero; the two are not
+    interchangeable, and which one is missing decides how it fails:
+
+      * the set-point alone does not empty a pool that starts full;
+      * the initial condition alone is refilled by homeostasis, which is what
+        would silently re-immunise the broth time-kill and the neutropenic
+        thigh model the bacterial layer is calibrated against.
+
+    Before the R10 repair neither mattered, because recruitment was six
+    orders of magnitude too weak to refill anything and the pool merely
+    decayed. Every site that wants no immune contribution must now say so.
+
+    Returns a new dict with a new ImmuneParameters; the caller's objects are
+    left alone, because several callers pass in a parameter set they go on to
+    use for immunocompetent runs as well.
+    """
+    src = get_default_parameters() if params is None else params
+    p = dict(src)
+    p['immune'] = dataclasses.replace(src['immune'], N_eff_0=0.0)
+    return p
 
 def get_drug_pk_parameters(drug_name: str) -> PKParameters:
     """

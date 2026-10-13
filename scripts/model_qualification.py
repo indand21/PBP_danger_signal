@@ -10,7 +10,8 @@ from scipy.integrate import solve_ivp
 from scipy.optimize import brentq
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.core.parameters import get_default_parameters, get_drug_pk_parameters, normalize_pk_parameters
+from src.core.parameters import (get_default_parameters, get_drug_pk_parameters,
+                                 immune_free_parameters, normalize_pk_parameters)
 from src.core.pd_model import create_ode_system
 from src.core.pk_models import TwoCompartmentPKModel, DosingRegimen
 from src.core.simulation import run_simulation
@@ -94,8 +95,13 @@ IMMUNE_OFF_IC = dict(B_rep=1e6, B_pers=1e3, B_SCV=0, N_eff=1e2,
 
 
 def _net_logchange_constant(C_eff):
-    """24 h log10 change in total burden at CONSTANT effect-site conc, immune off."""
-    pd = create_ode_system(get_default_parameters())
+    """24 h log10 change in total burden at CONSTANT effect-site conc, immune off.
+
+    "Immune off" now has to be said at the set-point as well as in y0: since
+    the R10 repair the effector pool is homeostatic, so the trace pool in
+    IMMUNE_OFF_IC would otherwise be recruited into a full response.
+    """
+    pd = create_ode_system(immune_free_parameters())
     y0 = np.array([1e6, 1e3, 0, 1e2, 0, 10, 5, 0, 0], dtype=float)
     sol = solve_ivp(lambda t, y: pd.rhs(t, y, C_effect=C_eff, drug_class="cidal"),
                     (0, 24), y0, method="LSODA", max_step=0.1, rtol=1e-6, atol=1e-8)
@@ -119,7 +125,7 @@ def _logkill_regimen(dose_mg, interval, n_doses, inf_min=30):
                                 effect_site_model=True)
     reg = DosingRegimen(dose_mg=dose_mg, interval_hours=interval, start_time=0,
                         n_doses=n_doses, infusion_duration_min=inf_min)
-    pd = create_ode_system(get_default_parameters())
+    pd = create_ode_system(immune_free_parameters())  # paired with IMMUNE_OFF_IC
     r = run_simulation(pkm, reg, pd, dict(IMMUNE_OFF_IC), t_span=(0, 24),
                        drug_class="cidal", weight_kg=WEIGHT)
     _, B = r.get_bacterial_burden()

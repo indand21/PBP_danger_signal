@@ -82,7 +82,10 @@ class ImprovedBacterialODE:
         dydt[2] = 0.0
 
         # Immune effectors (simplified recruitment)
-        recruit = self.p_imm.k_prod * (B_total / (self.p_imm.EC50_immune + B_total))
+        # Homeostatic, burden-recruited pool; mirrors src/core/pd_model (R10).
+        _hill = B_total / (self.p_imm.EC50_immune + B_total)
+        recruit = self.p_imm.k_deg_immune * self.p_imm.N_eff_0 * (
+            1.0 + (self.p_imm.recruit_fold_max - 1.0) * _hill)
         degrade = self.p_imm.k_deg_immune * N_eff
         dydt[3] = recruit - degrade
 

@@ -29,10 +29,10 @@ bacteria:
 # IMMUNE DYNAMICS PARAMETERS
 # ============================================================================
 immune:
-  N_eff_0: 1.0e7             # baseline neutrophils/macrophages per mL
-  k_prod: 0.5                # per hour, immune recruitment rate
+  N_eff_0: 1.0e7             # cells/mL, homeostatic effector level (0 = neutropenic)
+  recruit_fold_max: 3.0      # x N_eff_0, plateau at saturating burden (R10)
   EC50_immune: 1.0e5         # CFU/mL, half-max for immune recruitment
-  k_deg_immune: 0.05         # per hour, immune cell degradation
+  k_deg_immune: 0.05         # per hour, effector turnover (also the response rate)
   k_kill_base: 1.0e-8        # per mL per hour, baseline immune killing capacity
 
 # ============================================================================

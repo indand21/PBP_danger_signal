@@ -41,6 +41,7 @@ from src.analysis.held_out_validation import (  # noqa: E402
 from src.analysis.injury_layer import check_rank_invariance  # noqa: E402
 from src.core.parameters import (  # noqa: E402
     get_default_parameters, get_drug_pd_parameters, get_drug_pk_parameters,
+    immune_free_parameters,
 )
 from src.core.pd_model import create_ode_system  # noqa: E402
 from src.core.pk_models import DosingRegimen, TwoCompartmentPKModel  # noqa: E402
@@ -125,7 +126,9 @@ def const_exposure_run(p, C_mult, Y, Yf, t_end=8.0, n=1600, B=1e8):
     """
     from scipy.integrate import solve_ivp
 
-    pd = create_ode_system(get_default_parameters())
+    # Constant concentration with no immune effectors: an in-vitro construct,
+    # so the pool is off at the set-point as well as in y0 (review R10).
+    pd = create_ode_system(immune_free_parameters())
     C_const = C_mult * MIC_EFFECT
     t = np.linspace(0.0, t_end, n)
     y0 = np.array([B, B * 1e-5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])

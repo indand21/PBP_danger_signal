@@ -210,6 +210,12 @@ def _run_scenario(
 ) -> SimulationResult:
     """Run a single scenario with the given parameters."""
     params = get_default_parameters()
+    # immune_level is the scenario's host status (one caller passes 1e3 for a
+    # neutropenic patient). The effector pool is homeostatic since the R10
+    # repair, so the level has to be the set-point as well as the initial
+    # condition, or a neutropenic scenario would recruit to the default
+    # immunocompetent baseline.
+    params["immune"].N_eff_0 = float(immune_level)
     pd_model = BacterialPopulationODE(params)
 
     pk_params = get_drug_pk_parameters(drug_name)

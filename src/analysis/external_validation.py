@@ -45,7 +45,9 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 from scipy.integrate import solve_ivp, trapezoid
 
-from src.core.parameters import get_default_parameters, get_drug_pk_parameters
+from src.core.parameters import (get_default_parameters,
+                                 get_drug_pk_parameters,
+                                 immune_free_parameters)
 from src.core.pd_model import BacterialPopulationODE
 from src.core.pk_models import TwoCompartmentPKModel, DosingRegimen
 from src.core.simulation import run_simulation
@@ -204,6 +206,10 @@ def predict_timekill(ds: DigitizedDataset) -> np.ndarray:
     """
     sc = ds.scenario
     params = get_default_parameters()
+    # The effector pool is homeostatic (R10), so its set-point must match the
+    # scenario's effector level or the pool would be repopulated towards the
+    # default baseline. For broth that level is zero, and this is what keeps a
+    # time-kill immune-free; it is set below, once `immune` is resolved.
     pd_model = BacterialPopulationODE(params)
 
     if "mic_multiple" in sc:
@@ -217,6 +223,7 @@ def predict_timekill(ds: DigitizedDataset) -> np.ndarray:
     else:
         c_const = float(sc.get("concentration_mgL", 0.0))
     immune = float(sc.get("immune", 0.0))  # broth: no neutrophils by default
+    params["immune"].N_eff_0 = immune
     drug_class = ds.drug_class
     is_static = (drug_class == "static")
 
@@ -257,6 +264,8 @@ def predict_cytokine(ds: DigitizedDataset, marker: str = "IL6") -> np.ndarray:
         infusion_duration_min=sc.get("infusion_min", 30.0),
     )
     params = get_default_parameters()
+    # Homeostatic set-point must match the scenario's effector level (R10).
+    params["immune"].N_eff_0 = float(sc.get("immune", 1e7))
     pd_model = BacterialPopulationODE(params)
     ic = {"B_rep": sc.get("initial_burden", 1e6), "B_pers": 1e2, "B_SCV": 0.0,
           "N_eff": sc.get("immune", 1e7), "Damage": 0, "IL6": 10, "TNF": 5}
@@ -285,13 +294,27 @@ def predict_cytokine(ds: DigitizedDataset, marker: str = "IL6") -> np.ndarray:
 # ---------------------------------------------------------------------------
 
 def _neutropenic_params():
-    """Default params with immune recruitment switched off (neutropenic host)."""
-    params = get_default_parameters()
-    try:
-        params["immune"].k_prod = 0.0
-    except Exception:  # noqa: BLE001 - tolerate param-container differences
-        pass
-    return params
+    """Default params with the effector pool switched off (neutropenic host).
+
+    N_eff_0 = 0 zeroes the homeostatic target and the recruited increment
+    together, so an effector pool started at zero stays at exactly zero for
+    all time. The callers below also start N_eff at 0; both are required,
+    since the initial condition alone would otherwise be repopulated by
+    homeostasis.
+
+    This is deliberately not wrapped in a try/except. Before the R10 repair
+    the line here set ``k_prod = 0``, which was a no-op -- recruitment was
+    six orders of magnitude too small to matter either way -- so a silent
+    failure was invisible. It is now the only thing that makes the host
+    neutropenic, and the bacterial layer is calibrated in that condition, so
+    an AttributeError must surface rather than be swallowed.
+
+    ``get_default_parameters`` is resolved from THIS module's namespace on
+    purpose: scripts/ds_bacterial_refit.py monkey-patches it here to sweep
+    bacterial parameters, so calling ``immune_free_parameters()`` with no
+    argument would quietly discard the swept values and fit the defaults.
+    """
+    return immune_free_parameters(get_default_parameters())
 
 
 def _delta_log10_const_conc(pd_model, C, drug_class, initial_burden, t_end=24.0):

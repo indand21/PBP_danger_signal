@@ -134,7 +134,7 @@ class ConfigManager:
         imm_data = data.get('immune', {})
         immune = ImmuneParameters(
             N_eff_0=imm_data.get('N_eff_0', 1e7),
-            k_prod=imm_data.get('k_prod', 0.5),
+            recruit_fold_max=imm_data.get('recruit_fold_max', 3.0),
             EC50_immune=imm_data.get('EC50_immune', 1e5),
             k_deg_immune=imm_data.get('k_deg_immune', 0.05),
             k_kill_base=imm_data.get('k_kill_base', 1e-8),
@@ -289,7 +289,7 @@ class ConfigManager:
             },
             'immune': {
                 'N_eff_0': config.immune.N_eff_0,
-                'k_prod': config.immune.k_prod,
+                'recruit_fold_max': config.immune.recruit_fold_max,
                 'EC50_immune': config.immune.EC50_immune,
                 'k_deg_immune': config.immune.k_deg_immune,
                 'k_kill_base': config.immune.k_kill_base,

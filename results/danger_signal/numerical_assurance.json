@@ -27,42 +27,42 @@
   "rows": [
    {
     "target_fT_pct": 40.0,
-    "kill_difference_default": 0.2386532954920404,
-    "kill_difference_tight": 0.23865341118188987,
-    "abs_change_kill_difference": 1.1568984947807337e-07,
-    "rel_change_ratio_low": 0.0010903825762513116,
-    "rel_change_ratio_high": 0.0010895382392406335
+    "kill_difference_default": 0.07285136765085909,
+    "kill_difference_tight": 0.07285152755440105,
+    "abs_change_kill_difference": 1.599035419630468e-07,
+    "rel_change_ratio_low": 0.0010808618940202892,
+    "rel_change_ratio_high": 0.0010790990988233332
    },
    {
     "target_fT_pct": 60.0,
-    "kill_difference_default": 0.027572224463081163,
-    "kill_difference_tight": 0.02757213016218829,
-    "abs_change_kill_difference": 9.430089287221222e-08,
-    "rel_change_ratio_low": 2.0313810302729442e-05,
-    "rel_change_ratio_high": 2.0822194059006e-05
+    "kill_difference_default": 0.019743955814290892,
+    "kill_difference_tight": 0.01974388784510328,
+    "abs_change_kill_difference": 6.796918761153847e-08,
+    "rel_change_ratio_low": 2.7348678212967557e-05,
+    "rel_change_ratio_high": 2.7994376524668703e-05
    },
    {
     "target_fT_pct": 80.0,
-    "kill_difference_default": 0.010389246940842867,
-    "kill_difference_tight": 0.010389203823006898,
-    "abs_change_kill_difference": 4.311783596833152e-08,
-    "rel_change_ratio_low": 0.0005128703895526977,
-    "rel_change_ratio_high": 0.0005133785865358338
+    "kill_difference_default": 0.008326847794931425,
+    "kill_difference_tight": 0.008326802779883291,
+    "abs_change_kill_difference": 4.5015048133478786e-08,
+    "rel_change_ratio_low": 0.0005167650860573875,
+    "rel_change_ratio_high": 0.0005163968429740287
    },
    {
     "target_fT_pct": 95.0,
-    "kill_difference_default": 0.008266203594986532,
-    "kill_difference_tight": 0.008266180806909773,
-    "abs_change_kill_difference": 2.2788076758928355e-08,
-    "rel_change_ratio_low": 8.39012097630508e-05,
-    "rel_change_ratio_high": 8.447649053621527e-05
+    "kill_difference_default": 0.0069598597118396555,
+    "kill_difference_tight": 0.006959804157114391,
+    "abs_change_kill_difference": 5.5554725264528315e-08,
+    "rel_change_ratio_low": 0.00013593470157429252,
+    "rel_change_ratio_high": 0.00013611477760752574
    }
   ],
-  "max_abs_change_kill_difference": 1.1568984947807337e-07,
-  "max_rel_change_cost_ratio": 0.0010903825762513116
+  "max_abs_change_kill_difference": 1.599035419630468e-07,
+  "max_rel_change_cost_ratio": 0.0010808618940202892
  },
  "provenance": {
-  "git_head": "313f1c41feb8efe0b3b30157fb6d25b7a3a07475",
+  "git_head": "e5c633e912b961f41dc3f9afa7225d35ecde74ba",
   "git_dirty": true,
   "python": "3.12.4",
   "numpy": "2.4.6",

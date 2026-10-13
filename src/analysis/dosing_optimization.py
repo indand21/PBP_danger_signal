@@ -589,7 +589,14 @@ def optimize_dosing_scipy(
             x0,
             method=method,
             bounds=bounds,
-            options={"maxiter": 100, "disp": verbose},
+            # Nelder-Mead on three parameters needs more than 100 iterations
+            # to converge; at that budget it reported success only when the
+            # objective surface happened to be easy, and the R10 immune repair
+            # changed the surface enough to expose it. The dose it returned on
+            # hitting the cap was sensible, so this was a convergence-flag
+            # defect rather than a wrong answer -- but a flag that depends on
+            # the landscape is not worth having.
+            options={"maxiter": 1000, "disp": verbose},
         )
 
         # Run final simulation at optimal parameters

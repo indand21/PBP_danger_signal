@@ -189,11 +189,18 @@ class BacterialPopulationODE:
         dydt[0] -= mutation_rate
 
         # --- Immune effectors (neutrophils/macrophages) ---
-        # Recruitment proportional to bacterial burden
-        recruit = self.p_imm.k_prod * (B_total / (self.p_imm.EC50_immune + B_total))
-        degrade = self.p_imm.k_deg_immune * N_eff
+        # Homeostatic pool, recruited by burden: the effectors relax towards a
+        # target that rises from N_eff_0 (no infection) to recruit_fold_max x
+        # N_eff_0 (saturating burden). Production is k_deg_immune * target, in
+        # cells/mL/h, which is the state's own scale; see ImmuneParameters for
+        # what this replaced (review R10) and why the plateau is a fold.
+        # N_eff_0 = 0 gives dN/dt = -k_deg * N, so a neutropenic host started
+        # at zero stays at exactly zero.
+        hill_immune = B_total / (self.p_imm.EC50_immune + B_total)
+        target = self.p_imm.N_eff_0 * (
+            1.0 + (self.p_imm.recruit_fold_max - 1.0) * hill_immune)
 
-        dydt[3] = recruit - degrade
+        dydt[3] = self.p_imm.k_deg_immune * (target - N_eff)
 
         # --- Cidal damage accumulation ---
         # Units: C_effect in mg/L

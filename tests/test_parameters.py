@@ -48,10 +48,20 @@ class TestImmuneParameters:
     def test_default_values(self):
         ip = ImmuneParameters()
         assert ip.N_eff_0 == 1e7
-        assert ip.k_prod == 0.5  # back to original value
+        assert ip.recruit_fold_max == 3.0  # R10 repair; k_prod is gone
         assert ip.EC50_immune == 1e5
         assert ip.k_deg_immune == 0.05
         assert ip.k_kill_base == 1e-8  # back to original value
+
+    def test_k_prod_is_gone(self):
+        """The mis-scaled recruitment constant must not come back silently.
+
+        ``k_prod`` carried units of 1/h in an equation for cells/mL/h (R10).
+        Reintroducing it -- say by merging an older config -- would make the
+        effector pool a decaying initial pool again, and nothing else in the
+        model would complain.
+        """
+        assert not hasattr(ImmuneParameters(), "k_prod")
 
     def test_ec50_positive(self):
         ip = ImmuneParameters()

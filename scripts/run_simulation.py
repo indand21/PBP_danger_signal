@@ -34,7 +34,8 @@ print('  Baseline MIC: {:.1f} mg/L'.format(params['bacteria'].MIC_baseline))
 # Create PD model
 print('\n[Step 2] Creating pharmacodynamic model...')
 pd_model = create_ode_system(params)
-print('  Immune recruitment rate: {:.3f} per hour'.format(pd_model.p_imm.k_prod))
+print('  Immune effector baseline: {:.1e} cells/mL'.format(pd_model.p_imm.N_eff_0))
+print('  Recruited plateau: {:.1f}x baseline'.format(pd_model.p_imm.recruit_fold_max))
 print('  Alpha (cidal): {:.1f}, Alpha (static): {:.1f}'.format(
     pd_model.p_cyto.alpha_cidal, pd_model.p_cyto.alpha_static))
 

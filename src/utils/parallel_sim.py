@@ -125,6 +125,11 @@ def _simulate_patient(patient: VirtualPatient) -> PatientResult:
     try:
         # Build parameters with overrides
         params = get_default_parameters()
+        # The patient's immune_level is used as the N_eff initial condition
+        # below; since the R10 repair the pool is homeostatic, so it must be
+        # the set-point too or every patient relaxes to the same baseline.
+        # Set before param_overrides, so an explicit override still wins.
+        params["immune"].N_eff_0 = float(patient.immune_level)
         for group, overrides in patient.param_overrides.items():
             if group in params:
                 for attr, val in overrides.items():

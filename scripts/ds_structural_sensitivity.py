@@ -14,6 +14,9 @@ by rewording:
       of 1e6. The equilibrium recruitment can support is 10 cells/mL, so the
       immune layer is a decaying initial pool, not a recruited response.
       Immune killing falls from 0.1/h to 0.009/h over 48 h.
+      This has since been REPAIRED, so the variants below are no longer
+      about whether the defect matters but about the one magnitude the
+      repair leaves free -- see the second note under VARIANTS.
 
 Neither is adopted here: changing the defaults would change every reported
 number and is the author's decision. What this script establishes is whether
@@ -53,8 +56,11 @@ change how the R7 variants should be read:
     substance.
 
 The refit has since been ADOPTED: the defaults in src/core/parameters.py are
-now the refitted values, so "baseline" is the refitted model. R10 is still
-not fixed.
+now the refitted values, so "baseline" is the refitted model. R10 has since
+been REPAIRED too (2026-10-13): the effector pool is homeostatic and
+burden-recruited, with production in cells/mL/h. "baseline" is therefore the
+repaired model, and what remains to bound is the recruited plateau, which no
+data here identify.
 
 Writes results/danger_signal/structural_sensitivity.json.
 """
@@ -88,15 +94,35 @@ TARGETS = (40.0, 80.0)
 PREVIOUS_PARAMETERS = {"k_kill_max": 3.0, "kill_C50": 0.6, "kill_hill": 4.0}
 REFIT_OPTIMUM = {"k_kill_max": 1.351, "kill_C50": 0.991, "kill_hill": 8.0}
 
+#: The R10 repair changes what the immune variants should be. They used to
+#: ask whether the mis-scaled layer mattered; the layer is now homeostatic and
+#: burden-recruited, so what is left to bound is the recruited plateau,
+#: recruit_fold_max, which no data in this repository identify.
+#:
+#:   immune_pre_repair      N_eff_0 = 0 leaves dN/dt = -k_deg * N, so with the
+#:                          study's initial pool of 1e7 cells/mL this is the
+#:                          decaying pool the study ran on before the repair,
+#:                          reproduced exactly rather than described. It also
+#:                          supersedes the old "immune_no_decay" variant,
+#:                          which is now identical to immune_no_recruitment:
+#:                          freezing turnover and removing recruitment both
+#:                          hold the pool at its initial level.
+#:   immune_no_recruitment  the bottom of the band: homeostasis at N_eff_0
+#:                          with no response to burden at all.
+#:   immune_max_recruitment the top of the band. Above about 5 the immune
+#:                          layer alone controls an untreated infection (72 h
+#:                          burden 5.09 against 8.90 log10 CFU at fold 7),
+#:                          which contradicts modelling infections that need
+#:                          antibiotics, so the band is bounded by the
+#:                          study's premise rather than by data.
 VARIANTS = {
     "baseline": {},
     "previous_parameters": {"bacteria": PREVIOUS_PARAMETERS},
     "refit_optimum": {"bacteria": REFIT_OPTIMUM},
-    "immune_no_decay": {"immune": {"k_deg_immune": 0.0}},
+    "immune_pre_repair": {"immune": {"N_eff_0": 0.0}},
+    "immune_no_recruitment": {"immune": {"recruit_fold_max": 1.0}},
+    "immune_max_recruitment": {"immune": {"recruit_fold_max": 5.0}},
     "immune_absent": {"immune": {"k_kill_base": 0.0}},
-    # Recruitment rescaled to the effector state's own units, so that it can
-    # actually sustain the initial pool: k_prod = k_deg * N_eff(0).
-    "immune_recruitment_scaled": {"immune": {"k_prod": 0.05 * 1e7}},
 }
 
 NOTES = {
@@ -111,11 +137,17 @@ NOTES = {
                      "8. The data cannot separate hill 8 from hill 4 "
                      "(0.05 log10 RMSE), so this variant bounds what the "
                      "choice of exponent decides",
-    "immune_no_decay": "immune effectors held at their initial level (R10): "
-                       "the opposite extreme to the decaying pool",
+    "immune_pre_repair": "the decaying effector pool the study ran on before "
+                         "the R10 repair: N_eff_0 = 0 leaves dN/dt = "
+                         "-k_deg * N from the initial 1e7 cells/mL, which is "
+                         "what the mis-scaled recruitment amounted to",
+    "immune_no_recruitment": "homeostasis with no response to burden "
+                             "(recruit_fold_max 1): the bottom of the "
+                             "admissible band for the repaired layer",
+    "immune_max_recruitment": "the top of that band (recruit_fold_max 5), "
+                              "above which the immune layer alone controls "
+                              "an untreated infection",
     "immune_absent": "no immune killing at all (R10): the neutropenic limit",
-    "immune_recruitment_scaled": "recruitment rescaled to cells/mL/h so it "
-                                 "sustains the initial pool (R10)",
 }
 
 
@@ -210,32 +242,62 @@ def main():
     hi = max(v["cost_ratio_span"][1] for v in payload["variants"].values())
     kd = max(v["max_abs_kill_difference"]
              for v in payload["variants"].values())
+    # Quoted numbers are read back off the variants that were actually run,
+    # so this paragraph cannot go stale when the variant set changes. An
+    # earlier hardcoded version had drifted on four counts at once: the number
+    # of immune variants, both Hill-exponent kill differences, and a closing
+    # sentence saying the refit was not yet adopted after it had been.
+    V = payload["variants"]
+    base = V["baseline"]
+    immune = {k: v for k, v in V.items() if k.startswith("immune_")}
+    band = [V[k]["max_abs_kill_difference"]
+            for k in ("immune_no_recruitment", "immune_max_recruitment")
+            if k in V]
+    band_ratio = [V[k]["cost_ratio_span"][1]
+                  for k in ("immune_no_recruitment", "immune_max_recruitment")
+                  if k in V]
     payload["summary"] = {
         "ordinal_holds_in_every_variant": ok,
         "cost_ratio_range_across_variants": [lo, hi],
         "max_abs_kill_difference_across_variants": kd,
-        "interpretation":
-            "The ordinal claim -- PBP-3 agent costs several-fold more danger "
-            "signal at matched exposure, while killing within about 0.1 log10 "
-            "-- is reproduced under the bacterial-layer refit, under the "
-            "fitted kill rate alone, under a kill_C50 corrected to the "
-            "calibration isolate's measured MIC, and under three immune "
-            "structures spanning no immune killing to a sustained effector "
-            "pool. What the refit moves is the dose scale, not the "
-            "comparison: because matching is done at equal %fT>MIC, a change "
-            "in the effective MIC multiplies both agents' doses by the same "
-            "factor (x1.85 to x2.31 here, exactly the MIC ratio), so the "
-            "cost ratio and the kill difference under a pure kill_C50 "
-            "correction are unchanged to the last digit. The residual kill "
-            "difference is the one quantity that is NOT robust: it is 0.105 "
-            "log10 at the refit optimum and 0.232 with the Hill exponent "
-            "held at 4, and the data cannot distinguish those two exponents. "
-            "The defaults are unchanged; adopting the refit is the author's "
-            "decision. See scripts/ds_bacterial_refit.py and the "
-            "Limitations." if ok else
+        "interpretation": (
+            "The ordinal claim -- the PBP-3 agent costs several-fold more "
+            "danger signal at matched exposure while killing within a small "
+            "fraction of a log10 -- holds in every variant run here "
+            f"({len(V)} of them), including the bacterial layer as it stood "
+            "before the refit, the refit's own formal optimum, and "
+            f"{len(immune)} immune structures spanning no immune killing at "
+            "all to the top of the recruited band. "
+            "What the bacterial parameters move is the dose scale, not the "
+            "comparison: because matching is at equal %fT>MIC, a change in "
+            "the effective MIC multiplies both agents' doses by the same "
+            "factor, exactly the MIC ratio, so the cost ratio and the kill "
+            "difference are almost untouched by it. "
+            f"At the values in use the kill difference is "
+            f"{base['max_abs_kill_difference']:.3f} log10 and the cost ratio "
+            f"tops out at {base['cost_ratio_span'][1]:.2f}. "
+            + (f"The one unidentified parameter of the repaired immune layer, "
+               f"the recruited plateau, moves the kill difference only over "
+               f"{min(band):.3f}-{max(band):.3f} log10 and the top of the "
+               f"cost ratio over {min(band_ratio):.2f}-{max(band_ratio):.2f} "
+               f"across its whole admissible band, so the choice of a "
+               f"mid-band default is not load-bearing. "
+               if len(band) == 2 and len(band_ratio) == 2 else "")
+            + "The immune layer is what the kill difference is most "
+            "sensitive to: removing immune killing entirely takes it to "
+            f"{V['immune_absent']['max_abs_kill_difference']:.3f} log10 and "
+            f"the cost ratio to {V['immune_absent']['cost_ratio_span'][1]:.2f}"
+            ", which is the neutropenic limit rather than a plausible host. "
+            "The residual kill difference also depends on the Hill exponent, "
+            "which the kill data cannot identify: "
+            f"{V['refit_optimum']['max_abs_kill_difference']:.3f} log10 at "
+            f"the fit's preferred exponent of 8 against "
+            f"{base['max_abs_kill_difference']:.3f} at the 4 in use."
+        ) if ok else (
             "At least one variant breaks the ordinal claim; the conclusion "
             "is NOT robust to the structures tested and the manuscript must "
-            "say so.",
+            "say so."
+        ),
     }
     print(f"\nordinal holds in every variant: {ok}")
     print(f"cost ratio across variants: {lo:.2f}-{hi:.2f}")

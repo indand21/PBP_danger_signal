@@ -181,7 +181,13 @@ def w_stasis_ratio(args):
     k, h, g = args
     ev = _patched(k_kill_max=k, kill_hill=h, kill_C50=1.0, k_growth=g)
     from src.core.pd_model import BacterialPopulationODE
-    pd_model = BacterialPopulationODE(ev.get_default_parameters())
+    from src.core.parameters import immune_free_parameters
+    # "No immune effectors" has to be said at the set-point, not only in the
+    # initial condition that _delta_log10_const_conc supplies: since the R10
+    # repair the pool is homeostatic, so a zeroed pool with the default
+    # set-point would be recruited and add immune killing to a broth MIC.
+    pd_model = BacterialPopulationODE(
+        immune_free_parameters(ev.get_default_parameters()))
 
     def delta(c):
         return ev._delta_log10_const_conc(pd_model, c, "cidal", 5e5, t_end=24.0)

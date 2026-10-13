@@ -6,6 +6,7 @@ Runs large-scale QSP simulations and computes clinical endpoints
 import numpy as np
 import pandas as pd
 from typing import Dict, List, Tuple, Optional
+import dataclasses
 from dataclasses import dataclass
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp, trapezoid  # np.trapz removed in NumPy 2.0
@@ -82,11 +83,22 @@ class InSilicoTrial:
             # Get initial conditions
             init_cond = patient.get_initial_conditions()
 
+            # The effector pool is homeostatic since the R10 repair, so a
+            # patient's immune status has to be carried by the set-point and
+            # not by the initial condition alone: otherwise a neutropenic
+            # patient starting at 1e5 cells/mL would be recruited to the
+            # cohort-wide default baseline within a day or so. One PD model
+            # per patient, since the set-point now differs between them.
+            pd_params = dict(self.params)
+            pd_params["immune"] = dataclasses.replace(
+                self.params["immune"], N_eff_0=float(init_cond["N_eff"]))
+            pd_model = create_ode_system(pd_params)
+
             # Run simulation
             result = run_simulation(
                 pk_model=pk_model,
                 regimen=self.regimen,
-                pd_model=self.pd_model,
+                pd_model=pd_model,
                 initial_conditions=init_cond,
                 t_span=(0, self.simulation_duration),
                 drug_class=self.drug_class,

@@ -53,6 +53,12 @@ def run_one(n_eff, k_pers, k_infl, drug_class, exposure_scale=1.0, t_span=(0, 96
     params = get_default_parameters()
     params["bacteria"].k_pers = k_pers
     params["damage"].k_infl = k_infl
+    # n_eff is the host's immune status, which this grid sweeps. Since the R10
+    # repair the effector pool is homeostatic, so the status has to be set at
+    # the set-point and not only in the initial condition below -- otherwise
+    # every point on the sweep would relax to the same default baseline within
+    # about a day and the immune axis of the grid would collapse.
+    params["immune"].N_eff_0 = n_eff
     if scv_midpoint is not None:
         params["bacteria"].scv_switch_midpoint = scv_midpoint
     pd_model = create_ode_system(params)

@@ -45,6 +45,7 @@ from src.analysis.held_out_validation import (  # noqa: E402
 from src.analysis.injury_layer import check_rank_invariance  # noqa: E402
 from src.core.parameters import (  # noqa: E402
     get_default_parameters, get_drug_pd_parameters, get_drug_pk_parameters,
+    immune_free_parameters,
 )
 from src.core.pd_model import create_ode_system  # noqa: E402
 from src.core.pk_models import DosingRegimen, TwoCompartmentPKModel  # noqa: E402
@@ -85,7 +86,13 @@ P_REF = None
 # --------------------------------------------------------------------------
 def effect_site_mic(params=None):
     from scipy.integrate import solve_ivp
-    pd = create_ode_system(params or get_default_parameters())
+    # The effective MIC is a property of the drug against the organism, so it
+    # is resolved with the effector pool off -- the same condition the
+    # bacterial layer was calibrated in. The trace N_eff below (1e2, contributing
+    # a kill rate of 1e-6/h) was this script's way of saying "immune off"; since
+    # the R10 repair the pool is homeostatic, so saying it requires the
+    # set-point too, or the trace would be recruited to a full response.
+    pd = create_ode_system(immune_free_parameters(params or get_default_parameters()))
     y0 = np.array([1e6, 1e3, 0, 1e2, 0, 10, 5, 0, 0], dtype=float)
 
     def net(C):
@@ -294,9 +301,14 @@ def analysis2_dual_pathway():
 
 
 def const_exposure(C_mult, Y, Yf, t_end=8.0, n=1600, B=1e8):
-    """Constant-concentration exposure through the validated PD ODE."""
+    """Constant-concentration exposure through the validated PD ODE.
+
+    An in-vitro construct: constant concentration and no immune effectors, so
+    the effector pool is switched off at the set-point as well as in the
+    initial condition (review R10).
+    """
     from scipy.integrate import solve_ivp
-    pd = create_ode_system(get_default_parameters())
+    pd = create_ode_system(immune_free_parameters())
     C_const = C_mult * MIC_EFFECT
     t = np.linspace(0.0, t_end, n)
     y0 = np.array([B, B * 1e-5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])

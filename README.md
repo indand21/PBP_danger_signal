@@ -41,22 +41,40 @@ an earlier version of this file overstated it:
   concentration equals the calibration isolate's measured MIC of 1 mg/L. The
   Hill exponent is not identified either - the fit prefers 8 and cannot
   separate that from the 4 in use - and that one choice decides the residual
-  kill difference between the two agents: 0.10 log10 CFU at 8 against the
-  0.24 reported at 4. The larger is reported.
-- The **immune** layer's recruitment term is not on the effector state's
-  scale, so it behaves as a decaying pool rather than a recruited response.
-  This is the largest remaining structural defect, and it matters more at the
-  refitted kill rate than it did before: slower drug killing leaves immune
-  killing a larger share of the total, so a mis-scaled immune layer has more
-  leverage.
+  kill difference between the two agents: 0.03 log10 CFU at 8 against the
+  0.07 reported at 4. The larger is reported.
+- The **immune** layer is illustrative, and nothing here identifies it: both
+  datasets above are immune-free by construction, one a broth culture and
+  one a *neutropenic* animal model. Its recruitment term was also
+  dimensionally wrong until 2026-10-13 - a rate constant in 1/h where the
+  equation needs cells/mL/h, six orders of magnitude too small, so the pool
+  could only decay - and it is now homeostatic and recruited by bacterial
+  burden, with production on the effector state's own scale. What the repair
+  cannot supply is the **size** of the response. That plateau is an
+  assumption, bounded below by homeostasis without recruitment and above by
+  the requirement that an untreated infection still progress; the default
+  sits mid-band, and the sensitivity run below covers both ends.
 
 `scripts/ds_structural_sensitivity.py` recomputes the whole analysis under
-six variants - the study as reported, the parameters it ran on before the
-bacterial layer was refitted, the refit's own formal optimum, and three
-immune-layer extremes - and writes the comparison to
+seven variants - the study as reported, the parameters it ran on before the
+bacterial layer was refitted, the refit's own formal optimum, and four
+immune structures spanning no immune killing at all to the top of the
+recruited band - and writes the comparison to
 `results/danger_signal/structural_sensitivity.json`, so what does and does
 not depend on these choices can be read off directly rather than taken on
-trust. The agent ranking holds in every one.
+trust. The agent ranking holds in every one. Across the whole admissible
+band of the recruited plateau the cost ratio tops out at 8.2-8.8 and the
+kill difference spans 0.05-0.14 log10, so that choice is not load-bearing;
+removing immune killing altogether, the neutropenic limit rather than a
+plausible host, is what moves them, to 10.8 and 0.31.
+
+The effective MIC is resolved with the effector pool switched off, so it is a
+property of the drug and the organism rather than of the host, and it is
+identical across every immune variant. Setting `N_eff_0 = 0` is what imposes
+that condition: it zeroes the homeostatic target and the recruited increment
+together. A zeroed initial condition alone is **not** enough, since
+homeostasis refills it - see `immune_free_parameters` in
+`src/core/parameters.py` and the tests in `tests/test_immune_layer.py`.
 
 Measuring the half-maximal concentration rather than anchoring it is the
 outstanding piece of work on the bacterial layer: it needs a time-kill
@@ -137,10 +155,11 @@ this repository.
 python -m pytest -q
 ```
 
-532 tests pass, covering the pharmacokinetic conventions and the conservation
+544 tests pass, covering the pharmacokinetic conventions and the conservation
 of drug mass, the bacterial dynamics, mass conservation across the persister
 and small-colony-variant switches, the danger-signal layer and its
-mass-balance identity, the unbound-fraction convention, the held-out
+mass-balance identity, the immune layer's units, fixed points and
+immune-free invariant, the unbound-fraction convention, the held-out
 validation data, solver failure handling, the provenance block, the tolerance
 term, and the acceptance criteria. One test deliberately rejects a saturated
 danger-signal pathway, so the criterion that a predecessor model failed can
@@ -174,7 +193,8 @@ locally released signal that reaches the circulation. They move absolute
 levels by about two orders of magnitude. Results are therefore reported as
 rankings and as ranges, never as absolute magnitudes or point estimates. The
 bacterial layer's half-maximal concentration and Hill exponent are not
-identified either, for the separate reasons given above.
+identified either, nor is the size of the immune response, for the separate
+reasons given above.
 
 The per-CFU yields themselves come from three published studies that measured
 different estimands, so the range they span is an **assumed scenario range**,

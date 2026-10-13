@@ -40,6 +40,7 @@ from src.analysis.danger_signal import (  # noqa: E402
 )
 from src.core.parameters import (  # noqa: E402
     get_default_parameters, get_drug_pd_parameters, get_drug_pk_parameters,
+    immune_free_parameters,
 )
 from src.core.pd_model import create_ode_system  # noqa: E402
 from src.core.pk_models import DosingRegimen, TwoCompartmentPKModel  # noqa: E402
@@ -132,10 +133,14 @@ def params_for_susceptibility(mic_factor: float):
 
 
 def effect_site_mic_for(params):
-    """Constant effect-site concentration giving 24 h stasis, for any params."""
+    """Constant effect-site concentration giving 24 h stasis, for any params.
+
+    Resolved with the effector pool off, so that the effective MIC is a
+    property of the drug and organism rather than of the host (review R10).
+    """
     from scipy.integrate import solve_ivp
     from scipy.optimize import brentq
-    pd = create_ode_system(params)
+    pd = create_ode_system(immune_free_parameters(params))
     y0 = np.array([1e6, 1e3, 0, 1e2, 0, 10, 5, 0, 0], dtype=float)
 
     def net(C):
