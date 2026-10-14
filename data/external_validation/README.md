@@ -22,6 +22,18 @@ Every dataset declares a `role`:
 boundary honest: if you ever tune a constant to improve fit on a dataset, change
 its role to `calibration`.
 
+The meropenem time-kill and neutropenic-thigh sources informed the adopted
+bacterial parameters and are registered as `calibration`. Figure 2A has also
+been re-read across the readable concentration arms for an exploratory fit:
+`meropenem_figure2a_multiarm.csv`, with source coordinates and overlap flags
+documented in `source_figures/README.md`. Run
+`python scripts/ds_multiarm_refit.py` and then
+`python scripts/ds_multiarm_downstream.py` to reproduce its sensitivity analysis.
+The custom multi-arm CSV is read by that script, not the two-column registry
+loader. It includes missing values for unresolved markers; these are not zeros.
+This analysis does not adopt new defaults or create another independent
+validation dataset from the same experiment.
+
 ## How to add a dataset
 
 1. **Pick a figure** from a published paper (see `registry.json` `notes` for the

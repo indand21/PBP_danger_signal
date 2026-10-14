@@ -60,14 +60,14 @@
      "ceftazidime"
     ],
     "scores": {
-     "imipenem": 3.2547792809365013,
-     "ceftazidime": 15.67983297876763
+     "imipenem": 3.1752457538365033,
+     "ceftazidime": 15.699159951869085
     },
     "separations": [
      {
       "lower": "imipenem",
       "higher": "ceftazidime",
-      "relative_separation": 0.7924225796700857
+      "relative_separation": 0.797744225578231
      }
     ],
     "min_separation": 1e-06,
@@ -91,14 +91,14 @@
      "ceftazidime"
     ],
     "scores": {
-     "imipenem": 3.2547792809365013,
-     "ceftazidime": 15.67983297876763
+     "imipenem": 3.1752457538365033,
+     "ceftazidime": 15.699159951869085
     },
     "separations": [
      {
       "lower": "imipenem",
       "higher": "ceftazidime",
-      "relative_separation": 0.7924225796700857
+      "relative_separation": 0.797744225578231
      }
     ],
     "min_separation": 1e-06,
@@ -122,14 +122,14 @@
      "ceftazidime"
     ],
     "scores": {
-     "imipenem": 3.2547792809365013,
-     "ceftazidime": 15.67983297876763
+     "imipenem": 3.1752457538365033,
+     "ceftazidime": 15.699159951869085
     },
     "separations": [
      {
       "lower": "imipenem",
       "higher": "ceftazidime",
-      "relative_separation": 0.7924225796700857
+      "relative_separation": 0.797744225578231
      }
     ],
     "min_separation": 1e-06,
@@ -146,29 +146,29 @@
  },
  "agent_predictions": {
   "ceftazidime": {
-   "DS_peak_pg_mL": 14.91982389367628,
-   "AUC_DS_pg_h_mL": 15.67983297876763,
-   "AUC_DS_excess_pg_h_mL": 15.67983297876763,
-   "DS_excess_peak_pg_mL": 14.91982389367628,
-   "IL6_peak_pg_mL": 451.91536586605065,
-   "AUC_IL6_pg_h_mL": 3746.5886788565463,
-   "AUC_IL6_excess_pg_h_mL": 3506.5886788565463,
-   "TNF_peak_pg_mL": 482.4087536406934,
-   "saturation_peak": 0.005801481882818767,
-   "saturation_mean": 8.891540213888848e-05,
-   "filament_fraction_of_release": 0.0014539056135244616
+   "DS_peak_pg_mL": 14.91861134415834,
+   "AUC_DS_pg_h_mL": 15.699159951869085,
+   "AUC_DS_excess_pg_h_mL": 15.699159951869085,
+   "DS_excess_peak_pg_mL": 14.91861134415834,
+   "IL6_peak_pg_mL": 452.81733583382515,
+   "AUC_IL6_pg_h_mL": 3753.342753183557,
+   "AUC_IL6_excess_pg_h_mL": 3513.342753183557,
+   "TNF_peak_pg_mL": 483.21814778727145,
+   "saturation_peak": 0.005800678463287521,
+   "saturation_mean": 0.00010704730174483778,
+   "filament_fraction_of_release": 0.001830233997894424
   },
   "imipenem": {
-   "DS_peak_pg_mL": 2.9522096975357845,
-   "AUC_DS_pg_h_mL": 3.2547792809365013,
-   "AUC_DS_excess_pg_h_mL": 3.2547792809365013,
-   "DS_excess_peak_pg_mL": 2.9522096975357845,
-   "IL6_peak_pg_mL": 33.60758504349352,
-   "AUC_IL6_pg_h_mL": 465.15261575917384,
-   "AUC_IL6_excess_pg_h_mL": 225.15261575917387,
-   "TNF_peak_pg_mL": 30.866124027681177,
-   "saturation_peak": 0.00036301171472905827,
-   "saturation_mean": 5.732382164468421e-06,
+   "DS_peak_pg_mL": 2.9435004760767787,
+   "AUC_DS_pg_h_mL": 3.1752457538365033,
+   "AUC_DS_excess_pg_h_mL": 3.1752457538365033,
+   "DS_excess_peak_pg_mL": 2.9435004760767787,
+   "IL6_peak_pg_mL": 33.63061646636312,
+   "AUC_IL6_pg_h_mL": 464.7007549786459,
+   "AUC_IL6_excess_pg_h_mL": 224.7007549786459,
+   "TNF_peak_pg_mL": 30.92045564122267,
+   "saturation_peak": 0.0003611787887168242,
+   "saturation_mean": 5.424993427757781e-06,
    "filament_fraction_of_release": 0.0
   }
  },
@@ -301,15 +301,15 @@
    "significance": "P > .05 (not significant at n=30)",
    "interpretation": "The ceftazidime-attributable cytokine rise in treated gram-negative urosepsis is a modest fraction of the patient's pre-treatment level, not a multi-fold increase."
   },
-  "attributable_IL6_peak_pg_mL": 446.91536586605065,
-  "implied_pretreatment_IL6_low_pg_mL": 1117.2884146651265,
-  "implied_pretreatment_IL6_high_pg_mL": 4469.153658660506,
+  "attributable_IL6_peak_pg_mL": 447.81733583382515,
+  "implied_pretreatment_IL6_low_pg_mL": 1119.5433395845628,
+  "implied_pretreatment_IL6_high_pg_mL": 4478.173358338251,
   "sepsis_IL6_range_pg_mL": [
    100.0,
    2000.0
   ],
   "overlaps_observed_sepsis_range": true,
-  "overlap_fraction_of_implied_interval": 0.2633493655260117,
+  "overlap_fraction_of_implied_interval": 0.26214755882583185,
   "marginal": true,
   "verdict": "marginally consistent, biased high",
   "over_predicts": false,
@@ -321,9 +321,9 @@
    {
     "focus_scale": 0.01,
     "V_focus_mL": 0.1,
-    "ratio_AUC_DS": 4.817475766702096,
-    "ratio_AUC_IL6": 15.625987261647616,
-    "caz_attributable_peak_pg_mL": 0.1674230582131706,
+    "ratio_AUC_DS": 4.944232245968995,
+    "ratio_AUC_IL6": 15.687631524005711,
+    "caz_attributable_peak_pg_mL": 0.16776244379892624,
     "rank_invariant": true,
     "consensus": [
      "imipenem",
@@ -333,9 +333,9 @@
    {
     "focus_scale": 0.1,
     "V_focus_mL": 1.0,
-    "ratio_AUC_DS": 4.8174856984316685,
-    "ratio_AUC_IL6": 15.625025136368867,
-    "caz_attributable_peak_pg_mL": 8.665017748873517,
+    "ratio_AUC_DS": 4.944239754735841,
+    "ratio_AUC_IL6": 15.686676154911568,
+    "caz_attributable_peak_pg_mL": 8.682590916244637,
     "rank_invariant": true,
     "consensus": [
      "imipenem",
@@ -345,9 +345,9 @@
    {
     "focus_scale": 1.0,
     "V_focus_mL": 10.0,
-    "ratio_AUC_DS": 4.817479658484262,
-    "ratio_AUC_IL6": 15.5742746626903,
-    "caz_attributable_peak_pg_mL": 446.91536586605065,
+    "ratio_AUC_DS": 4.9442346101559265,
+    "ratio_AUC_IL6": 15.635651751670537,
+    "caz_attributable_peak_pg_mL": 447.81733583382515,
     "rank_invariant": true,
     "consensus": [
      "imipenem",
@@ -357,9 +357,9 @@
    {
     "focus_scale": 10.0,
     "V_focus_mL": 100.0,
-    "ratio_AUC_DS": 4.817479055999005,
-    "ratio_AUC_IL6": 13.44100475441126,
-    "caz_attributable_peak_pg_mL": 19693.251261164554,
+    "ratio_AUC_DS": 4.944233350974384,
+    "ratio_AUC_IL6": 13.491021844904186,
+    "caz_attributable_peak_pg_mL": 19723.543066331305,
     "rank_invariant": true,
     "consensus": [
      "imipenem",
@@ -367,9 +367,9 @@
     ]
    }
   ],
-  "ratio_spread": 1.0000020616044694,
+  "ratio_spread": 1.0000015186921798,
   "endpoint": "AUC_DS_pg_h_mL (attributable danger-signal exposure)",
-  "ratio_spread_il6_not_reported": 1.1625609504021086
+  "ratio_spread_il6_not_reported": 1.1628201113565928
  },
  "yield_uncertainty": {
   "ratio_range": [
@@ -380,15 +380,15 @@
    {
     "yield_ratio": 3.5,
     "Y_imipenem_fg_per_CFU": 1.4085714285714286,
-    "ratio_AUC_DS": 3.372235029152898,
-    "ratio_AUC_IL6": 8.452602458840161,
+    "ratio_AUC_DS": 3.460964719249589,
+    "ratio_AUC_IL6": 8.485919539689322,
     "ordinal_holds": true
    },
    {
     "yield_ratio": 7.0,
     "Y_imipenem_fg_per_CFU": 0.7042857142857143,
-    "ratio_AUC_DS": 6.744467959516764,
-    "ratio_AUC_IL6": 27.722062438537712,
+    "ratio_AUC_DS": 6.921932177251498,
+    "ratio_AUC_IL6": 27.83133058381077,
     "ordinal_holds": true
    }
   ]
@@ -435,7 +435,7 @@
   "yield_robust": true
  },
  "provenance": {
-  "git_head": "e5c633e912b961f41dc3f9afa7225d35ecde74ba",
+  "git_head": "f4db0725e50d6cba80ed1906daacd8876aa6d913",
   "git_dirty": true,
   "python": "3.12.4",
   "numpy": "2.4.6",

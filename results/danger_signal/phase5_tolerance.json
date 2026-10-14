@@ -184,12 +184,12 @@
   "what_it_contradicts": "The cytokine arm of the model. Despite ~5x the endotoxin, ceftazidime's median peak IL-6 was LOWER than imipenem's (291.9 vs 594.8; P = .36), and peak cytokines did not correlate with peak endotoxin in any of the three cytokines (IL-6 r = .23, P = .18). The cytokine comparison is noise-dominated -- the interquartile ranges span more than a decade -- but it certainly does not support the model's direction, and it must not be cited as if it did."
  },
  "diagnosis": {
-  "model_DS_peak_pg_mL": 14.91982389367628,
+  "model_DS_peak_pg_mL": 14.91861134415834,
   "simpson_baseline_endotoxin_caz": 65.5,
   "simpson_peak_endotoxin_caz": 725.8,
-  "model_attributable_IL6_no_tolerance": 446.91536586605065,
+  "model_attributable_IL6_no_tolerance": 447.81733583382515,
   "observed_attributable_IL6": 80.29999999999998,
-  "over_prediction_fold": 5.565571181395401,
+  "over_prediction_fold": 5.5768036841074125,
   "conclusion": "error is in the DS->cytokine step, not release"
  },
  "tolerance_calibration": {
@@ -197,7 +197,7 @@
   "k_tol_off": 0.35,
   "pretreatment_DS_pg_mL": 65.5,
   "steady_state_tolerance": 0.8724413436514769,
-  "tol_shift_fold": 5393.181506843,
+  "tol_shift_fold": 5393.181356757104,
   "route": "tolerance as a DOSE-RESPONSE RIGHT-SHIFT; induction rate held at the volunteer-safe value and the shift fitted",
   "output_scaling_failure": "modelling tolerance as suppression of cytokine OUTPUT cannot satisfy both settings: it runs to k_tol_on ~4400/h and tolerance 0.999, breaking the volunteer calibration by 60-74%",
   "fitted_against": "Simpson table 5 minus table 3, ceftazidime arm",
@@ -206,23 +206,23 @@
  "calibration_preserved": {
   "cells": {
    "1ng": {
-    "IL6_peak_with_tolerance": 9.250899217494347,
+    "IL6_peak_with_tolerance": 9.25089928601939,
     "IL6_peak_without_tolerance": 65.54995249222486,
-    "relative_change": -0.8588725259779306,
-    "peak_tolerance_reached": 0.0012102374999979992
+    "relative_change": -0.858872524932544,
+    "peak_tolerance_reached": 0.0012102375194838794
    },
    "2ng": {
-    "IL6_peak_with_tolerance": 11.91975396593082,
+    "IL6_peak_with_tolerance": 11.91975408126577,
     "IL6_peak_without_tolerance": 200.87986835380545,
-    "relative_change": -0.9406622770932087,
-    "peak_tolerance_reached": 0.0019698567389780015
+    "relative_change": -0.9406622765190599,
+    "peak_tolerance_reached": 0.0019698567717663447
    }
   },
-  "max_abs_change": 0.9406622770932087,
+  "max_abs_change": 0.9406622765190599,
   "pass": false
  },
  "held_out_prins": {
-  "predicted_pct": 37.948960433818755,
+  "predicted_pct": 37.94896030791846,
   "observed_pct_range": [
    10.0,
    40.0
@@ -230,7 +230,7 @@
   "pass": true
  },
  "agent_separation": {
-  "model_AUC_DS_ratio": 18.999641972288988,
+  "model_AUC_DS_ratio": 19.500378187270677,
   "simpson_measured_peak_ratio": 4.971232876712328,
   "yield_interval_implied": [
    9.9,
@@ -238,7 +238,7 @@
   ]
  },
  "provenance": {
-  "git_head": "e5c633e912b961f41dc3f9afa7225d35ecde74ba",
+  "git_head": "f4db0725e50d6cba80ed1906daacd8876aa6d913",
   "git_dirty": true,
   "python": "3.12.4",
   "numpy": "2.4.6",

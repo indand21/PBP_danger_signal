@@ -14,7 +14,7 @@ preparation; the manuscript itself is not part of this repository.
 
 | Layer | Content |
 |---|---|
-| Pharmacokinetic | two-compartment, analytic effect-site concentration from a dosing history |
+| Pharmacokinetic | two-compartment code path, one-compartment as used: the simulation reads clearance, central volume and the penetration ratio only, so the peripheral parameters never enter |
 | Bacterial | replicating, persister and small-colony-variant pools with immune effectors and saturating concentration-dependent killing |
 | Danger signal | release proportional to drug-induced killing with an agent-specific per-CFU yield, plus a kill-independent term confined to a smooth sub-MIC window; first-order plasma clearance |
 | Cytokine | interleukin-6 and tumour necrosis factor downstream of receptor occupancy. Calibrated, but **computed and not reported** - it does not transfer from healthy volunteers to septic patients |
@@ -28,9 +28,14 @@ danger-signal quantity. Their calibration status is not uniform, though, and
 an earlier version of this file overstated it:
 
 - The **pharmacokinetic** layer is fitted to published concentration-time
-  data. Ceftazidime's resulting half-life, 1.18 h, is shorter than the
-  reported 1.6-2.0 h; that is a consequence of the one-compartment
-  simplification this study uses.
+  data where such a curve has been digitized, which is true for meropenem and
+  not for ceftazidime. Meropenem's clearance and central volume are fitted to
+  the digitized 1 g plasma curve and meet all three of that dataset's
+  acceptance targets. Ceftazidime's central volume is **anchored, not
+  fitted**: it is set so the half-life equals the 1.57 h measured by Leroy,
+  which puts the volume on that paper's independently measured value without
+  being made to. That is a weaker basis, and the manuscript's supplement says
+  so.
 - The **bacterial** layer's maximum kill rate is fitted to a meropenem
   time-kill curve and a neutropenic-thigh dose-response
   (`scripts/ds_bacterial_refit.py`, written to
@@ -128,7 +133,7 @@ python scripts/ds_phase5_tolerance.py    # endotoxin-tolerance term (ships disab
 python scripts/ds_phase4_figures.py      # figures, read back from the stored JSON
 ```
 
-Five further stages write their own JSON alongside the pipeline's without
+Seven further stages write their own JSON alongside the pipeline's without
 feeding into it:
 
 ```bash
@@ -137,22 +142,36 @@ python scripts/ds_mass_balance_convergence.py  # order of the mass-balance resid
 python scripts/ds_structural_sensitivity.py    # kill-parameter and immune-layer variants
 python scripts/ds_bacterial_refit.py           # bacterial-layer fit and identifiability
 python scripts/ds_validation_targets.py        # curve-level validation vs registry targets
-python scripts/ds_pk_refit.py                  # pharmacokinetic fit (not adopted)
+python scripts/ds_pk_refit.py                  # pharmacokinetic fit (adopted)
+python scripts/ds_multiarm_refit.py            # seven-arm C50 refit from one figure
+python scripts/ds_multiarm_downstream.py       # what that refit would do downstream
 ```
 
 `ds_validation_targets.py` scores the digitized curves against the numeric
 acceptance targets recorded in `data/external_validation/registry.json`, which
-were previously computed by nothing. **Three of those targets are currently
-not met** and the script says so rather than failing quietly: the meropenem
-plasma RMSE and AUC, and the neutropenic-thigh stasis threshold, which the
-model places near 36% fT>MIC against a published 17.3%.
+were previously computed by nothing. **One of those targets is still not
+met** and the script says so rather than failing quietly: the neutropenic-thigh
+stasis threshold, which the model places at 37.1% fT>MIC against a published
+17.3%.
 
 `ds_pk_refit.py` fits the two identifiable pharmacokinetic parameters to the
-digitized plasma curve and meets all three of its targets, but **changes no
-default**: adopting it is a revision of the model and is left to the author.
-Running it also shows that the thigh threshold is *not* a pharmacokinetic
-problem — the refit leaves it where it was — so the two failures have
-different causes, one in the PK layer and one in the bacterial layer.
+digitized plasma curve and meets all three of its targets. **Its fit has now
+been adopted** as the meropenem default (`CL` 12.157 L/h, `Vc` 0.270 L/kg),
+which is why those three targets are met above; ceftazidime, which has no
+digitized curve here, is instead anchored to a published half-life. Running
+it also shows that the thigh threshold is *not* a pharmacokinetic problem —
+the refit leaves it where it was — so the two failures have different causes,
+one in the PK layer and one in the bacterial layer.
+
+`ds_multiarm_refit.py` refits the kill-potency parameter to all seven
+concentration arms of a single published time-kill figure, read from the
+raster images shipped in `data/external_validation/source_figures/`, and
+`ds_multiarm_downstream.py` reports what adopting that fit would change.
+Neither changes a default. The primary fit is dominated by two 2 h readings
+that disagree with each other; dropping that pair gives the best residual of
+any scenario and a potency within 2.2% of the one in use, by a route that
+uses no MIC anchor. The refit is treated as corroboration, not as a
+replacement, and the Hill exponent stays unidentified across its scenarios.
 
 `ds_bacterial_refit.py` reports the fit the bacterial parameters come from
 and the profiles behind the identifiability statements above; it changes no
@@ -216,7 +235,13 @@ layers below the danger signal, with their own registry.
 
 No copyrighted source PDF is included in this repository, and no new
 experimental data were generated. Every dataset is published and cited in the
-accompanying manuscript.
+accompanying manuscript. One exception runs the other way:
+`data/external_validation/source_figures/` ships two raster renderings of the
+published figure the seven-arm time-kill digitisation reads its coordinates
+from. That paper is open access under CC BY 4.0, so redistributing the images
+with attribution is permitted, and a digitisation whose source image is absent
+cannot be checked by a reader. The folder's own README carries the citation
+and the licence.
 
 ## Uncalibrated parameters
 

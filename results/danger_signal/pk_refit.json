@@ -5,28 +5,28 @@
   "dataset": "meropenem_pk_1g",
   "source": "Abulfathi AA et al. Front Pharmacol 2021;12:637618",
   "current": {
-   "CL_L_per_h": 15.0,
-   "Vc_L_per_kg": 0.25,
-   "Vc_L_at_70kg": 17.5,
-   "rmse_log10": 0.33932924451336166,
-   "rmse_target_met": false,
-   "cmax_relative_error": -0.1664636079032591,
+   "CL_L_per_h": 12.156785,
+   "Vc_L_per_kg": 0.270308,
+   "Vc_L_at_70kg": 18.92156,
+   "rmse_log10": 0.047915102717173245,
+   "rmse_target_met": true,
+   "cmax_relative_error": -0.17980049764452455,
    "cmax_target_met": true,
-   "auc_0_8h_relative_error": -0.20739631771200595,
-   "auc_target_met": false,
-   "terminal_half_life_h": 0.8084999999999998
+   "auc_0_8h_relative_error": -0.024505842446942983,
+   "auc_target_met": true,
+   "terminal_half_life_h": 1.0786273739315118
   },
   "fitted": {
-   "CL_L_per_h": 12.1567845846836,
-   "Vc_L_per_kg": 0.2703082522942597,
-   "Vc_L_at_70kg": 18.921577660598178,
-   "rmse_log10": 0.04791401637863991,
+   "CL_L_per_h": 12.180102413770328,
+   "Vc_L_per_kg": 0.27160584038004804,
+   "Vc_L_at_70kg": 19.012408826603362,
+   "rmse_log10": 0.04783301927835439,
    "rmse_target_met": true,
-   "cmax_relative_error": -0.17981491180849474,
+   "cmax_relative_error": -0.18335050481228932,
    "cmax_target_met": true,
-   "auc_0_8h_relative_error": -0.024528925735914475,
+   "auc_0_8h_relative_error": -0.02649957355852295,
    "auc_target_met": true,
-   "terminal_half_life_h": 1.0786284175270517
+   "terminal_half_life_h": 1.0817314066210413
   },
   "observed_terminal_half_life_h": 1.1522963379567348,
   "published_popPK_for_comparison": {
@@ -53,8 +53,8 @@
   },
   "current": {
    "CL_L_per_h": 7.0,
-   "Vc_L_per_kg": 0.17,
-   "implied_t_half_h": 1.1781000000000001
+   "Vc_L_per_kg": 0.226551,
+   "implied_t_half_h": 1.56999843
   },
   "anchored": {
    "CL_L_per_h": 7.0,
@@ -64,13 +64,13 @@
   }
  },
  "summary": {
-  "meropenem_targets_met_before": 1,
+  "meropenem_targets_met_before": 3,
   "meropenem_targets_met_after": 3,
   "caveat": "A one-compartment model cannot reproduce a biexponential profile. If the fitted curve still misses a target, that is the structure failing, not the parameters, and the fix is a real two-compartment solution rather than a better search."
  },
  "provenance": {
-  "git_head": "77d477412caf32297da1f37025defcbfb36f231b",
-  "git_dirty": false,
+  "git_head": "f4db0725e50d6cba80ed1906daacd8876aa6d913",
+  "git_dirty": true,
   "python": "3.12.4",
   "numpy": "2.4.6",
   "scipy": "1.15.3",

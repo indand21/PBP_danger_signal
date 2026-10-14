@@ -6,61 +6,59 @@
  "datasets": {
   "meropenem_pk_1g": {
    "rmse_log10": {
-    "value": 0.33932924451336166,
+    "value": 0.047915102717173245,
     "target": "< 0.15",
-    "met": false
+    "met": true
    },
    "cmax_relative_error": {
-    "value": -0.1664636079032591,
+    "value": -0.17980049764452455,
     "target": "within +/-0.20",
     "met": true
    },
    "auc_0_8h_relative_error": {
-    "value": -0.20739631771200595,
+    "value": -0.024505842446942983,
     "target": "within +/-0.15",
-    "met": false
+    "met": true
    },
    "terminal_half_life_h": {
     "observed": 1.1522963379567348,
-    "model": 0.8084999999999998,
+    "model": 1.0786273739315118,
     "note": "not a registry target; recorded because the two targets above both follow from it"
    },
    "predicted_over_observed": [
     null,
-    0.8335363920967409,
-    0.8834558208839882,
-    0.8773446496584785,
-    0.8296498621501455,
-    0.6907915861012999,
-    0.5385837698120162,
-    0.29791258891462014,
-    0.18778118434465738
+    0.8201995023554755,
+    0.9557756216687162,
+    1.056705797353281,
+    1.1124780456666763,
+    1.1480720236655197,
+    1.109432407909925,
+    0.9427302097176229,
+    0.9128546347666231
    ]
   },
   "meropenem_neutropenic_thigh": {
    "effective_mic_mgL": 0.7704817512908506,
-   "model_stasis_fT_pct": 35.887168928074786,
+   "model_stasis_fT_pct": 37.05735609020148,
    "published_stasis_fT_pct": 17.3,
-   "gap_percentage_points": 18.587168928074785,
+   "gap_percentage_points": 19.75735609020148,
    "target": "within 5-10 percentage points of 17.3",
    "met": false,
-   "model_1log_fT_pct": 43.044236212659854,
+   "model_1log_fT_pct": 45.094047278927796,
    "published_1log_fT_pct": 26.0,
    "monotone": true,
    "published_source": "Sabet M et al. Antimicrob Agents Chemother 2020; stasis, 1-log and 2-log at 17.3, 26.0 and 41.7 %24-h fT>MIC"
   }
  },
  "summary": {
-  "n_targets_not_met": 3,
+  "n_targets_not_met": 1,
   "not_met": [
-   "meropenem_pk_1g.rmse_log10",
-   "meropenem_pk_1g.auc_0_8h_relative_error",
    "meropenem_neutropenic_thigh"
   ],
   "interpretation": "Both failures run in the same direction -- the model needs more exposure than the data do -- and both follow from a terminal half-life that is too short, so the plasma profile decays faster than observed and the time spent above any threshold is understated."
  },
  "provenance": {
-  "git_head": "b9ae2ea7e4fcfce6a6d59dbf87055c08389c55c9",
+  "git_head": "f4db0725e50d6cba80ed1906daacd8876aa6d913",
   "git_dirty": true,
   "python": "3.12.4",
   "numpy": "2.4.6",

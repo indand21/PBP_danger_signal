@@ -354,12 +354,25 @@ def get_drug_pk_parameters(drug_name: str) -> PKParameters:
         )
     elif drug_name.lower() == 'meropenem':
         # IV meropenem: 500-2000 mg q6-8h
-        # Literature: CL 9-15 L/h, Vd ~0.3 L/kg, t1/2 ~1 h, lung penetration moderate
+        # REFITTED 2026-10-14 by scripts/ds_pk_refit.py against the digitized
+        # 1 g IV plasma curve (Abulfathi 2021). CL 15.0 -> 12.157 and
+        # Vc 0.250 -> 0.270 L/kg. Only these two are identifiable: the layer is
+        # one-compartment in use, so Vp and Q never enter and are left alone.
+        #
+        # This meets all three acceptance targets the registry sets for that
+        # dataset, which the previous values did not:
+        #   log10 RMSE   0.339 -> 0.048   (target < 0.15)
+        #   AUC(0-8h)   -20.7% -> -2.5%   (target +/-15%)
+        #   Cmax        -16.6% -> -18.0%  (target +/-20%, met throughout)
+        # Terminal half-life 0.81 -> 1.08 h, against 1.15 h fitted from the
+        # curve's own decay limb. The fitted clearance also lands close to the
+        # 11.8 L/h that source publishes from its own population fit, which the
+        # objective never saw.
         return PKParameters(
-            CL=15.0,       # L/h (total; literature: 9-15 L/h for normal renal function)
-            Vc=0.25,       # L/kg (literature: 0.2-0.3 L/kg)
-            Vp=0.15,       # L/kg
-            Q=8.0,         # L/h (estimated)
+            CL=12.156785,  # L/h (fitted; literature 9-15, Mouton review ~14.6)
+            Vc=0.270308,   # L/kg (fitted)
+            Vp=0.15,       # L/kg (inert: not used by run_simulation)
+            Q=8.0,         # L/h (inert: not used by run_simulation)
             Ka=0.0,        # IV only
             Kp=0.4         # lung penetration ratio (literature: 0.3-0.5)
         )
@@ -372,11 +385,19 @@ def get_drug_pk_parameters(drug_name: str) -> PKParameters:
         # (tissue penetration) belongs.
         # Required for the danger-signal study as the PBP-3 (high-yield)
         # comparator against meropenem/imipenem (PBP-2).
+        # ANCHORED 2026-10-14 (scripts/ds_pk_refit.py). Unlike meropenem,
+        # ceftazidime has NO digitized plasma curve in this repository, so its
+        # Vc is not fitted: it is set so the one-compartment half-life equals
+        # Leroy's measured 1.57 h, Vc = CL * t_half / ln 2. That gives
+        # 0.227 L/kg, which lands on Leroy's independently measured apparent
+        # volume of 0.230 L/kg without being made to -- the only check
+        # available. This is a weaker basis than meropenem's fit and S2.1 says
+        # so. It replaces 0.170 L/kg, which implied a half-life of 1.18 h.
         return PKParameters(
             CL=7.0,        # L/h (total; literature 6-8 L/h)
-            Vc=0.17,       # L/kg (central; Leroy 1984 measured 0.127 L/kg)
-            Vp=0.09,       # L/kg (Vc + Vp = 0.26, inside Leroy's 0.230 +/- range)
-            Q=5.0,         # L/h (estimated)
+            Vc=0.226551,   # L/kg (anchored to Leroy's t1/2 1.57 h)
+            Vp=0.09,       # L/kg (inert: not used by run_simulation)
+            Q=5.0,         # L/h (inert: not used by run_simulation)
             Ka=0.0,        # IV only
             Kp=0.5         # tissue penetration ratio (Nix 1991, AAC 35:1947/1953)
         )

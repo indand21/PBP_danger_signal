@@ -1,0 +1,414 @@
+{
+  "status": "conditional sensitivity; no defaults or Table 1 replaced",
+  "analysis_script_sha256": "6d4b5bee7ba5838f407cd146da5336317324abf01d455bec551e383b0a358a6c",
+  "input_fit_sha256": "679131bf0ff0348b6a542d55531c41a6c22c3f114d77d9c70908711a6fa3ec23",
+  "reference_results_sha256": "a2f64f259a6af3d16962cb152ba138ddfb5006302d37c34f08529c4e673f37c5",
+  "reference_effective_mic_mgL": 0.770456832246574,
+  "fixed": "Adopted in-vivo growth, immune recruitment, PK, signal model and yield range",
+  "interpretation": "No statistical confidence level. Reading perturbations omit replicate noise, shared digitisation error and structural uncertainty. Do not interpret a best fit to noisy raster summaries as a measured constant.",
+  "variants": {
+    "primary": {
+      "parameters": {
+        "k_kill_max": 1.9004498790705906,
+        "kill_C50": 0.6766033739505595,
+        "kill_hill": 1.0343414622623461,
+        "k_growth_broth": 0.7445068911499938,
+        "log10_initial_total": 4.745867483243013
+      },
+      "effective_mic_mgL": 0.24963371332181478,
+      "dose_multiplier_vs_Table1": 0.3240073977849066,
+      "rows": [
+        {
+          "target_fT_pct": 40.0,
+          "dose_mg_q8h": {
+            "ceftazidime": 33.19160729985786,
+            "meropenem": 83.15520102844422
+          },
+          "achieved_fT_pct": {
+            "ceftazidime": 39.95296650198352,
+            "meropenem": 39.99958361319957
+          },
+          "net_log10_change": {
+            "ceftazidime": -2.179893829671999,
+            "meropenem": -2.296915040966171
+          },
+          "kill_difference_log10": 0.1170212112941722,
+          "cost_ratio_range": [
+            {
+              "yield_ratio": 3.5,
+              "ratio_AUC_DS": 5.476429404085537,
+              "ratio_AUC_IL6": 11.13784925451385
+            },
+            {
+              "yield_ratio": 7.0,
+              "ratio_AUC_DS": 10.952863263092459,
+              "ratio_AUC_IL6": 36.53335260391465
+            }
+          ]
+        },
+        {
+          "target_fT_pct": 60.0,
+          "dose_mg_q8h": {
+            "ceftazidime": 65.34596825644763,
+            "meropenem": 225.4712174588806
+          },
+          "achieved_fT_pct": {
+            "ceftazidime": 59.99033117246186,
+            "meropenem": 59.99738358376615
+          },
+          "net_log10_change": {
+            "ceftazidime": -2.878827721767857,
+            "meropenem": -3.040204742269192
+          },
+          "kill_difference_log10": 0.16137702050133518,
+          "cost_ratio_range": [
+            {
+              "yield_ratio": 3.5,
+              "ratio_AUC_DS": 4.286341521743384,
+              "ratio_AUC_IL6": 8.587361046534491
+            },
+            {
+              "yield_ratio": 7.0,
+              "ratio_AUC_DS": 8.572681355270065,
+              "ratio_AUC_IL6": 28.1645847025618
+            }
+          ]
+        },
+        {
+          "target_fT_pct": 80.0,
+          "dose_mg_q8h": {
+            "ceftazidime": 130.5083999691595,
+            "meropenem": 623.3232195620309
+          },
+          "achieved_fT_pct": {
+            "ceftazidime": 80.01035066078778,
+            "meropenem": 79.9971670742395
+          },
+          "net_log10_change": {
+            "ceftazidime": -3.1515342162271143,
+            "meropenem": -3.2597833738302113
+          },
+          "kill_difference_log10": 0.10824915760309706,
+          "cost_ratio_range": [
+            {
+              "yield_ratio": 3.5,
+              "ratio_AUC_DS": 3.820928724215173,
+              "ratio_AUC_IL6": 8.346725024605133
+            },
+            {
+              "yield_ratio": 7.0,
+              "ratio_AUC_DS": 7.641872506443041,
+              "ratio_AUC_IL6": 27.374003968228028
+            }
+          ]
+        },
+        {
+          "target_fT_pct": 95.0,
+          "dose_mg_q8h": {
+            "ceftazidime": 220.0987295110597,
+            "meropenem": 1343.0129631564414
+          },
+          "achieved_fT_pct": {
+            "ceftazidime": 94.99612266366746,
+            "meropenem": 95.02066605428375
+          },
+          "net_log10_change": {
+            "ceftazidime": -3.247964622159292,
+            "meropenem": -3.3294667962262174
+          },
+          "kill_difference_log10": 0.08150217406692528,
+          "cost_ratio_range": [
+            {
+              "yield_ratio": 3.5,
+              "ratio_AUC_DS": 3.6950871800470266,
+              "ratio_AUC_IL6": 8.352690592531728
+            },
+            {
+              "yield_ratio": 7.0,
+              "ratio_AUC_DS": 7.390169490993181,
+              "ratio_AUC_IL6": 27.392925192975916
+            }
+          ]
+        }
+      ]
+    },
+    "0.5x_assumed_at_native_control": {
+      "parameters": {
+        "k_kill_max": 1.6812083091296932,
+        "kill_C50": 0.9905926551613168,
+        "kill_hill": 27.27392848530762,
+        "k_growth_broth": 0.5863858478263192,
+        "log10_initial_total": 4.802493781088401
+      },
+      "effective_mic_mgL": 0.9598092272667239,
+      "dose_multiplier_vs_Table1": 1.245766390919031,
+      "rows": [
+        {
+          "target_fT_pct": 40.0,
+          "dose_mg_q8h": {
+            "ceftazidime": 127.61742206329299,
+            "meropenem": 319.7209550756039
+          },
+          "achieved_fT_pct": {
+            "ceftazidime": 39.954876910472855,
+            "meropenem": 39.99909147416937
+          },
+          "net_log10_change": {
+            "ceftazidime": -2.7725021177035023,
+            "meropenem": -2.809763274677338
+          },
+          "kill_difference_log10": 0.037261156973835696,
+          "cost_ratio_range": [
+            {
+              "yield_ratio": 3.5,
+              "ratio_AUC_DS": 3.995755224618337,
+              "ratio_AUC_IL6": 9.454682341316099
+            },
+            {
+              "yield_ratio": 7.0,
+              "ratio_AUC_DS": 7.991499951472425,
+              "ratio_AUC_IL6": 31.007507143279334
+            }
+          ]
+        },
+        {
+          "target_fT_pct": 60.0,
+          "dose_mg_q8h": {
+            "ceftazidime": 251.24676656298402,
+            "meropenem": 866.907566772089
+          },
+          "achieved_fT_pct": {
+            "ceftazidime": 59.9929396027019,
+            "meropenem": 59.999306396027144
+          },
+          "net_log10_change": {
+            "ceftazidime": -3.1239906774100175,
+            "meropenem": -3.1464181933288202
+          },
+          "kill_difference_log10": 0.022427515918802765,
+          "cost_ratio_range": [
+            {
+              "yield_ratio": 3.5,
+              "ratio_AUC_DS": 3.6516471388526166,
+              "ratio_AUC_IL6": 9.026944425519662
+            },
+            {
+              "yield_ratio": 7.0,
+              "ratio_AUC_DS": 7.303292862580519,
+              "ratio_AUC_IL6": 29.604881898648884
+            }
+          ]
+        },
+        {
+          "target_fT_pct": 80.0,
+          "dose_mg_q8h": {
+            "ceftazidime": 501.7878589368768,
+            "meropenem": 2396.596876856849
+          },
+          "achieved_fT_pct": {
+            "ceftazidime": 80.01051386195283,
+            "meropenem": 79.99862053871826
+          },
+          "net_log10_change": {
+            "ceftazidime": -3.2607352798272444,
+            "meropenem": -3.27474098194784
+          },
+          "kill_difference_log10": 0.014005702120595487,
+          "cost_ratio_range": [
+            {
+              "yield_ratio": 3.5,
+              "ratio_AUC_DS": 3.569713408691581,
+              "ratio_AUC_IL6": 8.80559074189478
+            },
+            {
+              "yield_ratio": 7.0,
+              "ratio_AUC_DS": 7.139427656615155,
+              "ratio_AUC_IL6": 28.879036391803922
+            }
+          ]
+        },
+        {
+          "target_fT_pct": 95.0,
+          "dose_mg_q8h": {
+            "ceftazidime": 846.251047918603,
+            "meropenem": 5163.710531015572
+          },
+          "achieved_fT_pct": {
+            "ceftazidime": 94.98195805672647,
+            "meropenem": 94.99579753472632
+          },
+          "net_log10_change": {
+            "ceftazidime": -3.3207166701325055,
+            "meropenem": -3.3301826686997997
+          },
+          "kill_difference_log10": 0.009465998567294243,
+          "cost_ratio_range": [
+            {
+              "yield_ratio": 3.5,
+              "ratio_AUC_DS": 3.540958470726266,
+              "ratio_AUC_IL6": 8.701305317308494
+            },
+            {
+              "yield_ratio": 7.0,
+              "ratio_AUC_DS": 7.081909405946616,
+              "ratio_AUC_IL6": 28.537038683530238
+            }
+          ]
+        }
+      ]
+    },
+    "0.5x_assumed_at_centrifuged_control": {
+      "parameters": {
+        "k_kill_max": 1.7605841951682086,
+        "kill_C50": 0.9919875908222185,
+        "kill_hill": 28.67951774787237,
+        "k_growth_broth": 0.6016439880392158,
+        "log10_initial_total": 4.844991121501028
+      },
+      "effective_mic_mgL": 0.9604658671987958,
+      "dose_multiplier_vs_Table1": 1.24661866440742,
+      "rows": [
+        {
+          "target_fT_pct": 40.0,
+          "dose_mg_q8h": {
+            "ceftazidime": 127.70472972087143,
+            "meropenem": 319.9396876531398
+          },
+          "achieved_fT_pct": {
+            "ceftazidime": 39.95579372822788,
+            "meropenem": 39.99852582519669
+          },
+          "net_log10_change": {
+            "ceftazidime": -2.8242625545791804,
+            "meropenem": -2.8619252751129016
+          },
+          "kill_difference_log10": 0.03766272053372122,
+          "cost_ratio_range": [
+            {
+              "yield_ratio": 3.5,
+              "ratio_AUC_DS": 3.9507204773541784,
+              "ratio_AUC_IL6": 9.423178034908073
+            },
+            {
+              "yield_ratio": 7.0,
+              "ratio_AUC_DS": 7.9014542029745005,
+              "ratio_AUC_IL6": 30.903548711123353
+            }
+          ]
+        },
+        {
+          "target_fT_pct": 60.0,
+          "dose_mg_q8h": {
+            "ceftazidime": 251.41865349118015,
+            "meropenem": 867.5006493447361
+          },
+          "achieved_fT_pct": {
+            "ceftazidime": 59.992900846554015,
+            "meropenem": 59.99832863038302
+          },
+          "net_log10_change": {
+            "ceftazidime": -3.1489748018796546,
+            "meropenem": -3.172212016992998
+          },
+          "kill_difference_log10": 0.023237215113343535,
+          "cost_ratio_range": [
+            {
+              "yield_ratio": 3.5,
+              "ratio_AUC_DS": 3.6474463858108095,
+              "ratio_AUC_IL6": 9.025192617823194
+            },
+            {
+              "yield_ratio": 7.0,
+              "ratio_AUC_DS": 7.29489180544998,
+              "ratio_AUC_IL6": 29.598474197465887
+            }
+          ]
+        },
+        {
+          "target_fT_pct": 80.0,
+          "dose_mg_q8h": {
+            "ceftazidime": 502.13115001623544,
+            "meropenem": 2398.2364747745564
+          },
+          "achieved_fT_pct": {
+            "ceftazidime": 80.00930474191095,
+            "meropenem": 79.99640537073658
+          },
+          "net_log10_change": {
+            "ceftazidime": -3.283080904080098,
+            "meropenem": -3.297706611089719
+          },
+          "kill_difference_log10": 0.01462570700962118,
+          "cost_ratio_range": [
+            {
+              "yield_ratio": 3.5,
+              "ratio_AUC_DS": 3.569566994767075,
+              "ratio_AUC_IL6": 8.804790819747938
+            },
+            {
+              "yield_ratio": 7.0,
+              "ratio_AUC_DS": 7.139133766788441,
+              "ratio_AUC_IL6": 28.875837017795764
+            }
+          ]
+        },
+        {
+          "target_fT_pct": 95.0,
+          "dose_mg_q8h": {
+            "ceftazidime": 846.8299986255091,
+            "meropenem": 5167.243210673154
+          },
+          "achieved_fT_pct": {
+            "ceftazidime": 94.98512745473472,
+            "meropenem": 94.99503753739492
+          },
+          "net_log10_change": {
+            "ceftazidime": -3.342715471871893,
+            "meropenem": -3.352588139983144
+          },
+          "kill_difference_log10": 0.00987266811125087,
+          "cost_ratio_range": [
+            {
+              "yield_ratio": 3.5,
+              "ratio_AUC_DS": 3.541211240060265,
+              "ratio_AUC_IL6": 8.70021202276869
+            },
+            {
+              "yield_ratio": 7.0,
+              "ratio_AUC_DS": 7.082422259283561,
+              "ratio_AUC_IL6": 28.532876273471782
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "primary_reading_perturbation_sensitivity": {
+    "n": 40,
+    "effective_mic_range_mgL": [
+      0.18602889531254624,
+      0.3103892211935311
+    ],
+    "dose_multiplier_range": [
+      0.24145271678635757,
+      0.4028638701125767
+    ]
+  },
+  "provenance": {
+    "git_head": "f4db0725e50d6cba80ed1906daacd8876aa6d913",
+    "git_dirty": true,
+    "python": "3.12.4",
+    "numpy": "2.4.6",
+    "scipy": "1.15.3",
+    "numpy_scipy_supported": true,
+    "platform": "win32",
+    "final_yields_fg_per_CFU": {
+      "piperacillin": 5.15,
+      "ceftazidime": 4.93,
+      "isepamicin": 0.28,
+      "imipenem": 0.986,
+      "meropenem": 0.986
+    },
+    "note": "Conditional downstream propagation of multiarm fits"
+  }
+}

@@ -43,7 +43,7 @@
  "refinement_factor": 32.0,
  "interpretation": "The residual falls by about four per doubling, i.e. at second order, which is the expected behaviour of the trapezoidal quadrature used for the areas. The residual is therefore discretization error, not a defect in the identity.",
  "provenance": {
-  "git_head": "e5c633e912b961f41dc3f9afa7225d35ecde74ba",
+  "git_head": "f4db0725e50d6cba80ed1906daacd8876aa6d913",
   "git_dirty": true,
   "python": "3.12.4",
   "numpy": "2.4.6",
