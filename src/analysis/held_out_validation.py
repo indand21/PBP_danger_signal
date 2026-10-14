@@ -456,21 +456,20 @@ PRINS_1995_WHOLE_BLOOD_DATA = {
     ],
 }
 
-#: The agent effect size, from every source that measures it. The in-vitro
-#: ELISA, the ex-vivo whole-blood cytokine readout and the in-patient plasma
-#: measurement agree on roughly 3.5-7x. Jackson & Kropp's 10-40x -- the
-#: interval this project has been carrying since Phase 1 -- is the outlier,
-#: and is the one most likely to be assay-inflated.
+#: Heterogeneous observed agent contrasts, mainly CAZ:imipenem, used to choose
+#: a conditional latent-yield range. These are not measurements of one common
+#: estimand or a confidence interval. Matched CAZ:meropenem ELISA is 0.62/0.13
+#: at 8 h, not the CAZ:imipenem 0.62/0.09 represented by the historical 6.9 key.
 AGENT_EFFECT_ESTIMATES = {
     "trautmann1998_free_LPS_elisa_invitro": 6.9,
     "prins1995_TNF_wholeblood_exvivo": 3.5,
     "simpson2000_plasma_endotoxin_patients": 4.97,
     "jackson1992_free_LPS_limulus_invitro": (10.0, 40.0),
     "recommended_interval": (3.5, 7.0),
-    "note": "Three independent estimates by three methods in three settings "
-            "cluster at 3.5-7x. The 10-40x interval should be retired as the "
-            "primary uncertainty range and reported as an outlier with its "
-            "likely assay explanation.",
+    "note": "3.5-7 is an assumed latent-yield range motivated by heterogeneous "
+            "CAZ:imipenem observations, not a measured interval. Direct CAZ:MERO "
+            "ELISA is 4.77 at 50xMIC,8h. Neither endpoint ratio measures fg/CFU killed. "
+            "Use equal-yield and wider stress tests in joint_robustness.json.",
 }
 
 

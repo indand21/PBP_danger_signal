@@ -62,11 +62,9 @@ Y_FILAMENT_CAZ = 1.5
 #: Total starting burden, CFU/mL, used to express cumulative killing relative
 #: to the burden initially present.
 B_TOTAL_0 = IC["B_rep"] + IC["B_pers"] + IC["B_SCV"]
-# Agent-effect interval. REVISED in Phase 5b: three independent measurements
-# (Trautmann ELISA in vitro 6.9x, Prins whole-blood TNF 3.5x, Simpson
-# in-patient plasma endotoxin 4.97x) agree on 3.5-7x. The 10-40x this
-# project carried from Phase 1 came from a Limulus assay and is treated as an
-# outlier -- see PHASE5B_AGENT_EFFECT.md.
+# Conditional latent-yield assumption, not a confidence interval. Evidence
+# spans different endpoints, mainly CAZ:imipenem. The matched CAZ:meropenem
+# ELISA endpoint is 4.77x, but is not a per-killed-cell yield measurement.
 YIELD_RATIO_RANGE = AGENT_EFFECT_ESTIMATES["recommended_interval"]
 
 # Both agents are beta-lactams and are given the SAME kill function, so any
@@ -193,7 +191,9 @@ def yield_range_ratio(sim_hi, sim_lo):
 
 # --------------------------------------------------------------------------
 def analysis1_yield_table():
-    """Agent-specific danger-signal yield table, with uncertainty."""
+    """Separate source observations from the nominal release-scale convention."""
+    from dataclasses import asdict
+    from src.analysis.yield_observations import observations, comparable_ratio
     y_caz = FINAL_YIELDS_FG_PER_CFU["ceftazidime"]
     carbapenem_interval = [round(y_caz / YIELD_RATIO_RANGE[1], 2),
                            round(y_caz / YIELD_RATIO_RANGE[0], 2)]
@@ -201,55 +201,37 @@ def analysis1_yield_table():
         dict(agent="piperacillin", pbp="PBP-3", morphology="filamentation",
              Y_lysis_fg_per_CFU=FINAL_YIELDS_FG_PER_CFU["piperacillin"],
              interval=None,
-             basis="Yamaguchi 1999: 515 ng/mL free LPS at 1x MIC, 4 h, / 1e8 CFU/mL"),
+             basis="Historical model scale, not measured fg/CFU; source endpoint 515 ng/mL at 4 h"),
         dict(agent="ceftazidime", pbp="PBP-3", morphology="filamentation",
              Y_lysis_fg_per_CFU=y_caz, interval=None,
-             basis="Yamaguchi 1999: 493 ng/mL free LPS at 1x MIC, 4 h, / 1e8 CFU/mL"),
+             basis="Historical model scale, not measured fg/CFU; source endpoint 493 ng/mL at 4 h"),
         dict(agent="imipenem", pbp="PBP-2", morphology="spheroplast, rapid lysis",
              Y_lysis_fg_per_CFU=round(FINAL_YIELDS_FG_PER_CFU["imipenem"], 2),
              interval=carbapenem_interval,
-             basis="REVISED in Phase 5b to 3.5-7x, from Trautmann 1998 (ELISA, "
-                   "6.9x), Prins 1995 (whole-blood TNF, 3.5x) and Simpson "
-                   "2000 (in patients, 5.0x). Jackson & Kropp's Limulus "
-                   "10-40x at "
-                   "equivalent MICs; interval derived from the ceftazidime anchor"),
+             basis="Conditional 3.5-7 latent-yield scenario; heterogeneous CAZ:imipenem evidence"),
         dict(agent="meropenem", pbp="PBP-2", morphology="spheroplast, rapid lysis",
              Y_lysis_fg_per_CFU=round(FINAL_YIELDS_FG_PER_CFU["meropenem"], 2),
              interval=carbapenem_interval,
-             basis="assigned imipenem's value (also PBP-2, also a low releaser "
-                   "per Trautmann 1998); pending digitization"),
+             basis="Imipenem latent-yield assumption transferred to meropenem; direct ELISA endpoint ratio 4.77"),
         dict(agent="isepamicin", pbp="none (ribosomal)", morphology="-",
              Y_lysis_fg_per_CFU=FINAL_YIELDS_FG_PER_CFU["isepamicin"],
              interval=None,
-             basis="Yamaguchi 1999: 28 +/- 2 ng/mL at 1x MIC, 6 h, / 1e8 CFU/mL"),
+             basis="Historical scale only; observed 28 +/- 2 ng/mL is a mean of 2,4,6 h"),
     ]
     caveats = [
-        "All per-CFU values scale inversely with the assumed 1e8 CFU/mL assay "
-        "inoculum, which is taken from the standard protocol and has NOT been "
-        "confirmed against the Yamaguchi methods section. The agent-to-agent "
-        "RATIOS, on which every conclusion in this study rests, are independent "
-        "of it.",
-        "Values are derived from published abstracts, not digitized curves, so "
-        "they are point estimates with no within-study dispersion.",
-        "A PBP-3 agent additionally carries a kill-independent filamentation "
-        "yield (Y_filament ~ 1.5 fg/CFU/h), which is anchored on P. aeruginosa "
-        "and is bounded above by Prins' E. coli result -- see Phase 3.",
+        "The source inoculum is 1e6 CFU/mL, not the historical 1e8 denominator. "
+        "Neither inoculum nor net CFU loss estimates cumulative drug-induced killing.",
+        "A 2,4,6 h sampling mean is not a 4 h point. No ISP:beta-lactam ratio "
+        "is formed from these unmatched summaries.",
+        "3.5-7 is a conditional latent-yield range, not a measured interval or CI. "
+        "Whole-blood TNF, plasma endotoxin and culture free LPS are different estimands.",
+        "The filamentation release coefficient is an assumption; zero and doubled "
+        "values are included in joint_robustness.json.",
     ]
-    note = ("Every agent in this table is BACTERICIDAL, and their yields still "
-            "differ several-fold. The PBP-3 cephalosporins (ceftazidime, "
-            "piperacillin) sit about 3.5-7x above the PBP-2 carbapenems at "
-            "equivalent MICs, while the bactericidal aminoglycoside isepamicin "
-            "sits LOWER still -- but that gap is not interpretable: "
-            "isepamicin's value is an absolute per-CFU measurement from "
-            "Yamaguchi, while the carbapenems' is derived from the assumed "
-            "agent ratio applied to the ceftazidime anchor, so the two are "
-            "not commensurable and their 3.5x separation is an artefact of "
-            "combining differently derived quantities on one axis. What the "
-            "aminoglycoside establishes is only that a bactericidal agent "
-            "with no PBP target is not a high releaser. Yield therefore "
-            "tracks the "
-            "molecular target, not the bactericidal/bacteriostatic class -- "
-            "which does not even vary across this table.")
+    note = ("Matched culture observations support an agent-specific release difference "
+            "among bactericidal drugs. They do not identify commensurable fg/CFU yields. "
+            "Keep source observations, latent model coefficients and cross-agent "
+            "transfer assumptions separate.")
     mechanism = (
         "The mechanism is PBP-3-SPECIFIC CELL-WALL DAMAGE, not filamentation "
         "as such. Trautmann 1998 settles this: ciprofloxacin induces filaments, "
@@ -259,8 +241,12 @@ def analysis1_yield_table():
         "well as PBP-2 and still releases little, so it is the DOMINANT PBP-3 "
         "specificity of the cephalosporins that matters. Filamentation is a "
         "marker of the relevant lesion, not its cause.")
+    obs = observations()
     return {"rows": rows, "caveats": caveats, "interpretation": note,
-            "mechanism": mechanism}
+            "mechanism": mechanism, "observations": {k:asdict(v) for k,v in obs.items()},
+            "matched_CAZ_MERO_ELISA_ratio":
+                comparable_ratio(obs["trautmann_ceftazidime"],obs["trautmann_meropenem"]),
+            "coefficient_status":"All fg/CFU entries are nominal scale conventions, not measurements"}
 
 
 def analysis2_dual_pathway():
@@ -928,6 +914,8 @@ def main():
                  "V_focus_mL": V_FOCUS, "layer2_reference":
                      {k: v for k, v in ref.items() if k != "params"},
                  "yield_ratio_range": list(YIELD_RATIO_RANGE),
+                 "yield_interval_status": "assumed latent-yield range, not a measured interval or confidence interval",
+                 "mic_reference_basis": "Synthetic model-predicted 24 h immune-free stasis; not a paired measured MIC",
                  "reporting_rule": "agent comparisons are reported as a ranking "
                                    "plus a range over the assumed 3.5-7x yield "
                                    "interval; no single fold-change and no "

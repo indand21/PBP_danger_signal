@@ -35,6 +35,8 @@
    3.5,
    7.0
   ],
+  "yield_interval_status": "assumed latent-yield range, not a measured interval or confidence interval",
+  "mic_reference_basis": "Synthetic model-predicted 24 h immune-free stasis; not a paired measured MIC",
   "reporting_rule": "agent comparisons are reported as a ranking plus a range over the assumed 3.5-7x yield interval; no single fold-change and no survival claim"
  },
  "analysis1_yield_table": {
@@ -45,7 +47,7 @@
     "morphology": "filamentation",
     "Y_lysis_fg_per_CFU": 5.15,
     "interval": null,
-    "basis": "Yamaguchi 1999: 515 ng/mL free LPS at 1x MIC, 4 h, / 1e8 CFU/mL"
+    "basis": "Historical model scale, not measured fg/CFU; source endpoint 515 ng/mL at 4 h"
    },
    {
     "agent": "ceftazidime",
@@ -53,7 +55,7 @@
     "morphology": "filamentation",
     "Y_lysis_fg_per_CFU": 4.93,
     "interval": null,
-    "basis": "Yamaguchi 1999: 493 ng/mL free LPS at 1x MIC, 4 h, / 1e8 CFU/mL"
+    "basis": "Historical model scale, not measured fg/CFU; source endpoint 493 ng/mL at 4 h"
    },
    {
     "agent": "imipenem",
@@ -64,7 +66,7 @@
      0.7,
      1.41
     ],
-    "basis": "REVISED in Phase 5b to 3.5-7x, from Trautmann 1998 (ELISA, 6.9x), Prins 1995 (whole-blood TNF, 3.5x) and Simpson 2000 (in patients, 5.0x). Jackson & Kropp's Limulus 10-40x at equivalent MICs; interval derived from the ceftazidime anchor"
+    "basis": "Conditional 3.5-7 latent-yield scenario; heterogeneous CAZ:imipenem evidence"
    },
    {
     "agent": "meropenem",
@@ -75,7 +77,7 @@
      0.7,
      1.41
     ],
-    "basis": "assigned imipenem's value (also PBP-2, also a low releaser per Trautmann 1998); pending digitization"
+    "basis": "Imipenem latent-yield assumption transferred to meropenem; direct ELISA endpoint ratio 4.77"
    },
    {
     "agent": "isepamicin",
@@ -83,16 +85,101 @@
     "morphology": "-",
     "Y_lysis_fg_per_CFU": 0.28,
     "interval": null,
-    "basis": "Yamaguchi 1999: 28 +/- 2 ng/mL at 1x MIC, 6 h, / 1e8 CFU/mL"
+    "basis": "Historical scale only; observed 28 +/- 2 ng/mL is a mean of 2,4,6 h"
    }
   ],
   "caveats": [
-   "All per-CFU values scale inversely with the assumed 1e8 CFU/mL assay inoculum, which is taken from the standard protocol and has NOT been confirmed against the Yamaguchi methods section. The agent-to-agent RATIOS, on which every conclusion in this study rests, are independent of it.",
-   "Values are derived from published abstracts, not digitized curves, so they are point estimates with no within-study dispersion.",
-   "A PBP-3 agent additionally carries a kill-independent filamentation yield (Y_filament ~ 1.5 fg/CFU/h), which is anchored on P. aeruginosa and is bounded above by Prins' E. coli result -- see Phase 3."
+   "The source inoculum is 1e6 CFU/mL, not the historical 1e8 denominator. Neither inoculum nor net CFU loss estimates cumulative drug-induced killing.",
+   "A 2,4,6 h sampling mean is not a 4 h point. No ISP:beta-lactam ratio is formed from these unmatched summaries.",
+   "3.5-7 is a conditional latent-yield range, not a measured interval or CI. Whole-blood TNF, plasma endotoxin and culture free LPS are different estimands.",
+   "The filamentation release coefficient is an assumption; zero and doubled values are included in joint_robustness.json."
   ],
-  "interpretation": "Every agent in this table is BACTERICIDAL, and their yields still differ several-fold. The PBP-3 cephalosporins (ceftazidime, piperacillin) sit about 3.5-7x above the PBP-2 carbapenems at equivalent MICs, while the bactericidal aminoglycoside isepamicin sits LOWER still -- but that gap is not interpretable: isepamicin's value is an absolute per-CFU measurement from Yamaguchi, while the carbapenems' is derived from the assumed agent ratio applied to the ceftazidime anchor, so the two are not commensurable and their 3.5x separation is an artefact of combining differently derived quantities on one axis. What the aminoglycoside establishes is only that a bactericidal agent with no PBP target is not a high releaser. Yield therefore tracks the molecular target, not the bactericidal/bacteriostatic class -- which does not even vary across this table.",
-  "mechanism": "The mechanism is PBP-3-SPECIFIC CELL-WALL DAMAGE, not filamentation as such. Trautmann 1998 settles this: ciprofloxacin induces filaments, with killing curves nearly identical to the beta-lactams, yet releases as little free LPS as the carbapenems -- so morphology does not predict release. Meropenem points the same way: it binds PBP-3 as well as PBP-2 and still releases little, so it is the DOMINANT PBP-3 specificity of the cephalosporins that matters. Filamentation is a marker of the relevant lesion, not its cause."
+  "interpretation": "Matched culture observations support an agent-specific release difference among bactericidal drugs. They do not identify commensurable fg/CFU yields. Keep source observations, latent model coefficients and cross-agent transfer assumptions separate.",
+  "mechanism": "The mechanism is PBP-3-SPECIFIC CELL-WALL DAMAGE, not filamentation as such. Trautmann 1998 settles this: ciprofloxacin induces filaments, with killing curves nearly identical to the beta-lactams, yet releases as little free LPS as the carbapenems -- so morphology does not predict release. Meropenem points the same way: it binds PBP-3 as well as PBP-2 and still releases little, so it is the DOMINANT PBP-3 specificity of the cephalosporins that matters. Filamentation is a marker of the relevant lesion, not its cause.",
+  "observations": {
+   "trautmann_ceftazidime": {
+    "agent": "ceftazidime",
+    "value": 0.62,
+    "unit": "mg/L",
+    "quantity": "free LPS",
+    "assay": "capture ELISA",
+    "organism": "E. coli Bort",
+    "times_h": [
+     8.0
+    ],
+    "operator": "point",
+    "concentration_xMIC": 50.0
+   },
+   "trautmann_meropenem": {
+    "agent": "meropenem",
+    "value": 0.13,
+    "unit": "mg/L",
+    "quantity": "free LPS",
+    "assay": "capture ELISA",
+    "organism": "E. coli Bort",
+    "times_h": [
+     8.0
+    ],
+    "operator": "point",
+    "concentration_xMIC": 50.0
+   },
+   "trautmann_imipenem": {
+    "agent": "imipenem",
+    "value": 0.09,
+    "unit": "mg/L",
+    "quantity": "free LPS",
+    "assay": "capture ELISA",
+    "organism": "E. coli Bort",
+    "times_h": [
+     8.0
+    ],
+    "operator": "point",
+    "concentration_xMIC": 50.0
+   },
+   "yamaguchi_ceftazidime": {
+    "agent": "ceftazidime",
+    "value": 493.0,
+    "unit": "ng/mL",
+    "quantity": "free LPS",
+    "assay": "Limulus colour KY",
+    "organism": "P. aeruginosa PAO1",
+    "times_h": [
+     4.0
+    ],
+    "operator": "point",
+    "concentration_xMIC": 1.0
+   },
+   "yamaguchi_piperacillin": {
+    "agent": "piperacillin",
+    "value": 515.0,
+    "unit": "ng/mL",
+    "quantity": "free LPS",
+    "assay": "Limulus colour KY",
+    "organism": "P. aeruginosa PAO1",
+    "times_h": [
+     4.0
+    ],
+    "operator": "point",
+    "concentration_xMIC": 1.0
+   },
+   "yamaguchi_isepamicin": {
+    "agent": "isepamicin",
+    "value": 28.0,
+    "unit": "ng/mL",
+    "quantity": "free LPS",
+    "assay": "Limulus colour KY",
+    "organism": "P. aeruginosa PAO1",
+    "times_h": [
+     2.0,
+     4.0,
+     6.0
+    ],
+    "operator": "mean",
+    "concentration_xMIC": 1.0
+   }
+  },
+  "matched_CAZ_MERO_ELISA_ratio": 4.769230769230769,
+  "coefficient_status": "All fg/CFU entries are nominal scale conventions, not measurements"
  },
  "analysis2_dual_pathway": {
   "levels": {
@@ -2172,7 +2259,7 @@
   "note": "A competent host needs less drug to hold the organism static, so the immunocompetent thresholds are the lower pair. Craig reports 30-40% fT>MIC for cephalosporins in neutropenic animals; the comparable figures here are the immune-free ones."
  },
  "provenance": {
-  "git_head": "f4db0725e50d6cba80ed1906daacd8876aa6d913",
+  "git_head": "5153480c83985a0d22899929c1b547489b258dd5",
   "git_dirty": true,
   "python": "3.12.4",
   "numpy": "2.4.6",

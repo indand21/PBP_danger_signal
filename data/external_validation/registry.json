@@ -59,7 +59,8 @@
     "initial_persister": 100.0,
     "initial_scv": 0.0,
     "immune": 0.0,
-    "mic_multiple": 4.0
+    "mic_multiple": 4.0,
+    "mic_reference_mode": "model_stasis"
    }
   },
   {
@@ -80,7 +81,8 @@
     "initial_persister": 100.0,
     "initial_scv": 0.0,
     "immune": 0.0,
-    "mic_multiple": 8.0
+    "mic_multiple": 8.0,
+    "mic_reference_mode": "model_stasis"
    }
   },
   {
@@ -120,6 +122,8 @@
    "notes": "Index-driven (Approach A): neutropenic host (N_eff=0, no recruitment), effective MIC = constant-conc 24h stasis concentration, %fT>MIC swept by varying dose at fixed interval/PK. Digitize Sabet Table 3 / dose-response fig as (%fT>MIC, Delta-log10 CFU). Success: model stasis threshold within ~5-10 pp of 17.3%; monotonic sigmoidal kill curve.",
    "scenario": {
     "index": "ft_mic",
+    "mic_reference_mode": "model_stasis",
+    "reference_note": "Historical synthetic pooled-cloud benchmark only. For strain-level calibration use sabet2020_strains.csv and a fixed measured MIC, with the control timing recorded separately.",
     "interval_hours": 6,
     "t_end": 24,
     "initial_burden": 1000000.0,
@@ -142,6 +146,7 @@
    "notes": "Index-driven (Approach A): neutropenic host, index = fAUC/MIC. Digitize LaPlante Table 3 / Fig 3 as (fAUC/MIC, Delta-log10 CFU). Key validation: model must show NO net kill (Delta-log10 >= 0) at any achievable exposure, confirming immune-dependence of bacteriostasis.",
    "scenario": {
     "index": "fauc_mic",
+    "mic_reference_mode": "model_stasis",
     "interval_hours": 12,
     "t_end": 24,
     "initial_burden": 1000000.0,

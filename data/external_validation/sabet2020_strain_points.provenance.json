@@ -1,0 +1,77 @@
+{
+  "source_pdf_sha256": "30fbb1a83d8384d5ce25638f637ec2fafe9f285e75a878a84e3897dc927e01a7",
+  "script_sha256": "00684d6c4b5ceb074abc2be463c66f67af90b8eb7f7eefd6bab40116ea5f26c9",
+  "calibration": {
+    "AB1148": [
+      2,
+      1,
+      349,
+      2953,
+      70,
+      568,
+      273
+    ],
+    "AB1036": [
+      2,
+      0,
+      169,
+      1475,
+      70,
+      379,
+      122.5
+    ],
+    "AB1022": [
+      3,
+      1,
+      295,
+      2950,
+      70,
+      722,
+      231.5
+    ],
+    "AB1157": [
+      3,
+      0,
+      167,
+      1474,
+      60,
+      310,
+      99.2
+    ],
+    "AB1137": [
+      4,
+      1,
+      167,
+      1573,
+      50,
+      470,
+      153
+    ],
+    "AB1129": [
+      4,
+      0,
+      170,
+      1476,
+      50,
+      352,
+      170
+    ]
+  },
+  "n_marker_clusters": 205,
+  "control_timing": {
+    "treatment_start_h_postinfection": 2,
+    "untreated_sacrifice_h_postinfection": 12,
+    "elapsed_control_growth_h": 10,
+    "reported_delta_log10_range": [
+      1.16,
+      2.08
+    ]
+  },
+  "caveats": [
+    "Visible marker clusters, not recovered replicate-level animal data",
+    "No dose or dosing-interval identity is encoded by the blue markers",
+    "Zero-index points cannot all be assigned to untreated animals with certainty",
+    "Table 3 gives AB1129 two-log 46.6; Fig 6 prints 46.9. Table 3 retained.",
+    "Table 3 gives AB1137 one-log 30.1; Fig 5 prints 30.0. Table 3 retained."
+  ]
+}

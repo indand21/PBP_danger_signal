@@ -123,7 +123,8 @@ def test_no_data_dataset_reports_no_data():
 # --- Dose-response (neutropenic-thigh PK/PD index) mode --------------------
 
 # Small grids keep these fast while still exercising the full path.
-_FAST = {"n_grid": 6, "mic_search_n": 9, "t_end": 24}
+_FAST = {"n_grid": 6, "mic_search_n": 9, "t_end": 24,
+         "mic_reference_mode": "model_stasis"}
 
 
 def _dr(drug, drug_class, index):

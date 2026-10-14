@@ -1,0 +1,99 @@
+{
+  "status": "Implementation and numerical/document checks complete; scientific gaps remain unresolved",
+  "test_command": "python -m pytest -q --junitxml=tmp/pd_document_qa/tests_pinned.xml",
+  "tests": {
+    "tests": 557,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "passed": 556
+  },
+  "expected_failure_note": "The one skip is the strict pytest xfail for legacy PK mass conservation",
+  "junit_sha256": "63bfc092909ec432a5e7458b43aa4dfcd98038bcd68211952a6ed3eb4e81e94b",
+  "numerical_reproduction": "All numerical values in the four before/after comparison outputs were identical under NumPy 2.5.2 and 2.4.6; final outputs use the supported pin",
+  "outputs": {
+    "joint_broth_refit.json": {
+      "sha256": "237a8aba6916fb5cf5d3a0a4668a067a363ddf6c86471db22d7d13b4631f2090",
+      "numpy": "2.4.6",
+      "scipy": "1.15.3"
+    },
+    "pd_context.json": {
+      "sha256": "5579e78f27d43f4551a0c511261df48f1c5d32ef068aad17711a4749ddac9862",
+      "numpy": "2.4.6",
+      "scipy": "1.15.3"
+    },
+    "joint_robustness.json": {
+      "sha256": "e003e269c01b963bfbc304ff828d095cddc06c3193f6664b00d5574f17f5faba",
+      "numpy": "2.4.6",
+      "scipy": "1.15.3"
+    },
+    "phase4_analyses.json": {
+      "sha256": "8410109d381191934ae8ea2a577e84421ac6adbc2d9c8723d564ebd65b1a367a",
+      "numpy": "2.4.6",
+      "scipy": "1.15.3"
+    },
+    "validation_targets.json": {
+      "sha256": "53f1fcd321e1ef9fa6877b412506e5c5f27e0ed0ec1f695703ce3ea1c73f8d25",
+      "numpy": "2.4.6",
+      "scipy": "1.15.3"
+    },
+    "multiarm_downstream.json": {
+      "sha256": "04358f816521272258569c82ba7962c99e5591baa50f6df853c40f08e6973b1b",
+      "numpy": "2.4.6",
+      "scipy": "1.15.3"
+    }
+  },
+  "documents": {
+    "danger_signal_manuscript.docx": {
+      "source_sha256": "4638fbb66dbaf29b2cf0e7136557ed5324b862a62eafaf91b78fd6e6087ba0a4",
+      "docx_sha256": "dd25a8195fd78cd09ccdc5e20dc3a0b1719135b8d05796f7df26727929f5925c",
+      "render_pages": 21,
+      "native_math_objects": 130,
+      "visual_review": "All rendered pages reviewed; figures remain separate submission files"
+    },
+    "danger_signal_supplementary.docx": {
+      "source_sha256": "b06515fca0104e66bd2780438c4a17132d6e62f1c68c09667a14f54eea705acd",
+      "docx_sha256": "738d8471d5cf2e49a8fe3f2860868dd44bc79de04486afa2a1a51121a0430247",
+      "render_pages": 24,
+      "native_math_objects": 293,
+      "visual_review": "All rendered pages reviewed; figures remain separate submission files"
+    },
+    "cover_letter_JAC.docx": {
+      "source_sha256": "53d1bf1646a3e5d605e0982c4eb2deae0efe72e9c4be0187bc186124a5c1a3dd",
+      "docx_sha256": "dd8d313e83f0d1f378044ac0b8ca953053a1f3d2e167c05f9a6eccf5b7b688ad",
+      "render_pages": 2,
+      "native_math_objects": 0,
+      "visual_review": "All rendered pages reviewed; figures remain separate submission files"
+    },
+    "Highlights.docx": {
+      "source_sha256": "16de1ead459733d81edf4002e55f338e734e002eb67f7c5b56908181065aecaf",
+      "docx_sha256": "51cb16250508d57edb066e240603daddaf7823f729a5aaabe0f65aefff41f6a7",
+      "render_pages": 1,
+      "native_math_objects": 0,
+      "visual_review": "All rendered pages reviewed; figures remain separate submission files"
+    }
+  },
+  "consistency_audit": "All hard checks passed; pre-existing bibliography/spelling warnings only",
+  "scientific_status": {
+    "thigh": "Original target unmet; context envelope is not a validation pass",
+    "hill": "Joint first-window optimum fails model adequacy; no PD default adopted",
+    "yield": "Observation operators separated; latent 3.5-7 ratio is an assumption, not a CI"
+  },
+  "provenance": {
+    "git_head": "5153480c83985a0d22899929c1b547489b258dd5",
+    "git_dirty": true,
+    "python": "3.12.4",
+    "numpy": "2.4.6",
+    "scipy": "1.15.3",
+    "numpy_scipy_supported": true,
+    "platform": "win32",
+    "final_yields_fg_per_CFU": {
+      "piperacillin": 5.15,
+      "ceftazidime": 4.93,
+      "isepamicin": 0.28,
+      "imipenem": 0.986,
+      "meropenem": 0.986
+    },
+    "note": "Pinned full-suite, source/hash and rendered-document verification"
+  }
+}

@@ -1,4 +1,4 @@
-# Meropenem Figure 2A source and digitisation
+# Meropenem Figure 2 source and digitisation
 
 ## Attribution and licence
 
@@ -25,7 +25,10 @@ images are what the digitisation actually needs.
 
 ## The figure
 
-Figure 2A, *P. aeruginosa* ATCC-27853, measured MIC 1 mg/L.
+Figure 2A-C, *P. aeruginosa* ATCC-27853, measured MIC 1 mg/L. The initial
+2B/C windows are now transcribed separately in `../meropenem_figure2bc_initial.csv`;
+their time windows, calibrations and quality flags are described in
+`../PD_CONTEXT_README.md`. The source figure is the same raster below.
 
 Downloaded 2026-10-14:
 

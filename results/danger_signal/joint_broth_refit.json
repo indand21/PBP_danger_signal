@@ -1,0 +1,589 @@
+{
+  "status": "exploratory model-adequacy check; not adopted",
+  "best": {
+    "k_kill_max": 2.521363041156224,
+    "kill_C50": 0.5612782660294394,
+    "kill_hill": 1.9692386684044725,
+    "panels": {
+      "A": {
+        "growth_h_inv": 0.6053481405226836,
+        "initial_total_log10": 5.202770101819071
+      },
+      "B": {
+        "growth_h_inv": 1.212980880468462,
+        "initial_total_log10": 4.09949758770038
+      },
+      "C": {
+        "growth_h_inv": 1.0568342428172186,
+        "initial_total_log10": 4.052240612781792
+      }
+    },
+    "rmse_log10": 0.4717087606093101,
+    "max_abs_residual_log10": 1.6328965072261283,
+    "success": true
+  },
+  "hill_profiles": [
+    {
+      "hill": 0.5,
+      "rmse_log10": 0.5673513688372597,
+      "parameters_transformed": [
+        1.4928050393264514,
+        1.6158962160688417,
+        -0.6931471805599453,
+        -0.21464734185282353,
+        4.981683235784579,
+        0.15311718134364502,
+        3.905444931786706,
+        -0.07723416222187429,
+        4.043062714094231
+      ],
+      "success": true
+    },
+    {
+      "hill": 0.9,
+      "rmse_log10": 0.5206659804027095,
+      "parameters_transformed": [
+        1.0917780045531693,
+        -0.07205016839455448,
+        -0.10536051565782628,
+        -0.3157007687561668,
+        5.09911178220706,
+        0.16488096221202794,
+        3.986005115199784,
+        -0.02490006622070679,
+        4.070883414263137
+      ],
+      "success": true
+    },
+    {
+      "hill": 1.0,
+      "rmse_log10": 0.5112898445579488,
+      "parameters_transformed": [
+        1.061643253875354,
+        -0.1908276241599142,
+        0.0,
+        -0.3382449453572027,
+        5.1215672108076316,
+        0.16048151600792943,
+        4.0142556841250014,
+        -0.013480819634039635,
+        4.076450660685288
+      ],
+      "success": true
+    },
+    {
+      "hill": 2.0,
+      "rmse_log10": 0.4717357497505513,
+      "parameters_transformed": [
+        0.9210954147966641,
+        -0.5832002327956683,
+        0.6931471805599453,
+        -0.505495535169327,
+        5.202509270359984,
+        0.19662191979051305,
+        4.096764714194153,
+        0.05652539342608147,
+        4.049743416314865
+      ],
+      "success": true
+    },
+    {
+      "hill": 4.0,
+      "rmse_log10": 0.5121459959810172,
+      "parameters_transformed": [
+        0.7822753044976252,
+        -0.6688447087768664,
+        1.3862943611198906,
+        -0.6782704459921766,
+        5.170236810940338,
+        0.307825590217547,
+        3.9384513264264243,
+        -0.0024206523982981524,
+        3.9974601432459886
+      ],
+      "success": true
+    },
+    {
+      "hill": 8.0,
+      "rmse_log10": 0.5388400102567351,
+      "parameters_transformed": [
+        0.7273093732593964,
+        -0.6442998880977824,
+        2.0794415416798357,
+        -0.7437387230109667,
+        5.147852900160087,
+        0.2724433020171547,
+        3.9168476491895463,
+        -0.08893500859471014,
+        3.9979984498268433
+      ],
+      "success": true
+    },
+    {
+      "hill": 16.0,
+      "rmse_log10": 0.5406664942936835,
+      "parameters_transformed": [
+        0.7225892565230779,
+        -0.6677327254590838,
+        2.772588722239781,
+        -0.7463866312775458,
+        5.1454004136656915,
+        0.27194712964230094,
+        3.913179672140406,
+        -0.09459236895438033,
+        3.9973691966510927
+      ],
+      "success": true
+    },
+    {
+      "hill": 29.49,
+      "rmse_log10": 0.5406736719681938,
+      "parameters_transformed": [
+        0.722574811027892,
+        -0.6793558398937547,
+        3.3840512228271846,
+        -0.7463990333370444,
+        5.145394854167588,
+        0.2719295919162605,
+        3.9131886550950497,
+        -0.09461228568389946,
+        3.9973684089841837
+      ],
+      "success": true
+    },
+    {
+      "hill": 64.0,
+      "rmse_log10": 0.5406736724911066,
+      "parameters_transformed": [
+        0.72257096582749,
+        -0.6867925317871544,
+        4.1588830833596715,
+        -0.7463969220842184,
+        5.14539105109168,
+        0.27194325964369986,
+        3.913167737966603,
+        -0.09461478144770989,
+        3.9973669679695947
+      ],
+      "success": true
+    }
+  ],
+  "predictions": [
+    {
+      "panel": "A",
+      "arm": "shared-baseline",
+      "C_mgL": 0.0,
+      "time_h": 0.0,
+      "observed_log10": 4.8,
+      "predicted_log10": 5.202770101819071
+    },
+    {
+      "panel": "A",
+      "arm": "0.25xMIC",
+      "C_mgL": 0.25,
+      "time_h": 2.0,
+      "observed_log10": 5.0,
+      "predicted_log10": 5.356909765811111
+    },
+    {
+      "panel": "A",
+      "arm": "0.25xMIC",
+      "C_mgL": 0.25,
+      "time_h": 9.6,
+      "observed_log10": 5.7,
+      "predicted_log10": 5.929493735075471
+    },
+    {
+      "panel": "A",
+      "arm": "1xMIC",
+      "C_mgL": 1.0,
+      "time_h": 2.0,
+      "observed_log10": 4.5,
+      "predicted_log10": 4.10357288667237
+    },
+    {
+      "panel": "A",
+      "arm": "1xMIC",
+      "C_mgL": 1.0,
+      "time_h": 9.6,
+      "observed_log10": 3.5,
+      "predicted_log10": 2.9439731294714027
+    },
+    {
+      "panel": "A",
+      "arm": "2xMIC",
+      "C_mgL": 2.0,
+      "time_h": 2.0,
+      "observed_log10": 3.4,
+      "predicted_log10": 3.770835739895404
+    },
+    {
+      "panel": "A",
+      "arm": "2xMIC",
+      "C_mgL": 2.0,
+      "time_h": 9.6,
+      "observed_log10": 2.8,
+      "predicted_log10": 2.8248232629343946
+    },
+    {
+      "panel": "A",
+      "arm": "4xMIC",
+      "C_mgL": 4.0,
+      "time_h": 2.0,
+      "observed_log10": 4.4,
+      "predicted_log10": 3.6661089044368675
+    },
+    {
+      "panel": "A",
+      "arm": "4xMIC",
+      "C_mgL": 4.0,
+      "time_h": 9.6,
+      "observed_log10": 2.9,
+      "predicted_log10": 2.7927372092428855
+    },
+    {
+      "panel": "A",
+      "arm": "8xMIC",
+      "C_mgL": 8.0,
+      "time_h": 2.0,
+      "observed_log10": 3.6,
+      "predicted_log10": 3.637903113702922
+    },
+    {
+      "panel": "A",
+      "arm": "8xMIC",
+      "C_mgL": 8.0,
+      "time_h": 9.6,
+      "observed_log10": 2.7,
+      "predicted_log10": 2.7844015171203127
+    },
+    {
+      "panel": "A",
+      "arm": "16xMIC",
+      "C_mgL": 16.0,
+      "time_h": 2.0,
+      "observed_log10": 3.8,
+      "predicted_log10": 3.6306029393241794
+    },
+    {
+      "panel": "A",
+      "arm": "16xMIC",
+      "C_mgL": 16.0,
+      "time_h": 9.6,
+      "observed_log10": 2.9,
+      "predicted_log10": 2.7822628676153216
+    },
+    {
+      "panel": "A",
+      "arm": "GC-native",
+      "C_mgL": 0.0,
+      "time_h": 2.0,
+      "observed_log10": 5.2,
+      "predicted_log10": 5.724682789536521
+    },
+    {
+      "panel": "A",
+      "arm": "GC-native",
+      "C_mgL": 0.0,
+      "time_h": 9.6,
+      "observed_log10": 7.6,
+      "predicted_log10": 7.672990085861479
+    },
+    {
+      "panel": "A",
+      "arm": "GC-centrifuged",
+      "C_mgL": 0.0,
+      "time_h": 2.0,
+      "observed_log10": 5.5,
+      "predicted_log10": 5.724682789536521
+    },
+    {
+      "panel": "A",
+      "arm": "GC-centrifuged",
+      "C_mgL": 0.0,
+      "time_h": 9.6,
+      "observed_log10": 8.0,
+      "predicted_log10": 7.672990085861479
+    },
+    {
+      "panel": "B",
+      "arm": "shared-baseline",
+      "C_mgL": 0.0,
+      "time_h": 0.0,
+      "observed_log10": 4.1,
+      "predicted_log10": 4.09949758770038
+    },
+    {
+      "panel": "B",
+      "arm": "GC-native",
+      "C_mgL": 0.0,
+      "time_h": 2.0,
+      "observed_log10": 5.1,
+      "predicted_log10": 5.144670331227547
+    },
+    {
+      "panel": "B",
+      "arm": "GC-centrifuged",
+      "C_mgL": 0.0,
+      "time_h": 2.0,
+      "observed_log10": 5.2,
+      "predicted_log10": 5.144670331227547
+    },
+    {
+      "panel": "B",
+      "arm": "GC-native",
+      "C_mgL": 0.0,
+      "time_h": 4.8,
+      "observed_log10": 6.4,
+      "predicted_log10": 6.606304665573825
+    },
+    {
+      "panel": "B",
+      "arm": "0.5xMIC",
+      "C_mgL": 0.5,
+      "time_h": 2.0,
+      "observed_log10": 4.7,
+      "predicted_log10": 4.1808473282162195
+    },
+    {
+      "panel": "B",
+      "arm": "0.5xMIC",
+      "C_mgL": 0.5,
+      "time_h": 4.8,
+      "observed_log10": 5.0,
+      "predicted_log10": 4.2929856402374655
+    },
+    {
+      "panel": "B",
+      "arm": "1xMIC",
+      "C_mgL": 1.0,
+      "time_h": 2.0,
+      "observed_log10": 3.8,
+      "predicted_log10": 3.513857062175545
+    },
+    {
+      "panel": "B",
+      "arm": "1xMIC",
+      "C_mgL": 1.0,
+      "time_h": 4.8,
+      "observed_log10": 1.7,
+      "predicted_log10": 2.8182557990465162
+    },
+    {
+      "panel": "B",
+      "arm": "2xMIC",
+      "C_mgL": 2.0,
+      "time_h": 2.0,
+      "observed_log10": 1.7,
+      "predicted_log10": 3.1755616338509967
+    },
+    {
+      "panel": "B",
+      "arm": "2xMIC",
+      "C_mgL": 2.0,
+      "time_h": 4.8,
+      "observed_log10": 4.0,
+      "predicted_log10": 2.3671034927738717
+    },
+    {
+      "panel": "C",
+      "arm": "shared-baseline",
+      "C_mgL": 0.0,
+      "time_h": 0.0,
+      "observed_log10": 4.1,
+      "predicted_log10": 4.052240612781792
+    },
+    {
+      "panel": "C",
+      "arm": "GC-native",
+      "C_mgL": 0.0,
+      "time_h": 2.0,
+      "observed_log10": 4.8,
+      "predicted_log10": 4.9619311412621325
+    },
+    {
+      "panel": "C",
+      "arm": "GC-centrifuged",
+      "C_mgL": 0.0,
+      "time_h": 2.0,
+      "observed_log10": 4.8,
+      "predicted_log10": 4.9619311412621325
+    },
+    {
+      "panel": "C",
+      "arm": "GC-native",
+      "C_mgL": 0.0,
+      "time_h": 3.2,
+      "observed_log10": 5.7,
+      "predicted_log10": 5.507634967571254
+    },
+    {
+      "panel": "C",
+      "arm": "GC-centrifuged",
+      "C_mgL": 0.0,
+      "time_h": 3.2,
+      "observed_log10": 6.0,
+      "predicted_log10": 5.507634967571254
+    },
+    {
+      "panel": "C",
+      "arm": "0.25xMIC",
+      "C_mgL": 0.25,
+      "time_h": 3.2,
+      "observed_log10": 4.7,
+      "predicted_log10": 4.917907751665657
+    },
+    {
+      "panel": "C",
+      "arm": "0.5xMIC",
+      "C_mgL": 0.5,
+      "time_h": 2.0,
+      "observed_log10": 4.0,
+      "predicted_log10": 4.0002809415476115
+    },
+    {
+      "panel": "C",
+      "arm": "0.5xMIC",
+      "C_mgL": 0.5,
+      "time_h": 3.2,
+      "observed_log10": 3.8,
+      "predicted_log10": 3.9696130892522956
+    },
+    {
+      "panel": "C",
+      "arm": "1xMIC",
+      "C_mgL": 1.0,
+      "time_h": 2.0,
+      "observed_log10": 3.8,
+      "predicted_log10": 3.340671014900381
+    },
+    {
+      "panel": "C",
+      "arm": "1xMIC",
+      "C_mgL": 1.0,
+      "time_h": 3.2,
+      "observed_log10": 2.7,
+      "predicted_log10": 2.9600061151964097
+    },
+    {
+      "panel": "C",
+      "arm": "2xMIC",
+      "C_mgL": 2.0,
+      "time_h": 2.0,
+      "observed_log10": 2.9,
+      "predicted_log10": 3.012457089040473
+    },
+    {
+      "panel": "C",
+      "arm": "2xMIC",
+      "C_mgL": 2.0,
+      "time_h": 3.2,
+      "observed_log10": 2.2,
+      "predicted_log10": 2.5454528635362768
+    },
+    {
+      "panel": "C",
+      "arm": "4xMIC",
+      "C_mgL": 4.0,
+      "time_h": 2.0,
+      "observed_log10": 2.8,
+      "predicted_log10": 2.9106041369503703
+    },
+    {
+      "panel": "C",
+      "arm": "4xMIC",
+      "C_mgL": 4.0,
+      "time_h": 3.2,
+      "observed_log10": 2.4,
+      "predicted_log10": 2.4425328655204144
+    },
+    {
+      "panel": "C",
+      "arm": "8xMIC",
+      "C_mgL": 8.0,
+      "time_h": 2.0,
+      "observed_log10": 3.0,
+      "predicted_log10": 2.8833508408431627
+    },
+    {
+      "panel": "C",
+      "arm": "8xMIC",
+      "C_mgL": 8.0,
+      "time_h": 3.2,
+      "observed_log10": 2.8,
+      "predicted_log10": 2.417490256153938
+    },
+    {
+      "panel": "C",
+      "arm": "16xMIC",
+      "C_mgL": 16.0,
+      "time_h": 2.0,
+      "observed_log10": 2.7,
+      "predicted_log10": 2.8763111836070965
+    },
+    {
+      "panel": "C",
+      "arm": "16xMIC",
+      "C_mgL": 16.0,
+      "time_h": 3.2,
+      "observed_log10": 2.5,
+      "predicted_log10": 2.411197312053952
+    }
+  ],
+  "scenario_sensitivity": {
+    "exclude_overlaid_C_high_doses": {
+      "parameters": {
+        "k_kill_max": 2.249038274594991,
+        "kill_C50": 0.5084349537886279,
+        "kill_hill": 1.9302732601048773
+      },
+      "rmse_log10": 0.5133317579204533,
+      "max_abs_residual_log10": 1.5818457026301174,
+      "n_points": 36,
+      "success": true,
+      "scope": "Reading/model-adequacy sensitivity; excluded observations are not invalidated"
+    },
+    "omit_B_2x_adequacy_diagnostic": {
+      "parameters": {
+        "k_kill_max": 2.5081370823685187,
+        "kill_C50": 0.5600775635149775,
+        "kill_hill": 1.9638927561951638
+      },
+      "rmse_log10": 0.3454689136317998,
+      "max_abs_residual_log10": 1.1323898262156187,
+      "n_points": 43,
+      "success": true,
+      "scope": "Reading/model-adequacy sensitivity; excluded observations are not invalidated"
+    }
+  },
+  "structural_check": {
+    "panel": "B",
+    "arm": "2xMIC",
+    "observed_growth_2_to_4_8h_log10": 2.3,
+    "reading_allowance_per_point_log10": 0.3,
+    "interpretation": "The joint best fit fails the stated reading allowance under the current fixed persistence mechanism. This is model inadequacy, not proof of resistance or a general impossibility for all kill models."
+  },
+  "uncertainty": "Digitisation and overlap sensitivity; no sampling-error model or confidence interval",
+  "source_sha256": {
+    "data/external_validation/meropenem_figure2a_multiarm.csv": "4f8af2d69a87955a36598bf69c9701ebae633c90f579ae766694ba846bdb89da",
+    "data/external_validation/meropenem_figure2bc_initial.csv": "97d1d1801cd1fb7801a69ea6b9f3db1688b9ff47d8f8b4773d40b94329717445"
+  },
+  "analysis_script_sha256": "9f54cdd640418ed3fc52dd968e361943aba748b11d4e60dc129c4dad1a580a8c",
+  "provenance": {
+    "git_head": "5153480c83985a0d22899929c1b547489b258dd5",
+    "git_dirty": true,
+    "python": "3.12.4",
+    "numpy": "2.4.6",
+    "scipy": "1.15.3",
+    "numpy_scipy_supported": true,
+    "platform": "win32",
+    "final_yields_fg_per_CFU": {
+      "piperacillin": 5.15,
+      "ceftazidime": 4.93,
+      "isepamicin": 0.28,
+      "imipenem": 0.986,
+      "meropenem": 0.986
+    },
+    "note": "Joint first-exposure broth windows, per-panel baseline and growth"
+  }
+}

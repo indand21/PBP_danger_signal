@@ -2,7 +2,7 @@
   "status": "conditional sensitivity; no defaults or Table 1 replaced",
   "analysis_script_sha256": "6d4b5bee7ba5838f407cd146da5336317324abf01d455bec551e383b0a358a6c",
   "input_fit_sha256": "679131bf0ff0348b6a542d55531c41a6c22c3f114d77d9c70908711a6fa3ec23",
-  "reference_results_sha256": "a2f64f259a6af3d16962cb152ba138ddfb5006302d37c34f08529c4e673f37c5",
+  "reference_results_sha256": "8410109d381191934ae8ea2a577e84421ac6adbc2d9c8723d564ebd65b1a367a",
   "reference_effective_mic_mgL": 0.770456832246574,
   "fixed": "Adopted in-vivo growth, immune recruitment, PK, signal model and yield range",
   "interpretation": "No statistical confidence level. Reading perturbations omit replicate noise, shared digitisation error and structural uncertainty. Do not interpret a best fit to noisy raster summaries as a measured constant.",
@@ -395,7 +395,7 @@
     ]
   },
   "provenance": {
-    "git_head": "f4db0725e50d6cba80ed1906daacd8876aa6d913",
+    "git_head": "5153480c83985a0d22899929c1b547489b258dd5",
     "git_dirty": true,
     "python": "3.12.4",
     "numpy": "2.4.6",

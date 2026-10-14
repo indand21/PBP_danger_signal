@@ -39,12 +39,12 @@
   },
   "meropenem_neutropenic_thigh": {
    "effective_mic_mgL": 0.7704817512908506,
-   "model_stasis_fT_pct": 37.05735609020148,
+   "model_stasis_fT_pct": 37.14774043464559,
    "published_stasis_fT_pct": 17.3,
-   "gap_percentage_points": 19.75735609020148,
+   "gap_percentage_points": 19.84774043464559,
    "target": "within 5-10 percentage points of 17.3",
    "met": false,
-   "model_1log_fT_pct": 45.094047278927796,
+   "model_1log_fT_pct": 45.202087740594145,
    "published_1log_fT_pct": 26.0,
    "monotone": true,
    "published_source": "Sabet M et al. Antimicrob Agents Chemother 2020; stasis, 1-log and 2-log at 17.3, 26.0 and 41.7 %24-h fT>MIC"
@@ -55,10 +55,65 @@
   "not_met": [
    "meropenem_neutropenic_thigh"
   ],
-  "interpretation": "Both failures run in the same direction -- the model needs more exposure than the data do -- and both follow from a terminal half-life that is too short, so the plasma profile decays faster than observed and the time spent above any threshold is understated."
+  "interpretation": "Report PK and thigh failures separately. A plasma-curve refit does not resolve the thigh PD benchmark. The historical pooled thigh diagnostic uses a model-stasis MIC and canonical human PK, not a strain-specific replay of the murine experiment. See pd_context.json for source-timed controls and fixed measured strain MICs."
+ },
+ "strain_context_diagnostic": {
+  "status": "context and transport sensitivity, not validated murine reconstruction",
+  "summaries": {
+   "control_low": {
+    "mean_predicted_stasis_ft_pct": 14.627493827332572,
+    "mean_published_stasis_ft_pct": 17.349999999999998,
+    "mean_predicted_one_log_ft_pct": 22.395941282494707,
+    "n_strains_with_stasis": 6
+   },
+   "control_mid": {
+    "mean_predicted_stasis_ft_pct": 22.175527017538794,
+    "mean_published_stasis_ft_pct": 17.349999999999998,
+    "mean_predicted_one_log_ft_pct": 30.69356213298521,
+    "n_strains_with_stasis": 6
+   },
+   "control_high": {
+    "mean_predicted_stasis_ft_pct": 30.620669430376214,
+    "mean_published_stasis_ft_pct": 17.349999999999998,
+    "mean_predicted_one_log_ft_pct": 37.583180946039995,
+    "n_strains_with_stasis": 6
+   },
+   "hill_0.9": {
+    "mean_predicted_stasis_ft_pct": 6.390754361977669,
+    "mean_published_stasis_ft_pct": 17.349999999999998,
+    "mean_predicted_one_log_ft_pct": 19.160365620174048,
+    "n_strains_with_stasis": 6
+   },
+   "hill_8.0": {
+    "mean_predicted_stasis_ft_pct": 22.37015002734056,
+    "mean_published_stasis_ft_pct": 17.349999999999998,
+    "mean_predicted_one_log_ft_pct": 30.655606125075867,
+    "n_strains_with_stasis": 6
+   },
+   "hill_29.49": {
+    "mean_predicted_stasis_ft_pct": 22.310659703558784,
+    "mean_published_stasis_ft_pct": 17.349999999999998,
+    "mean_predicted_one_log_ft_pct": 30.582161791139573,
+    "n_strains_with_stasis": 6
+   },
+   "interval_2.0": {
+    "mean_predicted_stasis_ft_pct": 8.94748896274088,
+    "mean_published_stasis_ft_pct": 17.349999999999998,
+    "mean_predicted_one_log_ft_pct": 30.812436559400286,
+    "n_strains_with_stasis": 6
+   },
+   "interval_4.0": {
+    "mean_predicted_stasis_ft_pct": 20.902603628285004,
+    "mean_published_stasis_ft_pct": 17.349999999999998,
+    "mean_predicted_one_log_ft_pct": 30.96781177422812,
+    "n_strains_with_stasis": 6
+   }
+  },
+  "acceptance_status": "unresolved; sensitivity envelope is not successful validation",
+  "control_elapsed_h": 10.0
  },
  "provenance": {
-  "git_head": "f4db0725e50d6cba80ed1906daacd8876aa6d913",
+  "git_head": "5153480c83985a0d22899929c1b547489b258dd5",
   "git_dirty": true,
   "python": "3.12.4",
   "numpy": "2.4.6",
@@ -75,7 +130,7 @@
   "endpoint": "curve-level validation against registry acceptance targets",
   "exposure_index": "%fT>MIC for the dose-response; plasma mg/L for the PK",
   "solver": {
-   "pk": "analytic two-compartment with effect site",
+   "pk": "adopted one-compartment plasma with effect site",
    "bacterial": "LSODA rtol 1e-6 atol 1e-8 max_step 0.2 h"
   }
  }

@@ -206,7 +206,7 @@ def predict_timekill(ds: DigitizedDataset) -> np.ndarray:
     concentration (in-vitro time-kill condition), with immune effectors off.
     """
     sc = ds.scenario
-    params = get_default_parameters()
+    params = parameters_for_scenario(sc)
     # The effector pool is homeostatic (R10), so its set-point must match the
     # scenario's effector level or the pool would be repopulated towards the
     # default baseline. For broth that level is zero, and this is what keeps a
@@ -214,13 +214,9 @@ def predict_timekill(ds: DigitizedDataset) -> np.ndarray:
     pd_model = BacterialPopulationODE(params)
 
     if "mic_multiple" in sc:
-        # MIC-matched comparison (standard PK/PD practice): express the in-vitro
-        # exposure as a multiple of MIC and map it onto the model's OWN effective
-        # MIC (24 h stasis concentration), so isolates with different MICs are
-        # compared on a common potency scale. The raw concentration_mgL is kept
-        # in the registry for provenance only.
-        c_const = float(sc["mic_multiple"]) * effective_mic(drug_class=ds.drug_class,
-                                                            scenario=sc)
+        # Experimental calibration uses its measured reference. Historical
+        # model-stasis normalisation must be explicitly marked in the registry.
+        c_const = float(sc["mic_multiple"]) * reference_mic(ds.drug_class, sc)
     else:
         c_const = float(sc.get("concentration_mgL", 0.0))
     immune = float(sc.get("immune", 0.0))  # broth: no neutrophils by default
@@ -294,7 +290,24 @@ def predict_cytokine(ds: DigitizedDataset, marker: str = "IL6") -> np.ndarray:
 # sweep the index, and no murine PK is required.
 # ---------------------------------------------------------------------------
 
-def _neutropenic_params():
+def parameters_for_scenario(scenario: Dict) -> Dict:
+    """Apply explicit experimental bacterial parameters without changing defaults.
+
+    Context growth, starting population and measured MIC are different pieces
+    of information. A thigh-growth override must not silently redefine MIC.
+    Reject misspelled overrides rather than adding inert dataclass attributes.
+    """
+    params = get_default_parameters()
+    for name, value in scenario.get("bacterial_parameters", {}).items():
+        if name not in params["bacteria"].__dataclass_fields__:
+            raise ValueError(f"Unknown bacterial parameter: {name}")
+        if not np.isfinite(value) or value < 0 or (name in {'kill_C50','kill_hill','B_max'} and value==0):
+            raise ValueError(f"Invalid bacterial parameter {name}: {value}")
+        setattr(params["bacteria"], name, float(value))
+    return params
+
+
+def _neutropenic_params(scenario=None):
     """Default params with the effector pool switched off (neutropenic host).
 
     N_eff_0 = 0 zeroes the homeostatic target and the recruited increment
@@ -315,7 +328,26 @@ def _neutropenic_params():
     bacterial parameters, so calling ``immune_free_parameters()`` with no
     argument would quietly discard the swept values and fit the defaults.
     """
-    return immune_free_parameters(get_default_parameters())
+    return immune_free_parameters(parameters_for_scenario(scenario or {}))
+
+
+def reference_mic(drug_class: str, scenario: Dict) -> float:
+    """Resolve the exposure-index denominator independently of the PD response.
+
+    Prefer a measured MIC in mg/L. ``mic_eff`` remains a compatibility alias
+    for an explicitly fixed reference. Historical model-stasis-normalised
+    analyses remain available, but their moving denominator must be requested
+    explicitly; it is not a default for experimental calibration.
+    """
+    fixed = scenario.get("mic_reference_mgL", scenario.get("mic_eff"))
+    if fixed is not None:
+        if not np.isfinite(fixed) or fixed <= 0:
+            raise ValueError("MIC reference must be finite and positive")
+        return float(fixed)
+    if scenario.get("mic_reference_mode") == "model_stasis":
+        return effective_mic(drug_class, scenario)
+    raise ValueError("Specify a fixed mic_reference_mgL or explicitly request "
+                     "mic_reference_mode='model_stasis' for a synthetic analysis")
 
 
 def _delta_log10_const_conc(pd_model, C, drug_class, initial_burden, t_end=24.0):
@@ -353,7 +385,7 @@ def effective_mic(drug_class: str, scenario: Dict) -> float:
     solved continuously. The three now agree to within the 0.006% their
     slightly different initial states imply.
     """
-    params = _neutropenic_params()
+    params = _neutropenic_params(scenario)
     pd_model = BacterialPopulationODE(params)
     b0 = scenario.get("initial_burden", 1e6)
     target = 0.0 if drug_class == "cidal" else scenario.get("static_stasis_eps", 0.1)
@@ -383,9 +415,9 @@ def dose_response_curve(ds: DigitizedDataset):
     mic_eff), sorted by index.
     """
     sc = ds.scenario
-    mic = sc.get("mic_eff") or effective_mic(ds.drug_class, sc)
+    mic = reference_mic(ds.drug_class, sc)
     pk = get_drug_pk_parameters(ds.drug)
-    params = _neutropenic_params()
+    params = _neutropenic_params(sc)
 
     interval = sc.get("interval_hours", 6.0)
     t_end = sc.get("t_end", 24.0)
@@ -411,13 +443,19 @@ def dose_response_curve(ds: DigitizedDataset):
             dose_mg=float(dose), interval_hours=interval, start_time=0.0,
             n_doses=n_doses, infusion_duration_min=sc.get("infusion_min", 30.0))
         pd_model = BacterialPopulationODE(params)
-        ic = {"B_rep": sc.get("initial_burden", 1e6), "B_pers": 1e2, "B_SCV": 0.0,
+        ic = {"B_rep": sc.get("initial_burden", 1e6),
+              "B_pers": sc.get("initial_persister", 1e2), "B_SCV": 0.0,
               "N_eff": 0.0, "Damage": 0, "IL6": 0, "TNF": 0, "PAMP": 0}
         res = run_simulation(pk_model, regimen, pd_model, ic, t_span=(0, t_end),
                              drug_class=ds.drug_class, weight_kg=weight)
         c_eff = np.interp(tu, res.t, res.get_effect_site_concentration())
         if index_kind == "ft_mic":
-            ix = 100.0 * float(np.mean(c_eff > mic))        # percent of time > MIC
+            # Resolve crossings continuously instead of counting 1000 samples.
+            # This keeps the index from jumping by 0.1 percentage point when
+            # dose or a context parameter changes slightly.
+            from src.core.simulation import SimulationResult
+            ix = 100.0 * float(SimulationResult._time_above_threshold(
+                res.t, res.get_effect_site_concentration(), mic)) / t_end
         else:  # fauc_mic
             ix = float(trapezoid(c_eff, tu) / mic)          # fAUC/MIC over t_end
         _, B = res.get_bacterial_burden()

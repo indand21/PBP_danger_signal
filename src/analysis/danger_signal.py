@@ -50,13 +50,17 @@ from scipy.integrate import solve_ivp
 # derivation of each number and the source it comes from).
 # --------------------------------------------------------------------------
 
-#: Danger-signal yield per CFU killed, fg LPS/CFU. Derived from Yamaguchi 1999
-#: (free LPS at 1 x MIC, 4-6 h, P. aeruginosa PAO1) divided by the nominal
-#: 1e8 CFU/mL inoculum of that assay. Confirm the inoculum on digitization.
+#: Historical scale conventions expressed in the model's fg/CFU units, NOT
+#: measured yields. Yamaguchi's actual inoculum was 1e6 CFU/mL, and neither
+#: inoculum nor net CFU loss is cumulative drug-induced killing. Its isepamicin
+#: endpoint is a mean of 2,4,6 h, whereas the beta-lactam endpoints are at 4 h.
+#: The nominal scale is retained for reproducibility; source observations and
+#: correct time operators live in yield_observations.py. Do not plot these
+#: constants as commensurable measured agent yields.
 YIELD_ANCHORS_FG_PER_CFU = {
     "piperacillin": 5.15,   # 515 ng/mL at 1 x MIC, 4 h
     "ceftazidime": 4.93,    # 493 ng/mL at 1 x MIC, 4 h
-    "isepamicin": 0.28,     # 28 +/- 2 ng/mL at 1 x MIC, 6 h
+    "isepamicin": 0.28,     # historical scale; observed 2,4,6 h mean is 28 ng/mL
     # Imipenem: Yamaguchi reports "less LPS" without a figure in the abstract;
     # Jackson & Kropp put ceftazidime 10-40x above imipenem, which brackets
     # imipenem at 0.12-0.49 fg/CFU. Mid-range value used; swept in the pilot.
@@ -70,11 +74,11 @@ YIELD_ANCHORS_FG_PER_CFU = {
 # kept on that basis. They are NOT the final model -- see FINAL_YIELDS below.
 
 #: Nominal ceftazidime:carbapenem yield ratio of the FINAL model. Phase 5b
-#: revised the agent effect to 3.5-7x from three independent measurements
-#: (Trautmann ELISA 6.9x, Prins whole-blood TNF 3.5x, Simpson in-patient
-#: 4.97x), retiring the Jackson & Kropp Limulus 10-40x as an assay outlier.
-#: The midpoint of that interval is used for every nominal analysis; the
-#: interval itself is swept wherever an uncertainty range is reported.
+#: uses an assumed 3.5-7x range motivated by heterogeneous CAZ:imipenem
+#: endpoints (ELISA, whole-blood TNF, plasma endotoxin), not a measured latent
+#: yield interval. Direct CAZ:meropenem ELISA is 4.77 at 8 h. The nominal 5x
+#: value and interval are conditional scenarios, with equal-yield and wider
+#: stress tests in scripts/ds_joint_robustness.py.
 FINAL_YIELD_RATIO = 5.0
 
 #: The single authoritative yield configuration for the danger-signal study.

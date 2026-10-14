@@ -1,0 +1,25 @@
+{
+  "source": "Nussbaumer-Proll et al. 2022, Figure 2B/C, doi:10.3389/fphar.2022.840692",
+  "licence": "CC BY 4.0; see source_figures/README.md",
+  "source_image": "data/external_validation/source_figures/figure2_embedded0.png",
+  "source_image_sha256": "e51df061dba35f746c06cf0e3384e28ebb1c283cf87a2aedfca607e3ad3ef786",
+  "csv_sha256": "97d1d1801cd1fb7801a69ea6b9f3db1688b9ff47d8f8b4773d40b94329717445",
+  "method": "Manual marker-centre readings rounded to 0.1 log10; approximate pixel coordinates retained",
+  "initial_exposure_end_h": {
+    "B": 4.8,
+    "C": 3.2
+  },
+  "axes": {
+    "B": {
+      "log10_one_y": 700,
+      "pixels_per_log10": 32.7
+    },
+    "C": {
+      "log10_one_y": 1122,
+      "pixels_per_log10": 37.5
+    }
+  },
+  "reading_allowance_log10": 0.3,
+  "uncertainty": "Sensitivity allowance, not SD. Cluster assignments and off-plot omissions are flagged; no replicate recovery.",
+  "notes": "Only the first on-drug window. Coincident control markers deduplicated in joint fit. No invented censoring limit. See PD_CONTEXT_README.md."
+}

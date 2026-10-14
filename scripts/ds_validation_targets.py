@@ -126,19 +126,27 @@ def main():
         "n_targets_not_met": len(failed),
         "not_met": failed,
         "interpretation":
-            "Both failures run in the same direction -- the model needs more "
-            "exposure than the data do -- and both follow from a terminal "
-            "half-life that is too short, so the plasma profile decays faster "
-            "than observed and the time spent above any threshold is "
-            "understated." if failed else
+            "Report PK and thigh failures separately. A plasma-curve refit does "
+            "not resolve the thigh PD benchmark. The historical pooled thigh "
+            "diagnostic uses a model-stasis MIC and canonical human PK, not a "
+            "strain-specific replay of the murine experiment. See pd_context.json "
+            "for source-timed controls and fixed measured strain MICs." if failed else
             "Every registry target is met.",
     }
+    context_path = os.path.join('results','danger_signal','pd_context.json')
+    if os.path.exists(context_path):
+        with open(context_path,encoding='utf-8') as f:
+            context = json.load(f)
+        payload['strain_context_diagnostic'] = {
+            'status': context['status'], 'summaries': context['summaries'],
+            'acceptance_status':'unresolved; sensitivity envelope is not successful validation',
+            'control_elapsed_h':context['control_elapsed_h']}
 
     from src.utils.provenance import provenance
     payload["provenance"] = provenance(
         endpoint="curve-level validation against registry acceptance targets",
         exposure_index="%fT>MIC for the dose-response; plasma mg/L for the PK",
-        solver={"pk": "analytic two-compartment with effect site",
+        solver={"pk": "adopted one-compartment plasma with effect site",
                 "bacterial": "LSODA rtol 1e-6 atol 1e-8 max_step 0.2 h"})
     with open(OUT, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=1, default=str)

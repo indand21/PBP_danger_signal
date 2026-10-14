@@ -1,16 +1,21 @@
 {
- "_comment": "Danger-signal (endotoxin/DAMP release) datasets for the danger-signal study (docs/danger_signal_study/DESIGN.md). Kept in a SEPARATE registry from data/external_validation/registry.json so that adding these kinds cannot break the validated external-validation run, which raises on unknown kinds. They merge into that engine in Phase 2, once a 'ds_release' predictor exists. Only digitized CSVs enter the repository -- never the source PDFs or figure screenshots. Values under 'anchors' are quantities stated in the published ABSTRACT (retrieved via PubMed) and serve as a correctness check on the digitization: if a digitized curve disagrees with its anchor, the digitization is wrong.",
+ "_comment": "Source registry for the danger-signal study. Anchors are published observations with their original assay and sampling definitions, not interchangeable latent release parameters. Local source PDFs are gitignored.",
  "datasets": [
   {
    "id": "yamaguchi1999_pao1_release",
    "kind": "ds_release",
    "role": "calibration",
    "organism": "P. aeruginosa PAO1",
-   "agents": ["isepamicin", "piperacillin", "ceftazidime", "imipenem"],
+   "agents": [
+    "isepamicin",
+    "piperacillin",
+    "ceftazidime",
+    "imipenem"
+   ],
    "csv": "yamaguchi1999_pao1_release.csv",
    "source": "Yamaguchi S, Sato S, Toriya M, Tsuji A. Jpn J Antibiot 1999;52(1):41-56. PMID 10202687 (in Japanese; figures are language-independent).",
    "priority": 1,
-   "why": "The ONLY identified source reporting absolute free LPS (ng/mL) together with matched viable counts AND a pharmacokinetic autosimulation (regimen-level) arm, for four agents spanning three mechanisms. It is therefore the primary Y_lysis calibration set and the only source that can also check a regimen-level prediction.",
+   "why": "Paired viable-count and free-LPS trajectories could inform an observation-model fit after digitisation. Published summaries alone do not identify latent per-CFU release yields.",
    "extract": [
     "For each agent and each concentration (1/4x, 1x MIC and any others shown): free LPS (ng/mL) vs time over 0-8 h.",
     "The MATCHED viable count (log10 CFU/mL) vs time for the same condition. Without the matched count the yield per CFU killed is not identifiable -- this pairing is the whole reason this paper is priority 1.",
@@ -22,30 +27,47 @@
     "obtained": "2026-10-14 from J-Stage, open access (jiyu/free), DOI 10.11553/antibiotics1968b.52.41. PDF kept in docs/article_pdfs/52_41.pdf (gitignored).",
     "inoculum_cfu_per_mL": 1000000.0,
     "inoculum_quote": "Methods II.4: cells grown 18 h on SDA, suspended in saline, added to 10 mL of STB to 1e6 cfu/mL, shaken at 37 C; drug added at 1/4, 1 and 4 MIC AT THE START of culture; 1 mL sampled at 2, 4 and 6 h. Methods II.5 (simulation): inoculated into 100 mL STB to 1e6 cfu/mL, pre-cultured 3 h, then the simulated plasma profile was applied.",
-    "mic_ug_per_mL": {"isepamicin": 3.13, "gentamicin": 3.13, "piperacillin": 12.5, "ceftazidime": 3.13, "imipenem": 12.5},
+    "mic_ug_per_mL": {
+     "isepamicin": 3.13,
+     "gentamicin": 3.13,
+     "piperacillin": 12.5,
+     "ceftazidime": 3.13,
+     "imipenem": 12.5
+    },
     "viable_counts_fig2_log10": "All arms start at 6.0, confirming the 1e6 inoculum. Ceftazidime 1x MIC falls to about 3.7 by 4 h; the untreated control rises to about 7.9 by 6 h. No treated arm exceeds about 6.4 at any time.",
-    "untreated_control_free_LPS_ng_mL": {"4h": 340.0, "6h": 6000.0, "read_from": "figure 3, log axis, approximate"},
-    "consequence": "The absolute anchors CANNOT be converted into a per-CFU mass yield from this experiment. Dividing 493 ng/mL by the 1e6 CFU/mL actually present gives about 493 fg/CFU, which exceeds the total LPS content of a single cell (order 10-100 fg); and the untreated control already sits at about 340 ng/mL at 4 h, so most of the 493 is not drug-attributable. The 1e8 denominator this study used is not supported by the paper and happened to make the number look physiological. Only the ORDERING and the agent RATIO are usable from this source, which is how the study uses it.",
+    "untreated_control_free_LPS_ng_mL": {
+     "4h": 340.0,
+     "6h": 6000.0,
+     "read_from": "figure 3, log axis, approximate"
+    },
+    "consequence": "The source inoculum is 1e6 CFU/mL. Inoculum or net CFU loss cannot substitute for integrated drug-induced killing. Untreated free LPS is appreciable, so background release and clearance require an observation model. Preserve the point versus sampling-mean distinction; do not form an ISP:beta-lactam yield ratio from unmatched summaries.",
     "corroboration": "At 6 h the untreated control (about 6000 ng/mL) released MORE free LPS than every treated arm including the sub-MIC ones. This is independent support for the study's no-within-agent-trade-off result, from the same figure.",
     "isepamicin_anchor_estimand": "The 28 +/- 2 ng/mL figure is the MEAN of the 2, 4 and 6 h values at 1x MIC (Japanese abstract: 1 MIC ni okeru 2, 4, 6 jikan go no LPS ryou no heikin chi), not a 6 h reading. The piperacillin and ceftazidime anchors ARE single 4 h readings."
    },
    "anchors": {
-    "free_LPS_ng_mL_at_1xMIC": {"isepamicin_6h": 28.0, "isepamicin_6h_sd": 2.0,
-                                "piperacillin_4h": 515.0, "ceftazidime_4h": 493.0},
+    "free_LPS_ng_mL_at_1xMIC": {
+     "isepamicin_mean_2_4_6h": 28.0,
+     "isepamicin_reported_plus_minus": 2.0,
+     "piperacillin_4h": 515.0,
+     "ceftazidime_4h": 493.0
+    },
     "qualitative": [
      "At 1/4 x MIC, piperacillin and ceftazidime did NOT reduce colony counts and induced MORE free LPS release than at 1x MIC -- the kill-independent (filamentation) pathway.",
      "Imipenem: rapid killing with less LPS release; free LPS rose at 8 h with regrowth.",
      "Total LPS released over 8 h in the PK simulation: isepamicin < imipenem < ceftazidime < piperacillin."
     ]
    },
-   "notes": "Japanese-language journal, 1999 -- likely requires an interlibrary request. If the full text proves unobtainable, the abstract anchors above still fix three absolute yields and the full qualitative ordering, which is enough for a reduced Layer-1 fit; record that substitution explicitly as a limitation."
+   "notes": "Full text obtained. Endpoints are assay-scale LPS observations with different time operators, not per-CFU yield measurements. No absolute release parameter can be fitted from these summaries alone. See src/analysis/yield_observations.py for point versus sampling-mean operators."
   },
   {
    "id": "jackson1992_pa_release",
    "kind": "ds_release",
    "role": "validation",
    "organism": "P. aeruginosa (smooth- and rough-LPS mutant isolates)",
-   "agents": ["ceftazidime", "imipenem"],
+   "agents": [
+    "ceftazidime",
+    "imipenem"
+   ],
    "csv": "jackson1992_pa_release.csv",
    "source": "Jackson JJ, Kropp H. J Infect Dis 1992;165(6):1033-41. doi:10.1093/infdis/165.6.1033 (PMID 1583320).",
    "priority": 1,
@@ -58,8 +80,14 @@
     "MICs of both agents for both isolates (the abstract states they are equivalent)."
    ],
    "anchors": {
-    "ceftazidime_over_imipenem_free_LPS_fold": [10.0, 40.0],
-    "window_h": [4.0, 8.0],
+    "ceftazidime_over_imipenem_free_LPS_fold": [
+     10.0,
+     40.0
+    ],
+    "window_h": [
+     4.0,
+     8.0
+    ],
     "temperature_C": 35.0,
     "qualitative": [
      "Sub-MIC ceftazidime induced filamentation and LPS release without significant bacterial lysis.",
@@ -74,7 +102,9 @@
    "kind": "ds_cytokine",
    "role": "calibration",
    "organism": "Papio (baboon), in vivo",
-   "agents": ["E. coli LPS"],
+   "agents": [
+    "E. coli LPS"
+   ],
    "csv": "haudek2003_lps_cytokine.csv",
    "source": "Haudek SB, Natmessnig BE, Furst W, Bahrami S, Schlag G, Redl H. Shock 2003;20(5):431-6. doi:10.1097/01.shk.0000090843.66556.74 (PMID 14560107).",
    "priority": 2,
@@ -85,7 +115,12 @@
     "Baseline (pre-challenge) cytokine concentrations, needed for the IL6_baseline parameter."
    ],
    "anchors": {
-    "doses_per_kg": ["1 mg", "0.1 mg", "4 ng", "1.5 mg over 30 min (infusion)"],
+    "doses_per_kg": [
+     "1 mg",
+     "0.1 mg",
+     "4 ng",
+     "1.5 mg over 30 min (infusion)"
+    ],
     "qualitative": [
      "Cytokine, haemodynamic and haematologic kinetics resembled human endotoxemia QUALITATIVELY.",
      "Baboons required an ~1e4-fold HIGHER initial LPS dose than humans to develop the same manifestations."
@@ -98,5 +133,5 @@
   "ds_release": "Long-format CSV: agent,concentration_xMIC,time_h,series,value. series in {free_lps_ng_mL, cell_associated_lps_ng_mL, log10_cfu_mL, filament_fraction}. One row per digitized point. Blank/# lines ignored, so a header-only stub reports NO_DATA.",
   "ds_cytokine": "Long-format CSV: dose_label,time_h,series,value. series in {lps_pg_mL, TNF_pg_mL, IL6_pg_mL, IL8_pg_mL}."
  },
- "_note": "Phase 1 pilot status: the modelling half of the pilot is complete and both stop-gates passed WITHOUT these data (see docs/danger_signal_study/PHASE1_PILOT.md and results/danger_signal/pilot_acceptance.json), using yields derived from the published abstracts. These CSVs turn abstract-derived point anchors into fitted curves with uncertainty, which is what Phase 3 needs."
- }
+ "_note": "Nominal release coefficients are historical scale conventions. Quantitative fitting requires paired trajectories and the correct observation operators; see yield_observations.py and joint_robustness.json."
+}

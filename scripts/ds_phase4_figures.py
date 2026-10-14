@@ -35,44 +35,37 @@ def _load():
 
 
 def fig1_yield_table(d):
-    """Yield by agent, grouped by PBP target -- the resource deliverable."""
-    rows = d["analysis1_yield_table"]["rows"]
-    labels = [r["agent"] for r in rows]
-    vals = [r["Y_lysis_fg_per_CFU"] for r in rows]
-    colors = ["#c0392b" if r["pbp"] == "PBP-3" else
-              ("#2471a3" if r["pbp"] == "PBP-2" else "#7f8c8d") for r in rows]
-    fig, ax = plt.subplots(figsize=(5.8, 3.1), constrained_layout=True)
-    y = np.arange(len(rows))
-    # Points with intervals, NOT bars: the axis is logarithmic, so a bar drawn
-    # from zero has no meaningful length and would misrepresent the ratios
-    # that are the whole point of this table.
-    for i, (r, c) in enumerate(zip(rows, colors)):
-        if r["interval"]:
-            lo, hi = r["interval"]
-            ax.plot([lo, hi], [i, i], color=c, lw=2.0, solid_capstyle="butt")
-            for e in (lo, hi):
-                ax.plot([e, e], [i - 0.14, i + 0.14], color=c, lw=1.4)
-        ax.plot([r["Y_lysis_fg_per_CFU"]], [i], "o", color=c, ms=7,
-                zorder=3)
-    ax.set_yticks(y)
-    ax.set_yticklabels(labels)
-    ax.set_xscale("log")
-    ax.set_xlim(0.08, 12)
-    ax.set_ylim(len(rows) - 0.4, -0.6)
-    ax.grid(axis="x", color="#dddddd", lw=0.6, which="both")
-    ax.set_axisbelow(True)
-    ax.set_xlabel("danger-signal yield per CFU killed (fg/CFU)")
-    handles = [plt.Line2D([], [], color=c, marker="o", ls="", ms=6) for c in
-               ("#c0392b", "#2471a3", "#7f8c8d")]
-    # "PBP-3" rather than "cephalosporins": the red group includes
-    # piperacillin, which is a penicillin, so the class label was wrong.
-    ax.legend(handles, ["PBP-3-specific (cephalosporin, penicillin)",
-                        "PBP-2-specific (carbapenems)",
-                        "ribosomal (aminoglycoside)"], frameon=False,
-              fontsize=7.5, loc="lower right")
-    ax.set_title("Every agent here is bactericidal, yet yields differ "
-                 "several-fold:\nthe yield tracks the PBP target, not killing "
-                 "class or morphology", fontsize=8.5)
+    """Observed release endpoints, separated by assay and sampling operator."""
+    obs = d['analysis1_yield_table']['observations']
+    fig, (ax, table_ax) = plt.subplots(1,2,figsize=(8.4,3.4),
+                                       gridspec_kw={'width_ratios':[1,1.6]},
+                                       constrained_layout=True)
+    agents = ['ceftazidime','meropenem','imipenem']
+    values = [obs['trautmann_'+a]['value'] for a in agents]
+    ax.barh(agents,values,color=[CAZ_C,MERO_C,'#5b8db8'])
+    ax.invert_yaxis()
+    ax.set_xlim(0,.72)
+    ax.set_xlabel('Free LPS (mg/L), capture ELISA')
+    ax.set_title('A  Matched 8 h observations\nE. coli Bort, 50×MIC',fontsize=9)
+    for i,v in enumerate(values):ax.text(v+.015,i,f'{v:.2f}',va='center',fontsize=9)
+    ax.text(.97,.04,'CAZ:MERO = 4.77; CAZ:IMI = 6.89\nEndpoint ratios; not per-cell yields',
+            transform=ax.transAxes,fontsize=7,ha='right',va='bottom',
+            bbox={'facecolor':'white','edgecolor':'none','alpha':.95})
+    table_ax.axis('off')
+    table_ax.set_title('B  Different sampling operators\nP. aeruginosa PAO1, 1×MIC; Limulus assay',fontsize=9)
+    cells = [['ceftazidime','493','4 h point'],
+             ['piperacillin','515','4 h point'],
+             ['isepamicin','28 ± 2','mean of 2, 4, 6 h']]
+    table = table_ax.table(cellText=cells,colLabels=['Agent','LPS (ng/mL)','Published statistic'],
+                          colWidths=[.30,.23,.47],cellLoc='left',colLoc='left',
+                          bbox=[0,.25,1,.58])
+    table.auto_set_font_size(False);table.set_fontsize(8)
+    for (row,col),cell in table.get_celld().items():
+        cell.set_edgecolor('#d6dce1');cell.set_linewidth(.5)
+        if row==0:cell.set_facecolor('#eaf0f4');cell.set_text_props(weight='bold')
+    table_ax.text(0,.1,'No ISP:β-lactam ratio from these summaries.\n'
+                  'Neither panel estimates fg/CFU killed.',fontsize=8,
+                  transform=table_ax.transAxes)
     _save(fig, "fig1_yield_table")
 
 

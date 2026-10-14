@@ -211,7 +211,7 @@ this repository.
 python -m pytest -q
 ```
 
-546 tests pass, covering the pharmacokinetic conventions and the conservation
+556 tests pass, covering the pharmacokinetic conventions and the conservation
 of drug mass, the bacterial dynamics, mass conservation across the persister
 and small-colony-variant switches, the danger-signal layer and its
 mass-balance identity, the immune layer's units, fixed points and
@@ -258,8 +258,8 @@ bacterial layer's half-maximal concentration and Hill exponent are not
 identified either, nor is the size of the immune response, for the separate
 reasons given above.
 
-The per-CFU yields themselves come from three published studies that measured
-different estimands, so the range they span is an **assumed scenario range**,
+The nominal per-CFU coefficients are informed by studies that measured
+different estimands, so the range used is an **assumed scenario range**,
 not a measured confidence interval, and is treated as one throughout. See the
 `final_yields_fg_per_CFU` entry in any results file's `provenance` block for
 the configuration in force, and `src/analysis/danger_signal.py` for how it was
@@ -275,6 +275,42 @@ experiment does not identify a per-CFU mass at all. It does identify the
 ordering of four agents, which is what this model takes from it. Nothing
 computed here is an absolute magnitude, so the scale cancels; the findings
 are recorded against the dataset in `data/danger_signal/registry.json`.
+
+## PD reassessment on 14 October 2026
+
+The thigh stasis target remains unmet: the historical diagnostic is 37.1%
+against 17.3% published. A new fixed-MIC, strain-specific context analysis
+uses untreated growth over the actual 10 h interval and gives a midpoint
+mean of 22.2% with a 14.6-30.6% growth envelope. This is a transport sensitivity,
+not validated murine calibration; paired controls and regimen-linked counts
+are missing.
+
+The first Figure 2B/C broth windows are now included in a joint concentration
+response check. Its best h is 1.97, but residuals remain too large and the
+concentration ordering reverses in one arm. No PD default is replaced.
+
+Source observations use their actual point or sampling-mean operators.
+Isepamicin's 2/4/6 h mean is not compared as a yield against 4 h beta-lactam
+points. The direct CAZ:MERO ELISA endpoint ratio is 4.77; it does not measure
+latent release per killed cell. Joint fixed-MIC stress tests include ten PD
+scenarios, equal yields and zero filament release, and report ranking tipping
+points rather than a confidence interval.
+
+From the pinned environment, run:
+
+```bash
+python scripts/ds_joint_broth_refit.py
+python scripts/ds_pd_context.py
+python scripts/ds_joint_robustness.py
+python scripts/ds_validation_targets.py
+python scripts/ds_pd_review_figures.py
+```
+
+See `data/external_validation/PD_CONTEXT_README.md` for transcription rules,
+assumptions and remaining data requirements. Original source PDFs are not
+distributed. Optional re-extraction of thigh pixels requires a locally
+obtained PDF, PyMuPDF and Pillow; the numerical analyses use the supplied CSVs.
+Nominal Table 1 remains an explicitly conditional model-MIC scenario.
 
 ## Licence
 
