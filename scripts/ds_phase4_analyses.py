@@ -194,7 +194,7 @@ def analysis1_yield_table():
     """Separate source observations from the nominal release-scale convention."""
     from dataclasses import asdict
     from src.analysis.yield_observations import (observations, comparable_ratio,
-                                                 kill_matched_ratio)
+                                                 net_change_matched_ratio)
     y_caz = FINAL_YIELDS_FG_PER_CFU["ceftazidime"]
     carbapenem_interval = [round(y_caz / YIELD_RATIO_RANGE[1], 2),
                            round(y_caz / YIELD_RATIO_RANGE[0], 2)]
@@ -253,22 +253,25 @@ def analysis1_yield_table():
              ("tsuji_ceftazidime_1x", "tsuji_meropenem_1x")]
     kill_matched = []
     for num, den in pairs:
-        ratio, gap = kill_matched_ratio(obs[num], obs[den])
+        ratio, gap = net_change_matched_ratio(obs[num], obs[den])
         kill_matched.append({"numerator": num, "denominator": den,
                              "comparator": obs[den].agent,
                              "concentration_xMIC": obs[num].concentration_xMIC,
-                             "kill_difference_log10": round(gap, 2),
+                             "net_change_difference_log10": round(gap, 2),
+                             "both_arms_grew": obs[num].delta_log10_net_change > 0,
                              "lps_ratio": round(ratio, 2)})
     return {"rows": rows, "caveats": caveats, "interpretation": note,
             "mechanism": mechanism, "observations": {k:asdict(v) for k,v in obs.items()},
             "matched_CAZ_MERO_ELISA_ratio":
                 comparable_ratio(obs["trautmann_ceftazidime"],obs["trautmann_meropenem"]),
-            "kill_matched_ratios": kill_matched,
-            "kill_matched_note":
-                "Ceftazidime against a carbapenem at EQUAL achieved killing, the only "
-                "source reporting viable counts with the LPS endpoint. These bracket the "
-                "assumed 3.5-7 range but are three pairs from one experiment at one "
-                "timepoint with no replicate dispersion; the range is NOT refitted to them.",
+            "net_change_matched_ratios": kill_matched,
+            "net_change_matched_note":
+                "Ceftazidime against a carbapenem at EQUAL NET bacterial change, the only "
+                "source reporting viable counts with the LPS endpoint. Equal net change is "
+                "NOT equal cumulative drug-induced killing, and in the 0.1x MIC pair both "
+                "arms GREW, so that pair is matched on growth. These bracket the assumed "
+                "3.5-7 range but are three pairs from one experiment at one timepoint with "
+                "no replicate dispersion; the range is NOT refitted to them.",
             "untreated_control_ug_L": obs["tsuji_control_6h"].value,
             "coefficient_status":"All fg/CFU entries are nominal scale conventions, not measurements"}
 

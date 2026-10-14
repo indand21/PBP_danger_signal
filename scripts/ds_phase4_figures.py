@@ -54,9 +54,9 @@ def fig1_yield_table(d):
             bbox={'facecolor':'white','edgecolor':'none','alpha':.95})
 
     # Panel B: the only comparison available at EQUAL achieved killing.
-    pairs = a1['kill_matched_ratios']
+    pairs = a1['net_change_matched_ratios']
     labels = [f"vs {p['comparator'][:4].upper()}\n{p['concentration_xMIC']:g}×MIC\n"
-              f"Δkill {p['kill_difference_log10']:.2f}" for p in pairs]
+              f"Δnet {p['net_change_difference_log10']:.2f}" for p in pairs]
     ratios = [p['lps_ratio'] for p in pairs]
     xs = np.arange(len(pairs))
     kill_ax.bar(xs, ratios, color=CAZ_C, width=.6)
@@ -66,10 +66,11 @@ def fig1_yield_table(d):
     kill_ax.set_xticks(xs); kill_ax.set_xticklabels(labels, fontsize=7)
     kill_ax.set_ylabel('Free LPS ratio, CAZ : carbapenem')
     kill_ax.set_ylim(0, max(ratios)*1.30)
-    kill_ax.set_title('B  At EQUAL achieved killing\nP. aeruginosa SR24, 6 h; Limulus assay',fontsize=9)
+    kill_ax.set_title('B  At equal NET bacterial change\nP. aeruginosa SR24, 6 h; Limulus assay',fontsize=9)
     for x, r in zip(xs, ratios):
         kill_ax.text(x, r+max(ratios)*.03, f'{r:.1f}×', ha='center', fontsize=8)
-    kill_ax.text(.5, -.30, 'Three pairs, one experiment; range not refitted to them',
+    kill_ax.text(.5, -.32, 'Net change is not cumulative killing; at 0.1× MIC both arms grew.\n'
+                 'Three pairs, one experiment; range not refitted to them',
                  transform=kill_ax.transAxes, fontsize=7, ha='center', va='top',
                  color='#5d6d7e')
 

@@ -22,10 +22,13 @@ class ReleaseObservation:
     times_h: tuple[float, ...]
     operator: str = "point"
     concentration_xMIC: float = 1.
-    #: Achieved killing at the same sampling time, log10 CFU/mL against the
-    #: inoculum. Only sources reporting viable counts alongside LPS carry it,
-    #: and only those permit a comparison at matched killing.
-    delta_log10_kill: float | None = None
+    #: NET change in viable count at the same sampling time, log10 CFU/mL
+    #: against the inoculum. This is NOT cumulative drug-induced killing,
+    #: which is the integral of the kill flux and is not recoverable from a
+    #: net count (see cumulative_drug_killing). A net change can even be
+    #: positive, meaning the population grew. Only sources reporting viable
+    #: counts alongside LPS carry it.
+    delta_log10_net_change: float | None = None
 
     def predict(self, times, values):
         """Apply the published sampling operator without extrapolation."""
@@ -53,24 +56,28 @@ def comparable_ratio(numerator, denominator):
     return numerator.value/denominator.value
 
 
-def kill_matched_ratio(numerator, denominator, tolerance_log10=0.5):
-    """Ratio of two observations that also achieved the same killing.
+def net_change_matched_ratio(numerator, denominator, tolerance_log10=0.5):
+    """Ratio of two observations that reached the same NET bacterial outcome.
 
-    The quantity this study needs is release at EQUAL bacterial effect, which a
-    ratio at equal MIC multiple does not supply: the agents need not kill
-    equally there. Both observations must therefore report viable counts, and
-    their achieved killing must agree to within `tolerance_log10`. The result
-    is still an endpoint ratio in one assay, not a per-killed-cell yield.
+    A ratio at equal MIC multiple does not compare release at equal bacterial
+    effect, because the agents need not act equally there. Requiring equal net
+    change is the closest available substitute, and it is weaker than it
+    sounds in two ways that callers must not forget. Equal net change is NOT
+    equal cumulative drug-induced killing: a population that grows and is
+    killed at the same time can show the same net count as one that is barely
+    touched. And the net change may be positive, in which case the pair is
+    matched on growth rather than on killing. The result is an endpoint ratio
+    in one assay, never a per-killed-cell yield.
     """
     if not numerator.same_estimand(denominator):
         raise ValueError("Cannot form an estimand-matched ratio from different observation operators")
-    if numerator.delta_log10_kill is None or denominator.delta_log10_kill is None:
-        raise ValueError("Matching on killing needs viable counts reported with the LPS endpoint")
+    if numerator.delta_log10_net_change is None or denominator.delta_log10_net_change is None:
+        raise ValueError("Matching on bacterial outcome needs viable counts reported with the LPS endpoint")
     if denominator.value<=0:raise ValueError("Ratio denominator must be positive")
-    gap=abs(numerator.delta_log10_kill-denominator.delta_log10_kill)
+    gap=abs(numerator.delta_log10_net_change-denominator.delta_log10_net_change)
     if not tolerance_log10>0:raise ValueError("Tolerance must be positive")
     if gap>tolerance_log10:
-        raise ValueError(f"Achieved killing differs by {gap:.2f} log10, above the {tolerance_log10} tolerance")
+        raise ValueError(f"Net bacterial change differs by {gap:.2f} log10, above the {tolerance_log10} tolerance")
     return numerator.value/denominator.value, gap
 
 
@@ -92,11 +99,13 @@ def observations():
     def ya(agent,value,times,operator="point"):
         return ReleaseObservation(agent,value,"ng/mL","free LPS","Limulus colour KY",
                                   "P. aeruginosa PAO1",times,operator)
-    def ts(agent,value,x_mic,delta_kill):
+    def ts(agent,value,x_mic,delta_net):
         # Tsuji 2003: the only source reporting viable counts WITH the LPS
-        # endpoint, so the only one allowing a ratio at matched killing.
+        # endpoint, so the only one allowing a ratio at a matched bacterial
+        # outcome. At 0.1x MIC both arms GREW, so that pair is matched on net
+        # growth, not on killing.
         return ReleaseObservation(agent,value,"ug/L","free LPS","Limulus Endospecy",
-                                  "P. aeruginosa SR24",(6.,),"point",x_mic,delta_kill)
+                                  "P. aeruginosa SR24",(6.,),"point",x_mic,delta_net)
     return {"trautmann_ceftazidime":tr("ceftazidime",.62),
             "trautmann_meropenem":tr("meropenem",.13),
             "trautmann_imipenem":tr("imipenem",.09),

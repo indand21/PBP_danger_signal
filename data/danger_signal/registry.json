@@ -211,24 +211,6 @@
      ]
     }
    },
-   "matched_kill_pairs": [
-    {
-     "pair": "CAZ 1x vs doripenem 1x",
-     "kill_difference_log10": 0.04,
-     "lps_ratio": 3.16
-    },
-    {
-     "pair": "CAZ 0.1x vs imipenem 0.1x",
-     "kill_difference_log10": 0.01,
-     "lps_ratio": 11.6
-    },
-    {
-     "pair": "CAZ 1x vs meropenem 1x",
-     "kill_difference_log10": 0.48,
-     "lps_ratio": 6.55
-    }
-   ],
-   "matched_kill_note": "These bracket the assumed 3.5-7 range in the right organism with measured MICs. NOT adopted: three pairs from one experiment at one timepoint, with no replicate dispersion, would be a worse basis for a claimed interval than an explicitly assumed scenario range.",
    "simulation_arm": {
     "doses": "doripenem 250 mg/30 min, imipenem/cilastatin and meropenem 500 mg/30 min, ceftazidime 1 g/60 min, simulated human plasma",
     "total_free_LPS_1_to_8h_ug_L": {
@@ -254,7 +236,56 @@
     "ceftazidime": 5.7
    },
    "sub_mic_note": "Carbapenems filament at 0.1x MIC in this study and release heavily there, so the kill-independent release term is not a PBP-3-exclusive property as Y_filament currently assumes. Recorded, not yet modelled.",
-   "commercial_interest": "Three of four authors were at Shionogi, which developed doripenem. Stated for the reader; the viable-count and LPS pairs are used here, not the authors' conclusion."
+   "commercial_interest": "Three of four authors were at Shionogi, which developed doripenem. Stated for the reader; the viable-count and LPS pairs are used here, not the authors' conclusion.",
+   "net_change_matched_pairs": [
+    {
+     "pair": "CAZ 1x vs doripenem 1x",
+     "lps_ratio": 3.16,
+     "net_change_difference_log10": 0.04,
+     "both_arms_grew": false
+    },
+    {
+     "pair": "CAZ 0.1x vs imipenem 0.1x",
+     "lps_ratio": 11.6,
+     "net_change_difference_log10": 0.01,
+     "both_arms_grew": true
+    },
+    {
+     "pair": "CAZ 1x vs meropenem 1x",
+     "lps_ratio": 6.55,
+     "net_change_difference_log10": 0.48,
+     "both_arms_grew": false
+    }
+   ],
+   "net_change_matched_note": "These bracket the assumed 3.5-7 range in the right organism with measured MICs. NOT adopted: three pairs from one experiment at one timepoint, with no replicate dispersion, would be a worse basis for a claimed interval than an explicitly assumed scenario range.",
+   "net_change_matched_warning": "What is matched is the NET change in viable count, NOT cumulative drug-induced killing, which is the integral of the kill flux and is not recoverable from a net count. In the 0.1x MIC pair BOTH ARMS GREW (+0.63 and +0.62 log10), so that pair compares release at equal net growth."
+  },
+  {
+   "id": "thorsted2020_cefuroxime_release",
+   "kind": "ds_release_model",
+   "role": "reference",
+   "organism": "E. coli",
+   "agents": [
+    "cefuroxime"
+   ],
+   "source": "Thorsted A, Tano E, Kaivonen K, Sjolin J, Friberg LE, Nielsen EI. Extension of pharmacokinetic/pharmacodynamic time-kill studies to include lipopolysaccharide/endotoxin release from Escherichia coli exposed to cefuroxime. Antimicrob Agents Chemother 2020;64(4):e02070-19. DOI 10.1128/AAC.02070-19. PMID 31988100, PMC7179275. Abstract verified via PubMed 2026-10-14; full text not retrieved.",
+   "why": "PRIOR ART for regimen-level endotoxin modelling, and the only source that ESTIMATES the per-CFU release coefficients this study declares unidentified. Our novelty claim is therefore the between-agent comparison at matched exposure, not regimen-level release modelling.",
+   "design": "52 time-kill experiments, static (0, 0.5, 1, 2, 10, 50x MIC) and dynamic (0, 15, 30x MIC) cefuroxime; susceptible, resting and filament states; sigmoidal Emax killing.",
+   "estimates": {
+    "release_per_CFU_growth_EU": 0.000292,
+    "release_per_CFU_antibiotic_killed_EU": 0.00636,
+    "release_per_killed_filament_EU": 0.295,
+    "filament_over_susceptible_fold": 46,
+    "kill_release_mean_transit_time_h": 7.63,
+    "growth_release": "instantaneous"
+   },
+   "conclusion": "Endotoxin release over 24 h is lowest when antibiotic exposure rapidly eradicates bacteria, and increased when growth and antibiotic-induced killing occur simultaneously.",
+   "bearing_on_this_study": [
+    "Corroborates the no-within-agent-trade-off result from an independent, data-fitted model in a different agent and organism.",
+    "Shows the per-CFU-killed yield IS estimable when release and viable counts are measured together under an observation model; our sources do not do this.",
+    "Supplies a measured filament coefficient for a cephalosporin (0.295 EU, 46x susceptible), the counterpart of the term whose PBP-3 exclusivity ds_filament_structure.py tests.",
+    "Its model releases endotoxin from GROWTH as well as killing; this model holds the untreated background constant and reports only attributable excess, which is why it cannot compare treatment against no treatment."
+   ]
   }
  ],
  "_schema": {

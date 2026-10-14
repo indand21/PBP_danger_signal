@@ -211,7 +211,7 @@ this repository.
 python -m pytest -q
 ```
 
-558 tests pass, covering the pharmacokinetic conventions and the conservation
+559 tests pass, covering the pharmacokinetic conventions and the conservation
 of drug mass, the bacterial dynamics, mass conservation across the persister
 and small-colony-variant switches, the danger-signal layer and its
 mass-balance identity, the immune layer's units, fixed points and
@@ -277,12 +277,24 @@ computed here is an absolute magnitude, so the scale cancels; the findings
 are recorded against the dataset in `data/danger_signal/registry.json`.
 
 One source reports viable counts beside the LPS endpoint, which is what lets
-the agent contrast be read at EQUAL ACHIEVED KILLING rather than at equal MIC
-multiple. Three such pairs give ceftazidime:carbapenem ratios of 3.2, 11.6 and
-6.5 at kill differences of 0.04, 0.01 and 0.48 log10, bracketing the assumed
-3.5-7 range. The range is not refitted to them. `kill_matched_ratio` in
-`src/analysis/yield_observations.py` refuses to form such a ratio unless both
-observations carry counts and their killing agrees within a tolerance.
+the agent contrast be read at a matched bacterial outcome rather than at equal
+MIC multiple. Three such pairs give ceftazidime:carbapenem ratios of 3.2, 11.6
+and 6.5, bracketing the assumed 3.5-7 range, which is not refitted to them.
+What is matched is the NET change in viable count, which is NOT cumulative
+drug-induced killing: that is the integral of the kill flux and cannot be
+recovered from a net count, and in one of the three pairs BOTH ARMS GREW.
+`net_change_matched_ratio` in `src/analysis/yield_observations.py` is named for
+what it does and refuses to form a ratio unless both observations carry counts
+and their net change agrees within a tolerance.
+
+Regimen-level release modelling is not new: Thorsted et al. (Antimicrob Agents
+Chemother 2020;64:e02070-19) fitted growth, killing and filament formation to
+cefuroxime endotoxin release under static and dynamic exposure. They estimate
+0.00636 EU per antibiotic-killed cell and 0.295 per killed filament, 46x the
+susceptible value, so the per-CFU coefficients this project treats as a scale
+convention are unidentified by ITS sources rather than unidentifiable. Their
+regimen predictions also reach this project's exposure-response conclusion
+independently: release is lowest when exposure clears the organism rapidly.
 
 The same source undercuts a structural assumption of the model. The
 kill-independent release term is given to the PBP-3 agent alone, but

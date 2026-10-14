@@ -110,7 +110,7 @@
     ],
     "operator": "point",
     "concentration_xMIC": 50.0,
-    "delta_log10_kill": null
+    "delta_log10_net_change": null
    },
    "trautmann_meropenem": {
     "agent": "meropenem",
@@ -124,7 +124,7 @@
     ],
     "operator": "point",
     "concentration_xMIC": 50.0,
-    "delta_log10_kill": null
+    "delta_log10_net_change": null
    },
    "trautmann_imipenem": {
     "agent": "imipenem",
@@ -138,7 +138,7 @@
     ],
     "operator": "point",
     "concentration_xMIC": 50.0,
-    "delta_log10_kill": null
+    "delta_log10_net_change": null
    },
    "yamaguchi_ceftazidime": {
     "agent": "ceftazidime",
@@ -152,7 +152,7 @@
     ],
     "operator": "point",
     "concentration_xMIC": 1.0,
-    "delta_log10_kill": null
+    "delta_log10_net_change": null
    },
    "yamaguchi_piperacillin": {
     "agent": "piperacillin",
@@ -166,7 +166,7 @@
     ],
     "operator": "point",
     "concentration_xMIC": 1.0,
-    "delta_log10_kill": null
+    "delta_log10_net_change": null
    },
    "yamaguchi_isepamicin": {
     "agent": "isepamicin",
@@ -182,7 +182,7 @@
     ],
     "operator": "mean",
     "concentration_xMIC": 1.0,
-    "delta_log10_kill": null
+    "delta_log10_net_change": null
    },
    "tsuji_ceftazidime_1x": {
     "agent": "ceftazidime",
@@ -196,7 +196,7 @@
     ],
     "operator": "point",
     "concentration_xMIC": 1.0,
-    "delta_log10_kill": -0.87
+    "delta_log10_net_change": -0.87
    },
    "tsuji_doripenem_1x": {
     "agent": "doripenem",
@@ -210,7 +210,7 @@
     ],
     "operator": "point",
     "concentration_xMIC": 1.0,
-    "delta_log10_kill": -0.91
+    "delta_log10_net_change": -0.91
    },
    "tsuji_meropenem_1x": {
     "agent": "meropenem",
@@ -224,7 +224,7 @@
     ],
     "operator": "point",
     "concentration_xMIC": 1.0,
-    "delta_log10_kill": -0.39
+    "delta_log10_net_change": -0.39
    },
    "tsuji_ceftazidime_0.1x": {
     "agent": "ceftazidime",
@@ -238,7 +238,7 @@
     ],
     "operator": "point",
     "concentration_xMIC": 0.1,
-    "delta_log10_kill": 0.63
+    "delta_log10_net_change": 0.63
    },
    "tsuji_imipenem_0.1x": {
     "agent": "imipenem",
@@ -252,7 +252,7 @@
     ],
     "operator": "point",
     "concentration_xMIC": 0.1,
-    "delta_log10_kill": 0.62
+    "delta_log10_net_change": 0.62
    },
    "tsuji_control_6h": {
     "agent": "none",
@@ -266,17 +266,18 @@
     ],
     "operator": "point",
     "concentration_xMIC": 0.0,
-    "delta_log10_kill": 2.59
+    "delta_log10_net_change": 2.59
    }
   },
   "matched_CAZ_MERO_ELISA_ratio": 4.769230769230769,
-  "kill_matched_ratios": [
+  "net_change_matched_ratios": [
    {
     "numerator": "tsuji_ceftazidime_1x",
     "denominator": "tsuji_doripenem_1x",
     "comparator": "doripenem",
     "concentration_xMIC": 1.0,
-    "kill_difference_log10": 0.04,
+    "net_change_difference_log10": 0.04,
+    "both_arms_grew": false,
     "lps_ratio": 3.16
    },
    {
@@ -284,7 +285,8 @@
     "denominator": "tsuji_imipenem_0.1x",
     "comparator": "imipenem",
     "concentration_xMIC": 0.1,
-    "kill_difference_log10": 0.01,
+    "net_change_difference_log10": 0.01,
+    "both_arms_grew": true,
     "lps_ratio": 11.6
    },
    {
@@ -292,11 +294,12 @@
     "denominator": "tsuji_meropenem_1x",
     "comparator": "meropenem",
     "concentration_xMIC": 1.0,
-    "kill_difference_log10": 0.48,
+    "net_change_difference_log10": 0.48,
+    "both_arms_grew": false,
     "lps_ratio": 6.55
    }
   ],
-  "kill_matched_note": "Ceftazidime against a carbapenem at EQUAL achieved killing, the only source reporting viable counts with the LPS endpoint. These bracket the assumed 3.5-7 range but are three pairs from one experiment at one timepoint with no replicate dispersion; the range is NOT refitted to them.",
+  "net_change_matched_note": "Ceftazidime against a carbapenem at EQUAL NET bacterial change, the only source reporting viable counts with the LPS endpoint. Equal net change is NOT equal cumulative drug-induced killing, and in the 0.1x MIC pair both arms GREW, so that pair is matched on growth. These bracket the assumed 3.5-7 range but are three pairs from one experiment at one timepoint with no replicate dispersion; the range is NOT refitted to them.",
   "untreated_control_ug_L": 87.93,
   "coefficient_status": "All fg/CFU entries are nominal scale conventions, not measurements"
  },
@@ -2378,7 +2381,7 @@
   "note": "A competent host needs less drug to hold the organism static, so the immunocompetent thresholds are the lower pair. Craig reports 30-40% fT>MIC for cephalosporins in neutropenic animals; the comparable figures here are the immune-free ones."
  },
  "provenance": {
-  "git_head": "854101dcd00ea18381a35ef50f5404db849370fa",
+  "git_head": "229fe34b361e35673fbcad68886e6b30edd148d2",
   "git_dirty": true,
   "python": "3.12.4",
   "numpy": "2.4.6",
