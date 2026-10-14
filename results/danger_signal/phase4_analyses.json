@@ -400,7 +400,8 @@
   "sub_mic_over_50x_dual": 6.7824312830277504,
   "sub_mic_over_50x_lysis_only": 0.963007327442822,
   "observation_to_explain": "Jackson & Kropp 1992: sub-MIC ceftazidime released LPS in amounts MATCHING those at 1, 2 and 50x MIC, without significant lysis.",
-  "conclusion": "A lysis-only model cannot reproduce that observation: with Y_filament = 0 the predicted sub-MIC release collapses, because there is almost no killing at 0.5x MIC to release anything. The kill-independent pathway is therefore REQUIRED by the P. aeruginosa data.",
+  "conclusion": "NECESSITY IS NOT ESTABLISHED, and an earlier version of this entry claimed it was. On the attributable-exposure endpoint the lysis-only structure already reproduces the stated observation: its 0.5x/50x ratio is 0.963, i.e. matching, while the dual structure overshoots at 6.78. What the comparison shows is that the two structures are DISTINGUISHABLE below the MIC -- 7.0-fold in absolute attributable exposure at 0.5x -- so the term is identifiable in principle by an experiment measuring release and viable counts together below the MIC. Deciding between them requires joint fitting at the source's own sampling times under an observation model, which has not been done.",
+  "superseded_conclusion": "Retained so the error is traceable: 'A lysis-only model cannot reproduce that observation: with Y_filament = 0 the predicted sub-MIC release collapses ... the kill-independent pathway is therefore REQUIRED.' The collapse is relative to the dual model's own sub-MIC value, not to the supra-MIC values the observation compares against.",
   "counter_evidence": "Prins 1995 (E. coli, whole blood) found 0.5x MIC comparable to untreated with little agent separation, which the dual-pathway model does NOT reproduce. The two held-out sources conflict; Y_filament is plausibly organism-dependent and bounded above by Prins. Unresolved -- see PHASE3_VALIDATION.md section 6."
  },
  "analysis3_matched_exposure": {
@@ -2381,7 +2382,7 @@
   "note": "A competent host needs less drug to hold the organism static, so the immunocompetent thresholds are the lower pair. Craig reports 30-40% fT>MIC for cephalosporins in neutropenic animals; the comparable figures here are the immune-free ones."
  },
  "provenance": {
-  "git_head": "229fe34b361e35673fbcad68886e6b30edd148d2",
+  "git_head": "2dd26991938f294209e315cae69f89c7bb16bd53",
   "git_dirty": true,
   "python": "3.12.4",
   "numpy": "2.4.6",

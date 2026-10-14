@@ -490,6 +490,7 @@ SOURCE_ROLES = (
     "ordinal_corroboration",  # its reported DIRECTION is compared with the model
     "magnitude_bound",        # bounds a magnitude the model must not exceed
     "untouched_evaluation",   # never consulted before the model was frozen
+    "null_result",            # found NO difference where the model predicts one
 )
 
 #: How each source was actually used. Written after the external review found
@@ -498,6 +499,19 @@ SOURCE_ROLES = (
 #: entry carries 'untouched_evaluation': this project has no prospective
 #: holdout, and the ledger must not imply otherwise.
 SOURCE_USE_LEDGER = [
+    {
+        "doi": "10.1177/09680519000060010401",
+        "short": "Luchi 2000, urosepsis (clinical, NULL)",
+        "roles": ["null_result"],
+        "note": "Randomized, multicentre, double-blind, imipenem (n=14) against "
+                "ceftazidime (n=19) in Gram-negative urosepsis: NO difference in "
+                "plasma endotoxin, IL-6 or TNF, or in urine endotoxin, IL-6 or "
+                "IL-8, over the first 8 h. It contributed nothing to this model "
+                "and disagrees with its predicted direction. Added 2026-10-15 "
+                "after external review found it absent while a concordant trial "
+                "in the same indication was cited; listing only the agreeing "
+                "studies is the selection this ledger exists to prevent.",
+    },
     {
         "doi": "10.1093/infdis/172.3.886",
         "short": "Prins 1995, urosepsis (clinical)",

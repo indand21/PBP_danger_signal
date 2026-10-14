@@ -307,6 +307,25 @@ ratio collapses from 35.2 to 1.13, while the ordering survives throughout. No
 coefficient is estimated and no default changes. Below the MIC this assumption
 is load-bearing, and the evidence for it is weak.
 
+A separate claim about that term has been RETRACTED. Until 2026-10-15 this
+project reported that a lysis-only structure cannot reproduce the published
+sub-MIC release, and therefore that the kill-independent pathway is required.
+The stored numbers say otherwise: the observation is sub-MIC release MATCHING
+that at higher concentrations, the lysis-only 0.5x/50x ratio is 0.963, which
+matches, and the dual-pathway ratio is 6.782, which overshoots. The old
+conclusion compared the sub-MIC value against the dual model's own sub-MIC
+value instead of against the supra-MIC values the observation is about, and
+the refuting ratio was being stored in the same dictionary. Neither structure
+is fitted to that source; analysis2_dual_pathway now says so and keeps the
+superseded text.
+
+The source-use ledger also gains a `null_result` role and an entry for a
+randomized double-blind urosepsis trial (Luchi 2000) that found no difference
+between imipenem and ceftazidime in plasma or urine endotoxin and cytokines.
+It contributed nothing to the model and disagrees with its predicted
+direction; listing only concordant studies is what that ledger exists to
+prevent.
+
 ## PD reassessment on 14 October 2026
 
 The thigh stasis target remains unmet: the historical diagnostic is 37.1%

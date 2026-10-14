@@ -235,7 +235,7 @@ def fig4_exposure_response(d):
 
 
 def fig5_dual_pathway(d):
-    """The kill-independent pathway is required by the P. aeruginosa data."""
+    """Two assumed release structures, and where they are distinguishable."""
     a2d = d["analysis2_dual_pathway"]
     levels = ["0.5x MIC", "1x MIC", "50x MIC"]
     dual = [a2d["levels"][k]["dual"]["AUC_DS_pg_h_mL"] for k in levels]
@@ -247,14 +247,18 @@ def fig5_dual_pathway(d):
     ax.bar(x + w / 2, lysis, w, label="lysis-coupled only", color="#95a5a6")
     ax.set_xticks(x)
     ax.set_xticklabels(levels)
-    ax.set_ylabel("danger-signal exposure (AUC$_{DS}$, pg·h/mL)")
-    ax.set_title("Jackson & Kropp observed sub-MIC release matching 1-50x MIC;\n"
-                 "a lysis-only model cannot produce it", fontsize=8.5)
+    ax.set_ylabel("modelled release exposure\n(AUC$_{DS}$, uncalibrated units)")
+    sub_dual = d["analysis2_dual_pathway"]["sub_mic_over_50x_dual"]
+    sub_lys = d["analysis2_dual_pathway"]["sub_mic_over_50x_lysis_only"]
+    ax.set_title("Two assumed structures, neither fitted to the sub-MIC source:\n"
+                 f"0.5x/50x ratio {sub_lys:.2f} lysis-only against {sub_dual:.2f} dual",
+                 fontsize=8.5)
     ax.set_ylim(0, max(dual) * 1.18)
     ax.legend(frameon=False, fontsize=7.5, loc="upper right")
-    fig.text(0.5, -0.05,
-             "N.B. Prins (E. coli) reports the opposite at sub-MIC "
-             "-- an unresolved conflict between held-out sources",
+    fig.text(0.5, -0.09,
+             "Jackson & Kropp report sub-MIC release MATCHING that at higher concentrations.\n"
+             "Prins (E. coli) reports sub-MIC comparable to untreated. Neither structure is "
+             "qualified here.",
              ha="center", fontsize=7, color="#555555")
     _save(fig, "fig5_dual_pathway")
 

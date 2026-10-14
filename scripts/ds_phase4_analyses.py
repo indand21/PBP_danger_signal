@@ -277,7 +277,18 @@ def analysis1_yield_table():
 
 
 def analysis2_dual_pathway():
-    """Is the kill-independent pathway REQUIRED to explain the sub-MIC data?"""
+    """Compare two assumed release structures below, at and above the MIC.
+
+    This was written to ask whether the kill-independent pathway is REQUIRED by
+    the sub-MIC data, and for a long time it answered yes. That answer was
+    wrong, and wrong against a number stored beside it: the observation is
+    sub-MIC release MATCHING that at higher concentrations, and the lysis-only
+    structure's 0.5x/50x ratio is 0.963, which matches, while the dual
+    structure's is 6.78, which does not. The earlier conclusion compared the
+    sub-MIC value against the dual model's own sub-MIC value instead of against
+    the supra-MIC values the observation is about. Neither structure is fitted
+    to that source, so neither is qualified by it.
+    """
     out = {}
     for label, mult in (("0.5x MIC", 0.5), ("1x MIC", 1.0), ("50x MIC", 50.0)):
         row = {}
@@ -299,11 +310,22 @@ def analysis2_dual_pathway():
             "Jackson & Kropp 1992: sub-MIC ceftazidime released LPS in amounts "
             "MATCHING those at 1, 2 and 50x MIC, without significant lysis.",
         "conclusion":
-            "A lysis-only model cannot reproduce that observation: with "
-            "Y_filament = 0 the predicted sub-MIC release collapses, because "
-            "there is almost no killing at 0.5x MIC to release anything. The "
-            "kill-independent pathway is therefore REQUIRED by the "
-            "P. aeruginosa data.",
+            "NECESSITY IS NOT ESTABLISHED, and an earlier version of this entry "
+            "claimed it was. On the attributable-exposure endpoint the lysis-only "
+            "structure already reproduces the stated observation: its 0.5x/50x "
+            "ratio is 0.963, i.e. matching, while the dual structure overshoots at "
+            "6.78. What the comparison shows is that the two structures are "
+            "DISTINGUISHABLE below the MIC -- 7.0-fold in absolute attributable "
+            "exposure at 0.5x -- so the term is identifiable in principle by an "
+            "experiment measuring release and viable counts together below the MIC. "
+            "Deciding between them requires joint fitting at the source's own "
+            "sampling times under an observation model, which has not been done.",
+        "superseded_conclusion":
+            "Retained so the error is traceable: 'A lysis-only model cannot "
+            "reproduce that observation: with Y_filament = 0 the predicted sub-MIC "
+            "release collapses ... the kill-independent pathway is therefore "
+            "REQUIRED.' The collapse is relative to the dual model's own sub-MIC "
+            "value, not to the supra-MIC values the observation compares against.",
         "counter_evidence":
             "Prins 1995 (E. coli, whole blood) found 0.5x MIC comparable to "
             "untreated with little agent separation, which the dual-pathway "
