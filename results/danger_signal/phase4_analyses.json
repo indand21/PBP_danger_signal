@@ -92,7 +92,8 @@
    "The source inoculum is 1e6 CFU/mL, not the historical 1e8 denominator. Neither inoculum nor net CFU loss estimates cumulative drug-induced killing.",
    "A 2,4,6 h sampling mean is not a 4 h point. No ISP:beta-lactam ratio is formed from these unmatched summaries.",
    "3.5-7 is a conditional latent-yield range, not a measured interval or CI. Whole-blood TNF, plasma endotoxin and culture free LPS are different estimands.",
-   "The filamentation release coefficient is an assumption; zero and doubled values are included in joint_robustness.json."
+   "The filamentation release coefficient is an assumption; zero and doubled values are included in joint_robustness.json.",
+   "Carbapenems filament at sub-MIC concentrations and release heavily there (Tsuji 2003: 0.1x vs 10x MIC raises free LPS 88-fold for doripenem and 48-fold for meropenem), so assigning the kill-independent term to PBP-3 agents alone is a structural assumption, not an observation. scripts/ds_filament_structure.py quantifies what relaxing it would cost."
   ],
   "interpretation": "Matched culture observations support an agent-specific release difference among bactericidal drugs. They do not identify commensurable fg/CFU yields. Keep source observations, latent model coefficients and cross-agent transfer assumptions separate.",
   "mechanism": "The mechanism is PBP-3-SPECIFIC CELL-WALL DAMAGE, not filamentation as such. Trautmann 1998 settles this: ciprofloxacin induces filaments, with killing curves nearly identical to the beta-lactams, yet releases as little free LPS as the carbapenems -- so morphology does not predict release. Meropenem points the same way: it binds PBP-3 as well as PBP-2 and still releases little, so it is the DOMINANT PBP-3 specificity of the cephalosporins that matters. Filamentation is a marker of the relevant lesion, not its cause.",
@@ -108,7 +109,8 @@
      8.0
     ],
     "operator": "point",
-    "concentration_xMIC": 50.0
+    "concentration_xMIC": 50.0,
+    "delta_log10_kill": null
    },
    "trautmann_meropenem": {
     "agent": "meropenem",
@@ -121,7 +123,8 @@
      8.0
     ],
     "operator": "point",
-    "concentration_xMIC": 50.0
+    "concentration_xMIC": 50.0,
+    "delta_log10_kill": null
    },
    "trautmann_imipenem": {
     "agent": "imipenem",
@@ -134,7 +137,8 @@
      8.0
     ],
     "operator": "point",
-    "concentration_xMIC": 50.0
+    "concentration_xMIC": 50.0,
+    "delta_log10_kill": null
    },
    "yamaguchi_ceftazidime": {
     "agent": "ceftazidime",
@@ -147,7 +151,8 @@
      4.0
     ],
     "operator": "point",
-    "concentration_xMIC": 1.0
+    "concentration_xMIC": 1.0,
+    "delta_log10_kill": null
    },
    "yamaguchi_piperacillin": {
     "agent": "piperacillin",
@@ -160,7 +165,8 @@
      4.0
     ],
     "operator": "point",
-    "concentration_xMIC": 1.0
+    "concentration_xMIC": 1.0,
+    "delta_log10_kill": null
    },
    "yamaguchi_isepamicin": {
     "agent": "isepamicin",
@@ -175,10 +181,123 @@
      6.0
     ],
     "operator": "mean",
-    "concentration_xMIC": 1.0
+    "concentration_xMIC": 1.0,
+    "delta_log10_kill": null
+   },
+   "tsuji_ceftazidime_1x": {
+    "agent": "ceftazidime",
+    "value": 250.9,
+    "unit": "ug/L",
+    "quantity": "free LPS",
+    "assay": "Limulus Endospecy",
+    "organism": "P. aeruginosa SR24",
+    "times_h": [
+     6.0
+    ],
+    "operator": "point",
+    "concentration_xMIC": 1.0,
+    "delta_log10_kill": -0.87
+   },
+   "tsuji_doripenem_1x": {
+    "agent": "doripenem",
+    "value": 79.51,
+    "unit": "ug/L",
+    "quantity": "free LPS",
+    "assay": "Limulus Endospecy",
+    "organism": "P. aeruginosa SR24",
+    "times_h": [
+     6.0
+    ],
+    "operator": "point",
+    "concentration_xMIC": 1.0,
+    "delta_log10_kill": -0.91
+   },
+   "tsuji_meropenem_1x": {
+    "agent": "meropenem",
+    "value": 38.28,
+    "unit": "ug/L",
+    "quantity": "free LPS",
+    "assay": "Limulus Endospecy",
+    "organism": "P. aeruginosa SR24",
+    "times_h": [
+     6.0
+    ],
+    "operator": "point",
+    "concentration_xMIC": 1.0,
+    "delta_log10_kill": -0.39
+   },
+   "tsuji_ceftazidime_0.1x": {
+    "agent": "ceftazidime",
+    "value": 736.6,
+    "unit": "ug/L",
+    "quantity": "free LPS",
+    "assay": "Limulus Endospecy",
+    "organism": "P. aeruginosa SR24",
+    "times_h": [
+     6.0
+    ],
+    "operator": "point",
+    "concentration_xMIC": 0.1,
+    "delta_log10_kill": 0.63
+   },
+   "tsuji_imipenem_0.1x": {
+    "agent": "imipenem",
+    "value": 63.48,
+    "unit": "ug/L",
+    "quantity": "free LPS",
+    "assay": "Limulus Endospecy",
+    "organism": "P. aeruginosa SR24",
+    "times_h": [
+     6.0
+    ],
+    "operator": "point",
+    "concentration_xMIC": 0.1,
+    "delta_log10_kill": 0.62
+   },
+   "tsuji_control_6h": {
+    "agent": "none",
+    "value": 87.93,
+    "unit": "ug/L",
+    "quantity": "free LPS",
+    "assay": "Limulus Endospecy",
+    "organism": "P. aeruginosa SR24",
+    "times_h": [
+     6.0
+    ],
+    "operator": "point",
+    "concentration_xMIC": 0.0,
+    "delta_log10_kill": 2.59
    }
   },
   "matched_CAZ_MERO_ELISA_ratio": 4.769230769230769,
+  "kill_matched_ratios": [
+   {
+    "numerator": "tsuji_ceftazidime_1x",
+    "denominator": "tsuji_doripenem_1x",
+    "comparator": "doripenem",
+    "concentration_xMIC": 1.0,
+    "kill_difference_log10": 0.04,
+    "lps_ratio": 3.16
+   },
+   {
+    "numerator": "tsuji_ceftazidime_0.1x",
+    "denominator": "tsuji_imipenem_0.1x",
+    "comparator": "imipenem",
+    "concentration_xMIC": 0.1,
+    "kill_difference_log10": 0.01,
+    "lps_ratio": 11.6
+   },
+   {
+    "numerator": "tsuji_ceftazidime_1x",
+    "denominator": "tsuji_meropenem_1x",
+    "comparator": "meropenem",
+    "concentration_xMIC": 1.0,
+    "kill_difference_log10": 0.48,
+    "lps_ratio": 6.55
+   }
+  ],
+  "kill_matched_note": "Ceftazidime against a carbapenem at EQUAL achieved killing, the only source reporting viable counts with the LPS endpoint. These bracket the assumed 3.5-7 range but are three pairs from one experiment at one timepoint with no replicate dispersion; the range is NOT refitted to them.",
+  "untreated_control_ug_L": 87.93,
   "coefficient_status": "All fg/CFU entries are nominal scale conventions, not measurements"
  },
  "analysis2_dual_pathway": {
@@ -2259,7 +2378,7 @@
   "note": "A competent host needs less drug to hold the organism static, so the immunocompetent thresholds are the lower pair. Craig reports 30-40% fT>MIC for cephalosporins in neutropenic animals; the comparable figures here are the immune-free ones."
  },
  "provenance": {
-  "git_head": "5153480c83985a0d22899929c1b547489b258dd5",
+  "git_head": "854101dcd00ea18381a35ef50f5404db849370fa",
   "git_dirty": true,
   "python": "3.12.4",
   "numpy": "2.4.6",

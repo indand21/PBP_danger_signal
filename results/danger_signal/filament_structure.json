@@ -1,0 +1,204 @@
+{
+ "status": "structural sensitivity; no default changed",
+ "question": "The filament term is assigned to PBP-3 agents alone. Tsuji 2003 shows carbapenems filament and release heavily below the MIC too. What would relaxing the exclusivity cost?",
+ "fraction_meaning": "Fraction of the ceftazidime filament coefficient (1.5 fg/CFU/h) given to meropenem. Not an estimate: no source in this study's evidence base identifies it.",
+ "scenarios": {
+  "mero_filament_0x_caz": {
+   "meropenem_Y_filament_fg_per_CFU_per_h": 0.0,
+   "matched_exposure": [
+    {
+     "target_fT_pct": 40.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.10812875992119375,
+     "cost_ratio_at_nominal_yield": 6.5117539300748195
+    },
+    {
+     "target_fT_pct": 60.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.032616023275946926,
+     "cost_ratio_at_nominal_yield": 5.302119503926746
+    },
+    {
+     "target_fT_pct": 80.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.01739305378906897,
+     "cost_ratio_at_nominal_yield": 5.119734550925033
+    },
+    {
+     "target_fT_pct": 95.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.014827507877493762,
+     "cost_ratio_at_nominal_yield": 5.073140751671765
+    }
+   ],
+   "sub_mic": {
+    "0.5xMIC": {
+     "ceftazidime_AUC_DS": 1136.5142976504765,
+     "meropenem_AUC_DS": 32.2737236333259,
+     "cost_ratio": 35.21484879039213
+    },
+    "1.0xMIC": {
+     "ceftazidime_AUC_DS": 498.7212748351802,
+     "meropenem_AUC_DS": 76.46215485765968,
+     "cost_ratio": 6.522459061788006
+    }
+   }
+  },
+  "mero_filament_0.25x_caz": {
+   "meropenem_Y_filament_fg_per_CFU_per_h": 0.375,
+   "matched_exposure": [
+    {
+     "target_fT_pct": 40.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.10812875992119375,
+     "cost_ratio_at_nominal_yield": 5.752862128754484
+    },
+    {
+     "target_fT_pct": 60.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.032616023275946926,
+     "cost_ratio_at_nominal_yield": 5.1931244532419845
+    },
+    {
+     "target_fT_pct": 80.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.01739305378906897,
+     "cost_ratio_at_nominal_yield": 5.0958612307643065
+    },
+    {
+     "target_fT_pct": 95.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.014827507877493762,
+     "cost_ratio_at_nominal_yield": 5.064084769994191
+    }
+   ],
+   "sub_mic": {
+    "0.5xMIC": {
+     "ceftazidime_AUC_DS": 1136.5142976504765,
+     "meropenem_AUC_DS": 276.0601336830673,
+     "cost_ratio": 4.116908452110145
+    },
+    "1.0xMIC": {
+     "ceftazidime_AUC_DS": 498.7212748351802,
+     "meropenem_AUC_DS": 105.56478392012433,
+     "cost_ratio": 4.7243148360208655
+    }
+   }
+  },
+  "mero_filament_0.5x_caz": {
+   "meropenem_Y_filament_fg_per_CFU_per_h": 0.75,
+   "matched_exposure": [
+    {
+     "target_fT_pct": 40.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.10812875992119375,
+     "cost_ratio_at_nominal_yield": 5.152394555098892
+    },
+    {
+     "target_fT_pct": 60.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.032616023275946926,
+     "cost_ratio_at_nominal_yield": 5.088528381913831
+    },
+    {
+     "target_fT_pct": 80.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.01739305378906897,
+     "cost_ratio_at_nominal_yield": 5.072203289095826
+    },
+    {
+     "target_fT_pct": 95.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.014827507877493762,
+     "cost_ratio_at_nominal_yield": 5.055069260716723
+    }
+   ],
+   "sub_mic": {
+    "0.5xMIC": {
+     "ceftazidime_AUC_DS": 1136.5142976504765,
+     "meropenem_AUC_DS": 519.8465633935873,
+     "cost_ratio": 2.186249516071142
+    },
+    "1.0xMIC": {
+     "ceftazidime_AUC_DS": 498.7212748351802,
+     "meropenem_AUC_DS": 134.66741359085597,
+     "cost_ratio": 3.7033552626947
+    }
+   }
+  },
+  "mero_filament_1x_caz": {
+   "meropenem_Y_filament_fg_per_CFU_per_h": 1.5,
+   "matched_exposure": [
+    {
+     "target_fT_pct": 40.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.10812875992119375,
+     "cost_ratio_at_nominal_yield": 4.262572063547392
+    },
+    {
+     "target_fT_pct": 60.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.032616023275946926,
+     "cost_ratio_at_nominal_yield": 4.8914884309349835
+    },
+    {
+     "target_fT_pct": 80.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.01739305378906897,
+     "cost_ratio_at_nominal_yield": 5.025550870600172
+    },
+    {
+     "target_fT_pct": 95.0,
+     "evaluated": true,
+     "kill_difference_log10": 0.014827507877493762,
+     "cost_ratio_at_nominal_yield": 5.037127502334176
+    }
+   ],
+   "sub_mic": {
+    "0.5xMIC": {
+     "ceftazidime_AUC_DS": 1136.5142976504765,
+     "meropenem_AUC_DS": 1007.4194686210471,
+     "cost_ratio": 1.1281440681369141
+    },
+    "1.0xMIC": {
+     "ceftazidime_AUC_DS": 498.7212748351802,
+     "meropenem_AUC_DS": 192.87267201434088,
+     "cost_ratio": 2.585753956880414
+    }
+   }
+  }
+ },
+ "summary": {
+  "matched_exposure_cost_ratio_range_at_f0": [
+   5.073140751671765,
+   6.5117539300748195
+  ],
+  "matched_exposure_cost_ratio_range_at_f1": [
+   4.262572063547392,
+   5.037127502334176
+  ],
+  "worst_case_relative_change_matched": 0.3454033875788032,
+  "sub_mic_cost_ratio_0.5xMIC": {
+   "f0": 35.21484879039213,
+   "f1": 1.1281440681369141
+  }
+ },
+ "interpretation": "This assumption is load-bearing, more so than expected. A matched %fT>MIC target of 40% leaves 60% of each interval BELOW the MIC, so the filament window is open for much of the matched-exposure comparison too, not only in failing arms. Giving meropenem the full ceftazidime coefficient narrows the matched-exposure cost ratio by up to 35% at the nominal yield, and collapses the 0.5x MIC ratio from about 35 to about 1.1. The ORDERING survives every fraction tested and the matched-exposure ratio stays several-fold, so no conclusion reverses; but the claim that the kill-independent pathway is PBP-3-exclusive is doing real work in the reported magnitudes, and the evidence for exclusivity is weak. The sub-MIC regime is where this is decided.",
+ "not_done": "Meropenem's filament coefficient is not estimated and no default is changed. Doing so needs an experiment measuring release and viable counts together across sub-inhibitory exposures for both agents, which is prediction 1 of the manuscript extended below the MIC.",
+ "provenance": {
+  "git_head": "854101dcd00ea18381a35ef50f5404db849370fa",
+  "git_dirty": true,
+  "python": "3.12.4",
+  "numpy": "2.4.6",
+  "scipy": "1.15.3",
+  "numpy_scipy_supported": true,
+  "platform": "win32",
+  "final_yields_fg_per_CFU": {
+   "piperacillin": 5.15,
+   "ceftazidime": 4.93,
+   "isepamicin": 0.28,
+   "imipenem": 0.986,
+   "meropenem": 0.986
+  }
+ }
+}

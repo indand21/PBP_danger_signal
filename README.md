@@ -211,7 +211,7 @@ this repository.
 python -m pytest -q
 ```
 
-556 tests pass, covering the pharmacokinetic conventions and the conservation
+558 tests pass, covering the pharmacokinetic conventions and the conservation
 of drug mass, the bacterial dynamics, mass conservation across the persister
 and small-colony-variant switches, the danger-signal layer and its
 mass-balance identity, the immune layer's units, fixed points and
@@ -276,6 +276,25 @@ ordering of four agents, which is what this model takes from it. Nothing
 computed here is an absolute magnitude, so the scale cancels; the findings
 are recorded against the dataset in `data/danger_signal/registry.json`.
 
+One source reports viable counts beside the LPS endpoint, which is what lets
+the agent contrast be read at EQUAL ACHIEVED KILLING rather than at equal MIC
+multiple. Three such pairs give ceftazidime:carbapenem ratios of 3.2, 11.6 and
+6.5 at kill differences of 0.04, 0.01 and 0.48 log10, bracketing the assumed
+3.5-7 range. The range is not refitted to them. `kill_matched_ratio` in
+`src/analysis/yield_observations.py` refuses to form such a ratio unless both
+observations carry counts and their killing agrees within a tolerance.
+
+The same source undercuts a structural assumption of the model. The
+kill-independent release term is given to the PBP-3 agent alone, but
+carbapenems filament below the MIC and release heavily there: 10x to 0.1x MIC
+raises free LPS 88-fold for doripenem and 48-fold for meropenem, against
+5.7-fold for ceftazidime. `scripts/ds_filament_structure.py` sweeps a
+meropenem filament coefficient from zero to the full ceftazidime value: the
+matched-exposure cost ratio moves from 5.07-6.51 to 4.26-5.04 and the 0.5x MIC
+ratio collapses from 35.2 to 1.13, while the ordering survives throughout. No
+coefficient is estimated and no default changes. Below the MIC this assumption
+is load-bearing, and the evidence for it is weak.
+
 ## PD reassessment on 14 October 2026
 
 The thigh stasis target remains unmet: the historical diagnostic is 37.1%
@@ -302,6 +321,7 @@ From the pinned environment, run:
 python scripts/ds_joint_broth_refit.py
 python scripts/ds_pd_context.py
 python scripts/ds_joint_robustness.py
+python scripts/ds_filament_structure.py
 python scripts/ds_validation_targets.py
 python scripts/ds_pd_review_figures.py
 ```

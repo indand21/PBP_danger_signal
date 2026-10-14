@@ -36,10 +36,11 @@ def _load():
 
 def fig1_yield_table(d):
     """Observed release endpoints, separated by assay and sampling operator."""
-    obs = d['analysis1_yield_table']['observations']
-    fig, (ax, table_ax) = plt.subplots(1,2,figsize=(8.4,3.4),
-                                       gridspec_kw={'width_ratios':[1,1.6]},
-                                       constrained_layout=True)
+    a1 = d['analysis1_yield_table']
+    obs = a1['observations']
+    fig, (ax, kill_ax, table_ax) = plt.subplots(
+        1, 3, figsize=(11.6, 3.4),
+        gridspec_kw={'width_ratios': [1, 1.15, 1.5]}, constrained_layout=True)
     agents = ['ceftazidime','meropenem','imipenem']
     values = [obs['trautmann_'+a]['value'] for a in agents]
     ax.barh(agents,values,color=[CAZ_C,MERO_C,'#5b8db8'])
@@ -51,8 +52,29 @@ def fig1_yield_table(d):
     ax.text(.97,.04,'CAZ:MERO = 4.77; CAZ:IMI = 6.89\nEndpoint ratios; not per-cell yields',
             transform=ax.transAxes,fontsize=7,ha='right',va='bottom',
             bbox={'facecolor':'white','edgecolor':'none','alpha':.95})
+
+    # Panel B: the only comparison available at EQUAL achieved killing.
+    pairs = a1['kill_matched_ratios']
+    labels = [f"vs {p['comparator'][:4].upper()}\n{p['concentration_xMIC']:g}×MIC\n"
+              f"Δkill {p['kill_difference_log10']:.2f}" for p in pairs]
+    ratios = [p['lps_ratio'] for p in pairs]
+    xs = np.arange(len(pairs))
+    kill_ax.bar(xs, ratios, color=CAZ_C, width=.6)
+    kill_ax.axhspan(3.5, 7.0, color='#7f8c8d', alpha=.18, zorder=0)
+    kill_ax.text(-.42, 5.25, 'assumed\n3.5–7× range', fontsize=7,
+                 ha='left', va='center', color='#5d6d7e')
+    kill_ax.set_xticks(xs); kill_ax.set_xticklabels(labels, fontsize=7)
+    kill_ax.set_ylabel('Free LPS ratio, CAZ : carbapenem')
+    kill_ax.set_ylim(0, max(ratios)*1.30)
+    kill_ax.set_title('B  At EQUAL achieved killing\nP. aeruginosa SR24, 6 h; Limulus assay',fontsize=9)
+    for x, r in zip(xs, ratios):
+        kill_ax.text(x, r+max(ratios)*.03, f'{r:.1f}×', ha='center', fontsize=8)
+    kill_ax.text(.5, -.30, 'Three pairs, one experiment; range not refitted to them',
+                 transform=kill_ax.transAxes, fontsize=7, ha='center', va='top',
+                 color='#5d6d7e')
+
     table_ax.axis('off')
-    table_ax.set_title('B  Different sampling operators\nP. aeruginosa PAO1, 1×MIC; Limulus assay',fontsize=9)
+    table_ax.set_title('C  Different sampling operators\nP. aeruginosa PAO1, 1×MIC; Limulus assay',fontsize=9)
     cells = [['ceftazidime','493','4 h point'],
              ['piperacillin','515','4 h point'],
              ['isepamicin','28 ± 2','mean of 2, 4, 6 h']]
