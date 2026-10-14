@@ -15,9 +15,20 @@
     "For each agent and each concentration (1/4x, 1x MIC and any others shown): free LPS (ng/mL) vs time over 0-8 h.",
     "The MATCHED viable count (log10 CFU/mL) vs time for the same condition. Without the matched count the yield per CFU killed is not identifiable -- this pairing is the whole reason this paper is priority 1.",
     "The pharmacokinetic autosimulation arm: free LPS and viable count vs time over 0-8 h for each agent, plus the simulated concentration-time profile if given.",
-    "CRITICAL: the starting inoculum (CFU/mL) and the assay volume, from the Methods. Every per-CFU yield in the study scales directly off this number; the pilot currently assumes 1e8 CFU/mL.",
-    "The LPS assay used and its standard (Limulus/LAL vs ELISA; EU/mL vs ng/mL conversion, if stated)."
+    "RESOLVED 2026-10-14, see full_text below: the starting inoculum is 1e6 CFU/mL, NOT the 1e8 this study assumed. Every per-CFU yield scales off it.",
+    "The LPS assay used and its standard (Limulus/LAL vs ELISA; EU/mL vs ng/mL conversion, if stated). RESOLVED: Limulus colour KY test (Wako), each sample measured twice and averaged."
    ],
+   "full_text": {
+    "obtained": "2026-10-14 from J-Stage, open access (jiyu/free), DOI 10.11553/antibiotics1968b.52.41. PDF kept in docs/article_pdfs/52_41.pdf (gitignored).",
+    "inoculum_cfu_per_mL": 1000000.0,
+    "inoculum_quote": "Methods II.4: cells grown 18 h on SDA, suspended in saline, added to 10 mL of STB to 1e6 cfu/mL, shaken at 37 C; drug added at 1/4, 1 and 4 MIC AT THE START of culture; 1 mL sampled at 2, 4 and 6 h. Methods II.5 (simulation): inoculated into 100 mL STB to 1e6 cfu/mL, pre-cultured 3 h, then the simulated plasma profile was applied.",
+    "mic_ug_per_mL": {"isepamicin": 3.13, "gentamicin": 3.13, "piperacillin": 12.5, "ceftazidime": 3.13, "imipenem": 12.5},
+    "viable_counts_fig2_log10": "All arms start at 6.0, confirming the 1e6 inoculum. Ceftazidime 1x MIC falls to about 3.7 by 4 h; the untreated control rises to about 7.9 by 6 h. No treated arm exceeds about 6.4 at any time.",
+    "untreated_control_free_LPS_ng_mL": {"4h": 340.0, "6h": 6000.0, "read_from": "figure 3, log axis, approximate"},
+    "consequence": "The absolute anchors CANNOT be converted into a per-CFU mass yield from this experiment. Dividing 493 ng/mL by the 1e6 CFU/mL actually present gives about 493 fg/CFU, which exceeds the total LPS content of a single cell (order 10-100 fg); and the untreated control already sits at about 340 ng/mL at 4 h, so most of the 493 is not drug-attributable. The 1e8 denominator this study used is not supported by the paper and happened to make the number look physiological. Only the ORDERING and the agent RATIO are usable from this source, which is how the study uses it.",
+    "corroboration": "At 6 h the untreated control (about 6000 ng/mL) released MORE free LPS than every treated arm including the sub-MIC ones. This is independent support for the study's no-within-agent-trade-off result, from the same figure.",
+    "isepamicin_anchor_estimand": "The 28 +/- 2 ng/mL figure is the MEAN of the 2, 4 and 6 h values at 1x MIC (Japanese abstract: 1 MIC ni okeru 2, 4, 6 jikan go no LPS ryou no heikin chi), not a 6 h reading. The piperacillin and ceftazidime anchors ARE single 4 h readings."
+   },
    "anchors": {
     "free_LPS_ng_mL_at_1xMIC": {"isepamicin_6h": 28.0, "isepamicin_6h_sd": 2.0,
                                 "piperacillin_4h": 515.0, "ceftazidime_4h": 493.0},

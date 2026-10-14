@@ -149,7 +149,11 @@ python scripts/ds_multiarm_downstream.py       # what that refit would do downst
 
 `ds_validation_targets.py` scores the digitized curves against the numeric
 acceptance targets recorded in `data/external_validation/registry.json`, which
-were previously computed by nothing. **One of those targets is still not
+were previously computed by nothing. Both curves it scores are registered as
+**calibration**, not validation: the adopted parameters were estimated from
+them, so meeting a target there measures fit, not prediction, and a test
+enforces that the dataset a fit was estimated from cannot be registered as
+held out. **One of those targets is still not
 met** and the script says so rather than failing quietly: the neutropenic-thigh
 stasis threshold, which the model places at 37.1% fT>MIC against a published
 17.3%.
@@ -207,7 +211,7 @@ this repository.
 python -m pytest -q
 ```
 
-545 tests pass, covering the pharmacokinetic conventions and the conservation
+546 tests pass, covering the pharmacokinetic conventions and the conservation
 of drug mass, the bacterial dynamics, mass conservation across the persister
 and small-colony-variant switches, the danger-signal layer and its
 mass-balance identity, the immune layer's units, fixed points and
@@ -260,6 +264,17 @@ not a measured confidence interval, and is treated as one throughout. See the
 `final_yields_fg_per_CFU` entry in any results file's `provenance` block for
 the configuration in force, and `src/analysis/danger_signal.py` for how it was
 set.
+
+Their **absolute** values are a scale convention rather than a measurement,
+and the full text of the source that anchors them says why. It inoculates at
+1e6 CFU/mL, not the 1e8 the conversion assumed; over the density actually
+present its 493 ng/mL works out at some hundreds of fg per CFU, which is more
+lipopolysaccharide than one cell contains, and its untreated control already
+carries about two thirds of that concentration at the same timepoint. So that
+experiment does not identify a per-CFU mass at all. It does identify the
+ordering of four agents, which is what this model takes from it. Nothing
+computed here is an absolute magnitude, so the scale cancels; the findings
+are recorded against the dataset in `data/danger_signal/registry.json`.
 
 ## Licence
 

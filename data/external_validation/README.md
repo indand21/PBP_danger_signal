@@ -22,6 +22,12 @@ Every dataset declares a `role`:
 boundary honest: if you ever tune a constant to improve fit on a dataset, change
 its role to `calibration`.
 
+The meropenem plasma curve is also calibration: it informed the adopted CL
+and central volume through `scripts/ds_pk_refit.py`. Its RMSE, peak and AUC
+targets assess fit to that curve, not independent prediction. Ceftazidime has
+no digitized plasma curve here; its volume is anchored to a published half-life,
+so it does not have the same evidential basis as meropenem.
+
 The meropenem time-kill and neutropenic-thigh sources informed the adopted
 bacterial parameters and are registered as `calibration`. Figure 2A has also
 been re-read across the readable concentration arms for an exploratory fit:

@@ -8,6 +8,8 @@ digitized data the user supplies, and is asserted only loosely here.
 """
 import numpy as np
 import pytest
+import json
+from pathlib import Path
 
 from src.analysis.external_validation import (
     DigitizedDataset,
@@ -98,6 +100,15 @@ def test_registry_loads_and_has_roles():
     assert len(datasets) >= 1
     roles = {d.role for d in datasets}
     assert roles <= {"calibration", "validation"}
+
+
+def test_adopted_pk_fit_source_is_not_held_out():
+    """The curve used to estimate adopted PK cannot count as validation."""
+    root = Path(__file__).resolve().parents[1]
+    fit = json.loads((root / "results/danger_signal/pk_refit.json").read_text(encoding="utf-8"))
+    by_id = {ds.id: ds for ds in load_registry()}
+    fitted_source = by_id[fit["meropenem"]["dataset"]]
+    assert fitted_source.role == "calibration"
 
 
 def test_no_data_dataset_reports_no_data():
