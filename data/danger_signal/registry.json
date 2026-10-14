@@ -127,6 +127,134 @@
     ]
    },
    "notes": "SPECIES-SCALE CAVEAT, and it is the important one: the paper itself reports that baboons need ~1e4x the human LPS dose. The Hill SHAPE (slope, span, kinetics) may be taken from this paper, but DS50 must NOT be taken from it on an absolute human scale. The pilot anchors DS50 on human experimental endotoxemia instead (4 ng/kg IV ~= 93 pg/mL plasma, a clear but submaximal response) and treats 30-1000 pg/mL as the uncertainty range. A human whole-blood or monocyte LPS-TNF concentration-response is the better absolute anchor and should be added as a separate Layer-2 dataset."
+  },
+  {
+   "id": "tsuji2003_sr24_release",
+   "kind": "ds_release",
+   "role": "reference",
+   "organism": "P. aeruginosa SR24 (blood culture isolate)",
+   "agents": [
+    "doripenem",
+    "imipenem",
+    "meropenem",
+    "ceftazidime"
+   ],
+   "source": "Tsuji M, Matsuda H, Miwa H, Miyazaki S. Antimicrobial-induced release of endotoxin from Pseudomonas aeruginosa: comparison of in vitro and animal models. J Antimicrob Chemother 2003;51:353-9. DOI 10.1093/jac/dkg042. Full text read 2026-10-14 (docs/article_pdfs/dkg042.pdf, gitignored).",
+   "why": "The ONLY source found that reports viable counts and free LPS together across several concentrations for CAZ and three carbapenems, which is what lets the agent contrast be read at MATCHED ACHIEVED KILLING rather than at matched MIC multiple. It is also the strongest published challenge to this study's central assumption, because its human-plasma simulation arm shows the contrast collapsing.",
+   "assay": "LPS-specific chromogenic Limulus (Endospecy), 0.2 um filtered, perchloric acid treated; Eagle's MEM + 20% heat-inactivated FCS",
+   "mic_mg_L": {
+    "doripenem": 0.2,
+    "imipenem": 1.56,
+    "meropenem": 0.2,
+    "ceftazidime": 1.56
+   },
+   "constant_concentration_6h": {
+    "_units": "delta_log10_cfu_per_mL vs inoculum, LPS ug/L",
+    "control": [
+     2.59,
+     87.93
+    ],
+    "doripenem": {
+     "10x": [
+      -4.44,
+      7.15
+     ],
+     "1x": [
+      -0.91,
+      79.51
+     ],
+     "0.1x": [
+      1.75,
+      630.3
+     ]
+    },
+    "imipenem": {
+     "10x": [
+      -3.21,
+      3.37
+     ],
+     "1x": [
+      -2.65,
+      5.37
+     ],
+     "0.1x": [
+      0.62,
+      63.48
+     ]
+    },
+    "meropenem": {
+     "10x": [
+      -2.95,
+      8.7
+     ],
+     "1x": [
+      -0.39,
+      38.28
+     ],
+     "0.1x": [
+      2.21,
+      413.8
+     ]
+    },
+    "ceftazidime": {
+     "10x": [
+      -2.28,
+      129.4
+     ],
+     "1x": [
+      -0.87,
+      250.9
+     ],
+     "0.1x": [
+      0.63,
+      736.6
+     ]
+    }
+   },
+   "matched_kill_pairs": [
+    {
+     "pair": "CAZ 1x vs doripenem 1x",
+     "kill_difference_log10": 0.04,
+     "lps_ratio": 3.16
+    },
+    {
+     "pair": "CAZ 0.1x vs imipenem 0.1x",
+     "kill_difference_log10": 0.01,
+     "lps_ratio": 11.6
+    },
+    {
+     "pair": "CAZ 1x vs meropenem 1x",
+     "kill_difference_log10": 0.48,
+     "lps_ratio": 6.55
+    }
+   ],
+   "matched_kill_note": "These bracket the assumed 3.5-7 range in the right organism with measured MICs. NOT adopted: three pairs from one experiment at one timepoint, with no replicate dispersion, would be a worse basis for a claimed interval than an explicitly assumed scenario range.",
+   "simulation_arm": {
+    "doses": "doripenem 250 mg/30 min, imipenem/cilastatin and meropenem 500 mg/30 min, ceftazidime 1 g/60 min, simulated human plasma",
+    "total_free_LPS_1_to_8h_ug_L": {
+     "carbapenems_range": [
+      161.7,
+      270.4
+     ],
+     "ceftazidime": 287.9
+    },
+    "untreated_control_8h_ug_L": 274.3,
+    "killing": "carbapenems >2 log10 reduction by 2 h; ceftazidime 1.2 log10 at 2 h, converging after 4 h",
+    "caveats": [
+     "standard doses, NOT matched exposure",
+     "killing unequal early, which compresses kill-attributable release for CAZ",
+     "control is inside the treated range, so no attributable component is separated from background"
+    ]
+   },
+   "conflict": "Directly conflicts with yamaguchi1999_pao1_release, whose own human-plasma simulation arm preserved ISP < IPM < CAZ < PIPC over 8 h in the same species. Neither matched exposure; neither reported an attributable quantity. Resolving this is prediction 1 of the manuscript.",
+   "sub_mic_release_fold_0.1x_over_10x": {
+    "doripenem": 88.2,
+    "meropenem": 47.6,
+    "imipenem": 18.8,
+    "ceftazidime": 5.7
+   },
+   "sub_mic_note": "Carbapenems filament at 0.1x MIC in this study and release heavily there, so the kill-independent release term is not a PBP-3-exclusive property as Y_filament currently assumes. Recorded, not yet modelled.",
+   "commercial_interest": "Three of four authors were at Shionogi, which developed doripenem. Stated for the reader; the viable-count and LPS pairs are used here, not the authors' conclusion."
   }
  ],
  "_schema": {
