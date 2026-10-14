@@ -1,4 +1,4 @@
-"""Phase 4 figures for the danger-signal study.
+"""Phase 4 figures for the endotoxin-release study.
 
 Reads results/danger_signal/phase4_analyses.json (so figures and numbers cannot
 drift) and writes docs/danger_signal_study/figures/.
@@ -93,7 +93,7 @@ def fig1_yield_table(d):
 
 
 def fig2_matched_exposure(d):
-    """Matched %fT>MIC: near-equal killing, divergent inflammatory cost."""
+    """Matched %fT>MIC: near-equal killing, divergent release exposure."""
     # Targets that no dose inside the search bracket can reach are recorded
     # with evaluated=False rather than dropped; they have no arms to plot.
     rows = [r for r in d["analysis3_matched_exposure"]["rows"]
@@ -111,7 +111,7 @@ def fig2_matched_exposure(d):
     a1.axhline(0.0, color="k", lw=0.6, ls=":")
     a1.set_xlabel("matched exposure target (% fT>MIC)")
     a1.set_ylabel("48 h net change (log$_{10}$ CFU)")
-    a1.set_title("Killing is nearly equal at matched exposure", fontsize=8.5)
+    a1.set_title("Net change is nearly equal at matched exposure", fontsize=8.5)
     a1.legend(fontsize=7.5, loc="upper right", frameon=True, framealpha=1.0,
               edgecolor="none")
 
@@ -121,8 +121,8 @@ def fig2_matched_exposure(d):
     a2.axhline(1.0, color="k", lw=0.8, ls=":")
     a2.set_yscale("log")
     a2.set_xlabel("matched exposure target (% fT>MIC)")
-    a2.set_ylabel("danger-signal cost ratio\n(ceftazidime / meropenem)")
-    a2.set_title("Inflammatory cost is not", fontsize=8.5)
+    a2.set_ylabel("release exposure ratio\n(ceftazidime / meropenem)")
+    a2.set_title("Release exposure is not", fontsize=8.5)
     a2.set_ylim(0.6, 30)
     a2.text(0.03, 0.97,
             "shaded band = assumed 3.5-7x yield range;\n"
@@ -132,14 +132,14 @@ def fig2_matched_exposure(d):
 
 
 def fig3_cost_index(d):
-    """Existing PK/PD indices do not rank inflammatory cost across agents."""
+    """Existing PK/PD indices do not rank release exposure across agents."""
     a4 = d["analysis4_cost_index"]
     lib = a4["library"]
     order = ["yield_weighted_kill", "cum_killed_cfu_per_mL",
              "net_log10_change", "fCmax_MIC", "fT_pct", "fAUC_MIC"]
     nice = {"yield_weighted_kill": "yield x killed biomass (proposed)",
             "cum_killed_cfu_per_mL": "killed biomass (agent-blind)",
-            "net_log10_change": "net log$_{10}$ kill",
+            "net_log10_change": "net log$_{10}$ change (signed)",
             "fCmax_MIC": "fC$_{max}$/MIC", "fT_pct": "% fT>MIC",
             "fAUC_MIC": "fAUC/MIC"}
     rho = [a4["candidates"][k]["spearman_rho"] for k in order]
@@ -155,7 +155,7 @@ def fig3_cost_index(d):
     a1.invert_yaxis()
     a1.axvline(0.0, color="k", lw=0.7)
     a1.set_xlim(-1.05, 1.05)
-    a1.set_xlabel("Spearman $\\rho$ with danger-signal cost (across agents)")
+    a1.set_xlabel("Spearman $\\rho$ with release exposure (across agents)")
     a1.set_title(f"Ranking performance, {a4['n_regimens']} regimens",
                  fontsize=8.5)
 
@@ -166,8 +166,8 @@ def fig3_cost_index(d):
                    s=18, c=c, marker=m, alpha=0.8, label=f"{agent}")
     a2.set_yscale("log")
     a2.set_xlabel("% fT>MIC")
-    a2.set_ylabel("inflammatory cost\n(attributable AUC$_{DS}$, pg·h/mL)")
-    a2.set_title("Same exposure, two different costs", fontsize=8.5)
+    a2.set_ylabel("modelled release exposure\n(AUC$_{DS}$, uncalibrated units)")
+    a2.set_title("Same exposure, two different release burdens", fontsize=8.5)
     # Limits derived from the data, with headroom: a hard-coded upper bound
     # silently clipped the highest-cost regimen in an earlier version.
     # The extra room below the lowest point is for the annotation, which would
@@ -180,8 +180,9 @@ def fig3_cost_index(d):
     _r = [x["ratio_AUC_DS"] for e in d["analysis3_matched_exposure"]["rows"]
           if e.get("evaluated", True) for x in e["cost_ratio_range"]]
     a2.text(0.03, 0.04,
-            "at matched %fT>MIC the two agents differ by\n"
-            f"several-fold in cost (range {min(_r):.1f}-{max(_r):.1f}x)",
+            "Computed at ONE nominal yield configuration.\n"
+            f"Table 1's wider range ({min(_r):.1f}-{max(_r):.1f}x) additionally\n"
+            "propagates the assumed 3.5-7x yield range.",
             transform=a2.transAxes, fontsize=7, ha="left", va="bottom",
             color="#555555")
     _save(fig, "fig3_cost_index")
@@ -209,8 +210,8 @@ def fig4_exposure_response(d):
         a2.plot(x, kill, "o-", color=col, ms=4)
     a1.set_yscale("log")
     a1.set_xlabel("exposure target (% fT>MIC)")
-    a1.set_ylabel("attributable AUC$_{DS}$ (pg·h/mL)")
-    a1.set_title("Cost falls with exposure, then flattens", fontsize=8.5)
+    a1.set_ylabel("modelled release exposure\n(AUC$_{DS}$, uncalibrated units)")
+    a1.set_title("Release falls with exposure, then flattens", fontsize=8.5)
     a1.set_ylim(1, 1e5)
     a1.legend(frameon=False, fontsize=6.5, ncol=2, loc="upper right")
     # Worded to match the manuscript: rescaling potency and re-solving the
@@ -226,7 +227,7 @@ def fig4_exposure_response(d):
     a2.set_title("Stasis boundary (dotted)", fontsize=8.5)
     cov = a5.get("coverage", {}).get("populated_arms", {})
     fig.text(0.5, -0.04,
-             "No evaluated exposure increase raised inflammatory cost "
+             "No evaluated exposure increase raised release exposure "
              f"(ceftazidime arms shown; {cov.get('ceftazidime', '?')} of "
              f"{a5.get('coverage', {}).get('n_possible_arms_per_agent', '?')} "
              "populated - missing points lie outside the dose bracket).",
