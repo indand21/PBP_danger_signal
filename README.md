@@ -1,14 +1,29 @@
 # PBP_danger_signal
 
-A within-host quantitative systems pharmacology model of the danger signal
-(free endotoxin and other pathogen-associated molecular patterns) liberated
-during antibiotic killing of Gram-negative bacteria, with an agent-specific
-release yield tied to penicillin-binding protein (PBP) specificity.
+A within-host quantitative systems pharmacology model of the endotoxin
+liberated during antibiotic killing of Gram-negative bacteria, used to ask
+what follows once two agents are compared at *matched* exposure rather than at
+fixed multiples of the MIC. The agent difference in release is an **assumed**
+scenario range, not a measured one, and the repository is arranged so that a
+reader can see how much of every result rests on it.
+
+The directory is named for the hypothesis the project started from - that
+release tracks penicillin-binding protein specificity - and the name is kept
+so existing links and the stored `results/danger_signal/` paths continue to
+work. The accompanying manuscript no longer asserts that: PBP specificity is
+the candidate axis consistent with the matched observations, not an
+established cause, and the reported endpoint is modelled endotoxin-release
+exposure above a fixed pre-treatment level, in uncalibrated units. It is not
+"danger signal", which names a broader biological category this model does not
+represent, and it is not "inflammatory cost", which the cytokine layer's
+failure to transfer leaves unsupported.
 
 This repository holds the model source, the digitized input data with their
 provenance, the analysis pipeline, and the stored results from which every
-reported number and figure is generated. It accompanies a manuscript in
-preparation; the manuscript itself is not part of this repository.
+reported number and figure is generated. It accompanies a manuscript,
+*Agent-specific endotoxin release at matched antibiotic exposure: a
+conditional within-host modelling study*, which is not part of this
+repository.
 
 ## What the model contains
 
@@ -16,16 +31,24 @@ preparation; the manuscript itself is not part of this repository.
 |---|---|
 | Pharmacokinetic | two-compartment code path, one-compartment as used: the simulation reads clearance, central volume and the penetration ratio only, so the peripheral parameters never enter |
 | Bacterial | replicating, persister and small-colony-variant pools with immune effectors and saturating concentration-dependent killing |
-| Danger signal | release proportional to drug-induced killing with an agent-specific per-CFU yield, plus a kill-independent term confined to a smooth sub-MIC window; first-order plasma clearance |
+| Endotoxin release | release proportional to drug-induced killing with an agent-specific per-CFU yield, plus a kill-independent term confined to a smooth sub-MIC window; first-order plasma clearance |
 | Cytokine | interleukin-6 and tumour necrosis factor downstream of receptor occupancy. Calibrated, but **computed and not reported** - it does not transfer from healthy volunteers to septic patients |
 | Injury | used only to test whether a ranking is invariant across seven monotone maps; no injury magnitude is ever reported |
 
-No parameter in the pharmacokinetic or bacterial layer is tuned to a
-danger-signal result. Both were fixed before the danger-signal layer was
-built, and while the bacterial layer was later refitted (see below), its
-objective is a root-mean-square error in log10 CFU and contains no
-danger-signal quantity. Their calibration status is not uniform, though, and
-an earlier version of this file overstated it:
+**What the headline numbers rest on.** With equal lysis yields and no sub-MIC
+term the agent ratio falls to 1.001-1.040, and the ceftazidime:meropenem yield
+ratio at which release exposure is equal is 0.81-1.00. The ordering therefore
+survives for any true ratio above about one, while the magnitude is the
+assumed 3.5-7-fold range propagating through the model. Run
+`scripts/ds_joint_robustness.py` and `scripts/ds_filament_structure.py` to
+reproduce both.
+
+No parameter in the pharmacokinetic or bacterial layer is tuned to a release
+result. Both were fixed before the release layer was built, and while the
+bacterial layer was later refitted (see below), its objective is a
+root-mean-square error in log10 CFU and contains no release quantity. Their
+calibration status is not uniform, though, and an earlier version of this file
+overstated it:
 
 - The **pharmacokinetic** layer is fitted to published concentration-time
   data where such a curve has been digitized, which is true for meropenem and
@@ -126,7 +149,7 @@ committed, so the figures can be regenerated without rerunning the pipeline.
 
 ```bash
 python scripts/ds_pilot_acceptance.py    # feasibility and acceptance screen
-python scripts/ds_phase2_build.py        # calibrate the danger-signal layer
+python scripts/ds_phase2_build.py        # calibrate the release layer
 python scripts/ds_phase3_validate.py     # held-out validation, scale invariance
 python scripts/ds_phase4_analyses.py     # yields, matched exposure, cost indices
 python scripts/ds_phase5_tolerance.py    # endotoxin-tolerance term (ships disabled)
@@ -213,12 +236,12 @@ python -m pytest -q
 
 559 tests pass, covering the pharmacokinetic conventions and the conservation
 of drug mass, the bacterial dynamics, mass conservation across the persister
-and small-colony-variant switches, the danger-signal layer and its
+and small-colony-variant switches, the release layer and its
 mass-balance identity, the immune layer's units, fixed points and
 immune-free invariant, the unbound-fraction convention, the held-out
 validation data, solver failure handling, the provenance block, the tolerance
 term, and the acceptance criteria. One test deliberately rejects a saturated
-danger-signal pathway, so the criterion that a predecessor model failed can
+release pathway, so the criterion that a predecessor model failed can
 still fail here.
 
 One further test is a deliberate strict `xfail`. It pins the non-conserving
@@ -235,7 +258,7 @@ tables, and `registry.json` records, for each source, the quantities
 extracted and the values stated in the published abstract against which the
 extraction was checked. `data/external_validation/` holds the
 concentration-time, time-kill and dose-fractionation curves used for the
-layers below the danger signal, with their own registry.
+layers below the release layer, with their own registry.
 
 No copyrighted source PDF is included in this repository, and no new
 experimental data were generated. Every dataset is published and cited in the
@@ -249,7 +272,7 @@ and the licence.
 
 ## Uncalibrated parameters
 
-Two parameters of the danger-signal layer are not identified by the available
+Two parameters of the release layer are not identified by the available
 data and are reported as such: the infection focus volume and the fraction of
 locally released signal that reaches the circulation. They move absolute
 levels by about two orders of magnitude. Results are therefore reported as
