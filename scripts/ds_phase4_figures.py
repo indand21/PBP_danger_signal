@@ -1,7 +1,10 @@
 """Phase 4 figures for the endotoxin-release study.
 
 Reads results/danger_signal/phase4_analyses.json (so figures and numbers cannot
-drift) and writes docs/danger_signal_study/figures/.
+drift) and writes docs/danger_signal_study/figures/, each figure as both a PNG
+for review and a PDF for submission. Every mark is vector in the PDF, and fonts
+are embedded as TrueType (pdf.fonttype 42) rather than matplotlib's default
+Type 3 subsets, which publishers routinely reject.
 
 Every agent comparison is drawn with the assumed 3.5-7x yield range as a band
 or a range, per the Phase 3 reporting rule: the claim is a ranking plus a range,
@@ -19,8 +22,15 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 plt.rcParams.update({"font.size": 9, "font.family": "sans-serif",
+                     "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
+                     "mathtext.fontset": "custom", "mathtext.rm": "Arial",
+                     "mathtext.it": "Arial:italic",
+                     "mathtext.bf": "Arial:bold", "mathtext.sf": "Arial",
+                     "mathtext.tt": "Arial", "mathtext.cal": "Arial:italic",
                      "axes.linewidth": 0.8, "savefig.dpi": 300,
-                     "savefig.bbox": "tight", "savefig.pad_inches": 0.05})
+                     "savefig.bbox": "tight", "savefig.pad_inches": 0.05,
+                     "pdf.fonttype": 42, "ps.fonttype": 42,
+                     "pdf.compression": 6})
 
 IN = os.path.join("results", "danger_signal", "phase4_analyses.json")
 OUT_DIR = os.path.join("docs", "danger_signal_study", "figures")
@@ -61,7 +71,7 @@ def fig1_yield_table(d):
     xs = np.arange(len(pairs))
     kill_ax.bar(xs, ratios, color=CAZ_C, width=.6)
     kill_ax.axhspan(3.5, 7.0, color='#7f8c8d', alpha=.18, zorder=0)
-    kill_ax.text(-.42, 5.25, 'assumed\n3.5–7× range', fontsize=7,
+    kill_ax.text(-.42, 5.25, 'assumed\n3.5-7× range', fontsize=7,
                  ha='left', va='center', color='#5d6d7e')
     kill_ax.set_xticks(xs); kill_ax.set_xticklabels(labels, fontsize=7)
     kill_ax.set_ylabel('Free LPS ratio, CAZ : carbapenem')
@@ -166,7 +176,7 @@ def fig3_cost_index(d):
                    s=18, c=c, marker=m, alpha=0.8, label=f"{agent}")
     a2.set_yscale("log")
     a2.set_xlabel("% fT>MIC")
-    a2.set_ylabel("modelled release exposure\n(AUC$_{DS}$, uncalibrated units)")
+    a2.set_ylabel("modeled release exposure\n(AUC$_{DS}$, uncalibrated units)")
     a2.set_title("Same exposure, two different release burdens", fontsize=8.5)
     # Limits derived from the data, with headroom: a hard-coded upper bound
     # silently clipped the highest-cost regimen in an earlier version.
@@ -210,7 +220,7 @@ def fig4_exposure_response(d):
         a2.plot(x, kill, "o-", color=col, ms=4)
     a1.set_yscale("log")
     a1.set_xlabel("exposure target (% fT>MIC)")
-    a1.set_ylabel("modelled release exposure\n(AUC$_{DS}$, uncalibrated units)")
+    a1.set_ylabel("modeled release exposure\n(AUC$_{DS}$, uncalibrated units)")
     a1.set_title("Release falls with exposure, then flattens", fontsize=8.5)
     a1.set_ylim(1, 1e5)
     a1.legend(frameon=False, fontsize=6.5, ncol=2, loc="upper right")
@@ -248,7 +258,7 @@ def fig5_dual_pathway(d):
     ax.bar(x + w / 2, lysis, w, label="lysis-coupled only", color="#95a5a6")
     ax.set_xticks(x)
     ax.set_xticklabels(levels)
-    ax.set_ylabel("modelled release exposure\n(AUC$_{DS}$, uncalibrated units)")
+    ax.set_ylabel("modeled release exposure\n(AUC$_{DS}$, uncalibrated units)")
     sub_dual = d["analysis2_dual_pathway"]["sub_mic_over_50x_dual"]
     sub_lys = d["analysis2_dual_pathway"]["sub_mic_over_50x_lysis_only"]
     ax.set_title("Two assumed structures, neither fitted to the sub-MIC source:\n"
@@ -265,11 +275,20 @@ def fig5_dual_pathway(d):
 
 
 def _save(fig, name):
+    """Write the raster copy for review and the vector copy for submission.
+
+    Both come from the same figure object in the same call, so the PDF a
+    journal receives cannot have been drawn from different numbers than the
+    PNG that was inspected.
+    """
     os.makedirs(OUT_DIR, exist_ok=True)
-    path = os.path.join(OUT_DIR, f"{name}.png")
-    fig.savefig(path)
+    written = []
+    for ext in ("png", "pdf"):
+        path = os.path.join(OUT_DIR, f"{name}.{ext}")
+        fig.savefig(path)
+        written.append(path)
     plt.close(fig)
-    print(f"  wrote {path}")
+    print(f"  wrote {written[0]} and {written[1]}")
 
 
 def main():
