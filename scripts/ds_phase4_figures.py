@@ -6,6 +6,11 @@ for review and a PDF for submission. Every mark is vector in the PDF, and fonts
 are embedded as TrueType (pdf.fonttype 42) rather than matplotlib's default
 Type 3 subsets, which publishers routinely reject.
 
+Every figure is drawn COL_W wide, the width AAC prints a figure at, so the
+journal places them without rescaling and the type sizes set here are the type
+sizes that reach the page. That is why the multi-panel figures stack vertically
+rather than spreading sideways.
+
 Every agent comparison is drawn with the assumed 3.5-7x yield range as a band
 or a range, per the Phase 3 reporting rule: the claim is a ranking plus a range,
 never a single fold-change.
@@ -13,6 +18,7 @@ never a single fold-change.
 import json
 import os
 import sys
+import textwrap
 
 import matplotlib
 matplotlib.use("Agg")
@@ -35,6 +41,15 @@ plt.rcParams.update({"font.size": 9, "font.family": "sans-serif",
 IN = os.path.join("results", "danger_signal", "phase4_analyses.json")
 OUT_DIR = os.path.join("docs", "danger_signal_study", "figures")
 
+# AAC prints a figure in one column exactly 360 pt wide. Measured off the
+# published PDF of Sabet et al., Antimicrob Agents Chemother 2020, in
+# docs/article_pdfs/: page 8.125 in, body text from 42 to 370.6 pt (4.56 in),
+# and all seven figures placed from 42 to 402 pt. ASM's own instructions give
+# only a ceiling ("Recommended dimensions are 7 inches by 9 inches or less")
+# and the rule this serves: "Submit graphics at their intended publication
+# size to prevent resizing issues."
+COL_W = 5.0
+
 CAZ_C = "#c0392b"   # PBP-3, high yield
 MERO_C = "#2471a3"  # PBP-2, low yield
 
@@ -49,8 +64,8 @@ def fig1_yield_table(d):
     a1 = d['analysis1_yield_table']
     obs = a1['observations']
     fig, (ax, kill_ax, table_ax) = plt.subplots(
-        1, 3, figsize=(11.6, 3.4),
-        gridspec_kw={'width_ratios': [1, 1.15, 1.5]}, constrained_layout=True)
+        3, 1, figsize=(COL_W, 7.1),
+        gridspec_kw={'height_ratios': [1, 1.12, 1.0]}, constrained_layout=True)
     agents = ['ceftazidime','meropenem','imipenem']
     values = [obs['trautmann_'+a]['value'] for a in agents]
     ax.barh(agents,values,color=[CAZ_C,MERO_C,'#5b8db8'])
@@ -79,10 +94,13 @@ def fig1_yield_table(d):
     kill_ax.set_title('B  At equal NET bacterial change\nP. aeruginosa SR24, 6 h; Limulus assay',fontsize=9)
     for x, r in zip(xs, ratios):
         kill_ax.text(x, r+max(ratios)*.03, f'{r:.1f}×', ha='center', fontsize=8)
-    kill_ax.text(.5, -.32, 'Net change is not cumulative killing; at 0.1× MIC both arms grew.\n'
-                 'Three pairs, one experiment; range not refitted to them',
-                 transform=kill_ax.transAxes, fontsize=7, ha='center', va='top',
-                 color='#5d6d7e')
+    # Carried as the x-label rather than as free text below the axes: stacked
+    # panels leave no room under one, and constrained_layout reserves space for
+    # a label but not for a text placed outside the axes, so the old form would
+    # have been overprinted by panel C's title.
+    kill_ax.set_xlabel('Net change is not cumulative killing; at 0.1× MIC both arms grew.\n'
+                       'Three pairs, one experiment; range not refitted to them',
+                       fontsize=7, color='#5d6d7e')
 
     table_ax.axis('off')
     table_ax.set_title('C  Different sampling operators\nP. aeruginosa PAO1, 1×MIC; Limulus assay',fontsize=9)
@@ -91,7 +109,7 @@ def fig1_yield_table(d):
              ['isepamicin','28 ± 2','mean of 2, 4, 6 h']]
     table = table_ax.table(cellText=cells,colLabels=['Agent','LPS (ng/mL)','Published statistic'],
                           colWidths=[.30,.23,.47],cellLoc='left',colLoc='left',
-                          bbox=[0,.25,1,.58])
+                          bbox=[0,.30,1,.66])
     table.auto_set_font_size(False);table.set_fontsize(8)
     for (row,col),cell in table.get_celld().items():
         cell.set_edgecolor('#d6dce1');cell.set_linewidth(.5)
@@ -114,7 +132,7 @@ def fig2_matched_exposure(d):
     lo = [min(x["ratio_AUC_DS"] for x in r["cost_ratio_range"]) for r in rows]
     hi = [max(x["ratio_AUC_DS"] for x in r["cost_ratio_range"]) for r in rows]
 
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(8.4, 3.2),
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(COL_W, 5.4),
                                  constrained_layout=True)
     a1.plot(t, caz_kill, "o-", color=CAZ_C, label="ceftazidime (PBP-3)", ms=5)
     a1.plot(t, mero_kill, "s--", color=MERO_C, label="meropenem (PBP-2)", ms=5)
@@ -154,7 +172,7 @@ def fig3_cost_index(d):
             "fAUC_MIC": "fAUC/MIC"}
     rho = [a4["candidates"][k]["spearman_rho"] for k in order]
 
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(9.0, 3.3),
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(COL_W, 6.0),
                                  constrained_layout=True)
     y = np.arange(len(order))
     cols = ["#1e8449" if r > 0.9 else "#b03a2e" if abs(r) < 0.4 else "#b9770e"
@@ -203,7 +221,7 @@ def fig4_exposure_response(d):
     a5 = d["analysis5_divergence_map"]
     cells = a5["cells"]
     facs = sorted({c["mic_factor"] for c in cells})
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(8.4, 3.3),
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(COL_W, 5.8),
                                  constrained_layout=True)
     cmap = plt.get_cmap("viridis")
     for i, fac in enumerate(facs):
@@ -236,12 +254,12 @@ def fig4_exposure_response(d):
     a2.set_ylabel("48 h net change (log$_{10}$ CFU)")
     a2.set_title("Stasis boundary (dotted)", fontsize=8.5)
     cov = a5.get("coverage", {}).get("populated_arms", {})
-    fig.text(0.5, -0.04,
-             "No evaluated exposure increase raised release exposure "
-             f"(ceftazidime arms shown; {cov.get('ceftazidime', '?')} of "
-             f"{a5.get('coverage', {}).get('n_possible_arms_per_agent', '?')} "
-             "populated - missing points lie outside the dose bracket).",
-             ha="center", fontsize=7.5, color="#555555")
+    _footnote(fig,
+              "No evaluated exposure increase raised release exposure "
+              f"(ceftazidime arms shown; {cov.get('ceftazidime', '?')} of "
+              f"{a5.get('coverage', {}).get('n_possible_arms_per_agent', '?')} "
+              "populated - missing points lie outside the dose bracket).",
+              7.5)
     _save(fig, "fig4_exposure_response")
 
 
@@ -251,7 +269,7 @@ def fig5_dual_pathway(d):
     levels = ["0.5x MIC", "1x MIC", "50x MIC"]
     dual = [a2d["levels"][k]["dual"]["AUC_DS_pg_h_mL"] for k in levels]
     lysis = [a2d["levels"][k]["lysis_only"]["AUC_DS_pg_h_mL"] for k in levels]
-    fig, ax = plt.subplots(figsize=(5.2, 3.3), constrained_layout=True)
+    fig, ax = plt.subplots(figsize=(COL_W, 3.4), constrained_layout=True)
     x = np.arange(len(levels))
     w = 0.36
     ax.bar(x - w / 2, dual, w, label="dual pathway", color=CAZ_C)
@@ -266,12 +284,26 @@ def fig5_dual_pathway(d):
                  fontsize=8.5)
     ax.set_ylim(0, max(dual) * 1.18)
     ax.legend(frameon=False, fontsize=7.5, loc="upper right")
-    fig.text(0.5, -0.09,
-             "Jackson & Kropp report sub-MIC release MATCHING that at higher concentrations.\n"
-             "Prins (E. coli) reports sub-MIC comparable to untreated. Neither structure is "
-             "qualified here.",
-             ha="center", fontsize=7, color="#555555")
+    _footnote(fig,
+              "Jackson & Kropp report sub-MIC release MATCHING that at higher "
+              "concentrations. Prins (E. coli) reports sub-MIC comparable to "
+              "untreated. Neither structure is qualified here.",
+              7)
     _save(fig, "fig5_dual_pathway")
+
+
+def _footnote(fig, text, fontsize):
+    """Set a note along the bottom of the figure, wrapped to the column width.
+
+    A figure-level label rather than a text at a negative y: savefig trims to
+    the tight bounding box, so a note hanging below the figure would widen the
+    saved file past the column the figure is being drawn for. Wrapping is by
+    character count against Arial's average advance, which is approximate, so
+    the saved width is checked after rendering rather than trusted.
+    """
+    chars = int(COL_W / (fontsize * 0.52 / 72))
+    fig.supxlabel(textwrap.fill(" ".join(text.split()), chars),
+                  fontsize=fontsize, color="#555555")
 
 
 def _save(fig, name):
@@ -282,6 +314,18 @@ def _save(fig, name):
     PNG that was inspected.
     """
     os.makedirs(OUT_DIR, exist_ok=True)
+    # savefig trims to the tight bounding box, so a label or annotation that
+    # reaches past the figure widens the SAVED file even though figsize is
+    # unchanged. That would hand the journal a figure it has to rescale, which
+    # is the one thing drawing at COL_W is meant to prevent, and it is
+    # invisible in the script. Measure what will actually be written.
+    fig.canvas.draw()
+    pad = plt.rcParams["savefig.pad_inches"]
+    saved_w = fig.get_tightbbox().width + 2 * pad
+    if saved_w > COL_W + 0.1:
+        raise RuntimeError(
+            f"{name} would be saved {saved_w:.2f} in wide against a "
+            f"{COL_W:.1f} in column; something is drawn past the figure edge")
     written = []
     for ext in ("png", "pdf"):
         path = os.path.join(OUT_DIR, f"{name}.{ext}")
