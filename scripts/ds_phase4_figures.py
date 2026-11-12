@@ -1,7 +1,7 @@
 """Phase 4 figures for the endotoxin-release study.
 
-Reads results/danger_signal/phase4_analyses.json (so figures and numbers cannot
-drift) and writes docs/danger_signal_study/figures/, each figure as both a PNG
+Reads results/danger_signal/phase4_analyses.json, and endpoint_windows.json
+for Figure 4 (so figures and numbers cannot drift), and writes docs/danger_signal_study/figures/, each figure as both a PNG
 for review and a PDF for submission. Every mark is vector in the PDF, and fonts
 are embedded as TrueType (pdf.fonttype 42) rather than matplotlib's default
 Type 3 subsets, which publishers routinely reject.
@@ -39,6 +39,7 @@ plt.rcParams.update({"font.size": 9, "font.family": "sans-serif",
                      "pdf.compression": 6})
 
 IN = os.path.join("results", "danger_signal", "phase4_analyses.json")
+WINDOWS = os.path.join("results", "danger_signal", "endpoint_windows.json")
 OUT_DIR = os.path.join("docs", "danger_signal_study", "figures")
 
 # AAC prints a figure in one column exactly 360 pt wide. Measured off the
@@ -216,50 +217,92 @@ def fig3_cost_index(d):
     _save(fig, "fig3_cost_index")
 
 
-def fig4_exposure_response(d):
-    """Cost versus exposure: flat above stasis, explosive below."""
-    a5 = d["analysis5_divergence_map"]
-    cells = a5["cells"]
-    facs = sorted({c["mic_factor"] for c in cells})
-    fig, (a1, a2) = plt.subplots(2, 1, figsize=(COL_W, 5.8),
+def fig4_exposure_response(w):
+    """Exposure-release on two windows, and one exposure step on every endpoint.
+
+    Reads endpoint_windows.json. The seven-level susceptibility sweep this
+    figure used to draw is one simulation per exposure target, so it is drawn
+    once per agent; the invariance itself is reported in S7.
+    """
+    arms = w["arms"]
+    rel = w["relative_to_reference_target"]
+    ref = w["reference_target_fT_pct"]
+    top = max(a["target_fT_pct"] for a in arms)
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(COL_W, 6.3),
                                  constrained_layout=True)
-    cmap = plt.get_cmap("viridis")
-    for i, fac in enumerate(facs):
-        sub = sorted([c for c in cells if c["mic_factor"] == fac
-                      and c.get("ceftazidime")],
-                     key=lambda c: c["target_fT_pct"])
-        if not sub:
-            continue
-        x = [c["target_fT_pct"] for c in sub]
-        cost = [c["ceftazidime"]["cost_AUC_DS"] for c in sub]
-        kill = [c["ceftazidime"]["net_log10_change"] for c in sub]
-        col = cmap(i / max(len(facs) - 1, 1))
-        a1.plot(x, cost, "o-", color=col, ms=4, label=f"MIC x{fac:g}")
-        a2.plot(x, kill, "o-", color=col, ms=4)
+    for agent, col in (("ceftazidime", CAZ_C), ("meropenem", MERO_C)):
+        sub = sorted((a for a in arms if a["agent"] == agent),
+                     key=lambda a: a["target_fT_pct"])
+        x = [a["target_fT_pct"] for a in sub]
+        for key, ls, lab in (("0-48h", "-", "0-48 h"), ("0-1h", "--", "0-1 h")):
+            y = [a["window_AUC"][key] for a in sub]
+            a1.plot(x, y, ls, color=col, lw=1.4, label=f"{agent}, {lab}")
+            # Filled where the regimen controls the infection, open where the
+            # burden grew over 48 h.
+            for xi, yi, arm in zip(x, y, sub):
+                a1.plot(xi, yi, "o", ms=5.5, color=col, mew=1.2,
+                        mfc=col if arm["controlled"] else "white")
     a1.set_yscale("log")
+    a1.set_ylim(1, 2000)
+    a1.set_xticks(sorted({a["target_fT_pct"] for a in arms}))
     a1.set_xlabel("exposure target (% fT>MIC)")
-    a1.set_ylabel("modeled release exposure\n(AUC$_{DS}$, uncalibrated units)")
-    a1.set_title("Release falls with exposure, then flattens", fontsize=8.5)
-    a1.set_ylim(1, 1e5)
-    a1.legend(frameon=False, fontsize=6.5, ncol=2, loc="upper right")
-    # Worded to match the manuscript: rescaling potency and re-solving the
-    # dose preserves C/C50 in a linear PK system, so the superposition is
-    # largely a consequence of how susceptibility is represented.
-    a1.text(0.03, 0.04,
-            "susceptibility curves superimpose, largely by\n"
-            "construction (potency and dose rescale together)",
-            transform=a1.transAxes, fontsize=7, va="bottom", color="#555555")
-    a2.axhline(0.0, color="k", lw=0.7, ls=":")
-    a2.set_xlabel("exposure target (% fT>MIC)")
-    a2.set_ylabel("48 h net change (log$_{10}$ CFU)")
-    a2.set_title("Stasis boundary (dotted)", fontsize=8.5)
-    cov = a5.get("coverage", {}).get("populated_arms", {})
+    a1.set_ylabel("modeled release exposure\n(AUC, uncalibrated units)")
+    a1.set_title("Release over 48 h falls with exposure; release in the first "
+                 "hour does not", fontsize=8.5)
+    a1.legend(frameon=False, fontsize=7, ncol=2, loc="upper right")
+
+    keys = ["0-1h", "0-2h", "0-4h", "0-8h", "0-24h", "0-48h",
+            "peak_excess", "max_release_rate_ng_per_h"]
+    labels = ["0-1 h", "0-2 h", "0-4 h", "0-8 h", "0-24 h", "0-48 h",
+              "peak\nconc.", "max.\nrate"]
+    xb = np.arange(len(keys))
+    bw = 0.38
+    vals = {}
+    for i, (agent, col) in enumerate((("ceftazidime", CAZ_C),
+                                      ("meropenem", MERO_C))):
+        v = np.array([rel[agent][f"{top:g}"][k] for k in keys])
+        vals[agent] = v
+        a2.bar(xb + (i - 0.5) * bw, v - 1.0, bw * 0.9, bottom=1.0, color=col,
+               label=agent)
+
+    def pct(r):
+        p = 100 * (r - 1)
+        return f"{p:+.1f}%" if abs(p) < 10 else f"{p:+.0f}%"
+
+    # Labelled where the sign of the change is the point. Two labels that
+    # print the same are set once, centred; otherwise each is anchored at the
+    # category's centre line and runs outward, so the pair cannot overprint
+    # however close the two bars are in height.
+    for j in (0, 5, 7):
+        pair = [vals["ceftazidime"][j], vals["meropenem"][j]]
+        texts = [pct(r) for r in pair]
+        spots = ([(xb[j], "center", max(pair), texts[0])]
+                 if texts[0] == texts[1] else
+                 [(xb[j] - 0.03, "right", pair[0], texts[0]),
+                  (xb[j] + 0.03, "left", pair[1], texts[1])])
+        for x0, ha, r, s in spots:
+            off = 0.012 if r >= 1.0 else -0.012
+            a2.text(x0, r + off, s, ha=ha,
+                    va="bottom" if off > 0 else "top",
+                    fontsize=6.5, color="#333333")
+    a2.axhline(1.0, color="k", lw=0.8)
+    a2.set_xticks(xb)
+    a2.set_xticklabels(labels, fontsize=7.5)
+    a2.set_ylim(0.5, 1.22)
+    a2.set_ylabel(f"{top:g}% fT>MIC relative to {ref:g}%")
+    a2.set_title(f"Raising exposure from {ref:g}% to {top:g}% fT>MIC, "
+                 "read on each endpoint", fontsize=8.5)
+    a2.legend(frameon=False, fontsize=7, loc="lower left")
+    n = w["n_steps"]
+    div = w["divergent_steps_by_endpoint"]
     _footnote(fig,
-              "No evaluated exposure increase raised release exposure "
-              f"(ceftazidime arms shown; {cov.get('ceftazidime', '?')} of "
-              f"{a5.get('coverage', {}).get('n_possible_arms_per_agent', '?')} "
-              "populated - missing points lie outside the dose bracket).",
-              7.5)
+              "Open markers: net bacterial growth over 48 h. Of "
+              f"{n} exposure steps that improved killing, {div['0-48h']} raised "
+              f"0-48 h release, {div['0-1h']} raised 0-1 h release and "
+              f"{div['max_release_rate_ng_per_h']} raised the maximum release "
+              "rate. Release here is immediate on killing, so the short "
+              "windows depend on that assumption.",
+              7)
     _save(fig, "fig4_exposure_response")
 
 
@@ -341,7 +384,8 @@ def main():
     fig1_yield_table(d)
     fig2_matched_exposure(d)
     fig3_cost_index(d)
-    fig4_exposure_response(d)
+    with open(WINDOWS, encoding="utf-8") as f:
+        fig4_exposure_response(json.load(f))
     fig5_dual_pathway(d)
 
 

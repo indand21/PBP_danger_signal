@@ -1,0 +1,888 @@
+{
+  "status": "re-reading of phase 4's stored regimens; no dose re-solved, no parameter changed",
+  "endpoint": "plasma endotoxin above the pre-treatment level, uncalibrated units; windows are AUCs from the first dose",
+  "windows_h": [
+    1.0,
+    2.0,
+    4.0,
+    8.0,
+    24.0,
+    48.0
+  ],
+  "reference_target_fT_pct": 40.0,
+  "regimen": "q8h x 6, 30-min infusion, MIC x1 stratum of analysis5_divergence_map",
+  "headline": {
+    "ceftazidime": {
+      "first_hour_change_pct_failing_to_reference": 13.590197450706953,
+      "first_hour_change_pct_reference_to_top": 1.4394132005406624,
+      "max_release_rate_change_pct_reference_to_top": 12.144597435062199,
+      "auc48_change_pct_reference_to_top": -36.867766958126545,
+      "peak_change_pct_reference_to_top": -0.3452312041008265
+    },
+    "meropenem": {
+      "first_hour_change_pct_failing_to_reference": 14.134143773296604,
+      "first_hour_change_pct_reference_to_top": 2.823769635828266,
+      "max_release_rate_change_pct_reference_to_top": 11.707843481659053,
+      "auc48_change_pct_reference_to_top": -18.96536808558865,
+      "peak_change_pct_reference_to_top": 0.762565801355608
+    },
+    "max_abs_peak_change_pct_reference_to_top": 0.762565801355608,
+    "first_hour_share_pct_controlled_range": [
+      40.95954507893091,
+      66.49866877317098
+    ],
+    "invariance_max_spread_pct": {
+      "dose_per_mic": 0.8010243440430109,
+      "AUC_DS": 1.3129831642996415
+    },
+    "invariance_max_net_log10_spread": 0.009114092877954172,
+    "numerical_max_window_AUC_error_pct": 0.5273584011550233
+  },
+  "arms": [
+    {
+      "agent": "ceftazidime",
+      "target_fT_pct": 20.0,
+      "dose_mg_q8h": 53.73454914693137,
+      "achieved_fT_pct": 20.041311339236604,
+      "net_log10_change": 0.5275220101778555,
+      "controlled": false,
+      "window_AUC": {
+        "0-1h": 9.071338505771802,
+        "0-2h": 14.54695789827738,
+        "0-4h": 19.226035773781724,
+        "0-8h": 37.24126407955321,
+        "0-24h": 225.54664044338492,
+        "0-48h": 531.7573659511719
+      },
+      "window_AUC_exact": {
+        "0-1h": 9.089668887277869,
+        "0-2h": 14.558836987735637,
+        "0-4h": 19.235137840422237,
+        "0-8h": 37.2520325764458,
+        "0-24h": 225.63518723381623,
+        "0-48h": 531.9768082949333
+      },
+      "peak_excess": 63.20899863557496,
+      "t_peak_h": 24.540425005466883,
+      "max_release_rate_ng_per_h": 2785.100336140691,
+      "t_max_release_h": 24.46908655729002,
+      "fraction_of_48h_AUC_in_first_hour": 0.017059168497921228,
+      "stored_48h_AUC_reproduced_rel_diff": 1.2487720300955393e-07,
+      "n_grid_points_first_hour": 44
+    },
+    {
+      "agent": "ceftazidime",
+      "target_fT_pct": 40.0,
+      "dose_mg_q8h": 102.44089340790983,
+      "achieved_fT_pct": 39.955007702840774,
+      "net_log10_change": -2.5070387844033335,
+      "controlled": true,
+      "window_AUC": {
+        "0-1h": 10.3041513201282,
+        "0-2h": 15.081631496389829,
+        "0-4h": 17.0443103665584,
+        "0-8h": 19.078862850320935,
+        "0-24h": 24.75965849130019,
+        "0-48h": 25.156898838284537
+      },
+      "window_AUC_exact": {
+        "0-1h": 10.326250510208975,
+        "0-2h": 15.098047713149441,
+        "0-4h": 17.058406361345725,
+        "0-8h": 19.092713892891258,
+        "0-24h": 24.777583960722023,
+        "0-48h": 25.175147862023362
+      },
+      "peak_excess": 14.96822986308985,
+      "t_peak_h": 0.4287761576141767,
+      "max_release_rate_ng_per_h": 664.1230251493297,
+      "t_max_release_h": 0.28115594334446664,
+      "fraction_of_48h_AUC_in_first_hour": 0.4095954507893091,
+      "stored_48h_AUC_reproduced_rel_diff": 8.686611392953341e-07,
+      "n_grid_points_first_hour": 46
+    },
+    {
+      "agent": "ceftazidime",
+      "target_fT_pct": 60.0,
+      "dose_mg_q8h": 201.68048230746808,
+      "achieved_fT_pct": 59.99282896574375,
+      "net_log10_change": -3.0606694930609954,
+      "controlled": true,
+      "window_AUC": {
+        "0-1h": 10.44892676906065,
+        "0-2h": 14.604812324116157,
+        "0-4h": 16.220857098024272,
+        "0-8h": 16.514227807705158,
+        "0-24h": 16.981426301005662,
+        "0-48h": 17.042831213009848
+      },
+      "window_AUC_exact": {
+        "0-1h": 10.483375652484348,
+        "0-2h": 14.634318735260488,
+        "0-4h": 16.24843191815065,
+        "0-8h": 16.541595566227233,
+        "0-24h": 17.009379000116258,
+        "0-48h": 17.07083900306674
+      },
+      "peak_excess": 15.050272700366827,
+      "t_peak_h": 0.25695527891625314,
+      "max_release_rate_ng_per_h": 697.4139178536485,
+      "t_max_release_h": 0.19202855470517077,
+      "fraction_of_48h_AUC_in_first_hour": 0.6130980609069424,
+      "stored_48h_AUC_reproduced_rel_diff": 3.171492037919537e-07,
+      "n_grid_points_first_hour": 47
+    },
+    {
+      "agent": "ceftazidime",
+      "target_fT_pct": 80.0,
+      "dose_mg_q8h": 402.7945067346825,
+      "achieved_fT_pct": 80.00955888269316,
+      "net_log10_change": -3.221554785335187,
+      "controlled": true,
+      "window_AUC": {
+        "0-1h": 10.454179025781848,
+        "0-2h": 14.310020262971173,
+        "0-4h": 15.803362155504162,
+        "0-8h": 15.967515785054516,
+        "0-24h": 16.066118042888004,
+        "0-48h": 16.097995999342082
+      },
+      "window_AUC_exact": {
+        "0-1h": 10.4950295686725,
+        "0-2h": 14.346273634381042,
+        "0-4h": 15.83782175131561,
+        "0-8h": 16.00180005405585,
+        "0-24h": 16.100536076606293,
+        "0-48h": 16.132445925474006
+      },
+      "peak_excess": 15.16539818844126,
+      "t_peak_h": 0.2369045659971511,
+      "max_release_rate_ng_per_h": 726.2754933184647,
+      "t_max_release_h": 0.10979970954958555,
+      "fraction_of_48h_AUC_in_first_hour": 0.6494087230614982,
+      "stored_48h_AUC_reproduced_rel_diff": 1.0807064406685887e-06,
+      "n_grid_points_first_hour": 47
+    },
+    {
+      "agent": "ceftazidime",
+      "target_fT_pct": 95.0,
+      "dose_mg_q8h": 679.3015561242617,
+      "achieved_fT_pct": 94.99761019575583,
+      "net_log10_change": -3.2793485987831326,
+      "controlled": true,
+      "window_AUC": {
+        "0-1h": 10.45247063443381,
+        "0-2h": 14.194201945082998,
+        "0-4h": 15.64227273089415,
+        "0-8h": 15.797769453526326,
+        "0-24h": 15.857787224269252,
+        "0-48h": 15.882112000694148
+      },
+      "window_AUC_exact": {
+        "0-1h": 10.492664345514191,
+        "0-2h": 14.229915897160204,
+        "0-4h": 15.676235570431423,
+        "0-8h": 15.831565212700072,
+        "0-24h": 15.891621928365957,
+        "0-48h": 15.915960304280825
+      },
+      "peak_excess": 14.916554862900925,
+      "t_peak_h": 0.18451298742550942,
+      "max_release_rate_ng_per_h": 744.7780930272727,
+      "t_max_release_h": 0.06082364744789767,
+      "fraction_of_48h_AUC_in_first_hour": 0.6581285054517291,
+      "stored_48h_AUC_reproduced_rel_diff": 1.9156093506064575e-06,
+      "n_grid_points_first_hour": 47
+    },
+    {
+      "agent": "meropenem",
+      "target_fT_pct": 20.0,
+      "dose_mg_q8h": 99.50176382665519,
+      "achieved_fT_pct": 20.002723438809387,
+      "net_log10_change": 0.3411788431776028,
+      "controlled": false,
+      "window_AUC": {
+        "0-1h": 1.7739206322968633,
+        "0-2h": 2.6183564966938624,
+        "0-4h": 2.7675341185766,
+        "0-8h": 2.769450161648395,
+        "0-24h": 17.25524674542561,
+        "0-48h": 40.44563651560894
+      },
+      "window_AUC_exact": {
+        "0-1h": 1.7786195783093202,
+        "0-2h": 2.6216636496030437,
+        "0-4h": 2.7703406382796714,
+        "0-8h": 2.772248784479834,
+        "0-24h": 17.27093310146299,
+        "0-48h": 40.485856441399335
+      },
+      "peak_excess": 9.539375892874363,
+      "t_peak_h": 24.46543851036421,
+      "max_release_rate_ng_per_h": 420.75640379007314,
+      "t_max_release_h": 24.387628169182197,
+      "fraction_of_48h_AUC_in_first_hour": 0.0438593822503514,
+      "stored_48h_AUC_reproduced_rel_diff": 2.5274621404434367e-07,
+      "n_grid_points_first_hour": 45
+    },
+    {
+      "agent": "meropenem",
+      "target_fT_pct": 40.0,
+      "dose_mg_q8h": 256.6459951128865,
+      "achieved_fT_pct": 40.001194824104154,
+      "net_log10_change": -2.6151675443245272,
+      "controlled": true,
+      "window_AUC": {
+        "0-1h": 2.024649124889874,
+        "0-2h": 2.859261992967515,
+        "0-4h": 3.136089271676584,
+        "0-8h": 3.14274501916914,
+        "0-24h": 3.8203241681118807,
+        "0-48h": 3.8633110528332075
+      },
+      "window_AUC_exact": {
+        "0-1h": 2.031871825980999,
+        "0-2h": 2.8654888419528413,
+        "0-4h": 3.1419013458850604,
+        "0-8h": 3.148531827455744,
+        "0-24h": 3.8273579136519484,
+        "0-48h": 3.8704219170546024
+      },
+      "peak_excess": 2.955735354457162,
+      "t_peak_h": 0.3576403250644002,
+      "max_release_rate_ng_per_h": 137.20239140802917,
+      "t_max_release_h": 0.1998737120139154,
+      "fraction_of_48h_AUC_in_first_hour": 0.5240709580982542,
+      "stored_48h_AUC_reproduced_rel_diff": 4.0705555048779166e-07,
+      "n_grid_points_first_hour": 45
+    },
+    {
+      "agent": "meropenem",
+      "target_fT_pct": 60.0,
+      "dose_mg_q8h": 695.8829304525955,
+      "achieved_fT_pct": 59.99984746327693,
+      "net_log10_change": -3.093285516347645,
+      "controlled": true,
+      "window_AUC": {
+        "0-1h": 2.067343276590629,
+        "0-2h": 2.826753309778077,
+        "0-4h": 3.1186489185383595,
+        "0-8h": 3.1385695130250353,
+        "0-24h": 3.2047154522991272,
+        "0-48h": 3.214344178339596
+      },
+      "window_AUC_exact": {
+        "0-1h": 2.0758824551982444,
+        "0-2h": 2.8343904830117856,
+        "0-4h": 3.125935754608806,
+        "0-8h": 3.145820306351284,
+        "0-24h": 3.212111871146478,
+        "0-48h": 3.2217597233484603
+      },
+      "peak_excess": 2.9939948128333778,
+      "t_peak_h": 0.2138770958379168,
+      "max_release_rate_ng_per_h": 145.43025219871356,
+      "t_max_release_h": 0.07296904942542663,
+      "fraction_of_48h_AUC_in_first_hour": 0.6431617654766943,
+      "stored_48h_AUC_reproduced_rel_diff": 6.54376021725284e-07,
+      "n_grid_points_first_hour": 48
+    },
+    {
+      "agent": "meropenem",
+      "target_fT_pct": 80.0,
+      "dose_mg_q8h": 1923.7931720800586,
+      "achieved_fT_pct": 79.99771264473691,
+      "net_log10_change": -3.238947839124256,
+      "controlled": true,
+      "window_AUC": {
+        "0-1h": 2.0794548512096473,
+        "0-2h": 2.811286293750277,
+        "0-4h": 3.094410512483829,
+        "0-8h": 3.1222002485786424,
+        "0-24h": 3.138623407270156,
+        "0-48h": 3.144311222315879
+      },
+      "window_AUC_exact": {
+        "0-1h": 2.0891618164241335,
+        "0-2h": 2.82012740016518,
+        "0-4h": 3.102913623544424,
+        "0-8h": 3.1306709806877437,
+        "0-24h": 3.147123618489214,
+        "0-48h": 3.1528198504457596
+      },
+      "peak_excess": 2.9822478731595417,
+      "t_peak_h": 0.22746642406308737,
+      "max_release_rate_ng_per_h": 151.20229895467403,
+      "t_max_release_h": 0.03770763997977233,
+      "fraction_of_48h_AUC_in_first_hour": 0.6613387493105936,
+      "stored_48h_AUC_reproduced_rel_diff": 1.5782806525528507e-06,
+      "n_grid_points_first_hour": 49
+    },
+    {
+      "agent": "meropenem",
+      "target_fT_pct": 95.0,
+      "dose_mg_q8h": 4145.0070965602,
+      "achieved_fT_pct": 95.00530131052244,
+      "net_log10_change": -3.2941761066606263,
+      "controlled": true,
+      "window_AUC": {
+        "0-1h": 2.0818205521105773,
+        "0-2h": 2.805556703455006,
+        "0-4h": 3.0855879797154966,
+        "0-8h": 3.115167787039835,
+        "0-24h": 3.1260714452606604,
+        "0-48h": 3.1306198913721595
+      },
+      "window_AUC_exact": {
+        "0-1h": 2.092857411494288,
+        "0-2h": 2.8157253560328885,
+        "0-4h": 3.0954180748404494,
+        "0-8h": 3.1249658522998955,
+        "0-24h": 3.135881811452353,
+        "0-48h": 3.1404347070351655
+      },
+      "peak_excess": 2.978274781448829,
+      "t_peak_h": 0.18292600394291045,
+      "max_release_rate_ng_per_h": 153.26583264717445,
+      "t_max_release_h": 0.02248991614066813,
+      "fraction_of_48h_AUC_in_first_hour": 0.6649866877317098,
+      "stored_48h_AUC_reproduced_rel_diff": 3.9213473411025513e-07,
+      "n_grid_points_first_hour": 48
+    }
+  ],
+  "exposure_steps": [
+    {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+        "0-1h": 1.1359019745070695,
+        "0-2h": 1.0367550110374462,
+        "0-4h": 0.8865223474618458,
+        "0-8h": 0.5123043839104247,
+        "0-24h": 0.10977622385608168,
+        "0-48h": 0.04730898046571591,
+        "peak_excess": 0.23680536294187562,
+        "max_release_rate_ng_per_h": 0.23845569099661373
+      }
+    },
+    {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+        "0-1h": 1.0140502060222703,
+        "0-2h": 0.9683841119982404,
+        "0-4h": 0.9516874985948522,
+        "0-8h": 0.8655771540088074,
+        "0-24h": 0.6858505866295543,
+        "0-48h": 0.6774615314298417,
+        "peak_excess": 1.005481131571829,
+        "max_release_rate_ng_per_h": 1.050127599019524
+      }
+    },
+    {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+        "0-1h": 1.0005026599226199,
+        "0-2h": 0.9798154160010527,
+        "0-4h": 0.9742618444884172,
+        "0-8h": 0.9668944846215844,
+        "0-24h": 0.9460994476027345,
+        "0-48h": 0.9445611353032404,
+        "peak_excess": 1.0076493954871415,
+        "max_release_rate_ng_per_h": 1.0413837101984431
+      }
+    },
+    {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+        "0-1h": 0.9998365829259452,
+        "0-2h": 0.9919064881977933,
+        "0-4h": 0.9898066358902048,
+        "0-8h": 0.9893692710993234,
+        "0-24h": 0.9870329087547708,
+        "0-48h": 0.9865893867375319,
+        "peak_excess": 0.9835913754160442,
+        "max_release_rate_ng_per_h": 1.025476007216307
+      }
+    },
+    {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+        "0-1h": 1.141341437732966,
+        "0-2h": 1.0920063775035365,
+        "0-4h": 1.133170951940979,
+        "0-8h": 1.134790242009106,
+        "0-24h": 0.22140072665867003,
+        "0-48h": 0.09551861178751046,
+        "peak_excess": 0.30984577897438875,
+        "max_release_rate_ng_per_h": 0.3260850938266009
+      }
+    },
+    {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+        "0-1h": 1.0210871855157013,
+        "0-2h": 0.98863039369271,
+        "0-4h": 0.994438821210947,
+        "0-8h": 0.9986713824638536,
+        "0-24h": 0.838859560413428,
+        "0-48h": 0.8320179593052225,
+        "peak_excess": 1.0129441420790672,
+        "max_release_rate_ng_per_h": 1.0599687855747018
+      }
+    },
+    {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+        "0-1h": 1.0058585212993711,
+        "0-2h": 0.9945283460094314,
+        "0-4h": 0.9922279144951365,
+        "0-8h": 0.9947844824279148,
+        "0-24h": 0.9793766260959127,
+        "0-48h": 0.978212365528357,
+        "peak_excess": 0.9960764996574195,
+        "max_release_rate_ng_per_h": 1.0396894502257594
+      }
+    },
+    {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+        "0-1h": 1.0011376543710742,
+        "0-2h": 0.9979619328319537,
+        "0-4h": 0.9971488809475215,
+        "0-8h": 0.9977475943312705,
+        "0-24h": 0.9960008066018939,
+        "0-48h": 0.9956456820029298,
+        "peak_excess": 0.998667752688678,
+        "max_release_rate_ng_per_h": 1.013647502099945
+      }
+    }
+  ],
+  "divergent_steps_by_endpoint": {
+    "0-1h": 7,
+    "0-2h": 2,
+    "0-4h": 1,
+    "0-8h": 1,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak_excess": 3,
+    "max_release_rate_ng_per_h": 6
+  },
+  "n_steps": 8,
+  "relative_to_reference_target": {
+    "ceftazidime": {
+      "20": {
+        "0-1h": 0.8803576562440214,
+        "0-2h": 0.9645480266348879,
+        "0-4h": 1.1280031494559002,
+        "0-8h": 1.9519645574121185,
+        "0-24h": 9.109440686455159,
+        "0-48h": 21.13763581789053,
+        "peak_excess": 4.222877335111081,
+        "max_release_rate_ng_per_h": 4.193651222248249
+      },
+      "40": {
+        "0-1h": 1.0,
+        "0-2h": 1.0,
+        "0-4h": 1.0,
+        "0-8h": 1.0,
+        "0-24h": 1.0,
+        "0-48h": 1.0,
+        "peak_excess": 1.0,
+        "max_release_rate_ng_per_h": 1.0
+      },
+      "60": {
+        "0-1h": 1.0140502060222703,
+        "0-2h": 0.9683841119982404,
+        "0-4h": 0.9516874985948522,
+        "0-8h": 0.8655771540088074,
+        "0-24h": 0.6858505866295543,
+        "0-48h": 0.6774615314298417,
+        "peak_excess": 1.005481131571829,
+        "max_release_rate_ng_per_h": 1.050127599019524
+      },
+      "80": {
+        "0-1h": 1.0145599284203621,
+        "0-2h": 0.9488376815463658,
+        "0-4h": 0.9271928177575888,
+        "0-8h": 0.8369217762255636,
+        "0-24h": 0.6488828611482328,
+        "0-48h": 0.6399038332516431,
+        "peak_excess": 1.0131724544020806,
+        "max_release_rate_ng_per_h": 1.0935857752487348
+      },
+      "95": {
+        "0-1h": 1.0143941320054066,
+        "0-2h": 0.9411582525723918,
+        "0-4h": 0.9177416037661986,
+        "0-8h": 0.8280246877114369,
+        "0-24h": 0.6404687378802583,
+        "0-48h": 0.6313223304187345,
+        "peak_excess": 0.9965476879589917,
+        "max_release_rate_ng_per_h": 1.121445974350622
+      }
+    },
+    "meropenem": {
+      "20": {
+        "0-1h": 0.8761620028326397,
+        "0-2h": 0.9157455676093444,
+        "0-4h": 0.8824793807916855,
+        "0-8h": 0.8812201259587281,
+        "0-24h": 4.516697009498456,
+        "0-48h": 10.469163875879895,
+        "peak_excess": 3.227412047729261,
+        "max_release_rate_ng_per_h": 3.066684184379677
+      },
+      "40": {
+        "0-1h": 1.0,
+        "0-2h": 1.0,
+        "0-4h": 1.0,
+        "0-8h": 1.0,
+        "0-24h": 1.0,
+        "0-48h": 1.0,
+        "peak_excess": 1.0,
+        "max_release_rate_ng_per_h": 1.0
+      },
+      "60": {
+        "0-1h": 1.0210871855157013,
+        "0-2h": 0.98863039369271,
+        "0-4h": 0.994438821210947,
+        "0-8h": 0.9986713824638536,
+        "0-24h": 0.838859560413428,
+        "0-48h": 0.8320179593052225,
+        "peak_excess": 1.0129441420790672,
+        "max_release_rate_ng_per_h": 1.0599687855747018
+      },
+      "80": {
+        "0-1h": 1.02706924654056,
+        "0-2h": 0.9832209502538639,
+        "0-4h": 0.9867099576631397,
+        "0-8h": 0.9934627943198748,
+        "0-24h": 0.8215594460460036,
+        "0-48h": 0.813890256134038,
+        "peak_excess": 1.008969855390605,
+        "max_release_rate_ng_per_h": 1.1020383639306275
+      },
+      "95": {
+        "0-1h": 1.0282376963582827,
+        "0-2h": 0.9812170799162163,
+        "0-4h": 0.9838967301035761,
+        "0-8h": 0.9912251130902768,
+        "0-24h": 0.8182738709332248,
+        "0-48h": 0.8103463191441135,
+        "peak_excess": 1.007625658013556,
+        "max_release_rate_ng_per_h": 1.1170784348165905
+      }
+    }
+  },
+  "agent_ratio_caz_over_mero": {
+    "20": {
+      "0-1h": 5.11372286934071,
+      "0-2h": 5.555759086528318,
+      "0-4h": 6.9469914190868485,
+      "0-8h": 13.447168898459962,
+      "0-24h": 13.071191839269273,
+      "0-48h": 13.147459448337623,
+      "peak_excess": 6.626114679346083,
+      "max_release_rate_ng_per_h": 6.619270226319012
+    },
+    "40": {
+      "0-1h": 5.089351628119104,
+      "0-2h": 5.2746588222708475,
+      "0-4h": 5.434893234862011,
+      "0-8h": 6.070763849421321,
+      "0-24h": 6.481036006831106,
+      "0-48h": 6.511745622925032,
+      "peak_excess": 5.064130603072497,
+      "max_release_rate_ng_per_h": 4.840462460849387
+    },
+    "60": {
+      "0-1h": 5.054277578077191,
+      "0-2h": 5.166638444747325,
+      "0-4h": 5.201245001193216,
+      "0-8h": 5.261705289359137,
+      "0-24h": 5.298887390711348,
+      "0-48h": 5.302117715911027,
+      "peak_excess": 5.026819898236212,
+      "max_release_rate_ng_per_h": 4.795521614723691
+    },
+    "80": {
+      "0-1h": 5.027365234547174,
+      "0-2h": 5.090203831172776,
+      "0-4h": 5.1070671107625865,
+      "0-8h": 5.114186955921102,
+      "0-24h": 5.118842230537509,
+      "0-48h": 5.119720937638427,
+      "peak_excess": 5.085223909431205,
+      "max_release_rate_ng_per_h": 4.803336313928537
+    },
+    "95": {
+      "0-1h": 5.0208317060934755,
+      "0-2h": 5.059317435146838,
+      "0-4h": 5.069462557452804,
+      "0-8h": 5.071241914881907,
+      "0-24h": 5.07275265519307,
+      "0-48h": 5.073152459186916,
+      "peak_excess": 5.008454879923648,
+      "max_release_rate_ng_per_h": 4.859387641482944
+    }
+  },
+  "agent_ratio_range_controlled_targets": [
+    4.795521614723691,
+    6.511745622925032
+  ],
+  "fraction_of_48h_AUC_in_first_hour_controlled_range": [
+    0.4095954507893091,
+    0.6649866877317098
+  ],
+  "distinct_exposure_summary": {
+    "ceftazidime": {
+      "controlled_targets": [
+        40.0,
+        60.0,
+        80.0,
+        95.0
+      ],
+      "failing_targets": [
+        20.0
+      ],
+      "cost_span_above_stasis_fold": 1.58397691926521,
+      "median_cost_controlled": 16.570413606175965,
+      "failing_over_controlled_fold": 32.09077205851883
+    },
+    "meropenem": {
+      "controlled_targets": [
+        40.0,
+        60.0,
+        80.0,
+        95.0
+      ],
+      "failing_targets": [
+        20.0
+      ],
+      "cost_span_above_stasis_fold": 1.2340402817602707,
+      "median_cost_controlled": 3.179327700327738,
+      "failing_over_controlled_fold": 12.72144312504799
+    }
+  },
+  "susceptibility_invariance": {
+    "rows": [
+      {
+        "agent": "ceftazidime",
+        "target_fT_pct": 20.0,
+        "mic_factors_populated": [
+          1.0,
+          2.0,
+          4.0,
+          8.0,
+          16.0,
+          32.0,
+          64.0
+        ],
+        "dose_per_mic_spread_rel": 0.0014922314370993117,
+        "AUC_DS_spread_rel": 0.013129831642996415,
+        "net_log10_spread_abs": 0.009114092877954172
+      },
+      {
+        "agent": "ceftazidime",
+        "target_fT_pct": 40.0,
+        "mic_factors_populated": [
+          1.0,
+          2.0,
+          4.0,
+          8.0,
+          16.0,
+          32.0,
+          64.0
+        ],
+        "dose_per_mic_spread_rel": 0.0017179073932080957,
+        "AUC_DS_spread_rel": 0.0024660237217914993,
+        "net_log10_spread_abs": 0.0027972244684115743
+      },
+      {
+        "agent": "ceftazidime",
+        "target_fT_pct": 60.0,
+        "mic_factors_populated": [
+          1.0,
+          2.0,
+          4.0,
+          8.0,
+          16.0,
+          32.0,
+          64.0
+        ],
+        "dose_per_mic_spread_rel": 0.0004041475406386663,
+        "AUC_DS_spread_rel": 2.178662538709908e-05,
+        "net_log10_spread_abs": 0.00014859162370362
+      },
+      {
+        "agent": "ceftazidime",
+        "target_fT_pct": 80.0,
+        "mic_factors_populated": [
+          1.0,
+          2.0,
+          4.0,
+          8.0,
+          16.0,
+          32.0,
+          64.0
+        ],
+        "dose_per_mic_spread_rel": 0.00801024344043011,
+        "AUC_DS_spread_rel": 0.0002614638551894366,
+        "net_log10_spread_abs": 0.0011915238738131606
+      },
+      {
+        "agent": "ceftazidime",
+        "target_fT_pct": 95.0,
+        "mic_factors_populated": [
+          1.0,
+          2.0,
+          4.0,
+          8.0,
+          16.0,
+          32.0,
+          64.0
+        ],
+        "dose_per_mic_spread_rel": 0.006006342146925858,
+        "AUC_DS_spread_rel": 0.0001089233735547257,
+        "net_log10_spread_abs": 0.0004568293950213409
+      },
+      {
+        "agent": "meropenem",
+        "target_fT_pct": 20.0,
+        "mic_factors_populated": [
+          1.0,
+          2.0,
+          4.0,
+          8.0,
+          16.0,
+          32.0,
+          64.0
+        ],
+        "dose_per_mic_spread_rel": 0.0003219902823794474,
+        "AUC_DS_spread_rel": 0.002124236555600012,
+        "net_log10_spread_abs": 0.0016910747943537086
+      },
+      {
+        "agent": "meropenem",
+        "target_fT_pct": 40.0,
+        "mic_factors_populated": [
+          1.0,
+          2.0,
+          4.0,
+          8.0,
+          16.0,
+          32.0,
+          64.0
+        ],
+        "dose_per_mic_spread_rel": 0.0001709998238781374,
+        "AUC_DS_spread_rel": 8.446384838323162e-05,
+        "net_log10_spread_abs": 0.00016495164916330296
+      },
+      {
+        "agent": "meropenem",
+        "target_fT_pct": 60.0,
+        "mic_factors_populated": [
+          1.0,
+          2.0,
+          4.0,
+          8.0,
+          16.0,
+          32.0,
+          64.0
+        ],
+        "dose_per_mic_spread_rel": 0.001248490531815083,
+        "AUC_DS_spread_rel": 6.93017448132327e-05,
+        "net_log10_spread_abs": 0.000273307115142174
+      },
+      {
+        "agent": "meropenem",
+        "target_fT_pct": 80.0,
+        "mic_factors_populated": [
+          1.0,
+          2.0,
+          4.0,
+          8.0,
+          16.0
+        ],
+        "dose_per_mic_spread_rel": 0.0015976087496654134,
+        "AUC_DS_spread_rel": 1.933508235918424e-05,
+        "net_log10_spread_abs": 0.0001522462335121766
+      },
+      {
+        "agent": "meropenem",
+        "target_fT_pct": 95.0,
+        "mic_factors_populated": [
+          1.0,
+          2.0,
+          4.0,
+          8.0
+        ],
+        "dose_per_mic_spread_rel": 0.002950059143841166,
+        "AUC_DS_spread_rel": 1.1036305562317494e-05,
+        "net_log10_spread_abs": 0.00014423605069247003
+      }
+    ],
+    "max_spread": {
+      "dose_per_mic": 0.00801024344043011,
+      "AUC_DS": 0.013129831642996415,
+      "net_log10": 0.009114092877954172
+    },
+    "n_distinct_exposure_levels_per_agent": 5,
+    "n_cells_in_sweep": 35,
+    "explanation": "kill depends on C only through C/kill_C50 and the effective MIC is proportional to kill_C50; with linear PK the re-solved dose scales by the same factor, so every MIC level reproduces one trajectory. Residual spread is the dose solver's 1-mg tolerance (brentq xtol)."
+  },
+  "numerical_check": {
+    "max_rel_diff_trapezoid_vs_exact_window_AUC": 0.005273584011550233,
+    "max_rel_diff_reproduced_vs_stored_48h_AUC": 1.9156093506064575e-06,
+    "reproduction_tolerance": 1e-05,
+    "max_abs_fold_change_gap_trapezoid_vs_exact": 0.0011658825395974848,
+    "step_directions_agree_with_exact": true,
+    "min_grid_points_first_hour": 44,
+    "method": "exact integration of D' = src - k D over the same piecewise-linear release input the ODE solver uses"
+  },
+  "caveat": "Release is lysis-coupled and immediate in this model, so short-window results depend on that assumption. A delay between killing and release, as fitted for cefuroxime by Thorsted et al. 2020, would move release later; it is not modeled here.",
+  "analysis_script_sha256": "9a625bd7504e1e1caf3ed218141923e14f0503f0966a2b3ecc0f5e732f206aa1",
+  "input_sha256": {
+    "phase4_analyses.json": "d40cc4e745a56256f34eb17358d27e202e18e06649dcf2325d922764d19f308f"
+  },
+  "provenance": {
+    "git_head": "f8edbf236c540e1b472706c7450dbfad4b715f83",
+    "git_dirty": true,
+    "python": "3.12.4",
+    "numpy": "2.4.6",
+    "scipy": "1.15.3",
+    "numpy_scipy_supported": true,
+    "platform": "win32",
+    "final_yields_fg_per_CFU": {
+      "piperacillin": 5.15,
+      "ceftazidime": 4.93,
+      "isepamicin": 0.28,
+      "imipenem": 0.986,
+      "meropenem": 0.986
+    },
+    "note": "Endpoint and observation-window re-reading of phase 4 regimens"
+  }
+}

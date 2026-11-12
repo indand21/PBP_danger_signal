@@ -152,6 +152,7 @@ python scripts/ds_pilot_acceptance.py    # feasibility and acceptance screen
 python scripts/ds_phase2_build.py        # calibrate the release layer
 python scripts/ds_phase3_validate.py     # held-out validation, scale invariance
 python scripts/ds_phase4_analyses.py     # yields, matched exposure, cost indices
+python scripts/ds_endpoint_windows.py    # phase 4 regimens read on shorter windows
 python scripts/ds_phase5_tolerance.py    # endotoxin-tolerance term (ships disabled)
 python scripts/ds_phase4_figures.py      # figures, read back from the stored JSON
 ```
