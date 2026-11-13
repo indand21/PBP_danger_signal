@@ -268,7 +268,7 @@
    "agents": [
     "cefuroxime"
    ],
-   "source": "Thorsted A, Tano E, Kaivonen K, Sjolin J, Friberg LE, Nielsen EI. Extension of pharmacokinetic/pharmacodynamic time-kill studies to include lipopolysaccharide/endotoxin release from Escherichia coli exposed to cefuroxime. Antimicrob Agents Chemother 2020;64(4):e02070-19. DOI 10.1128/AAC.02070-19. PMID 31988100, PMC7179275. Abstract verified via PubMed 2026-10-14; full text not retrieved.",
+   "source": "Thorsted A, Tano E, Kaivonen K, Sjolin J, Friberg LE, Nielsen EI. Extension of pharmacokinetic/pharmacodynamic time-kill studies to include lipopolysaccharide/endotoxin release from Escherichia coli exposed to cefuroxime. Antimicrob Agents Chemother 2020;64(4):e02070-19. DOI 10.1128/AAC.02070-19. PMID 31988100, PMC7179275. Abstract verified via PubMed 2026-10-14; full text read via PMC 2026-11-13.",
    "why": "PRIOR ART for regimen-level endotoxin modelling, and the only source that ESTIMATES the per-CFU release coefficients this study declares unidentified. Our novelty claim is therefore the between-agent comparison at matched exposure, not regimen-level release modelling.",
    "design": "52 time-kill experiments, static (0, 0.5, 1, 2, 10, 50x MIC) and dynamic (0, 15, 30x MIC) cefuroxime; susceptible, resting and filament states; sigmoidal Emax killing.",
    "estimates": {
@@ -277,6 +277,10 @@
     "release_per_killed_filament_EU": 0.295,
     "filament_over_susceptible_fold": 46,
     "kill_release_mean_transit_time_h": 7.63,
+    "kill_release_transit_compartments": 1,
+    "kill_release_transit_rate_per_h": 0.131,
+    "kill_release_transit_rate_rse": 0.27,
+    "kill_release_delay_applies_to": "antibiotic-killed susceptible and filamentous cells (Results, Table 1)",
     "growth_release": "instantaneous"
    },
    "conclusion": "Endotoxin release over 24 h is lowest when antibiotic exposure rapidly eradicates bacteria, and increased when growth and antibiotic-induced killing occur simultaneously.",
@@ -284,7 +288,8 @@
     "Corroborates the no-within-agent-trade-off result from an independent, data-fitted model in a different agent and organism.",
     "Shows the per-CFU-killed yield IS estimable when release and viable counts are measured together under an observation model; our sources do not do this.",
     "Supplies a measured filament coefficient for a cephalosporin (0.295 EU, 46x susceptible), the counterpart of the term whose PBP-3 exclusivity ds_filament_structure.py tests.",
-    "Its model releases endotoxin from GROWTH as well as killing; this model holds the untreated background constant and reports only attributable excess, which is why it cannot compare treatment against no treatment."
+    "Its model releases endotoxin from GROWTH as well as killing; this model holds the untreated background constant and reports only attributable excess, which is why it cannot compare treatment against no treatment.",
+    "Its kill-release delay, inserted here by scripts/ds_release_delay.py, leaves the 48-h results standing; it removes the rise in peak and plasma arrival rate that immediate release produces, and reverses ceftazidime's first-hour rise, while meropenem's survives."
    ]
   }
  ],

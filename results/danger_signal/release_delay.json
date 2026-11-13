@@ -1,0 +1,5892 @@
+{
+ "status": "re-reading of phase 4's stored regimens under a delay between killing and release; no dose re-solved, no parameter of the bacterial or release layers changed",
+ "endpoint": "plasma endotoxin above the pre-treatment level, uncalibrated units; windows are AUCs from the first dose",
+ "delay_structure": {
+  "equations": "A_1' = r_lysis - (n/MTT) A_1; A_i' = (n/MTT)(A_{i-1} - A_i); D' = (n/MTT) A_n + r_filament - k D",
+  "source": "Thorsted A et al. Antimicrob Agents Chemother 2020;64:e02070-19, PMC7179275, Results and Table 1: one transit compartment for release after antibiotic-induced killing of susceptible and filamentous cells; growth-associated release immediate",
+  "thorsted_transit_rate_per_h": 0.131,
+  "thorsted_transit_rate_rse": 0.27,
+  "thorsted_mtt_h": 7.63,
+  "thorsted_mtt_approx_95pct_h": [
+   4.991883197920182,
+   16.214077710831653
+  ],
+  "approx_interval_method": "Wald interval on the transit rate, rate x (1 +/- 1.96 RSE), inverted",
+  "mtt_grid_h": [
+   0.5,
+   1.0,
+   2.0,
+   4.0,
+   7.63,
+   12.0,
+   16.0
+  ],
+  "n_grid": [
+   1,
+   3
+  ],
+  "filament_term": "kept immediate: in this model it is release from surviving filamenting cells, not release on killing; one variant delays it as well",
+  "k_ds_clear_per_h": 13.9
+ },
+ "headline": {
+  "primary_config": "n1_mtt7.63",
+  "table1_ratio_range": [
+   3.54764272640461,
+   9.106459681284528
+  ],
+  "table1_ratio_range_immediate": [
+   3.5476528736732824,
+   9.106295841166158
+  ],
+  "divergent_48h_steps": 0,
+  "divergent_48h_steps_max_any_delay": 0,
+  "divergent_first_hour_steps": 4,
+  "divergent_peak_steps": 0,
+  "divergent_max_arrival_steps": 0,
+  "n_steps": 8,
+  "failing_over_controlled_fold": {
+   "ceftazidime": 30.238510388946946,
+   "meropenem": 11.404719095417187
+  },
+  "failing_over_controlled_fold_immediate": {
+   "ceftazidime": 32.043625167801,
+   "meropenem": 12.702282863590161
+  },
+  "auc48_change_pct_reference_to_top": {
+   "ceftazidime": -36.64982548819776,
+   "meropenem": -18.693079534148904
+  },
+  "first_hour_change_pct_reference_to_top": {
+   "ceftazidime": -30.86610944623046,
+   "meropenem": 15.527269751694451
+  },
+  "peak_change_pct_reference_to_top": {
+   "ceftazidime": -31.79838478793292,
+   "meropenem": -2.897397291049808
+  },
+  "max_arrival_change_pct_reference_to_top": {
+   "ceftazidime": -1.0958579740048324,
+   "meropenem": -2.9116802790922103
+  },
+  "first_hour_change_pct_failing_to_reference": {
+   "ceftazidime": -30.062301951789273,
+   "meropenem": 38.30826089228132
+  },
+  "first_hour_share_pct_controlled_range": [
+   3.227672476609058,
+   5.40094917600391
+  ],
+  "t_peak_h_reference": {
+   "ceftazidime": 0.12081647774767065,
+   "meropenem": 2.157640325064401
+  },
+  "agent_ratio_range_controlled": [
+   5.039081163193678,
+   11.130190226527176
+  ],
+  "agent_ratio_range_controlled_24_48h": [
+   5.06806103772085,
+   6.504614058060391
+  ],
+  "agent_ratio_range_controlled_short": [
+   5.039081163193678,
+   11.130190226527176
+  ],
+  "agent_ratio_range_controlled_immediate": [
+   4.7955216147236905,
+   6.5044970294044
+  ],
+  "table1_max_abs_rel_change_pct_any_delay": 0.6493539001881654,
+  "table1_max_abs_rel_change_pct_primary": 0.0017991960861829526,
+  "in_transit_pct_at_48h_controlled_max": 0.4438387564972477,
+  "in_transit_pct_at_48h_failing_range": [
+   5.815276529678205,
+   10.34711808077471
+  ],
+  "immediate_steps_raising": {
+   "0-1h": 7,
+   "0-24h": 0,
+   "0-48h": 0,
+   "peak": 3,
+   "max_arrival": 6
+  },
+  "first_hour_steps_raising_by_agent": {
+   "immediate": {
+    "ceftazidime": 3,
+    "meropenem": 4
+   },
+   "n1_mtt0.5": {
+    "ceftazidime": 4,
+    "meropenem": 4
+   },
+   "n1_mtt1": {
+    "ceftazidime": 4,
+    "meropenem": 4
+   },
+   "n1_mtt2": {
+    "ceftazidime": 2,
+    "meropenem": 4
+   },
+   "n1_mtt4": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "n1_mtt7.63": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "n1_mtt12": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "n1_mtt16": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "n3_mtt0.5": {
+    "ceftazidime": 4,
+    "meropenem": 4
+   },
+   "n3_mtt1": {
+    "ceftazidime": 4,
+    "meropenem": 4
+   },
+   "n3_mtt2": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "n3_mtt4": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "n3_mtt7.63": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "n3_mtt12": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "n3_mtt16": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "n1_mtt7.63_filament_delayed": {
+    "ceftazidime": 4,
+    "meropenem": 4
+   }
+  },
+  "spearman_pooled_fT": -0.3826299374876331,
+  "spearman_pooled_yield_weighted_kill": 0.9995657837603126,
+  "spearman_within_fT": {
+   "ceftazidime": -0.9288668499602326,
+   "meropenem": -0.9756521739130434
+  },
+  "offset_at_matched_fT": [
+   3.957563995398534,
+   6.047922470848634
+  ],
+  "offset_at_matched_fT_immediate": [
+   3.78990352069425,
+   6.042930649334537
+  ],
+  "max_in_transit_pct_at_48h_library": 10.672361394254052,
+  "in_transit_pct_at_48h_figure4": {
+   "ceftazidime": {
+    "20": 5.815276529678205,
+    "40": 0.4420590066915074,
+    "60": 0.2641477237011907,
+    "80": 0.24393985731533926,
+    "95": 0.24052782187578403
+   },
+   "meropenem": {
+    "20": 10.34711808077471,
+    "40": 0.4438387564972477,
+    "60": 0.2645759956485082,
+    "80": 0.2436091014614014,
+    "95": 0.24022321211364714
+   }
+  },
+  "over_mtt_grid_n1": {
+   "mtt_h": [
+    0.5,
+    1.0,
+    2.0,
+    4.0,
+    7.63,
+    12.0,
+    16.0
+   ],
+   "table1_ratio_range": [
+    3.54764272640461,
+    9.165427928373443
+   ],
+   "spearman_pooled_yield_weighted_kill_min": 0.9988059053408598,
+   "spearman_pooled_fT_range": [
+    -0.38458406966943975,
+    -0.3790473618209877
+   ],
+   "failing_over_controlled_fold": {
+    "ceftazidime": [
+     28.811960965787012,
+     32.04361335989211
+    ],
+    "meropenem": [
+     9.728282629525538,
+     12.7022909337928
+    ]
+   },
+   "divergent_first_hour_steps": [
+    4,
+    8
+   ],
+   "offset_range": [
+    3.789903521491315,
+    6.094427173846459
+   ]
+  },
+  "over_every_delay": {
+   "n_configs": 15,
+   "divergent_48h_steps_max": 0,
+   "divergent_peak_steps_max": 0,
+   "divergent_max_arrival_steps_max": 0,
+   "spearman_pooled_yield_weighted_kill_min": 0.9988059053408598,
+   "failing_over_controlled_fold": {
+    "ceftazidime": [
+     27.233297440584366,
+     32.043643075577805
+    ],
+    "meropenem": [
+     9.157993693754454,
+     12.702311720262136
+    ]
+   },
+   "meropenem_first_hour_steps_raising_min": 4,
+   "table1_ratio_range": [
+    3.547564459148635,
+    9.165427928373443
+   ],
+   "offset_range": [
+    3.7899035207027327,
+    6.094427173846459
+   ],
+   "agent_ratio_range_controlled": [
+    4.7853113855575335,
+    1494.0710381621354
+   ]
+  }
+ },
+ "by_delay": [
+  {
+   "label": "immediate",
+   "mtt_h": 0.0,
+   "n": 0,
+   "filament_delayed": false,
+   "table1_ratio_range": [
+    3.5476528736732824,
+    9.106295841166158
+   ],
+   "offset_at_matched_fT": [
+    3.78990352069425,
+    6.042930649334537
+   ],
+   "spearman_pooled_fT": -0.38458406966943975,
+   "spearman_pooled_yield_weighted_kill": 0.9997828918801563,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 7,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 3,
+    "max_arrival": 6
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 32.043625167801,
+    "meropenem": 12.702282863590161
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.77907914777309,
+    "meropenem": -18.860662368689617
+   },
+   "first_hour_share_controlled_range": [
+    0.41017635990873774,
+    0.666422838470703
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 3,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": 1.611561090259217,
+    "meropenem": 3.0014484542520092
+   },
+   "table1_max_abs_rel_change_pct": 0.0,
+   "agent_ratio_range_controlled": [
+    4.7955216147236905,
+    6.5044970294044
+   ],
+   "max_in_transit_fraction_at_48h_library": 0.0
+  },
+  {
+   "label": "n1_mtt0.5",
+   "mtt_h": 0.5,
+   "n": 1,
+   "filament_delayed": false,
+   "table1_ratio_range": [
+    3.5476502897297855,
+    9.106293743668079
+   ],
+   "offset_at_matched_fT": [
+    3.789903521491315,
+    6.042930638083762
+   ],
+   "spearman_pooled_fT": -0.38458406966943975,
+   "spearman_pooled_yield_weighted_kill": 0.9997828918801563,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 8,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 0,
+    "max_arrival": 0
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 32.04361335989211,
+    "meropenem": 12.7022909337928
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.77955607219035,
+    "meropenem": -18.861234057038057
+   },
+   "first_hour_share_controlled_range": [
+    0.23161917209686225,
+    0.40905042881210263
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 4,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": 9.448554060758507,
+    "meropenem": 10.179187257662425
+   },
+   "table1_max_abs_rel_change_pct": 0.0001578747730102137,
+   "agent_ratio_range_controlled": [
+    4.948279740652815,
+    6.504495531191487
+   ],
+   "max_in_transit_fraction_at_48h_library": 1.2355763174023375e-05
+  },
+  {
+   "label": "n1_mtt1",
+   "mtt_h": 1.0,
+   "n": 1,
+   "filament_delayed": false,
+   "table1_ratio_range": [
+    3.547650146025488,
+    9.106282691428465
+   ],
+   "offset_at_matched_fT": [
+    3.7899180927620444,
+    6.042929052046915
+   ],
+   "spearman_pooled_fT": -0.38458406966943975,
+   "spearman_pooled_yield_weighted_kill": 0.9997828918801563,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 8,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 0,
+    "max_arrival": 0
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 32.039802592494134,
+    "meropenem": 12.700373687820552
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.78001507155878,
+    "meropenem": -18.861918338931737
+   },
+   "first_hour_share_controlled_range": [
+    0.15398924192133107,
+    0.2669384429456213
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 4,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": 7.654810662224731,
+    "meropenem": 12.633432293995451
+   },
+   "table1_max_abs_rel_change_pct": 0.0002704589374014077,
+   "agent_ratio_range_controlled": [
+    4.978124070190254,
+    6.504487636734626
+   ],
+   "max_in_transit_fraction_at_48h_library": 3.9719121772796576e-05
+  },
+  {
+   "label": "n1_mtt2",
+   "mtt_h": 2.0,
+   "n": 1,
+   "filament_delayed": false,
+   "table1_ratio_range": [
+    3.547649271294334,
+    9.106232809464439
+   ],
+   "offset_at_matched_fT": [
+    3.79307368718325,
+    6.0427118444331045
+   ],
+   "spearman_pooled_fT": -0.38458406966943975,
+   "spearman_pooled_yield_weighted_kill": 0.9997828918801563,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 6,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 0,
+    "max_arrival": 0
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 31.94815067042404,
+    "meropenem": 12.641862307613408
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.777773712177066,
+    "meropenem": -18.859466186815045
+   },
+   "first_hour_share_controlled_range": [
+    0.09744844476628185,
+    0.15505385717469938
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 2,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": -0.04910921683766167,
+    "meropenem": 14.20068003081074
+   },
+   "table1_max_abs_rel_change_pct": 0.0006921771795953546,
+   "agent_ratio_range_controlled": [
+    5.035607364541668,
+    6.504452006760311
+   ],
+   "max_in_transit_fraction_at_48h_library": 0.0014738362915512012
+  },
+  {
+   "label": "n1_mtt4",
+   "mtt_h": 4.0,
+   "n": 1,
+   "filament_delayed": false,
+   "table1_ratio_range": [
+    3.5476431506026667,
+    9.106040341299234
+   ],
+   "offset_at_matched_fT": [
+    3.837841931076634,
+    6.0410050127291735
+   ],
+   "spearman_pooled_fT": -0.38458406966943975,
+   "spearman_pooled_yield_weighted_kill": 0.9997828918801563,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 4,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 0,
+    "max_arrival": 0
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 31.44468028192505,
+    "meropenem": 12.295772469544987
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.758310277666006,
+    "meropenem": -18.83606194077445
+   },
+   "first_hour_share_controlled_range": [
+    0.05920548824324449,
+    0.08604521853588848
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": -13.995890718694193,
+    "meropenem": 15.082896210631613
+   },
+   "table1_max_abs_rel_change_pct": 0.002805749685497183,
+   "agent_ratio_range_controlled": [
+    5.039483487904174,
+    6.923043227823099
+   ],
+   "max_in_transit_fraction_at_48h_library": 0.024405985064617396
+  },
+  {
+   "label": "n1_mtt7.63",
+   "mtt_h": 7.63,
+   "n": 1,
+   "filament_delayed": false,
+   "table1_ratio_range": [
+    3.54764272640461,
+    9.106459681284528
+   ],
+   "offset_at_matched_fT": [
+    3.957563995398534,
+    6.047922470848634
+   ],
+   "spearman_pooled_fT": -0.3826299374876331,
+   "spearman_pooled_yield_weighted_kill": 0.9995657837603126,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 4,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 0,
+    "max_arrival": 0
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 30.238510388946946,
+    "meropenem": 11.404719095417187
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.64982548819776,
+    "meropenem": -18.693079534148904
+   },
+   "first_hour_share_controlled_range": [
+    0.03227672476609058,
+    0.0540094917600391
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": -30.86610944623046,
+    "meropenem": 15.527269751694451
+   },
+   "table1_max_abs_rel_change_pct": 0.0017991960861829526,
+   "agent_ratio_range_controlled": [
+    5.039081163193678,
+    11.130190226527176
+   ],
+   "max_in_transit_fraction_at_48h_library": 0.10672361394254051
+  },
+  {
+   "label": "n1_mtt12",
+   "mtt_h": 12.0,
+   "n": 1,
+   "filament_delayed": false,
+   "table1_ratio_range": [
+    3.5478639479285254,
+    9.124103774723865
+   ],
+   "offset_at_matched_fT": [
+    4.072404650680348,
+    6.069309505868563
+   ],
+   "spearman_pooled_fT": -0.3802415537098695,
+   "spearman_pooled_yield_weighted_kill": 0.9991315675206253,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 4,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 0,
+    "max_arrival": 0
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 29.172808872273187,
+    "meropenem": 10.408711503776301
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.49744317126126,
+    "meropenem": -18.344681903035664
+   },
+   "first_hour_share_controlled_range": [
+    0.021289749481371197,
+    0.04162321442774501
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": -43.063365160626155,
+    "meropenem": 15.710195795291359
+   },
+   "table1_max_abs_rel_change_pct": 0.19555628181113782,
+   "agent_ratio_range_controlled": [
+    5.03927476684281,
+    16.28716909271789
+   ],
+   "max_in_transit_fraction_at_48h_library": 0.21281907787795457
+  },
+  {
+   "label": "n1_mtt16",
+   "mtt_h": 16.0,
+   "n": 1,
+   "filament_delayed": false,
+   "table1_ratio_range": [
+    3.548409969639772,
+    9.165427928373443
+   ],
+   "offset_at_matched_fT": [
+    4.159825617867127,
+    6.094427173846459
+   ],
+   "spearman_pooled_fT": -0.3790473618209877,
+   "spearman_pooled_yield_weighted_kill": 0.9988059053408598,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 4,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 0,
+    "max_arrival": 0
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 28.811960965787012,
+    "meropenem": 9.728282629525538
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.50821042578567,
+    "meropenem": -18.001382821473943
+   },
+   "first_hour_share_controlled_range": [
+    0.016700013353873167,
+    0.03689208745445741
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": -50.293436868762385,
+    "meropenem": 15.790880603945512
+   },
+   "table1_max_abs_rel_change_pct": 0.6493539001881654,
+   "agent_ratio_range_controlled": [
+    5.039619759277426,
+    20.93812853120908
+   ],
+   "max_in_transit_fraction_at_48h_library": 0.29780285012698926
+  },
+  {
+   "label": "n3_mtt0.5",
+   "mtt_h": 0.5,
+   "n": 3,
+   "filament_delayed": false,
+   "table1_ratio_range": [
+    3.5476495551507035,
+    9.106294546689059
+   ],
+   "offset_at_matched_fT": [
+    3.7899035207027327,
+    6.042930643904572
+   ],
+   "spearman_pooled_fT": -0.38458406966943975,
+   "spearman_pooled_yield_weighted_kill": 0.9997828918801563,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 8,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 0,
+    "max_arrival": 0
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 32.043643075577805,
+    "meropenem": 12.702290298918758
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.77952041936637,
+    "meropenem": -18.861164343537283
+   },
+   "first_hour_share_controlled_range": [
+    0.20247471591495064,
+    0.3839202968175444
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 4,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": 16.64696990173471,
+    "meropenem": 14.911576107509795
+   },
+   "table1_max_abs_rel_change_pct": 0.00016150122845726145,
+   "agent_ratio_range_controlled": [
+    4.847079362197108,
+    6.5044961047779095
+   ],
+   "max_in_transit_fraction_at_48h_library": 1.2214715647986569e-05
+  },
+  {
+   "label": "n3_mtt1",
+   "mtt_h": 1.0,
+   "n": 3,
+   "filament_delayed": false,
+   "table1_ratio_range": [
+    3.5476495033807587,
+    9.106290525998372
+   ],
+   "offset_at_matched_fT": [
+    3.789903520948233,
+    6.042930622414442
+   ],
+   "spearman_pooled_fT": -0.38458406966943975,
+   "spearman_pooled_yield_weighted_kill": 0.9997828918801563,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 8,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 0,
+    "max_arrival": 0
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 32.04359899108763,
+    "meropenem": 12.702311720262136
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.7801170517231,
+    "meropenem": -18.861964718047354
+   },
+   "first_hour_share_controlled_range": [
+    0.09074983924975104,
+    0.16766992007134499
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 4,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": 13.664460055339633,
+    "meropenem": 24.78313368242415
+   },
+   "table1_max_abs_rel_change_pct": 0.0003198530849402026,
+   "agent_ratio_range_controlled": [
+    4.917418916120495,
+    6.504493232855984
+   ],
+   "max_in_transit_fraction_at_48h_library": 2.499609699913071e-05
+  },
+  {
+   "label": "n3_mtt2",
+   "mtt_h": 2.0,
+   "n": 3,
+   "filament_delayed": false,
+   "table1_ratio_range": [
+    3.5476503956002503,
+    9.10625667301163
+   ],
+   "offset_at_matched_fT": [
+    3.789914387729841,
+    6.042928564309015
+   ],
+   "spearman_pooled_fT": -0.38458406966943975,
+   "spearman_pooled_yield_weighted_kill": 0.9997828918801563,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 4,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 0,
+    "max_arrival": 0
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 32.03426381466408,
+    "meropenem": 12.698160039029913
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.781043707772064,
+    "meropenem": -18.863476047288863
+   },
+   "first_hour_share_controlled_range": [
+    0.02712870753470976,
+    0.048494250982399546
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": -25.617525388045426,
+    "meropenem": 32.57425485748682
+   },
+   "table1_max_abs_rel_change_pct": 0.0004650170384312702,
+   "agent_ratio_range_controlled": [
+    5.035120237669756,
+    9.4648080714678
+   ],
+   "max_in_transit_fraction_at_48h_library": 8.685647405654511e-05
+  },
+  {
+   "label": "n3_mtt4",
+   "mtt_h": 4.0,
+   "n": 3,
+   "filament_delayed": false,
+   "table1_ratio_range": [
+    3.547646994403971,
+    9.106117020243708
+   ],
+   "offset_at_matched_fT": [
+    3.7987638357801443,
+    6.042293830691111
+   ],
+   "spearman_pooled_fT": -0.38458406966943975,
+   "spearman_pooled_yield_weighted_kill": 0.9997828918801563,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 4,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 0,
+    "max_arrival": 0
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 31.71771965724125,
+    "meropenem": 12.495218538805709
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.7715471583428,
+    "meropenem": -18.85245467019413
+   },
+   "first_hour_share_controlled_range": [
+    0.00491521690536044,
+    0.026330744996846258
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": -68.87884889121383,
+    "meropenem": 37.33480388206842
+   },
+   "table1_max_abs_rel_change_pct": 0.0019637064902044976,
+   "agent_ratio_range_controlled": [
+    5.038583618506106,
+    34.84381110860457
+   ],
+   "max_in_transit_fraction_at_48h_library": 0.004234101778242999
+  },
+  {
+   "label": "n3_mtt7.63",
+   "mtt_h": 7.63,
+   "n": 3,
+   "filament_delayed": false,
+   "table1_ratio_range": [
+    3.547630840004508,
+    9.105759966179278
+   ],
+   "offset_at_matched_fT": [
+    3.9438788534318245,
+    6.035746632234415
+   ],
+   "spearman_pooled_fT": -0.38458406966943975,
+   "spearman_pooled_yield_weighted_kill": 0.9997828918801563,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 4,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 0,
+    "max_arrival": 0
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 30.41055862701153,
+    "meropenem": 11.583491554044883
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.72172929244929,
+    "meropenem": -18.791332846636067
+   },
+   "first_hour_share_controlled_range": [
+    0.0008509067439543814,
+    0.02401701552005307
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": -82.48622520972438,
+    "meropenem": 39.81462266502254
+   },
+   "table1_max_abs_rel_change_pct": 0.005884664810229534,
+   "agent_ratio_range_controlled": [
+    5.039141774543895,
+    183.5799448927376
+   ],
+   "max_in_transit_fraction_at_48h_library": 0.07266599742685372
+  },
+  {
+   "label": "n3_mtt12",
+   "mtt_h": 12.0,
+   "n": 3,
+   "filament_delayed": false,
+   "table1_ratio_range": [
+    3.547603917900889,
+    9.10399341679408
+   ],
+   "offset_at_matched_fT": [
+    4.17986900881154,
+    6.047312811651644
+   ],
+   "spearman_pooled_fT": -0.3826299374876331,
+   "spearman_pooled_yield_weighted_kill": 0.9995657837603126,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 4,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 0,
+    "max_arrival": 0
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 28.671540071560216,
+    "meropenem": 10.311609949526606
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.58080765535679,
+    "meropenem": -18.625652276078487
+   },
+   "first_hour_share_controlled_range": [
+    0.00023632626560851668,
+    0.0237428360149243
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": -84.81797508592133,
+    "meropenem": 40.84953091973054
+   },
+   "table1_max_abs_rel_change_pct": 0.02528387406074417,
+   "agent_ratio_range_controlled": [
+    5.037839435310259,
+    653.3178135239523
+   ],
+   "max_in_transit_fraction_at_48h_library": 0.20505449653358368
+  },
+  {
+   "label": "n3_mtt16",
+   "mtt_h": 16.0,
+   "n": 3,
+   "filament_delayed": false,
+   "table1_ratio_range": [
+    3.547625243460695,
+    9.105816531561384
+   ],
+   "offset_at_matched_fT": [
+    4.336643455997842,
+    6.077693570138617
+   ],
+   "spearman_pooled_fT": -0.3790473618209877,
+   "spearman_pooled_yield_weighted_kill": 0.9988059053408598,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 4,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 0,
+    "max_arrival": 0
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 27.233297440584366,
+    "meropenem": 9.157993693754454
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.313810922823606,
+    "meropenem": -18.2671909328577
+   },
+   "first_hour_share_controlled_range": [
+    0.0001041831514878382,
+    0.023931938477794627
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 0,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": -85.33431897274271,
+    "meropenem": 41.30846871825429
+   },
+   "table1_max_abs_rel_change_pct": 0.0052634969600617865,
+   "agent_ratio_range_controlled": [
+    5.038306466092494,
+    1494.0710381621354
+   ],
+   "max_in_transit_fraction_at_48h_library": 0.3227825951680668
+  },
+  {
+   "label": "n1_mtt7.63_filament_delayed",
+   "mtt_h": 7.63,
+   "n": 1,
+   "filament_delayed": true,
+   "table1_ratio_range": [
+    3.547564459148635,
+    9.091489574062901
+   ],
+   "offset_at_matched_fT": [
+    3.9150362187385137,
+    6.031737081241009
+   ],
+   "spearman_pooled_fT": -0.3826299374876331,
+   "spearman_pooled_yield_weighted_kill": 0.9995657837603126,
+   "divergent_steps_by_endpoint": {
+    "0-1h": 8,
+    "0-24h": 0,
+    "0-48h": 0,
+    "peak": 0,
+    "max_arrival": 0
+   },
+   "failing_over_controlled_fold": {
+    "ceftazidime": 27.546115347001788,
+    "meropenem": 11.404719095417187
+   },
+   "auc48_change_pct_reference_to_top": {
+    "ceftazidime": -36.54691258726825,
+    "meropenem": -18.693079534148904
+   },
+   "first_hour_share_controlled_range": [
+    0.02378442478042879,
+    0.04586131005071649
+   ],
+   "first_hour_steps_raising": {
+    "ceftazidime": 4,
+    "meropenem": 4
+   },
+   "first_hour_change_pct_reference_to_top": {
+    "ceftazidime": 18.654257807002452,
+    "meropenem": 15.527269751694451
+   },
+   "table1_max_abs_rel_change_pct": 0.1625937413138212,
+   "agent_ratio_range_controlled": [
+    4.7853113855575335,
+    6.493921124330657
+   ],
+   "max_in_transit_fraction_at_48h_library": 0.10672361394254051
+  }
+ ],
+ "results": {
+  "immediate": {
+   "config": {
+    "label": "immediate",
+    "mtt_h": 0.0,
+    "n": 0,
+    "delay_filament": false
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.553147920583079,
+       "7": 9.106295841166158
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.7090249826971244,
+       "7": 7.418049965394249
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.581781606150169,
+       "7": 7.163563212300338
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.5476528736732824,
+       "7": 7.095305747346565
+      }
+     }
+    ],
+    "range": [
+     3.5476528736732824,
+     9.106295841166158
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.38458406966943975,
+     "fAUC_MIC": -0.48176291793313064,
+     "fCmax_MIC": -0.44653132387786615,
+     "net_log10_change": 0.4153278332609639,
+     "cum_killed_cfu_per_mL": 0.4423577941815024,
+     "yield_weighted_kill": 0.9997828918801563
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.9340876472433816,
+      "fAUC_MIC": -0.9208695652173912,
+      "fCmax_MIC": -0.8467058256258435,
+      "net_log10_change": 0.9156521739130434,
+      "cum_killed_cfu_per_mL": 0.9982608695652172,
+      "yield_weighted_kill": 0.9982608695652172
+     },
+     "meropenem": {
+      "fT_pct": -0.9782608695652173,
+      "fAUC_MIC": -0.9165217391304347,
+      "fCmax_MIC": -0.8196651734543691,
+      "net_log10_change": 0.9582608695652173,
+      "cum_killed_cfu_per_mL": 0.9999999999999999,
+      "yield_weighted_kill": 0.9999999999999999
+     }
+    },
+    "offset_at_matched_fT": [
+     3.78990352069425,
+     6.042930649334537
+    ],
+    "max_in_transit_fraction_at_48h": 0.0
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 7,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 3,
+     "max_arrival": 6
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.1360425377718493,
+       "0-24h": 0.10981258847294134,
+       "0-48h": 0.04732376951302397,
+       "peak": 0.23680455074854564,
+       "max_arrival": 0.23845569099661365
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0152160885618682,
+       "0-24h": 0.6864825491896213,
+       "0-48h": 0.6780829688320579,
+       "peak": 1.0054861576039087,
+       "max_arrival": 1.050127599019524
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0011116568340654,
+       "0-24h": 0.9465681302354517,
+       "0-48h": 0.9450294694113005,
+       "peak": 1.0076447883886237,
+       "max_arrival": 1.041383710198443
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.9997746339690767,
+       "0-24h": 0.9870243979923236,
+       "0-48h": 0.9865807316390096,
+       "peak": 0.9835877470674272,
+       "max_arrival": 1.0254760072163072
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.1423869672639104,
+       "0-24h": 0.22160689820098659,
+       "0-48h": 0.09559935881946345,
+       "peak": 0.3098451722838763,
+       "max_arrival": 0.3260850938266009
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0216601404943428,
+       "0-24h": 0.839250455174071,
+       "0-48h": 0.8324053016422122,
+       "peak": 1.012941044072654,
+       "max_arrival": 1.059968785574702
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0063969716554209,
+       "0-24h": 0.9797677492988209,
+       "0-48h": 0.9786017956574826,
+       "peak": 0.9960739722066239,
+       "max_arrival": 1.039689450225759
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0017689367291231,
+       "0-24h": 0.9964279105622633,
+       "0-48h": 0.9960717249960089,
+       "peak": 0.9986733576063187,
+       "max_arrival": 1.013647502099945
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 32.043625167801,
+      "change_pct_reference_to_top": {
+       "0-1h": 1.611561090259217,
+       "0-24h": -35.862907563716696,
+       "0-48h": -36.77907914777309,
+       "peak": -0.3455563171288367,
+       "max_arrival": 12.144597435062243
+      },
+      "first_hour_change_pct_failing_to_reference": 13.604253777184926,
+      "t_peak_h_reference": 0.4287761576141767,
+      "in_transit_fraction_at_48h": {
+       "20": 0.0,
+       "40": 0.0,
+       "60": 0.0,
+       "80": 0.0,
+       "95": 0.0
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 12.702282863590161,
+      "change_pct_reference_to_top": {
+       "0-1h": 3.0014484542520092,
+       "0-24h": -18.066669430970684,
+       "0-48h": -18.860662368689617,
+       "peak": 0.7625674686702055,
+       "max_arrival": 11.707843481659053
+      },
+      "first_hour_change_pct_failing_to_reference": 14.238696726391042,
+      "t_peak_h_reference": 0.3576403250644002,
+      "in_transit_fraction_at_48h": {
+       "20": 0.0,
+       "40": 0.0,
+       "60": 0.0,
+       "80": 0.0,
+       "95": 0.0
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 5.11051885300741,
+      "0-24h": 13.064446831462893,
+      "0-48h": 13.139818570095791,
+      "peak": 6.6261274391881315,
+      "max_arrival": 6.6192702263190135
+     },
+     "40": {
+      "0-1h": 5.0821367657988965,
+      "0-24h": 6.4738089616186425,
+      "0-48h": 6.5044970294044,
+      "peak": 5.064132901841599,
+      "max_arrival": 4.840462460849387
+     },
+     "60": {
+      "0-1h": 5.050081533389711,
+      "0-24h": 5.295388106780123,
+      "0-48h": 5.298607118138724,
+      "peak": 5.026862681559005,
+      "max_arrival": 4.7955216147236905
+     },
+     "80": {
+      "0-1h": 5.0235599206173935,
+      "0-24h": 5.115952859943705,
+      "0-48h": 5.116830865928824,
+      "peak": 5.085256842719165,
+      "max_arrival": 4.803336313928537
+     },
+     "95": {
+      "0-1h": 5.013559112000131,
+      "0-24h": 5.06767247105079,
+      "0-48h": 5.068075533818965,
+      "peak": 5.008440730989332,
+      "max_arrival": 4.859387641482946
+     }
+    },
+    "agent_ratio_range_controlled": [
+     4.7955216147236905,
+     6.5044970294044
+    ],
+    "first_hour_share_controlled_range": [
+     0.41017635990873774,
+     0.666422838470703
+    ],
+    "arms": {
+     "ceftazidime 20": {
+      "window_AUC": {
+       "0-1h": 9.08966888727787,
+       "0-2h": 14.558836987735635,
+       "0-4h": 19.235137840422215,
+       "0-8h": 37.25203257644583,
+       "0-24h": 225.6351872338152,
+       "0-48h": 531.9768082949286
+      },
+      "peak": 63.209196703656986,
+      "t_peak_h": 24.540425005466883,
+      "max_arrival": 928.3667787135638,
+      "t_max_arrival_h": 24.46908655729002,
+      "in_transit_fraction_at_end": 0.0,
+      "first_hour_share": 0.017086588636094354,
+      "mass_balance_rel_residual": 8.356707361656595e-15
+     },
+     "ceftazidime 40": {
+      "window_AUC": {
+       "0-1h": 10.326250510208974,
+       "0-2h": 15.098047713149437,
+       "0-4h": 17.058406361345714,
+       "0-8h": 19.09271389289129,
+       "0-24h": 24.777583960722016,
+       "0-48h": 25.175147862023337
+      },
+      "peak": 14.968225428585944,
+      "t_peak_h": 0.4287761576141767,
+      "max_arrival": 221.37434171644318,
+      "t_max_arrival_h": 0.28115594334446664,
+      "in_transit_fraction_at_end": 0.0,
+      "first_hour_share": 0.41017635990873774,
+      "mass_balance_rel_residual": 2.2741275505217733e-15
+     },
+     "ceftazidime 60": {
+      "window_AUC": {
+       "0-1h": 10.48337565248435,
+       "0-2h": 14.63431873526049,
+       "0-4h": 16.248431918150665,
+       "0-8h": 16.541595566227247,
+       "0-24h": 17.009379000116322,
+       "0-48h": 17.07083900306682
+      },
+      "peak": 15.050343472338,
+      "t_peak_h": 0.25695527891625314,
+      "max_arrival": 232.47130595121615,
+      "t_max_arrival_h": 0.19202855470517077,
+      "in_transit_fraction_at_end": 0.0,
+      "first_hour_share": 0.6141101588856286,
+      "mass_balance_rel_residual": 2.9944613818208364e-15
+     },
+     "ceftazidime 80": {
+      "window_AUC": {
+       "0-1h": 10.495029568672509,
+       "0-2h": 14.34627363438105,
+       "0-4h": 15.837821751315607,
+       "0-8h": 16.001800054055856,
+       "0-24h": 16.100536076606264,
+       "0-48h": 16.13244592547397
+      },
+      "peak": 15.165400163360127,
+      "t_peak_h": 0.2369045659971511,
+      "max_arrival": 242.09183110615484,
+      "t_max_arrival_h": 0.10979970954958555,
+      "in_transit_fraction_at_end": 0.0,
+      "first_hour_share": 0.6505541451777199,
+      "mass_balance_rel_residual": 8.872223980032372e-16
+     },
+     "ceftazidime 95": {
+      "window_AUC": {
+       "0-1h": 10.492664345514195,
+       "0-2h": 14.229915897160204,
+       "0-4h": 15.676235570431436,
+       "0-8h": 15.831565212700095,
+       "0-24h": 15.891621928365986,
+       "0-48h": 15.915960304280869
+      },
+      "peak": 14.91650178005538,
+      "t_peak_h": 0.18451298742550942,
+      "max_arrival": 248.25936434242428,
+      "t_max_arrival_h": 0.06082364744789767,
+      "in_transit_fraction_at_end": 0.0,
+      "first_hour_share": 0.6592542419631452,
+      "mass_balance_rel_residual": 1.2847008490873763e-15
+     },
+     "meropenem 20": {
+      "window_AUC": {
+       "0-1h": 1.7786195783093202,
+       "0-2h": 2.6216636496030445,
+       "0-4h": 2.7703406382796727,
+       "0-8h": 2.772248784479834,
+       "0-24h": 17.270933101462948,
+       "0-48h": 40.48585644139913
+      },
+      "peak": 9.539387415012005,
+      "t_peak_h": 24.46543851036421,
+      "max_arrival": 140.25213459669104,
+      "t_max_arrival_h": 24.387628169182197,
+      "in_transit_fraction_at_end": 0.0,
+      "first_hour_share": 0.04393187484828847,
+      "mass_balance_rel_residual": 6.46460558841442e-15
+     },
+     "meropenem 40": {
+      "window_AUC": {
+       "0-1h": 2.0318718259809994,
+       "0-2h": 2.8654888419528413,
+       "0-4h": 3.1419013458850595,
+       "0-8h": 3.148531827455743,
+       "0-24h": 3.827357913651949,
+       "0-48h": 3.870421917054601
+      },
+      "peak": 2.9557331370870363,
+      "t_peak_h": 0.3576403250644002,
+      "max_arrival": 45.73413046934305,
+      "t_max_arrival_h": 0.1998737120139154,
+      "in_transit_fraction_at_end": 0.0,
+      "first_hour_share": 0.524974245579732,
+      "mass_balance_rel_residual": 2.6414785524900794e-16
+     },
+     "meropenem 60": {
+      "window_AUC": {
+       "0-1h": 2.075882455198245,
+       "0-2h": 2.8343904830117865,
+       "0-4h": 3.1259357546088062,
+       "0-8h": 3.145820306351285,
+       "0-24h": 3.212111871146481,
+       "0-48h": 3.2217597233484643
+      },
+      "peak": 2.993983409881084,
+      "t_peak_h": 0.2138770958379168,
+      "max_arrival": 48.47675073290453,
+      "t_max_arrival_h": 0.07296904942542663,
+      "in_transit_fraction_at_end": 0.0,
+      "first_hour_share": 0.6443318662636711,
+      "mass_balance_rel_residual": 1.9039849014009915e-15
+     },
+     "meropenem 80": {
+      "window_AUC": {
+       "0-1h": 2.0891618164241335,
+       "0-2h": 2.820127400165179,
+       "0-4h": 3.1029136235444215,
+       "0-8h": 3.130670980687741,
+       "0-24h": 3.147123618489212,
+       "0-48h": 3.1528198504457614
+      },
+      "peak": 2.9822289478009836,
+      "t_peak_h": 0.22746642406308737,
+      "max_arrival": 50.40076631822467,
+      "t_max_arrival_h": 0.03770763997977233,
+      "in_transit_fraction_at_end": 0.0,
+      "first_hour_share": 0.6626327908106635,
+      "mass_balance_rel_residual": 4.864043705103175e-16
+     },
+     "meropenem 95": {
+      "window_AUC": {
+       "0-1h": 2.092857411494288,
+       "0-2h": 2.8157253560328885,
+       "0-4h": 3.095418074840451,
+       "0-8h": 3.124965852299896,
+       "0-24h": 3.135881811452355,
+       "0-48h": 3.1404347070351686
+      },
+      "peak": 2.978272596451167,
+      "t_peak_h": 0.18292600394291045,
+      "max_arrival": 51.08861088239148,
+      "t_max_arrival_h": 0.02248991614066813,
+      "in_transit_fraction_at_end": 0.0,
+      "first_hour_share": 0.666422838470703,
+      "mass_balance_rel_residual": 1.953289569636588e-15
+     }
+    }
+   }
+  },
+  "n1_mtt0.5": {
+   "config": {
+    "label": "n1_mtt0.5",
+    "mtt_h": 0.5,
+    "n": 1,
+    "delay_filament": false
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.5531468718340395,
+       "7": 9.106293743668079
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.7090227311922175,
+       "7": 7.418045462384435
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.5817759514205885,
+       "7": 7.163551902841177
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.5476502897297855,
+       "7": 7.095300579459571
+      }
+     }
+    ],
+    "range": [
+     3.5476502897297855,
+     9.106293743668079
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.38458406966943975,
+     "fAUC_MIC": -0.48176291793313064,
+     "fCmax_MIC": -0.44653132387786615,
+     "net_log10_change": 0.4153278332609639,
+     "cum_killed_cfu_per_mL": 0.4423577941815024,
+     "yield_weighted_kill": 0.9997828918801563
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.9340876472433816,
+      "fAUC_MIC": -0.9208695652173912,
+      "fCmax_MIC": -0.8467058256258435,
+      "net_log10_change": 0.9156521739130434,
+      "cum_killed_cfu_per_mL": 0.9982608695652172,
+      "yield_weighted_kill": 0.9982608695652172
+     },
+     "meropenem": {
+      "fT_pct": -0.9782608695652173,
+      "fAUC_MIC": -0.9165217391304347,
+      "fCmax_MIC": -0.8196651734543691,
+      "net_log10_change": 0.9582608695652173,
+      "cum_killed_cfu_per_mL": 0.9999999999999999,
+      "yield_weighted_kill": 0.9999999999999999
+     }
+    },
+    "offset_at_matched_fT": [
+     3.789903521491315,
+     6.042930638083762
+    ],
+    "max_in_transit_fraction_at_48h": 1.2355763174023375e-05
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 8,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 0,
+     "max_arrival": 0
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.1664013718479522,
+       "0-24h": 0.10981328753514771,
+       "0-48h": 0.047323873404549674,
+       "peak": 0.23607870153287533,
+       "max_arrival": 0.23549817647362917
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.058909296716284,
+       "0-24h": 0.6864816019452706,
+       "0-48h": 0.6780826086823591,
+       "peak": 0.9743426387776355,
+       "max_arrival": 0.9769575018048862
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0243129136192215,
+       "0-24h": 0.9465568172424189,
+       "0-48h": 0.9450269492220987,
+       "peak": 0.9866779773195433,
+       "max_arrival": 0.9845494687446562
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.009063783839879,
+       "0-24h": 0.9870049736952615,
+       "0-48h": 0.9865764440799226,
+       "peak": 0.9934602156315903,
+       "max_arrival": 0.9947111845655191
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.289918777195676,
+       "0-24h": 0.22160714393426328,
+       "0-48h": 0.09559939299293274,
+       "peak": 0.3063474633274213,
+       "max_arrival": 0.3066422667337094
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.070254238067711,
+       "0-24h": 0.8392499711532755,
+       "0-48h": 0.8324051730938676,
+       "peak": 0.9819537267435706,
+       "max_arrival": 0.9801397031676244
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.022784819821846,
+       "0-24h": 0.9797603223744997,
+       "0-48h": 0.9786001368577537,
+       "peak": 0.992066249136061,
+       "max_arrival": 0.9928449122575123
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0065337333879874,
+       "0-24h": 0.9964045524052694,
+       "0-48h": 0.9960665491391099,
+       "peak": 0.9955921567603087,
+       "max_arrival": 0.9969839024176683
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 32.04361335989211,
+      "change_pct_reference_to_top": {
+       "0-1h": 9.448554060758507,
+       "0-24h": -35.86502478136896,
+       "0-48h": -36.77955607219035,
+       "peak": -4.4924678907844235,
+       "max_arrival": -4.322412643602458
+      },
+      "first_hour_change_pct_failing_to_reference": 16.640137184795222,
+      "t_peak_h_reference": 0.8906763235509735,
+      "in_transit_fraction_at_48h": {
+       "20": 2.181010118663255e-06,
+       "40": 2.3482522171572412e-07,
+       "60": 7.235965915230934e-07,
+       "80": 3.2257684526025784e-06,
+       "95": 7.478357688492316e-06
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 12.7022909337928,
+      "change_pct_reference_to_top": {
+       "0-1h": 10.179187257662425,
+       "0-24h": -18.06925841921636,
+       "0-48h": -18.861234057038057,
+       "peak": -3.013080794168621,
+       "max_arrival": -2.9808327548666136
+      },
+      "first_hour_change_pct_failing_to_reference": 28.991877719567594,
+      "t_peak_h_reference": 0.8576403250644001,
+      "in_transit_fraction_at_48h": {
+       "20": 3.3238015201112703e-07,
+       "40": 2.5731014751022784e-08,
+       "60": 1.6129828379081634e-07,
+       "80": 1.6859056462226972e-06,
+       "95": 6.633567137408207e-06
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 5.530912420072837,
+      "0-24h": 13.064354000921949,
+      "0-48h": 13.139791394323355,
+      "peak": 6.649009377840885,
+      "max_arrival": 6.655305731395159
+     },
+     "40": {
+      "0-1h": 5.0012946151300195,
+      "0-24h": 6.473796994512802,
+      "0-48h": 6.504495531191487,
+      "peak": 5.123886071558288,
+      "max_arrival": 5.111207858958071
+     },
+     "60": {
+      "0-1h": 4.948279740652815,
+      "0-24h": 5.295374065196096,
+      "0-48h": 5.298603901703171,
+      "peak": 5.084171015180439,
+      "max_arrival": 5.094613395371452
+     },
+     "80": {
+      "0-1h": 4.955672728339792,
+      "0-24h": 5.115916930696196,
+      "0-48h": 5.116822787743699,
+      "peak": 5.056557037368665,
+      "max_arrival": 5.052046749645235
+     },
+     "95": {
+      "0-1h": 4.968129441522727,
+      "0-24h": 5.067655946994486,
+      "0-48h": 5.068071842471116,
+      "peak": 5.045729027279919,
+      "max_arrival": 5.040530137581622
+     }
+    },
+    "agent_ratio_range_controlled": [
+     4.948279740652815,
+     6.504495531191487
+    ],
+    "first_hour_share_controlled_range": [
+     0.23161917209686225,
+     0.40905042881210263
+    ]
+   }
+  },
+  "n1_mtt1": {
+   "config": {
+    "label": "n1_mtt1",
+    "mtt_h": 1.0,
+    "n": 1,
+    "delay_filament": false
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.5531413457142325,
+       "7": 9.106282691428465
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.709018208826511,
+       "7": 7.418036417653022
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.581771918901697,
+       "7": 7.163543837803394
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.547650146025488,
+       "7": 7.095300292050976
+      }
+     }
+    ],
+    "range": [
+     3.547650146025488,
+     9.106282691428465
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.38458406966943975,
+     "fAUC_MIC": -0.48176291793313064,
+     "fCmax_MIC": -0.44653132387786615,
+     "net_log10_change": 0.4153278332609639,
+     "cum_killed_cfu_per_mL": 0.4423577941815024,
+     "yield_weighted_kill": 0.9997828918801563
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.9340876472433816,
+      "fAUC_MIC": -0.9208695652173912,
+      "fCmax_MIC": -0.8467058256258435,
+      "net_log10_change": 0.9156521739130434,
+      "cum_killed_cfu_per_mL": 0.9982608695652172,
+      "yield_weighted_kill": 0.9982608695652172
+     },
+     "meropenem": {
+      "fT_pct": -0.9782608695652173,
+      "fAUC_MIC": -0.9165217391304347,
+      "fCmax_MIC": -0.8196651734543691,
+      "net_log10_change": 0.9582608695652173,
+      "cum_killed_cfu_per_mL": 0.9999999999999999,
+      "yield_weighted_kill": 0.9999999999999999
+     }
+    },
+    "offset_at_matched_fT": [
+     3.7899180927620444,
+     6.042929052046915
+    ],
+    "max_in_transit_fraction_at_48h": 3.9719121772796576e-05
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 8,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 0,
+     "max_arrival": 0
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0967413293165227,
+       "0-24h": 0.10984722313670248,
+       "0-48h": 0.04732958585833226,
+       "peak": 0.23379614713642197,
+       "max_arrival": 0.23403925182620466
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.045515457600864,
+       "0-24h": 0.6865047966730804,
+       "0-48h": 0.6780826746492697,
+       "peak": 0.9704955006867431,
+       "max_arrival": 0.9707879142655448
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0211936283115624,
+       "0-24h": 0.946540586974241,
+       "0-48h": 0.9450233153343961,
+       "peak": 0.983714727652366,
+       "max_arrival": 0.9835726846414344
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.008311886696104,
+       "0-24h": 0.986989146942653,
+       "0-48h": 0.9865729789049991,
+       "peak": 0.9936160189476891,
+       "max_arrival": 0.9930117072724797
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.333439116569493,
+       "0-24h": 0.2217099333386325,
+       "0-48h": 0.09561400108394055,
+       "peak": 0.3120050714988343,
+       "max_arrival": 0.31183089916972406
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.086187402407181,
+       "0-24h": 0.8392667519936576,
+       "0-48h": 0.8324052587315004,
+       "peak": 0.9798381840098843,
+       "max_arrival": 0.9796098078821907
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0284969552029075,
+       "0-24h": 0.9797429982081248,
+       "0-48h": 0.978596282427633,
+       "peak": 0.9922628422202179,
+       "max_arrival": 0.9916967131615965
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0082298397648668,
+       "0-24h": 0.9963837260818313,
+       "0-48h": 0.9960619695682154,
+       "peak": 0.9974977970589595,
+       "max_arrival": 0.996288850637144
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 32.039802592494134,
+      "change_pct_reference_to_top": {
+       "0-1h": 7.654810662224731,
+       "0-24h": -35.86498596552424,
+       "0-48h": -36.78001507155878,
+       "peak": -5.140401030317054,
+       "max_arrival": -5.183222969612478
+      },
+      "first_hour_change_pct_failing_to_reference": 9.674132931652268,
+      "t_peak_h_reference": 1.1906763235509736,
+      "in_transit_fraction_at_48h": {
+       "20": 0.000117851187884259,
+       "40": 3.833261172870071e-06,
+       "60": 4.269995834320453e-06,
+       "80": 1.0532625903536845e-05,
+       "95": 1.8357422582391386e-05
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 12.700373687820552,
+      "change_pct_reference_to_top": {
+       "0-1h": 12.633432293995451,
+       "0-24h": -18.07078141964635,
+       "0-48h": -18.861918338931737,
+       "peak": -3.017576299680358,
+       "max_arrival": -3.2129465237498933
+      },
+      "first_hour_change_pct_failing_to_reference": 33.3439116569493,
+      "t_peak_h_reference": 1.0576403250644002,
+      "in_transit_fraction_at_48h": {
+       "20": 0.00014460363165532007,
+       "40": 2.4812780319873413e-06,
+       "60": 2.5324769284442756e-06,
+       "80": 7.834368353002968e-06,
+       "95": 1.7422655597184285e-05
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 6.332918735821072,
+      "0-24h": 13.066122322276247,
+      "0-48h": 13.140197123439119,
+      "peak": 6.872630822079992,
+      "max_arrival": 6.858654845116618
+     },
+     "40": {
+      "0-1h": 5.20876703440846,
+      "0-24h": 6.473671398720474,
+      "0-48h": 6.504487636734626,
+      "peak": 5.149899003802974,
+      "max_arrival": 5.147643972291495
+     },
+     "60": {
+      "0-1h": 5.013726395138546,
+      "0-24h": 5.295344366674637,
+      "0-48h": 5.2985974411807435,
+      "peak": 5.1007951044817705,
+      "max_arrival": 5.101286772583481
+     },
+     "80": {
+      "0-1h": 4.978124070190254,
+      "0-24h": 5.1158909777666075,
+      "0-48h": 5.116817027002412,
+      "peak": 5.05685293605119,
+      "max_arrival": 5.059496779050205
+     },
+     "95": {
+      "0-1h": 4.978529176037322,
+      "0-24h": 5.0676549002394955,
+      "0-48h": 5.068071637179267,
+      "peak": 5.03717411460722,
+      "max_arrival": 5.042854320101275
+     }
+    },
+    "agent_ratio_range_controlled": [
+     4.978124070190254,
+     6.504487636734626
+    ],
+    "first_hour_share_controlled_range": [
+     0.15398924192133107,
+     0.2669384429456213
+    ]
+   }
+  },
+  "n1_mtt2": {
+   "config": {
+    "label": "n1_mtt2",
+    "mtt_h": 2.0,
+    "n": 1,
+    "delay_filament": false
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.5531164047322195,
+       "7": 9.106232809464439
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.7090084649042554,
+       "7": 7.418016929808511
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.581767283004087,
+       "7": 7.163534566008174
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.547649271294334,
+       "7": 7.095298542588668
+      }
+     }
+    ],
+    "range": [
+     3.547649271294334,
+     9.106232809464439
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.38458406966943975,
+     "fAUC_MIC": -0.48176291793313064,
+     "fCmax_MIC": -0.44653132387786615,
+     "net_log10_change": 0.4153278332609639,
+     "cum_killed_cfu_per_mL": 0.4423577941815024,
+     "yield_weighted_kill": 0.9997828918801563
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.9340876472433816,
+      "fAUC_MIC": -0.9208695652173912,
+      "fCmax_MIC": -0.8467058256258435,
+      "net_log10_change": 0.9156521739130434,
+      "cum_killed_cfu_per_mL": 0.9982608695652172,
+      "yield_weighted_kill": 0.9982608695652172
+     },
+     "meropenem": {
+      "fT_pct": -0.9782608695652173,
+      "fAUC_MIC": -0.9165217391304347,
+      "fCmax_MIC": -0.8196651734543691,
+      "net_log10_change": 0.9582608695652173,
+      "cum_killed_cfu_per_mL": 0.9999999999999999,
+      "yield_weighted_kill": 0.9999999999999999
+     }
+    },
+    "offset_at_matched_fT": [
+     3.79307368718325,
+     6.0427118444331045
+    ],
+    "max_in_transit_fraction_at_48h": 0.0014738362915512012
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 6,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 0,
+     "max_arrival": 0
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.9719566524412222,
+       "0-24h": 0.11060493584119267,
+       "0-48h": 0.047463631632236214,
+       "peak": 0.2224464577248312,
+       "max_arrival": 0.22232174246830436
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.9978973212101193,
+       "0-24h": 0.687162329837374,
+       "0-48h": 0.67810701692798,
+       "peak": 0.9645619010841531,
+       "max_arrival": 0.965295776584178
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0009346931198566,
+       "0-24h": 0.9465604814282114,
+       "0-48h": 0.9450244659211304,
+       "peak": 0.9827781109430757,
+       "max_arrival": 0.9820862431468126
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0006796540229694,
+       "0-24h": 0.9869819162861825,
+       "0-48h": 0.9865713383758866,
+       "peak": 0.9932570935269208,
+       "max_arrival": 0.9936387843142083
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.3604928145021076,
+       "0-24h": 0.2247564791847406,
+       "0-48h": 0.09605337041076933,
+       "peak": 0.3120248158833147,
+       "max_arrival": 0.31188283961641206
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0962395376849987,
+       "0-24h": 0.839869862996524,
+       "0-48h": 0.8324327679900585,
+       "peak": 0.9796980273627474,
+       "max_arrival": 0.9790383445424921
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0321357041026837,
+       "0-24h": 0.9797516382084347,
+       "0-48h": 0.9785961696269976,
+       "peak": 0.991852988526646,
+       "max_arrival": 0.9920887999693223
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0093143009973768,
+       "0-24h": 0.9963713484138411,
+       "0-48h": 0.9960592696512736,
+       "peak": 0.9970903175649354,
+       "max_arrival": 0.9975392214509212
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 31.94815067042404,
+      "change_pct_reference_to_top": {
+       "0-1h": -0.04910921683766167,
+       "0-24h": -35.80267858081345,
+       "0-48h": -36.777773712177066,
+       "peak": -5.844161733420538,
+       "max_arrival": -5.802675327308837
+      },
+      "first_hour_change_pct_failing_to_reference": -2.80433475587778,
+      "t_peak_h_reference": 1.490676323550974,
+      "in_transit_fraction_at_48h": {
+       "20": 0.0029037517894603695,
+       "40": 6.56016507080733e-05,
+       "60": 3.1449786804434414e-05,
+       "80": 3.677287622179241e-05,
+       "95": 4.648311200977833e-05
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 12.641862307613408,
+      "change_pct_reference_to_top": {
+       "0-1h": 14.20068003081074,
+       "0-24h": -18.012201214939928,
+       "0-48h": -18.859466186815045,
+       "peak": -3.111096989495199,
+       "max_arrival": -3.1097160559987347
+      },
+      "first_hour_change_pct_failing_to_reference": 36.049281450210756,
+      "t_peak_h_reference": 1.4576403250644006,
+      "in_transit_fraction_at_48h": {
+       "20": 0.004615276421030876,
+       "40": 5.891836019310585e-05,
+       "60": 2.711421774162884e-05,
+       "80": 3.2729740620482875e-05,
+       "95": 4.528304245376881e-05
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 8.053473553039412,
+      "0-24h": 13.151535701612488,
+      "0-48h": 13.163226589262662,
+      "peak": 7.2747997998090606,
+      "max_arrival": 7.270062668434965
+     },
+     "40": {
+      "0-1h": 5.753523364252929,
+      "0-24h": 6.472003689354657,
+      "0-48h": 6.504452006760311,
+      "peak": 5.186297255055512,
+      "max_arrival": 5.182372336638102
+     },
+     "60": {
+      "0-1h": 5.237382301346636,
+      "0-24h": 5.295245525331384,
+      "0-48h": 5.298583521291804,
+      "peak": 5.106170064861853,
+      "max_arrival": 5.1096283992647225
+     },
+     "80": {
+      "0-1h": 5.07905852468042,
+      "0-24h": 5.115857895276042,
+      "0-48h": 5.11681040429156,
+      "peak": 5.059451580574836,
+      "max_arrival": 5.058111490287285
+     },
+     "95": {
+      "0-1h": 5.035607364541668,
+      "0-24h": 5.067647957727246,
+      "0-48h": 5.068070387563338,
+      "peak": 5.040000974068905,
+      "max_arrival": 5.038333976306776
+     }
+    },
+    "agent_ratio_range_controlled": [
+     5.035607364541668,
+     6.504452006760311
+    ],
+    "first_hour_share_controlled_range": [
+     0.09744844476628185,
+     0.15505385717469938
+    ]
+   }
+  },
+  "n1_mtt4": {
+   "config": {
+    "label": "n1_mtt4",
+    "mtt_h": 4.0,
+    "n": 1,
+    "delay_filament": false
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.553020170649617,
+       "7": 9.106040341299234
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.7089885706841925,
+       "7": 7.417977141368385
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.581757916826329,
+       "7": 7.163515833652658
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.5476431506026667,
+       "7": 7.095286301205333
+      }
+     }
+    ],
+    "range": [
+     3.5476431506026667,
+     9.106040341299234
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.38458406966943975,
+     "fAUC_MIC": -0.48176291793313064,
+     "fCmax_MIC": -0.44653132387786615,
+     "net_log10_change": 0.4153278332609639,
+     "cum_killed_cfu_per_mL": 0.4423577941815024,
+     "yield_weighted_kill": 0.9997828918801563
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.9340876472433816,
+      "fAUC_MIC": -0.9208695652173912,
+      "fCmax_MIC": -0.8467058256258435,
+      "net_log10_change": 0.9156521739130434,
+      "cum_killed_cfu_per_mL": 0.9982608695652172,
+      "yield_weighted_kill": 0.9982608695652172
+     },
+     "meropenem": {
+      "fT_pct": -0.9782608695652173,
+      "fAUC_MIC": -0.9165217391304347,
+      "fCmax_MIC": -0.8196651734543691,
+      "net_log10_change": 0.9582608695652173,
+      "cum_killed_cfu_per_mL": 0.9999999999999999,
+      "yield_weighted_kill": 0.9999999999999999
+     }
+    },
+    "offset_at_matched_fT": [
+     3.837841931076634,
+     6.0410050127291735
+    ],
+    "max_in_transit_fraction_at_48h": 0.024405985064617396
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 4,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 0,
+     "max_arrival": 0
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.8235548986052946,
+       "0-24h": 0.1139882999920322,
+       "0-48h": 0.04821018004698725,
+       "peak": 0.15877940154773906,
+       "max_arrival": 0.1788199739760268
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.9142072011847266,
+       "0-24h": 0.6917050594230383,
+       "0-48h": 0.6782825893946074,
+       "peak": 0.9547464608763437,
+       "max_arrival": 0.9934378909339034
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.957404524117527,
+       "0-24h": 0.947020320460213,
+       "0-48h": 0.9450617321121518,
+       "peak": 0.9811978655116886,
+       "max_arrival": 0.9963839411600751
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.9826052700987713,
+       "0-24h": 0.9870416306609969,
+       "0-48h": 0.9865807056247009,
+       "peak": 0.9930351862746726,
+       "max_arrival": 0.9991766778827289
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.3755423997808556,
+       "0-24h": 0.24161416538369873,
+       "0-48h": 0.09873119306997136,
+       "peak": 0.2819607712687928,
+       "max_arrival": 0.28193953119498233
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.1018608976220212,
+       "0-24h": 0.8447088499183244,
+       "0-48h": 0.8326351651022805,
+       "peak": 0.9802856889195937,
+       "max_arrival": 0.9798701632632048
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0341781681318898,
+       "0-24h": 0.9801523944924695,
+       "0-48h": 0.9786320696125738,
+       "peak": 0.9917976218729159,
+       "max_arrival": 0.9919165426889903
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0099238913383801,
+       "0-24h": 0.9964240864219753,
+       "0-48h": 0.996067840802724,
+       "peak": 0.997263820074974,
+       "max_arrival": 0.9974949293422687
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 31.44468028192505,
+      "change_pct_reference_to_top": {
+       "0-1h": -13.995890718694193,
+       "0-24h": -35.34297461441164,
+       "0-48h": -36.758310277666006,
+       "peak": -6.972941447705927,
+       "max_arrival": -1.09694006766331
+      },
+      "first_hour_change_pct_failing_to_reference": -17.644510139470537,
+      "t_peak_h_reference": 1.8906763235509743,
+      "in_transit_fraction_at_48h": {
+       "20": 0.018484352905864008,
+       "40": 0.0004525118031181944,
+       "60": 0.00016359043980726986,
+       "80": 0.00013029025279635357,
+       "95": 0.00013084823210895738
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 12.295772469544987,
+      "change_pct_reference_to_top": {
+       "0-1h": 15.082896210631613,
+       "0-24h": -17.501725215625175,
+       "0-48h": -18.83606194077445,
+       "peak": -3.0415222265816166,
+       "max_arrival": -3.048537735630019
+      },
+      "first_hour_change_pct_failing_to_reference": 37.554239978085555,
+      "t_peak_h_reference": 1.857640325064401,
+      "in_transit_fraction_at_48h": {
+       "20": 0.03156178627431135,
+       "40": 0.00042496580884891387,
+       "60": 0.0001539094540769143,
+       "80": 0.00012360811119793838,
+       "95": 0.0001279360107484245
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 11.563211525441304,
+      "0-24h": 13.705470281398505,
+      "0-48h": 13.320396915629475,
+      "peak": 9.327323832027206,
+      "max_arrival": 10.381486575533538
+     },
+     "40": {
+      "0-1h": 6.923043227823099,
+      "0-24h": 6.465942323733216,
+      "0-48h": 6.504314529499456,
+      "peak": 5.252457245832334,
+      "max_arrival": 6.584451465181473
+     },
+     "60": {
+      "0-1h": 5.744006332058935,
+      "0-24h": 5.294753357557785,
+      "0-48h": 5.298555100977412,
+      "peak": 5.11561580776485,
+      "max_arrival": 6.675622773064759
+     },
+     "80": {
+      "0-1h": 5.317592092285988,
+      "0-24h": 5.1157749035838185,
+      "0-48h": 5.116797024037616,
+      "peak": 5.060943080180009,
+      "max_arrival": 6.705688474851606
+     },
+     "95": {
+      "0-1h": 5.173750278539623,
+      "0-24h": 5.06760411729908,
+      "0-48h": 5.068061643718108,
+      "peak": 5.039483487904174,
+      "max_arrival": 6.7169940779916635
+     }
+    },
+    "agent_ratio_range_controlled": [
+     5.039483487904174,
+     6.923043227823099
+    ],
+    "first_hour_share_controlled_range": [
+     0.05920548824324449,
+     0.08604521853588848
+    ]
+   }
+  },
+  "n1_mtt7.63": {
+   "config": {
+    "label": "n1_mtt7.63",
+    "mtt_h": 7.63,
+    "n": 1,
+    "delay_filament": false
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.553229840642264,
+       "7": 9.106459681284528
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.7090411799968384,
+       "7": 7.418082359993677
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.581770285451769,
+       "7": 7.163540570903538
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.54764272640461,
+       "7": 7.09528545280922
+      }
+     }
+    ],
+    "range": [
+     3.54764272640461,
+     9.106459681284528
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.3826299374876331,
+     "fAUC_MIC": -0.4832826747720365,
+     "fCmax_MIC": -0.4495711675609637,
+     "net_log10_change": 0.41315675206252717,
+     "cum_killed_cfu_per_mL": 0.4420321320017368,
+     "yield_weighted_kill": 0.9995657837603126
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.9288668499602326,
+      "fAUC_MIC": -0.9260869565217391,
+      "fCmax_MIC": -0.8545336144605971,
+      "net_log10_change": 0.9095652173913044,
+      "cum_killed_cfu_per_mL": 0.997391304347826,
+      "yield_weighted_kill": 0.997391304347826
+     },
+     "meropenem": {
+      "fT_pct": -0.9756521739130434,
+      "fAUC_MIC": -0.9182608695652172,
+      "fCmax_MIC": -0.8222755720959437,
+      "net_log10_change": 0.957391304347826,
+      "cum_killed_cfu_per_mL": 0.9991304347826085,
+      "yield_weighted_kill": 0.9991304347826085
+     }
+    },
+    "offset_at_matched_fT": [
+     3.957563995398534,
+     6.047922470848634
+    ],
+    "max_in_transit_fraction_at_48h": 0.10672361394254051
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 4,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 0,
+     "max_arrival": 0
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.6993769804821073,
+       "0-24h": 0.11687534100473708,
+       "0-48h": 0.050053508960064524,
+       "peak": 0.12368400491637631,
+       "max_arrival": 0.17005250747009867
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.8138471188957667,
+       "0-24h": 0.6994926067159174,
+       "0-48h": 0.6793063593152617,
+       "peak": 0.7189087328852013,
+       "max_arrival": 0.9934445339312785
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.8922772935628,
+       "0-24h": 0.9478619640309931,
+       "0-48h": 0.9452229892544627,
+       "peak": 0.9555292472428857,
+       "max_arrival": 0.9963865595338305
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.9520249409300576,
+       "0-24h": 0.9870933218874187,
+       "0-48h": 0.9866153306984217,
+       "peak": 0.9928346285197625,
+       "max_arrival": 0.9991783027097204
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.3830826089228132,
+       "0-24h": 0.2743913915080017,
+       "0-48h": 0.10627174327936899,
+       "peak": 0.2293483008377195,
+       "max_arrival": 0.22928634002641102
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.1046828913680231,
+       "0-24h": 0.8571682260744242,
+       "0-48h": 0.8339184808336219,
+       "peak": 0.9814999120725478,
+       "max_arrival": 0.9811698533455699
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0352050546788492,
+       "0-24h": 0.9814356470339947,
+       "0-48h": 0.9788095584087239,
+       "peak": 0.9918497702011891,
+       "max_arrival": 0.9919123584542431
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0102305505234501,
+       "0-24h": 0.9965943628701337,
+       "0-48h": 0.9961063577132427,
+       "peak": 0.9974582085493373,
+       "max_arrival": 0.997584029276382
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 30.238510388946946,
+      "change_pct_reference_to_top": {
+       "0-1h": -30.86610944623046,
+       "0-24h": -34.55349811363103,
+       "0-48h": -36.64982548819776,
+       "peak": -31.79838478793292,
+       "max_arrival": -1.0958579740048324
+      },
+      "first_hour_change_pct_failing_to_reference": -30.062301951789273,
+      "t_peak_h_reference": 0.12081647774767065,
+      "in_transit_fraction_at_48h": {
+       "20": 0.05815276529678205,
+       "40": 0.004420590066915074,
+       "60": 0.002641477237011907,
+       "80": 0.0024393985731533925,
+       "95": 0.0024052782187578402
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 11.404719095417187,
+      "change_pct_reference_to_top": {
+       "0-1h": 15.527269751694451,
+       "0-24h": -16.16095582306557,
+       "0-48h": -18.693079534148904,
+       "peak": -2.897397291049808,
+       "max_arrival": -2.9116802790922103
+      },
+      "first_hour_change_pct_failing_to_reference": 38.30826089228132,
+      "t_peak_h_reference": 2.157640325064401,
+      "in_transit_fraction_at_48h": {
+       "20": 0.10347118080774709,
+       "40": 0.004438387564972477,
+       "60": 0.0026457599564850822,
+       "80": 0.002436091014614014,
+       "95": 0.0024022321211364713
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 17.96643049764148,
+      "0-24h": 15.242754230304296,
+      "0-48h": 13.810353952628803,
+      "peak": 13.303611433507074,
+      "max_arrival": 14.731610708716016
+     },
+     "40": {
+      "0-1h": 9.085001742063971,
+      "0-24h": 6.492558271334332,
+      "0-48h": 6.504614058060391,
+      "peak": 7.174432668292229,
+      "max_arrival": 10.925846432028846
+     },
+     "60": {
+      "0-1h": 6.693144748340773,
+      "0-24h": 5.298255781446014,
+      "0-48h": 5.298630257138348,
+      "peak": 5.254979888730671,
+      "max_arrival": 11.06253150711994
+     },
+     "80": {
+      "0-1h": 5.769041654579541,
+      "0-24h": 5.117009093889201,
+      "0-48h": 5.1168146935025005,
+      "peak": 5.062547906157997,
+      "max_arrival": 11.112431067287998
+     },
+     "95": {
+      "0-1h": 5.436651601536218,
+      "0-24h": 5.068226043411219,
+      "0-48h": 5.06806103772085,
+      "peak": 5.039081163193678,
+      "max_arrival": 11.130190226527176
+     }
+    },
+    "agent_ratio_range_controlled": [
+     5.039081163193678,
+     11.130190226527176
+    ],
+    "first_hour_share_controlled_range": [
+     0.03227672476609058,
+     0.0540094917600391
+    ],
+    "arms": {
+     "ceftazidime 20": {
+      "window_AUC": {
+       "0-1h": 1.615515625535402,
+       "0-2h": 3.6007200875131558,
+       "0-4h": 9.499056473392166,
+       "0-8h": 31.422863372429006,
+       "0-24h": 197.44436772047683,
+       "0-48h": 500.72010258651835
+      },
+      "peak": 18.65384600861449,
+      "t_peak_h": 24.121726641371886,
+      "max_arrival": 287.3794541564656,
+      "t_max_arrival_h": 24.05279586930093,
+      "in_transit_fraction_at_end": 0.05815276529678205,
+      "first_hour_share": 0.0032263845952864665,
+      "mass_balance_rel_residual": 7.619350829745719e-15
+     },
+     "ceftazidime 40": {
+      "window_AUC": {
+       "0-1h": 1.1298544401086121,
+       "0-2h": 2.691367624341449,
+       "0-4h": 6.074131764443994,
+       "0-8h": 12.509873548831054,
+       "0-24h": 23.07637780679543,
+       "0-48h": 25.062798141298725
+      },
+      "peak": 2.307182381438801,
+      "t_peak_h": 0.12081647774767065,
+      "max_arrival": 48.869596774695246,
+      "t_max_arrival_h": 0.03627652669352127,
+      "in_transit_fraction_at_end": 0.004420590066915074,
+      "first_hour_share": 0.04508093764067097,
+      "mass_balance_rel_residual": 9.7462609308076e-16
+     },
+     "ceftazidime 60": {
+      "window_AUC": {
+       "0-1h": 0.9195287808539835,
+       "0-2h": 2.4141133277118083,
+       "0-4h": 5.513094588528319,
+       "0-8h": 10.094750178058833,
+       "0-24h": 16.14175566563668,
+       "0-48h": 17.025318159618944
+      },
+      "peak": 1.6586535623752297,
+      "t_peak_h": 0.0743211881810331,
+      "max_arrival": 48.54923379124663,
+      "t_max_arrival_h": 0.017952006843906142,
+      "in_transit_fraction_at_end": 0.002641477237011907,
+      "first_hour_share": 0.0540094917600391,
+      "mass_balance_rel_residual": 1.1977845527283347e-15
+     },
+     "ceftazidime 80": {
+      "window_AUC": {
+       "0-1h": 0.8204746519334933,
+       "0-2h": 2.298151815077359,
+       "0-4h": 5.3207340641965715,
+       "0-8h": 9.676141148578493,
+       "0-24h": 15.300156228138794,
+       "0-48h": 16.092722123843306
+      },
+      "peak": 1.584891989893134,
+      "t_peak_h": 2.1576171083571367,
+      "max_arrival": 48.373804025263816,
+      "t_max_arrival_h": 0.009065543761832082,
+      "in_transit_fraction_at_end": 0.0024393985731533925,
+      "first_hour_share": 0.050984205507274706,
+      "mass_balance_rel_residual": 3.802381705728159e-16
+     },
+     "ceftazidime 95": {
+      "window_AUC": {
+       "0-1h": 0.7811123320415936,
+       "0-2h": 2.253888047681505,
+       "0-4h": 5.250645008352069,
+       "0-8h": 9.557277691845401,
+       "0-24h": 15.102682036630002,
+       "0-48h": 15.87732636005347
+      },
+      "peak": 1.5735356500294968,
+      "t_peak_h": 2.165044505273782,
+      "max_arrival": 48.33405540157574,
+      "t_max_arrival_h": 0.005072765338282323,
+      "in_transit_fraction_at_end": 0.0024052782187578402,
+      "first_hour_share": 0.04919671702452572,
+      "mass_balance_rel_residual": 2.5694016981747525e-16
+     },
+     "meropenem 20": {
+      "window_AUC": {
+       "0-1h": 0.08991856372068324,
+       "0-2h": 0.36370060129243775,
+       "0-4h": 0.9116588136079942,
+       "0-8h": 1.670706426242354,
+       "0-24h": 12.953326199272793,
+       "0-48h": 36.256862373263516
+      },
+      "peak": 1.4021640741574934,
+      "t_peak_h": 25.80954764699859,
+      "max_arrival": 19.50767365760191,
+      "t_max_arrival_h": 25.709547646998587,
+      "in_transit_fraction_at_end": 0.10347118080774709,
+      "first_hour_share": 0.002480042613587845,
+      "mass_balance_rel_residual": 7.0706623623282724e-15
+     },
+     "meropenem 40": {
+      "window_AUC": {
+       "0-1h": 0.1243648017013948,
+       "0-2h": 0.42119994064198535,
+       "0-4h": 1.0323600625746727,
+       "0-8h": 1.895506443601022,
+       "0-24h": 3.554281200475516,
+       "0-48h": 3.853079970246873
+      },
+      "peak": 0.32158394790371525,
+      "t_peak_h": 2.157640325064401,
+      "max_arrival": 4.472843095381172,
+      "t_max_arrival_h": 2.157640325064401,
+      "in_transit_fraction_at_end": 0.004438387564972477,
+      "first_hour_share": 0.03227672476609058,
+      "mass_balance_rel_residual": 1.4528132038695436e-15
+     },
+     "meropenem 60": {
+      "window_AUC": {
+       "0-1h": 0.13738366872790764,
+       "0-2h": 0.43225100318798265,
+       "0-4h": 1.0336412595861766,
+       "0-8h": 1.8945048912578906,
+       "0-24h": 3.0466169115812733,
+       "0-48h": 3.2131545953187293
+      },
+      "peak": 0.3156346165914393,
+      "t_peak_h": 2.149770353321722,
+      "max_arrival": 4.38861880393289,
+      "t_max_arrival_h": 2.0497703533217217,
+      "in_transit_fraction_at_end": 0.0026457599564850822,
+      "first_hour_share": 0.04275663204256123,
+      "mass_balance_rel_residual": 2.062650309851074e-15
+     },
+     "meropenem 80": {
+      "window_AUC": {
+       "0-1h": 0.14222026829745452,
+       "0-2h": 0.4360609951332526,
+       "0-4h": 1.0316941608933448,
+       "0-8h": 1.8862637233314048,
+       "0-24h": 2.9900584398824774,
+       "0-48h": 3.145066430542887
+      },
+      "peak": 0.31306212193375954,
+      "t_peak_h": 2.142394704347601,
+      "max_arrival": 4.3531252281657125,
+      "t_max_arrival_h": 2.042394704347601,
+      "in_transit_fraction_at_end": 0.002436091014614014,
+      "first_hour_share": 0.045220115834852206,
+      "mass_balance_rel_residual": 1.6213479017010586e-15
+     },
+     "meropenem 95": {
+      "window_AUC": {
+       "0-1h": 0.14367525993773025,
+       "0-2h": 0.4371851950506063,
+       "0-4h": 1.0310387432217019,
+       "0-8h": 1.8830702343906751,
+       "0-24h": 2.9798753858391436,
+       "0-48h": 3.1328206668942644
+      },
+      "peak": 0.312266383308702,
+      "t_peak_h": 2.167689733286842,
+      "max_arrival": 4.342608205058221,
+      "t_max_arrival_h": 2.067689733286842,
+      "in_transit_fraction_at_end": 0.0024022321211364713,
+      "first_hour_share": 0.04586131005071649,
+      "mass_balance_rel_residual": 8.13870654015245e-16
+     }
+    }
+   }
+  },
+  "n1_mtt12": {
+   "config": {
+    "label": "n1_mtt12",
+    "mtt_h": 12.0,
+    "n": 1,
+    "delay_filament": false
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.562051887361933,
+       "7": 9.124103774723865
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.710410780151838,
+       "7": 7.420821560303676
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.582213160578652,
+       "7": 7.164426321157304
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.5478639479285254,
+       "7": 7.095727895857051
+      }
+     }
+    ],
+    "range": [
+     3.5478639479285254,
+     9.124103774723865
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.3802415537098695,
+     "fAUC_MIC": -0.48653929656969164,
+     "fCmax_MIC": -0.4549994598522094,
+     "net_log10_change": 0.4100086843247937,
+     "cum_killed_cfu_per_mL": 0.4414893617021276,
+     "yield_weighted_kill": 0.9991315675206253
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.922775919796559,
+      "fAUC_MIC": -0.9347826086956521,
+      "fCmax_MIC": -0.865840420555241,
+      "net_log10_change": 0.9026086956521738,
+      "cum_killed_cfu_per_mL": 0.9956521739130434,
+      "yield_weighted_kill": 0.9956521739130434
+     },
+     "meropenem": {
+      "fT_pct": -0.9713043478260868,
+      "fAUC_MIC": -0.9234782608695651,
+      "fCmax_MIC": -0.830106768020667,
+      "net_log10_change": 0.9530434782608694,
+      "cum_killed_cfu_per_mL": 0.997391304347826,
+      "yield_weighted_kill": 0.997391304347826
+     }
+    },
+    "offset_at_matched_fT": [
+     4.072404650680348,
+     6.069309505868563
+    ],
+    "max_in_transit_fraction_at_48h": 0.21281907787795457
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 4,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 0,
+     "max_arrival": 0
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.6314038615298837,
+       "0-24h": 0.11402674742706646,
+       "0-48h": 0.05176193359119376,
+       "peak": 0.12257082486802223,
+       "max_arrival": 0.16967196495905418
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.7414883660925982,
+       "0-24h": 0.6989444432312408,
+       "0-48h": 0.6808322469635206,
+       "peak": 0.7188567754392075,
+       "max_arrival": 0.9934472035557073
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.8340966949536788,
+       "0-24h": 0.9472092794383135,
+       "0-48h": 0.9453651890616442,
+       "peak": 0.6537849261632072,
+       "max_arrival": 0.9963876110746432
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.9206001758077592,
+       "0-24h": 0.986807102821865,
+       "0-48h": 0.9866235736614946,
+       "peak": 0.9925325257629608,
+       "max_arrival": 0.9991789549550628
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.3861794254591637,
+       "0-24h": 0.3008209816714935,
+       "0-48h": 0.11597532701745632,
+       "peak": 0.1873057254707809,
+       "max_arrival": 0.18728283280309405
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.1058427701765883,
+       "0-24h": 0.8675519071429861,
+       "0-48h": 0.8371019332554044,
+       "peak": 0.9828520235205965,
+       "max_arrival": 0.9828662431788385
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0356273737776334,
+       "0-24h": 0.9825716348531413,
+       "0-48h": 0.9791972256916093,
+       "peak": 0.9918811227601506,
+       "max_arrival": 0.9917952633016749
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0103566966336395,
+       "0-24h": 0.9967479169690427,
+       "0-48h": 0.9961757276997358,
+       "peak": 0.9975187849704076,
+       "max_arrival": 0.997600621955116
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 29.172808872273187,
+      "change_pct_reference_to_top": {
+       "0-1h": -43.063365160626155,
+       "0-24h": -34.66876511042278,
+       "0-48h": -36.49744317126126,
+       "peak": -53.353182269240705,
+       "max_arrival": -1.0954232525364427
+      },
+      "first_hour_change_pct_failing_to_reference": -36.85961384701163,
+      "t_peak_h_reference": 0.12081647774767065,
+      "in_transit_fraction_at_48h": {
+       "20": 0.10757040980596524,
+       "40": 0.024536809290014665,
+       "60": 0.020606435295009856,
+       "80": 0.0202609095760624,
+       "95": 0.02021916561947604
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 10.408711503776301,
+      "change_pct_reference_to_top": {
+       "0-1h": 15.710195795291359,
+       "0-24h": -15.034028358167795,
+       "0-48h": -18.344681903035664,
+       "peak": -2.754649937620124,
+       "max_arrival": -2.753683427563758
+      },
+      "first_hour_change_pct_failing_to_reference": 38.61794254591637,
+      "t_peak_h_reference": 2.457640325064401,
+      "in_transit_fraction_at_48h": {
+       "20": 0.19642485298942225,
+       "40": 0.026429323565942287,
+       "60": 0.020970032511860134,
+       "80": 0.02037806167233399,
+       "95": 0.02027689146366169
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 25.684743721744606,
+      "0-24h": 17.39793543654522,
+      "0-48h": 14.602166462603968,
+      "peak": 16.053835396790777,
+      "max_arrival": 17.67625496450522
+     },
+     "40": {
+      "0-1h": 11.699384704792491,
+      "0-24h": 6.594719486494328,
+      "0-48h": 6.517216981945622,
+      "peak": 10.505454875628233,
+      "max_arrival": 16.014094127346457
+     },
+     "60": {
+      "0-1h": 7.844657380777598,
+      "0-24h": 5.3130452504374475,
+      "0-48h": 5.300586828788339,
+      "peak": 7.683676927646836,
+      "max_arrival": 16.18649245378086
+     },
+     "80": {
+      "0-1h": 6.318105295424059,
+      "0-24h": 5.121830902478875,
+      "0-48h": 5.117447372255242,
+      "peak": 5.064590944955673,
+      "max_arrival": 16.26144139266249
+     },
+     "95": {
+      "0-1h": 5.756827133544895,
+      "0-24h": 5.07074961278866,
+      "0-48h": 5.068377068469333,
+      "peak": 5.03927476684281,
+      "max_arrival": 16.28716909271789
+     }
+    },
+    "agent_ratio_range_controlled": [
+     5.03927476684281,
+     16.28716909271789
+    ],
+    "first_hour_share_controlled_range": [
+     0.021289749481371197,
+     0.04162321442774501
+    ]
+   }
+  },
+  "n1_mtt16": {
+   "config": {
+    "label": "n1_mtt16",
+    "mtt_h": 16.0,
+    "n": 1,
+    "delay_filament": false
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.582713964186722,
+       "7": 9.165427928373443
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.7136417977232528,
+       "7": 7.4272835954465055
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.5832656349343104,
+       "7": 7.166531269868621
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.548409969639772,
+       "7": 7.096819939279544
+      }
+     }
+    ],
+    "range": [
+     3.548409969639772,
+     9.165427928373443
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.3790473618209877,
+     "fAUC_MIC": -0.4875162831089882,
+     "fCmax_MIC": -0.456736513385408,
+     "net_log10_change": 0.4080547112462006,
+     "cum_killed_cfu_per_mL": 0.4408380373425966,
+     "yield_weighted_kill": 0.9988059053408598
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.922775919796559,
+      "fAUC_MIC": -0.9347826086956521,
+      "fCmax_MIC": -0.865840420555241,
+      "net_log10_change": 0.9026086956521738,
+      "cum_killed_cfu_per_mL": 0.9956521739130434,
+      "yield_weighted_kill": 0.9956521739130434
+     },
+     "meropenem": {
+      "fT_pct": -0.9678260869565216,
+      "fAUC_MIC": -0.9286956521739129,
+      "fCmax_MIC": -0.8375028975051277,
+      "net_log10_change": 0.946086956521739,
+      "cum_killed_cfu_per_mL": 0.9956521739130434,
+      "yield_weighted_kill": 0.9956521739130434
+     }
+    },
+    "offset_at_matched_fT": [
+     4.159825617867127,
+     6.094427173846459
+    ],
+    "max_in_transit_fraction_at_48h": 0.29780285012698926
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 4,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 0,
+     "max_arrival": 0
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.5971495954311293,
+       "0-24h": 0.10914668246022245,
+       "0-48h": 0.05240981299653928,
+       "peak": 0.12387970997557164,
+       "max_arrival": 0.17134871665433768
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.6986381329026358,
+       "0-24h": 0.6927059448159856,
+       "0-48h": 0.6809017408727377,
+       "peak": 0.7188341473888519,
+       "max_arrival": 0.9934483695421706
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.7938987318113744,
+       "0-24h": 0.94556517817359,
+       "0-48h": 0.9451814678014423,
+       "peak": 0.6497589876715899,
+       "max_arrival": 0.9963880702192603
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.8961822563149165,
+       "0-24h": 0.986330555119145,
+       "0-48h": 0.9865473307458106,
+       "peak": 0.7771926659356103,
+       "max_arrival": 0.9991792396999464
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.3875441078448336,
+       "0-24h": 0.31625304900623474,
+       "0-48h": 0.12359912831111505,
+       "peak": 0.16402656085560663,
+       "max_arrival": 0.16399414849986246
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.106354040359096,
+       "0-24h": 0.8734003123624469,
+       "0-48h": 0.8402474137515296,
+       "peak": 0.9840348068076312,
+       "max_arrival": 0.9840659786193656
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.035813573874707,
+       "0-24h": 0.9832231758390247,
+       "0-48h": 0.9795716429840408,
+       "peak": 0.9919020032735246,
+       "max_arrival": 0.991821063578147
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.010412319262935,
+       "0-24h": 0.9968377583009731,
+       "0-48h": 0.9962380834637621,
+       "peak": 0.997532137423093,
+       "max_arrival": 0.9975600085618201
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 28.811960965787012,
+      "change_pct_reference_to_top": {
+       "0-1h": -50.293436868762385,
+       "0-24h": -35.39548474030958,
+       "0-48h": -36.50821042578567,
+       "peak": -63.6997439197192,
+       "max_arrival": -1.0952334085204352
+      },
+      "first_hour_change_pct_failing_to_reference": -40.28504045688707,
+      "t_peak_h_reference": 0.12081647774767065,
+      "in_transit_fraction_at_48h": {
+       "20": 0.14806425204841842,
+       "40": 0.05712457208723134,
+       "60": 0.05322443613746954,
+       "80": 0.053073234390029936,
+       "95": 0.05310569496856569
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 9.728282629525538,
+      "change_pct_reference_to_top": {
+       "0-1h": 15.790880603945512,
+       "0-24h": -14.396813802879793,
+       "0-48h": -18.001382821473943,
+       "peak": -2.63427008279441,
+       "max_arrival": -2.6364108470116165
+      },
+      "first_hour_change_pct_failing_to_reference": 38.75441078448336,
+      "t_peak_h_reference": 2.6576403250644014,
+      "in_transit_fraction_at_48h": {
+       "20": 0.2743853636130262,
+       "40": 0.06317950805863012,
+       "60": 0.05439606161550251,
+       "80": 0.05346344263513288,
+       "95": 0.053306580690803844
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 32.75193287923865,
+      "0-24h": 19.480948807876054,
+      "0-48h": 15.43929654411571,
+      "peak": 17.898152512063298,
+      "max_arrival": 19.727166508940552
+     },
+     "40": {
+      "0-1h": 14.095266130892593,
+      "0-24h": 6.723353151024256,
+      "0-48h": 6.5467342345524635,
+      "peak": 13.517432364169228,
+      "max_arrival": 20.611861431971946
+     },
+     "60": {
+      "0-1h": 8.900849143422754,
+      "0-24h": 5.3323849681417155,
+      "0-48h": 5.305202568176078,
+      "peak": 9.874439299466358,
+      "max_arrival": 20.808381325762777
+     },
+     "80": {
+      "0-1h": 6.822050825781549,
+      "0-24h": 5.128151640840288,
+      "0-48h": 5.118950907049013,
+      "peak": 6.4683866570199475,
+      "max_arrival": 20.904197011873265
+     },
+     "95": {
+      "0-1h": 6.050798060542037,
+      "0-24h": 5.074098179493307,
+      "0-48h": 5.069157099485392,
+      "peak": 5.039619759277426,
+      "max_arrival": 20.93812853120908
+     }
+    },
+    "agent_ratio_range_controlled": [
+     5.039619759277426,
+     20.93812853120908
+    ],
+    "first_hour_share_controlled_range": [
+     0.016700013353873167,
+     0.03689208745445741
+    ]
+   }
+  },
+  "n3_mtt0.5": {
+   "config": {
+    "label": "n3_mtt0.5",
+    "mtt_h": 0.5,
+    "n": 3,
+    "delay_filament": false
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.553147273344529,
+       "7": 9.106294546689059
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.7090232493384723,
+       "7": 7.4180464986769445
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.5817758215288746,
+       "7": 7.163551643057749
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.5476495551507035,
+       "7": 7.095299110301407
+      }
+     }
+    ],
+    "range": [
+     3.5476495551507035,
+     9.106294546689059
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.38458406966943975,
+     "fAUC_MIC": -0.48176291793313064,
+     "fCmax_MIC": -0.44653132387786615,
+     "net_log10_change": 0.4153278332609639,
+     "cum_killed_cfu_per_mL": 0.4423577941815024,
+     "yield_weighted_kill": 0.9997828918801563
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.9340876472433816,
+      "fAUC_MIC": -0.9208695652173912,
+      "fCmax_MIC": -0.8467058256258435,
+      "net_log10_change": 0.9156521739130434,
+      "cum_killed_cfu_per_mL": 0.9982608695652172,
+      "yield_weighted_kill": 0.9982608695652172
+     },
+     "meropenem": {
+      "fT_pct": -0.9782608695652173,
+      "fAUC_MIC": -0.9165217391304347,
+      "fCmax_MIC": -0.8196651734543691,
+      "net_log10_change": 0.9582608695652173,
+      "cum_killed_cfu_per_mL": 0.9999999999999999,
+      "yield_weighted_kill": 0.9999999999999999
+     }
+    },
+    "offset_at_matched_fT": [
+     3.7899035207027327,
+     6.042930643904572
+    ],
+    "max_in_transit_fraction_at_48h": 1.2214715647986569e-05
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 8,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 0,
+     "max_arrival": 0
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.2201328627877004,
+       "0-24h": 0.10981289212953303,
+       "0-48h": 0.04732381272201171,
+       "peak": 0.23725880283524436,
+       "max_arrival": 0.23687262859430877
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.1000478372604519,
+       "0-24h": 0.6864817208077123,
+       "0-48h": 0.6780827091107114,
+       "peak": 0.9798440805153789,
+       "max_arrival": 0.9840881847262599
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0434404979044702,
+       "0-24h": 0.9465586526451915,
+       "0-48h": 0.9450273515030091,
+       "peak": 0.9863589469988849,
+       "max_arrival": 0.9825166144544971
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0162351250008443,
+       "0-24h": 0.9870049568590462,
+       "0-48h": 0.986576434368228,
+       "peak": 0.9952606908593036,
+       "max_arrival": 0.9976353743714584
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.4139298019451958,
+       "0-24h": 0.22160690811033834,
+       "0-48h": 0.09559936008967126,
+       "peak": 0.3081076224613778,
+       "max_arrival": 0.30684566476933195
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.1025792998068722,
+       "0-24h": 0.8392502533648267,
+       "0-48h": 0.8324052534963657,
+       "peak": 0.9820961419395002,
+       "max_arrival": 0.9789147953157246
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.032621978834002,
+       "0-24h": 0.9797629817806954,
+       "0-48h": 0.9786007256281277,
+       "peak": 0.9933436296466195,
+       "max_arrival": 0.9948480531873746
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0092821262074925,
+       "0-24h": 0.9964053082709389,
+       "0-48h": 0.9960667094583323,
+       "peak": 0.9962482654141664,
+       "max_arrival": 0.998794437393502
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 32.043643075577805,
+      "change_pct_reference_to_top": {
+       "0-1h": 16.64696990173471,
+       "0-24h": -35.8648904108694,
+       "0-48h": -36.77952041936637,
+       "peak": -3.810246242323556,
+       "max_arrival": -3.5403324719778806
+      },
+      "first_hour_change_pct_failing_to_reference": 22.01328627877004,
+      "t_peak_h_reference": 1.0,
+      "in_transit_fraction_at_48h": {
+       "20": 9.398842577987117e-07,
+       "40": 1.3238446453282766e-07,
+       "60": 4.814861744927763e-07,
+       "80": 2.5612084960677017e-06,
+       "95": 6.785166883411025e-06
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 12.702290298918758,
+      "change_pct_reference_to_top": {
+       "0-1h": 14.911576107509795,
+       "0-24h": -18.0689463281115,
+       "0-48h": -18.861164343537283,
+       "peak": -2.8101091943213863,
+       "max_arrival": -2.7302584681675235
+      },
+      "first_hour_change_pct_failing_to_reference": 41.39298019451958,
+      "t_peak_h_reference": 0.9576403250644001,
+      "in_transit_fraction_at_48h": {
+       "20": 1.516982178022887e-08,
+       "40": 4.2079020792406905e-09,
+       "60": 5.346731700929991e-08,
+       "80": 1.007777254139898e-06,
+       "95": 5.716848762901433e-06
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 5.629879734728138,
+      "0-24h": 13.064397457410342,
+      "0-48h": 13.139804879527341,
+      "peak": 6.617400492824031,
+      "max_arrival": 6.575601995694545
+     },
+     "40": {
+      "0-1h": 4.858233604266695,
+      "0-24h": 6.473802107349645,
+      "0-48h": 6.5044961047779095,
+      "peak": 5.0957405930636925,
+      "max_arrival": 5.076102771342865
+     },
+     "60": {
+      "0-1h": 4.847079362197108,
+      "0-24h": 5.2953773835681925,
+      "0-48h": 5.2986046419121156,
+      "peak": 5.084055463342783,
+      "max_arrival": 5.1029290655716535
+     },
+     "80": {
+      "0-1h": 4.897860985667115,
+      "0-24h": 5.115916170182547,
+      "0-48h": 5.116822602184092,
+      "peak": 5.048306994318461,
+      "max_arrival": 5.039676735802592
+     },
+     "95": {
+      "0-1h": 4.931602613145761,
+      "0-24h": 5.0676512629261286,
+      "0-48h": 5.068070793072433,
+      "peak": 5.043302639775718,
+      "max_arrival": 5.033828382298777
+     }
+    },
+    "agent_ratio_range_controlled": [
+     4.847079362197108,
+     6.5044961047779095
+    ],
+    "first_hour_share_controlled_range": [
+     0.20247471591495064,
+     0.3839202968175444
+    ]
+   }
+  },
+  "n3_mtt1": {
+   "config": {
+    "label": "n3_mtt1",
+    "mtt_h": 1.0,
+    "n": 3,
+    "delay_filament": false
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.553145262999186,
+       "7": 9.106290525998372
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.709019506777689,
+       "7": 7.418039013555378
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.5817701497112058,
+       "7": 7.1635402994224116
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.5476495033807587,
+       "7": 7.095299006761517
+      }
+     }
+    ],
+    "range": [
+     3.5476495033807587,
+     9.106290525998372
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.38458406966943975,
+     "fAUC_MIC": -0.48176291793313064,
+     "fCmax_MIC": -0.44653132387786615,
+     "net_log10_change": 0.4153278332609639,
+     "cum_killed_cfu_per_mL": 0.4423577941815024,
+     "yield_weighted_kill": 0.9997828918801563
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.9340876472433816,
+      "fAUC_MIC": -0.9208695652173912,
+      "fCmax_MIC": -0.8467058256258435,
+      "net_log10_change": 0.9156521739130434,
+      "cum_killed_cfu_per_mL": 0.9982608695652172,
+      "yield_weighted_kill": 0.9982608695652172
+     },
+     "meropenem": {
+      "fT_pct": -0.9782608695652173,
+      "fAUC_MIC": -0.9165217391304347,
+      "fCmax_MIC": -0.8196651734543691,
+      "net_log10_change": 0.9582608695652173,
+      "cum_killed_cfu_per_mL": 0.9999999999999999,
+      "yield_weighted_kill": 0.9999999999999999
+     }
+    },
+    "offset_at_matched_fT": [
+     3.789903520948233,
+     6.042930622414442
+    ],
+    "max_in_transit_fraction_at_48h": 2.499609699913071e-05
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 8,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 0,
+     "max_arrival": 0
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.022351337801131,
+       "0-24h": 0.1098142461948275,
+       "0-48h": 0.04732401376963522,
+       "peak": 0.23556048035297963,
+       "max_arrival": 0.23558006093161704
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0693230775973925,
+       "0-24h": 0.6864801171171152,
+       "0-48h": 0.6780820691603182,
+       "peak": 0.9739656860961037,
+       "max_arrival": 0.9746399807327913
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.04356596386086,
+       "0-24h": 0.9465417284972094,
+       "0-48h": 0.9450235999366978,
+       "peak": 0.9836164019686284,
+       "max_arrival": 0.9824976350787178
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0185816489313002,
+       "0-24h": 0.9869846545744899,
+       "0-48h": 0.9865719713014405,
+       "peak": 0.9943923416021867,
+       "max_arrival": 0.9945891639870553
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.6056816263735916,
+       "0-24h": 0.2216071648062214,
+       "0-48h": 0.09559939537892044,
+       "peak": 0.31372642166913944,
+       "max_arrival": 0.3139135574818006
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.165394229635612,
+       "0-24h": 0.8392489958285796,
+       "0-48h": 0.8324049403030117,
+       "peak": 0.9795668284506418,
+       "max_arrival": 0.9784180276103184
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0542760693247508,
+       "0-24h": 0.9797480489445078,
+       "0-48h": 0.9785974029665471,
+       "peak": 0.9925984457048042,
+       "max_arrival": 0.9926662045366098
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0156139927283487,
+       "0-24h": 0.9963778248643097,
+       "0-48h": 0.9960606407092356,
+       "peak": 0.997339889123464,
+       "max_arrival": 0.9986814953072324
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 32.04359899108763,
+      "change_pct_reference_to_top": {
+       "0-1h": 13.664460055339633,
+       "0-24h": -35.867506154370886,
+       "0-48h": -36.7801170517231,
+       "peak": -4.736356130566655,
+       "max_arrival": -4.759984021320118
+      },
+      "first_hour_change_pct_failing_to_reference": 2.2351337801131077,
+      "t_peak_h_reference": 1.490676323550974,
+      "in_transit_fraction_at_48h": {
+       "20": 5.152228919836171e-06,
+       "40": 5.836505075313517e-07,
+       "60": 1.8067325855768785e-06,
+       "80": 7.66772065359397e-06,
+       "95": 1.6436174288604677e-05
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 12.702311720262136,
+      "change_pct_reference_to_top": {
+       "0-1h": 24.78313368242415,
+       "0-24h": -18.07257765590099,
+       "0-48h": -18.861964718047354,
+       "peak": -3.0269958343276837,
+       "max_arrival": -3.0038077889011805
+      },
+      "first_hour_change_pct_failing_to_reference": 60.56816263735916,
+      "t_peak_h_reference": 1.4576403250644006,
+      "in_transit_fraction_at_48h": {
+       "20": 3.7250774115101354e-07,
+       "40": 5.3846771359973474e-08,
+       "60": 4.3352307299997603e-07,
+       "80": 4.504055674189521e-06,
+       "95": 1.5271767547278712e-05
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 8.503443728591336,
+      "0-24h": 13.064204361692848,
+      "0-48h": 13.13974810619925,
+      "peak": 6.83162091142951,
+      "max_arrival": 6.831696126651638
+     },
+     "40": {
+      "0-1h": 5.414215949818239,
+      "0-24h": 6.473778748845768,
+      "0-48h": 6.504493232855984,
+      "peak": 5.129500712512335,
+      "max_arrival": 5.126925395301513
+     },
+     "60": {
+      "0-1h": 4.967886329801691,
+      "0-24h": 5.295353841097316,
+      "0-48h": 5.298599295396704,
+      "peak": 5.1001703362031146,
+      "max_arrival": 5.107128372010414
+     },
+     "80": {
+      "0-1h": 4.917418916120495,
+      "0-24h": 5.11587992765728,
+      "0-48h": 5.116814499587443,
+      "peak": 5.05401879000641,
+      "max_arrival": 5.05481250858742
+     },
+     "95": {
+      "0-1h": 4.931787769694216,
+      "0-24h": 5.067650902338195,
+      "0-48h": 5.068070719115376,
+      "peak": 5.039082096187752,
+      "max_arrival": 5.034099230486526
+     }
+    },
+    "agent_ratio_range_controlled": [
+     4.917418916120495,
+     6.504493232855984
+    ],
+    "first_hour_share_controlled_range": [
+     0.09074983924975104,
+     0.16766992007134499
+    ]
+   }
+  },
+  "n3_mtt2": {
+   "config": {
+    "label": "n3_mtt2",
+    "mtt_h": 2.0,
+    "n": 3,
+    "delay_filament": false
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.553128336505815,
+       "7": 9.10625667301163
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.7090082257882644,
+       "7": 7.418016451576529
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.581764950255421,
+       "7": 7.163529900510842
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.5476503956002503,
+       "7": 7.095300791200501
+      }
+     }
+    ],
+    "range": [
+     3.5476503956002503,
+     9.10625667301163
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.38458406966943975,
+     "fAUC_MIC": -0.48176291793313064,
+     "fCmax_MIC": -0.44653132387786615,
+     "net_log10_change": 0.4153278332609639,
+     "cum_killed_cfu_per_mL": 0.4423577941815024,
+     "yield_weighted_kill": 0.9997828918801563
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.9340876472433816,
+      "fAUC_MIC": -0.9208695652173912,
+      "fCmax_MIC": -0.8467058256258435,
+      "net_log10_change": 0.9156521739130434,
+      "cum_killed_cfu_per_mL": 0.9982608695652172,
+      "yield_weighted_kill": 0.9982608695652172
+     },
+     "meropenem": {
+      "fT_pct": -0.9782608695652173,
+      "fAUC_MIC": -0.9165217391304347,
+      "fCmax_MIC": -0.8196651734543691,
+      "net_log10_change": 0.9582608695652173,
+      "cum_killed_cfu_per_mL": 0.9999999999999999,
+      "yield_weighted_kill": 0.9999999999999999
+     }
+    },
+    "offset_at_matched_fT": [
+     3.789914387729841,
+     6.042928564309015
+    ],
+    "max_in_transit_fraction_at_48h": 8.685647405654511e-05
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 4,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 0,
+     "max_arrival": 0
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.6761422648570955,
+       "0-24h": 0.10989845342825202,
+       "0-48h": 0.0473380214045211,
+       "peak": 0.22318745925369765,
+       "max_arrival": 0.22332878922208504
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.8329967584996469,
+       "0-24h": 0.6865365091166226,
+       "0-48h": 0.6780818489152893,
+       "peak": 0.9660292749972595,
+       "max_arrival": 0.9654467922273489
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.9211869036931057,
+       "0-24h": 0.9465046298863162,
+       "0-48h": 0.9450153222436934,
+       "peak": 0.9827800149924802,
+       "max_arrival": 0.9834906629429262
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.9693476375985695,
+       "0-24h": 0.9869593731254501,
+       "0-48h": 0.9865664724740815,
+       "peak": 0.9926753476421226,
+       "max_arrival": 0.9931175315176308
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.7496394040055978,
+       "0-24h": 0.2218322429585438,
+       "0-48h": 0.09563123694219049,
+       "peak": 0.3265205806171365,
+       "max_arrival": 0.326201014986642
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.2130841398763486,
+       "0-24h": 0.8392837595424987,
+       "0-48h": 0.8324041071950687,
+       "peak": 0.9802346021874969,
+       "max_arrival": 0.9808974021187074
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0709128721680163,
+       "0-24h": 0.9797023563192623,
+       "0-48h": 0.9785872753732383,
+       "peak": 0.9915019981541136,
+       "max_arrival": 0.9917740449905972
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.020502637226013,
+       "0-24h": 0.996344647847731,
+       "0-48h": 0.9960533925741883,
+       "peak": 0.9978369326948274,
+       "max_arrival": 0.9968302565758386
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 32.03426381466408,
+      "change_pct_reference_to_top": {
+       "0-1h": -25.617525388045426,
+       "0-24h": -35.8663945081891,
+       "0-48h": -36.781043707772064,
+       "peak": -5.755971757937939,
+       "max_arrival": -5.702705251110752
+      },
+      "first_hour_change_pct_failing_to_reference": -32.38577351429045,
+      "t_peak_h_reference": 2.3906763235509745,
+      "in_transit_fraction_at_48h": {
+       "20": 0.00028615464325976175,
+       "40": 1.029036370905245e-05,
+       "60": 1.2012097850544896e-05,
+       "80": 2.6605140467598216e-05,
+       "95": 4.119466137202559e-05
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 12.698160039029913,
+      "change_pct_reference_to_top": {
+       "0-1h": 32.57425485748682,
+       "0-24h": -18.075733016418706,
+       "0-48h": -18.863476047288863,
+       "peak": -3.0197728263333,
+       "max_arrival": -3.0255032787628977
+      },
+      "first_hour_change_pct_failing_to_reference": 74.96394040055978,
+      "t_peak_h_reference": 2.257640325064401,
+      "in_transit_fraction_at_48h": {
+       "20": 0.0003103801359713679,
+       "40": 6.252007210340275e-06,
+       "60": 7.663352744126598e-06,
+       "80": 2.1874367348628188e-05,
+       "95": 4.026203978501245e-05
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 24.49188878421954,
+      "0-24h": 13.066736717920355,
+      "0-48h": 13.140186316490272,
+      "peak": 7.580187950345635,
+      "max_arrival": 7.57195472361856
+     },
+     "40": {
+      "0-1h": 9.4648080714678,
+      "0-24h": 6.473423959933382,
+      "0-48h": 6.5044690521511495,
+      "peak": 5.181305527833998,
+      "max_arrival": 5.184028874157332
+     },
+     "60": {
+      "0-1h": 6.499264300131411,
+      "0-24h": 5.295279262769442,
+      "0-48h": 5.298583179697529,
+      "peak": 5.106219277939109,
+      "max_arrival": 5.10237261976504
+     },
+     "80": {
+      "0-1h": 5.590592206442247,
+      "0-24h": 5.115845957115345,
+      "0-48h": 5.116807071793454,
+      "peak": 5.061301205514942,
+      "max_arrival": 5.059757165193943
+     },
+     "95": {
+      "0-1h": 5.310351145022625,
+      "0-24h": 5.0676561867902725,
+      "0-48h": 5.068071993714645,
+      "peak": 5.035120237669756,
+      "max_arrival": 5.040911943460616
+     }
+    },
+    "agent_ratio_range_controlled": [
+     5.035120237669756,
+     9.4648080714678
+    ],
+    "first_hour_share_controlled_range": [
+     0.02712870753470976,
+     0.048494250982399546
+    ]
+   }
+  },
+  "n3_mtt4": {
+   "config": {
+    "label": "n3_mtt4",
+    "mtt_h": 4.0,
+    "n": 3,
+    "delay_filament": false
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.553058510121854,
+       "7": 9.106117020243708
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.708989035988873,
+       "7": 7.417978071977746
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.581759723166753,
+       "7": 7.163519446333506
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.547646994403971,
+       "7": 7.095293988807942
+      }
+     }
+    ],
+    "range": [
+     3.547646994403971,
+     9.106117020243708
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.38458406966943975,
+     "fAUC_MIC": -0.48176291793313064,
+     "fCmax_MIC": -0.44653132387786615,
+     "net_log10_change": 0.4153278332609639,
+     "cum_killed_cfu_per_mL": 0.4423577941815024,
+     "yield_weighted_kill": 0.9997828918801563
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.9340876472433816,
+      "fAUC_MIC": -0.9208695652173912,
+      "fCmax_MIC": -0.8467058256258435,
+      "net_log10_change": 0.9156521739130434,
+      "cum_killed_cfu_per_mL": 0.9982608695652172,
+      "yield_weighted_kill": 0.9982608695652172
+     },
+     "meropenem": {
+      "fT_pct": -0.9782608695652173,
+      "fAUC_MIC": -0.9165217391304347,
+      "fCmax_MIC": -0.8196651734543691,
+      "net_log10_change": 0.9582608695652173,
+      "cum_killed_cfu_per_mL": 0.9999999999999999,
+      "yield_weighted_kill": 0.9999999999999999
+     }
+    },
+    "offset_at_matched_fT": [
+     3.7987638357801443,
+     6.042293830691111
+    ],
+    "max_in_transit_fraction_at_48h": 0.004234101778242999
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 4,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 0,
+     "max_arrival": 0
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.513733280035242,
+       "0-24h": 0.1125969658211876,
+       "0-48h": 0.047803923714112316,
+       "peak": 0.17386717497349555,
+       "max_arrival": 0.17506482899807974
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.5841121884978302,
+       "0-24h": 0.688753352149968,
+       "0-48h": 0.6781687813349292,
+       "peak": 0.932915526495928,
+       "max_arrival": 0.9934518688498299
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.6653607286763608,
+       "0-24h": 0.9466160712073276,
+       "0-48h": 0.9450317773545528,
+       "peak": 0.9808061121479315,
+       "max_arrival": 0.9963894480635659
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.8007597209720467,
+       "0-24h": 0.9869798103970606,
+       "0-48h": 0.9865710086429711,
+       "peak": 0.9931833298943565,
+       "max_arrival": 0.9991800940649592
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.8361799619624184,
+       "0-24h": 0.23289467844990572,
+       "0-48h": 0.09717230617554759,
+       "peak": 0.3284140935798842,
+       "max_arrival": 0.32840486936233854
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.2415618746893384,
+       "0-24h": 0.8413096320268012,
+       "0-48h": 0.8325023641739451,
+       "peak": 0.9846501690184842,
+       "max_arrival": 0.9843421159967245
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.080835463960119,
+       "0-24h": 0.9797839442736873,
+       "0-48h": 0.9786006800506756,
+       "peak": 0.9919813689951634,
+       "max_arrival": 0.9919050920222016
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0234170724273548,
+       "0-24h": 0.9963620830813231,
+       "0-48h": 0.9960574736932275,
+       "peak": 0.997494853890425,
+       "max_arrival": 0.9976936433654473
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 31.71771965724125,
+      "change_pct_reference_to_top": {
+       "0-1h": -68.87884889121383,
+       "0-24h": -35.65039759741961,
+       "0-48h": -36.7715471583428,
+       "peak": -9.122806569939234,
+       "max_arrival": -1.0946636874003324
+      },
+      "first_hour_change_pct_failing_to_reference": -48.6266719964758,
+      "t_peak_h_reference": 3.990676323550976,
+      "in_transit_fraction_at_48h": {
+       "20": 0.009887674074257311,
+       "40": 0.00021835048170500102,
+       "60": 9.668958675605034e-05,
+       "80": 9.513344549590453e-05,
+       "95": 0.00010567770356241696
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 12.495218538805709,
+      "change_pct_reference_to_top": {
+       "0-1h": 37.33480388206842,
+       "0-24h": -17.869707136735013,
+       "0-48h": -18.85245467019413,
+       "peak": -2.569229039865173,
+       "max_arrival": -2.587790940481549
+      },
+      "first_hour_change_pct_failing_to_reference": 83.61799619624183,
+      "t_peak_h_reference": 3.7576403250644024,
+      "in_transit_fraction_at_48h": {
+       "20": 0.015784257088468832,
+       "40": 0.00019922997163222006,
+       "60": 8.714109470255938e-05,
+       "80": 8.889786427176265e-05,
+       "95": 0.00010383468221020641
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 124.53837476060389,
+      "0-24h": 13.378129460983596,
+      "0-48h": 13.221604337234782,
+      "peak": 10.203610962857669,
+      "max_arrival": 11.13396683856793
+     },
+     "40": {
+      "0-1h": 34.84381110860457,
+      "0-24h": 6.4678883849799815,
+      "0-48h": 6.504369300174081,
+      "peak": 5.401939342195502,
+      "max_arrival": 5.935253044356093
+     },
+     "60": {
+      "0-1h": 16.392815515009787,
+      "0-24h": 5.295053850453113,
+      "0-48h": 5.298555765698373,
+      "peak": 5.118115290171427,
+      "max_arrival": 5.990181800807784
+     },
+     "80": {
+      "0-1h": 10.09139322294343,
+      "0-24h": 5.11580446081185,
+      "0-48h": 5.116799604523931,
+      "peak": 5.060456694224864,
+      "max_arrival": 6.0172631296197565
+     },
+     "95": {
+      "0-1h": 7.895882762886959,
+      "0-24h": 5.067631338544625,
+      "0-48h": 5.068067134862816,
+      "peak": 5.038583618506106,
+      "max_arrival": 6.0262281711910335
+     }
+    },
+    "agent_ratio_range_controlled": [
+     5.038583618506106,
+     34.84381110860457
+    ],
+    "first_hour_share_controlled_range": [
+     0.00491521690536044,
+     0.026330744996846258
+    ]
+   }
+  },
+  "n3_mtt7.63": {
+   "config": {
+    "label": "n3_mtt7.63",
+    "mtt_h": 7.63,
+    "n": 3,
+    "delay_filament": false
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.552879983089639,
+       "7": 9.105759966179278
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.7089549965766975,
+       "7": 7.417909993153395
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.581741264189178,
+       "7": 7.163482528378356
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.547630840004508,
+       "7": 7.095261680009016
+      }
+     }
+    ],
+    "range": [
+     3.547630840004508,
+     9.105759966179278
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.38458406966943975,
+     "fAUC_MIC": -0.48176291793313064,
+     "fCmax_MIC": -0.44653132387786615,
+     "net_log10_change": 0.4153278332609639,
+     "cum_killed_cfu_per_mL": 0.4423577941815024,
+     "yield_weighted_kill": 0.9997828918801563
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.9340876472433816,
+      "fAUC_MIC": -0.9208695652173912,
+      "fCmax_MIC": -0.8467058256258435,
+      "net_log10_change": 0.9156521739130434,
+      "cum_killed_cfu_per_mL": 0.9982608695652172,
+      "yield_weighted_kill": 0.9982608695652172
+     },
+     "meropenem": {
+      "fT_pct": -0.9782608695652173,
+      "fAUC_MIC": -0.9165217391304347,
+      "fCmax_MIC": -0.8196651734543691,
+      "net_log10_change": 0.9582608695652173,
+      "cum_killed_cfu_per_mL": 0.9999999999999999,
+      "yield_weighted_kill": 0.9999999999999999
+     }
+    },
+    "offset_at_matched_fT": [
+     3.9438788534318245,
+     6.035746632234415
+    ],
+    "max_in_transit_fraction_at_48h": 0.07266599742685372
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 4,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 0,
+     "max_arrival": 0
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.4794873253946699,
+       "0-24h": 0.12246203284827525,
+       "0-48h": 0.049823882916279115,
+       "peak": 0.1143591543171928,
+       "max_arrival": 0.15356599335520013
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.5070600757790054,
+       "0-24h": 0.7018577701796608,
+       "0-48h": 0.6786058461467166,
+       "peak": 0.7105054965077809,
+       "max_arrival": 0.9934518698765213
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.5326935019668314,
+       "0-24h": 0.9480504453611562,
+       "0-48h": 0.9451380552818865,
+       "peak": 0.9637601979273666,
+       "max_arrival": 0.9963894481750902
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.648399908245567,
+       "0-24h": 0.9871865570599252,
+       "0-48h": 0.9866014633468602,
+       "peak": 0.9920552723683941,
+       "max_arrival": 0.9991800940799198
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.8810029896788791,
+       "0-24h": 0.289631497571407,
+       "0-48h": 0.1047506747205823,
+       "peak": 0.2625804714674184,
+       "max_arrival": 0.262592334407208
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.256217417149658,
+       "0-24h": 0.8551452829489754,
+       "0-48h": 0.8330138748463212,
+       "peak": 0.9933206742299544,
+       "max_arrival": 0.9932999145768446
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0859289292879366,
+       "0-24h": 0.9810065950500672,
+       "0-48h": 0.9787067948321291,
+       "peak": 0.9927966945689123,
+       "max_arrival": 0.9928041351565497
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0249115362375811,
+       "0-24h": 0.9965464485288286,
+       "0-48h": 0.9960876235291629,
+       "peak": 0.9975650039817229,
+       "max_arrival": 0.9974556091925246
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 30.41055862701153,
+      "change_pct_reference_to_top": {
+       "0-1h": -82.48622520972438,
+       "0-24h": -34.31294494036899,
+       "0-48h": -36.72172929244929,
+       "peak": -32.068328926409286,
+       "max_arrival": -1.0946635726345244
+      },
+      "first_hour_change_pct_failing_to_reference": -52.05126746053301,
+      "t_peak_h_reference": 8.04266494886743,
+      "in_transit_fraction_at_48h": {
+       "20": 0.05048445986773598,
+       "40": 0.0011568219160855318,
+       "60": 0.0003989814757695496,
+       "80": 0.000286435617604723,
+       "95": 0.00026652588664578445
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 11.583491554044883,
+      "change_pct_reference_to_top": {
+       "0-1h": 39.81462266502254,
+       "0-24h": -16.39940329514271,
+       "0-48h": -18.791332846636067,
+       "peak": -1.6235826999625003,
+       "max_arrival": -1.6356894109299747
+      },
+      "first_hour_change_pct_failing_to_reference": 88.10029896788791,
+      "t_peak_h_reference": 6.157640325064395,
+      "in_transit_fraction_at_48h": {
+       "20": 0.08703394135210143,
+       "40": 0.0010988706921349722,
+       "60": 0.00038026583262262587,
+       "80": 0.0002750891429471783,
+       "95": 0.0002601813557779554
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 720.1742504957605,
+      "0-24h": 15.253317450097853,
+      "0-48h": 13.674372960908116,
+      "peak": 16.755861815493255,
+      "max_arrival": 18.328278486642176
+     },
+     "40": {
+      "0-1h": 183.5799448927376,
+      "0-24h": 6.449409951203669,
+      "0-48h": 6.50411426155663,
+      "peak": 7.297519790283857,
+      "max_arrival": 10.71851658825381
+     },
+     "60": {
+      "0-1h": 74.10027873998774,
+      "0-24h": 5.29333269747617,
+      "0-48h": 5.2985071379667374,
+      "peak": 5.219792617213437,
+      "max_arrival": 10.720156309929363
+     },
+     "80": {
+      "0-1h": 36.349282088474624,
+      "0-24h": 5.115507323404827,
+      "0-48h": 5.116773234555947,
+      "peak": 5.0671284397152485,
+      "max_arrival": 10.758870004421297
+     },
+     "95": {
+      "0-1h": 22.99600535035422,
+      "0-24h": 5.067460798904003,
+      "0-48h": 5.068044057149302,
+      "peak": 5.039141774543895,
+      "max_arrival": 10.777470840946838
+     }
+    },
+    "agent_ratio_range_controlled": [
+     5.039141774543895,
+     183.5799448927376
+    ],
+    "first_hour_share_controlled_range": [
+     0.0008509067439543814,
+     0.02401701552005307
+    ]
+   }
+  },
+  "n3_mtt12": {
+   "config": {
+    "label": "n3_mtt12",
+    "mtt_h": 12.0,
+    "n": 3,
+    "delay_filament": false
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.55199670839704,
+       "7": 9.10399341679408
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.7088814350665262,
+       "7": 7.4177628701330525
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.5817086267826417,
+       "7": 7.163417253565283
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.547603917900889,
+       "7": 7.095207835801778
+      }
+     }
+    ],
+    "range": [
+     3.547603917900889,
+     9.10399341679408
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.3826299374876331,
+     "fAUC_MIC": -0.4832826747720365,
+     "fCmax_MIC": -0.4495711675609637,
+     "net_log10_change": 0.41315675206252717,
+     "cum_killed_cfu_per_mL": 0.4420321320017368,
+     "yield_weighted_kill": 0.9995657837603126
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.9288668499602326,
+      "fAUC_MIC": -0.9260869565217391,
+      "fCmax_MIC": -0.8545336144605971,
+      "net_log10_change": 0.9095652173913044,
+      "cum_killed_cfu_per_mL": 0.997391304347826,
+      "yield_weighted_kill": 0.997391304347826
+     },
+     "meropenem": {
+      "fT_pct": -0.9756521739130434,
+      "fAUC_MIC": -0.9182608695652172,
+      "fCmax_MIC": -0.8222755720959437,
+      "net_log10_change": 0.957391304347826,
+      "cum_killed_cfu_per_mL": 0.9991304347826085,
+      "yield_weighted_kill": 0.9991304347826085
+     }
+    },
+    "offset_at_matched_fT": [
+     4.17986900881154,
+     6.047312811651644
+    ],
+    "max_in_transit_fraction_at_48h": 0.20505449653358368
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 4,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 0,
+     "max_arrival": 0
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.474201334849884,
+       "0-24h": 0.12606926710063762,
+       "0-48h": 0.052737571994634684,
+       "peak": 0.10997106045666286,
+       "max_arrival": 0.15381542037301582
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.4939498449300088,
+       "0-24h": 0.7177329934774379,
+       "0-48h": 0.6799223489865774,
+       "peak": 0.7187664283081291,
+       "max_arrival": 0.9934518700056061
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.5057995262299008,
+       "0-24h": 0.9501436786307498,
+       "0-48h": 0.9453579600782108,
+       "peak": 0.6492780224242665,
+       "max_arrival": 0.9963894481890748
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.6076708841650603,
+       "0-24h": 0.9873830053455334,
+       "0-48h": 0.9866545088626029,
+       "peak": 0.978938387944109,
+       "max_arrival": 0.9991800940817932
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.8996695515420476,
+       "0-24h": 0.3664935207179125,
+       "0-48h": 0.1174508310701795,
+       "peak": 0.19702690774701953,
+       "max_arrival": 0.19702420804853257
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.26229919464447,
+       "0-24h": 0.8790830714174239,
+       "0-48h": 0.8344845605712811,
+       "peak": 0.9876506584713942,
+       "max_arrival": 0.987699608132423
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0880393161915645,
+       "0-24h": 0.9835483372239648,
+       "0-48h": 0.9789240144796453,
+       "peak": 0.9937387753676151,
+       "max_arrival": 0.9937228202104575
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0255303344194264,
+       "0-24h": 0.9968701568600625,
+       "0-48h": 0.9961396615375757,
+       "peak": 0.9977196678784483,
+       "max_arrival": 0.9977150885504183
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 28.671540071560216,
+      "change_pct_reference_to_top": {
+       "0-1h": -84.81797508592133,
+       "0-24h": -32.66546860786236,
+       "0-48h": -36.58080765535679,
+       "peak": -54.31497720591744,
+       "max_arrival": -1.0946635582096076
+      },
+      "first_hour_change_pct_failing_to_reference": -52.579866515011595,
+      "t_peak_h_reference": 0.12081647774767065,
+      "in_transit_fraction_at_48h": {
+       "20": 0.10556141193275954,
+       "40": 0.004265331386235569,
+       "60": 0.0015931607866527884,
+       "80": 0.0012498720751747986,
+       "95": 0.0011765410307341127
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 10.311609949526606,
+      "change_pct_reference_to_top": {
+       "0-1h": 40.84953091973054,
+       "0-24h": -13.808543397083639,
+       "0-48h": -18.625652276078487,
+       "peak": -2.077131432919588,
+       "max_arrival": -2.0742999651341854
+      },
+      "first_hour_change_pct_failing_to_reference": 89.96695515420477,
+      "t_peak_h_reference": 10.140961934430765,
+      "in_transit_fraction_at_48h": {
+       "20": 0.18776496765948386,
+       "40": 0.004016282254907528,
+       "60": 0.001554779501518195,
+       "80": 0.0012294726909269581,
+       "95": 0.0011626524555881648
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 2617.217343397744,
+      "0-24h": 18.85923673246157,
+      "0-48h": 14.482377450919875,
+      "peak": 19.346469870338353,
+      "max_arrival": 21.111530895787826
+     },
+     "40": {
+      "0-1h": 653.3178135239523,
+      "0-24h": 6.487345665160758,
+      "0-48h": 6.5028524405671835,
+      "peak": 10.798280458554116,
+      "max_arrival": 16.481624423804917
+     },
+     "60": {
+      "0-1h": 255.64955919270764,
+      "0-24h": 5.296634840745067,
+      "0-48h": 5.298402050095045,
+      "peak": 7.8584886371431555,
+      "max_arrival": 16.577611725005166
+     },
+     "80": {
+      "0-1h": 118.84444247213959,
+      "0-24h": 5.116743043004447,
+      "0-48h": 5.116726609689491,
+      "peak": 5.134492170420099,
+      "max_arrival": 16.622097292152745
+     },
+     "95": {
+      "0-1h": 70.42044980174377,
+      "0-24h": 5.068047316509034,
+      "0-48h": 5.068005597001281,
+      "peak": 5.037839435310259,
+      "max_arrival": 16.646504524994572
+     }
+    },
+    "agent_ratio_range_controlled": [
+     5.037839435310259,
+     653.3178135239523
+    ],
+    "first_hour_share_controlled_range": [
+     0.00023632626560851668,
+     0.0237428360149243
+    ]
+   }
+  },
+  "n3_mtt16": {
+   "config": {
+    "label": "n3_mtt16",
+    "mtt_h": 16.0,
+    "n": 3,
+    "delay_filament": false
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.552908265780692,
+       "7": 9.105816531561384
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.7090758411805758,
+       "7": 7.4181516823611515
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.5817734424735943,
+       "7": 7.163546884947189
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.547625243460695,
+       "7": 7.09525048692139
+      }
+     }
+    ],
+    "range": [
+     3.547625243460695,
+     9.105816531561384
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.3790473618209877,
+     "fAUC_MIC": -0.4875162831089882,
+     "fCmax_MIC": -0.456736513385408,
+     "net_log10_change": 0.4080547112462006,
+     "cum_killed_cfu_per_mL": 0.4408380373425966,
+     "yield_weighted_kill": 0.9988059053408598
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.922775919796559,
+      "fAUC_MIC": -0.9347826086956521,
+      "fCmax_MIC": -0.865840420555241,
+      "net_log10_change": 0.9026086956521738,
+      "cum_killed_cfu_per_mL": 0.9956521739130434,
+      "yield_weighted_kill": 0.9956521739130434
+     },
+     "meropenem": {
+      "fT_pct": -0.9678260869565216,
+      "fAUC_MIC": -0.9286956521739129,
+      "fCmax_MIC": -0.8375028975051277,
+      "net_log10_change": 0.946086956521739,
+      "cum_killed_cfu_per_mL": 0.9956521739130434,
+      "yield_weighted_kill": 0.9956521739130434
+     }
+    },
+    "offset_at_matched_fT": [
+     4.336643455997842,
+     6.077693570138617
+    ],
+    "max_in_transit_fraction_at_48h": 0.3227825951680668
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 4,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 0,
+     "max_arrival": 0
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.4730578179198296,
+       "0-24h": 0.11975697109220676,
+       "0-48h": 0.05530375965194046,
+       "peak": 0.11394652148061318,
+       "max_arrival": 0.15888985875656159
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.4910551087293165,
+       "0-24h": 0.7185727983127953,
+       "0-48h": 0.6824935576481186,
+       "peak": 0.7187664416890951,
+       "max_arrival": 0.993451870031482
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.49964956776980085,
+       "0-24h": 0.9498026753399937,
+       "0-48h": 0.9457030225346047,
+       "peak": 0.6492780226880387,
+       "max_arrival": 0.9963894481918752
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 0.5977319706071076,
+       "0-24h": 0.9871046152894903,
+       "0-48h": 0.9867154502855494,
+       "peak": 0.7385484418569563,
+       "max_arrival": 0.9991800940821681
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.9079408427619333,
+       "0-24h": 0.42383201142927424,
+       "0-48h": 0.13170219428100619,
+       "peak": 0.1691430111895865,
+       "max_arrival": 0.16914291918551674
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.264989854022194,
+       "0-24h": 0.8961726390454843,
+       "0-48h": 0.8377640935401165,
+       "peak": 0.9287647481871508,
+       "max_arrival": 0.9287965349479205
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.088972308603322,
+       "0-24h": 0.9854467850487948,
+       "0-48h": 0.9793149371815435,
+       "peak": 0.9899476013516247,
+       "max_arrival": 0.9899379349223937
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0258038193537897,
+       "0-24h": 0.9971223511459938,
+       "0-48h": 0.9962132278841137,
+       "peak": 0.997437333799167,
+       "max_arrival": 0.9974395915491988
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 27.233297440584366,
+      "change_pct_reference_to_top": {
+       "0-1h": -85.33431897274271,
+       "0-24h": -32.62987643147692,
+       "0-48h": -36.313810922823606,
+       "peak": -65.53347640859175,
+       "max_arrival": -1.094663555318376
+      },
+      "first_hour_change_pct_failing_to_reference": -52.69421820801704,
+      "t_peak_h_reference": 0.12081647774767065,
+      "in_transit_fraction_at_48h": {
+       "20": 0.15636277124482845,
+       "40": 0.015166496167583076,
+       "60": 0.008813089599192268,
+       "80": 0.008112210581315131,
+       "95": 0.007978289611974823
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 9.157993693754454,
+      "change_pct_reference_to_top": {
+       "0-1h": 41.30846871825429,
+       "0-24h": -11.941089331979205,
+       "0-48h": -18.2671909328577,
+       "peak": -8.292775348584358,
+       "max_arrival": -8.290324614589684
+      },
+      "first_hour_change_pct_failing_to_reference": 90.79408427619333,
+      "t_peak_h_reference": 13.440961934430753,
+      "in_transit_fraction_at_48h": {
+       "20": 0.28353152447732116,
+       "40": 0.01511341969960283,
+       "60": 0.0088261666743941,
+       "80": 0.008109613406317112,
+       "95": 0.007970317883073594
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 6025.900107162715,
+      "0-24h": 23.457892247181807,
+      "0-48h": 15.48920808942323,
+      "peak": 19.899567448208973,
+      "max_arrival": 21.78185785538596
+     },
+     "40": {
+      "0-1h": 1494.0710381621354,
+      "0-24h": 6.628206572354759,
+      "0-48h": 6.504154665400993,
+      "peak": 13.405735618308865,
+      "max_arrival": 20.461490996864182
+     },
+     "60": {
+      "0-1h": 579.981897689717,
+      "0-24h": 5.314655610960343,
+      "0-48h": 5.298679773115111,
+      "peak": 10.374632443150182,
+      "max_arrival": 21.885855221894058
+     },
+     "80": {
+      "0-1h": 266.1111785906177,
+      "0-24h": 5.122421823671478,
+      "0-48h": 5.116819203533714,
+      "peak": 6.8044215972711095,
+      "max_arrival": 22.028487280326157
+     },
+     "95": {
+      "0-1h": 155.0619681643928,
+      "0-24h": 5.070958661988107,
+      "0-48h": 5.0680360620867315,
+      "peak": 5.038306466092494,
+      "max_arrival": 22.066926337922958
+     }
+    },
+    "agent_ratio_range_controlled": [
+     5.038306466092494,
+     1494.0710381621354
+    ],
+    "first_hour_share_controlled_range": [
+     0.0001041831514878382,
+     0.023931938477794627
+    ]
+   }
+  },
+  "n1_mtt7.63_filament_delayed": {
+   "config": {
+    "label": "n1_mtt7.63_filament_delayed",
+    "mtt_h": 7.63,
+    "n": 1,
+    "delay_filament": true
+   },
+   "table1": {
+    "rows": [
+     {
+      "target_fT_pct": 40.0,
+      "ratio_AUC48": {
+       "3.5": 4.545744787031451,
+       "7": 9.091489574062901
+      }
+     },
+     {
+      "target_fT_pct": 60.0,
+      "ratio_AUC48": {
+       "3.5": 3.708084585834379,
+       "7": 7.416169171668758
+      }
+     },
+     {
+      "target_fT_pct": 80.0,
+      "ratio_AUC48": {
+       "3.5": 3.5815402125383633,
+       "7": 7.163080425076727
+      }
+     },
+     {
+      "target_fT_pct": 95.0,
+      "ratio_AUC48": {
+       "3.5": 3.547564459148635,
+       "7": 7.09512891829727
+      }
+     }
+    ],
+    "range": [
+     3.547564459148635,
+     9.091489574062901
+    ]
+   },
+   "table2": {
+    "spearman_pooled": {
+     "fT_pct": -0.3826299374876331,
+     "fAUC_MIC": -0.4832826747720365,
+     "fCmax_MIC": -0.4495711675609637,
+     "net_log10_change": 0.41315675206252717,
+     "cum_killed_cfu_per_mL": 0.4420321320017368,
+     "yield_weighted_kill": 0.9995657837603126
+    },
+    "spearman_within": {
+     "ceftazidime": {
+      "fT_pct": -0.9288668499602326,
+      "fAUC_MIC": -0.9260869565217391,
+      "fCmax_MIC": -0.8545336144605971,
+      "net_log10_change": 0.9095652173913044,
+      "cum_killed_cfu_per_mL": 0.997391304347826,
+      "yield_weighted_kill": 0.997391304347826
+     },
+     "meropenem": {
+      "fT_pct": -0.9756521739130434,
+      "fAUC_MIC": -0.9182608695652172,
+      "fCmax_MIC": -0.8222755720959437,
+      "net_log10_change": 0.957391304347826,
+      "cum_killed_cfu_per_mL": 0.9991304347826085,
+      "yield_weighted_kill": 0.9991304347826085
+     }
+    },
+    "offset_at_matched_fT": [
+     3.9150362187385137,
+     6.031737081241009
+    ],
+    "max_in_transit_fraction_at_48h": 0.10672361394254051
+   },
+   "figure4": {
+    "divergent_steps_by_endpoint": {
+     "0-1h": 8,
+     "0-24h": 0,
+     "0-48h": 0,
+     "peak": 0,
+     "max_arrival": 0
+    },
+    "n_steps": 8,
+    "steps": [
+     {
+      "agent": "ceftazidime",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.2872313843747192,
+       "0-24h": 0.15342010179759494,
+       "0-48h": 0.05486446879596132,
+       "peak": 0.1078732150154436,
+       "max_arrival": 0.10786819213202084
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.110280189113663,
+       "0-24h": 0.7124286340901872,
+       "0-48h": 0.6802494221504519,
+       "peak": 0.9576429026659736,
+       "max_arrival": 0.9578432517183766
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0489177182600293,
+       "0-24h": 0.9496942877795598,
+       "0-48h": 0.9454061019131018,
+       "peak": 0.9748662998918656,
+       "max_arrival": 0.9746582047676394
+      }
+     },
+     {
+      "agent": "ceftazidime",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.018847806675588,
+       "0-24h": 0.9874533523312136,
+       "0-48h": 0.986656941553926,
+       "peak": 0.9897514787995337,
+       "max_arrival": 0.9898457115247302
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 20.0,
+      "to_fT": 40.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.3830826089228132,
+       "0-24h": 0.2743913915080017,
+       "0-48h": 0.10627174327936899,
+       "peak": 0.2293483008377195,
+       "max_arrival": 0.22928634002641102
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 40.0,
+      "to_fT": 60.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.1046828913680231,
+       "0-24h": 0.8571682260744242,
+       "0-48h": 0.8339184808336219,
+       "peak": 0.9814999120725478,
+       "max_arrival": 0.9811698533455699
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 60.0,
+      "to_fT": 80.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0352050546788492,
+       "0-24h": 0.9814356470339947,
+       "0-48h": 0.9788095584087239,
+       "peak": 0.9918497702011891,
+       "max_arrival": 0.9919123584542431
+      }
+     },
+     {
+      "agent": "meropenem",
+      "from_fT": 80.0,
+      "to_fT": 95.0,
+      "kill_improved": true,
+      "fold_change": {
+       "0-1h": 1.0102305505234501,
+       "0-24h": 0.9965943628701337,
+       "0-48h": 0.9961063577132427,
+       "peak": 0.9974582085493373,
+       "max_arrival": 0.997584029276382
+      }
+     }
+    ],
+    "per_agent": {
+     "ceftazidime": {
+      "failing_over_controlled_fold": 27.546115347001788,
+      "change_pct_reference_to_top": {
+       "0-1h": 18.654257807002452,
+       "0-24h": -33.18995246254644,
+       "0-48h": -36.54691258726825,
+       "peak": -7.599395767150807,
+       "max_arrival": -7.59099527316126
+      },
+      "first_hour_change_pct_failing_to_reference": 28.723138437471917,
+      "t_peak_h_reference": 2.2906763235509744,
+      "in_transit_fraction_at_48h": {
+       "20": 0.14208184950343633,
+       "40": 0.006056828997153271,
+       "60": 0.0029004174642834595,
+       "80": 0.002504262457453125,
+       "95": 0.002427516622842141
+      }
+     },
+     "meropenem": {
+      "failing_over_controlled_fold": 11.404719095417187,
+      "change_pct_reference_to_top": {
+       "0-1h": 15.527269751694451,
+       "0-24h": -16.16095582306557,
+       "0-48h": -18.693079534148904,
+       "peak": -2.897397291049808,
+       "max_arrival": -2.9116802790922103
+      },
+      "first_hour_change_pct_failing_to_reference": 38.30826089228132,
+      "t_peak_h_reference": 2.157640325064401,
+      "in_transit_fraction_at_48h": {
+       "20": 0.10347118080774709,
+       "40": 0.004438387564972477,
+       "60": 0.0026457599564850822,
+       "80": 0.002436091014614014,
+       "95": 0.0024022321211364713
+      }
+     }
+    },
+    "agent_ratio": {
+     "20": {
+      "0-1h": 5.141640450958959,
+      "0-24h": 11.37147666013423,
+      "0-48h": 12.57863848400442,
+      "peak": 11.317341353782384,
+      "max_arrival": 11.31126131160706
+     },
+     "40": {
+      "0-1h": 4.7853113855575335,
+      "0-24h": 6.358118952634461,
+      "0-48h": 6.493921124330657,
+      "peak": 5.323074087754283,
+      "max_arrival": 5.321404268023035
+     },
+     "60": {
+      "0-1h": 4.809557993194768,
+      "0-24h": 5.284500595120059,
+      "0-48h": 5.2972636940491205,
+      "peak": 5.193687801498499,
+      "max_arrival": 5.194891741130608
+     },
+     "80": {
+      "0-1h": 4.8732669660564945,
+      "0-24h": 5.113590528446915,
+      "0-48h": 5.116486017911921,
+      "peak": 5.1047561454930195,
+      "max_arrival": 5.104527446621346
+     },
+     "95": {
+      "0-1h": 4.914835882896814,
+      "0-24h": 5.066687408527957,
+      "0-48h": 5.067949227355171,
+      "peak": 5.065314918066379,
+      "max_arrival": 5.064931328204498
+     }
+    },
+    "agent_ratio_range_controlled": [
+     4.7853113855575335,
+     6.493921124330657
+    ],
+    "first_hour_share_controlled_range": [
+     0.02378442478042879,
+     0.04586131005071649
+    ]
+   }
+  }
+ },
+ "numerical_check": {
+  "max_rel_diff_reproduced_vs_stored_48h_AUC": 2.9550456832268247e-06,
+  "reproduction_tolerance": 1e-05,
+  "max_rel_diff_zero_delay_vs_independent_exact": 8.975667942390169e-15,
+  "max_rel_diff_zero_delay_exact_vs_stored_trapezoid": 0.0031699049056701715,
+  "max_rel_diff_table1_ratio_zero_delay_vs_stored": 0.0011140931972251078,
+  "max_abs_diff_pooled_spearman_zero_delay_vs_stored": 0.0,
+  "max_rel_diff_offset_zero_delay_vs_stored": 0.0014013852497990475,
+  "max_mass_balance_rel_residual": 1.0322991446752264e-14,
+  "n_arms": 66,
+  "method": "closed-form integration (matrix exponential per step) of the transit chain and the endotoxin compartment over the same piecewise-linear release input the ODE solver interpolates"
+ },
+ "analysis_script_sha256": "e8847dd1e77648552d3635273253cce3846683475a4d0f1691c260b464a18085",
+ "input_sha256": {
+  "phase4_analyses.json": "d40cc4e745a56256f34eb17358d27e202e18e06649dcf2325d922764d19f308f"
+ },
+ "provenance": {
+  "git_head": "95457fe840dd9430fe87d04427364c9b853db19d",
+  "git_dirty": false,
+  "python": "3.12.4",
+  "numpy": "2.4.6",
+  "scipy": "1.15.3",
+  "numpy_scipy_supported": true,
+  "platform": "win32",
+  "final_yields_fg_per_CFU": {
+   "piperacillin": 5.15,
+   "ceftazidime": 4.93,
+   "isepamicin": 0.28,
+   "imipenem": 0.986,
+   "meropenem": 0.986
+  },
+  "note": "Delay between killing and endotoxin release, re-reading phase 4 regimens"
+ }
+}
