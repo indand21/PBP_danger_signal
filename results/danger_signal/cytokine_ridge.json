@@ -1,0 +1,371 @@
+{
+ "headline": {
+  "reference_DS50": 300.0,
+  "cost_stored": 0.0012247330282485073,
+  "cost_refit": 0.0012247330282485073,
+  "cost_rel_diff": 0.0,
+  "param_rel_diff_refit_vs_stored": {
+   "hill": -5.5584777558514986e-08,
+   "k_IL6_max": -0.0002473757957432987,
+   "k_signal_off": 0.0009422519185766642
+  },
+  "table1_max_rel_diff_refit_vs_stored": {
+   "AUC_DS_pg_h_mL": 2.1818264110962104e-06,
+   "AUC_IL6_excess_pg_h_mL": 0.00024990193269758265,
+   "IL6_peak_pg_mL": 3.485887581788916e-05,
+   "saturation_peak": 1.4996366039854436e-05
+  },
+  "grid_read": {
+   "n_feasible": 4,
+   "rejected_DS50": [
+    50.0,
+    100.0
+   ],
+   "rejected_t_peak_IL6_h": [
+    3.23,
+    2.79
+   ],
+   "reference_t_peak_IL6_h": 2.145
+  },
+  "between_grid_points": {
+   "n_feasible": 6,
+   "n_grid": 6,
+   "max_cost": 2.8813331471288297e-07,
+   "min_cost_DS50": 3000.0,
+   "t_peak_IL6_h_range": [
+    1.997861848056872,
+    2.000000546206292
+   ],
+   "k_signal_off_range": [
+    1.0424546066167482,
+    1.0453391041036237
+   ],
+   "saturation_at_2ng_kg_of_rejected": {
+    "50": 0.46509777281223846,
+    "100": 0.2012738479659162
+   },
+   "saturation_at_2ng_kg_range": [
+    0.00011262907977909919,
+    0.46509777281223846
+   ]
+  }
+ },
+ "stored_reference": {
+  "DS50": 300.0,
+  "hill": 1.713984131094413,
+  "k_IL6_max": 176080.53594356967,
+  "k_signal_off": 0.931066454178522,
+  "cost": 0.0012247330282485073,
+  "pred_t_peak_IL6_h": [
+   2.145,
+   2.145
+  ],
+  "saturation_peak_at_2ng_kg": 0.03957037478270822
+ },
+ "family_grid_read": [
+  {
+   "DS50": 50.0,
+   "feasible": false,
+   "cost": 0.057626156958240804,
+   "hill": 2.0268047516451677,
+   "k_IL6_max": 16703.26081886908,
+   "k_signal_off": 0.4627768190553169,
+   "pred_t_peak_IL6_h": [
+    3.23,
+    3.235
+   ],
+   "max_rel_peak_error": 1.1891287954313157e-10,
+   "saturation_peak_at_2ng_kg": 0.4650980837691179
+  },
+  {
+   "DS50": 100.0,
+   "feasible": false,
+   "cost": 0.0277046729300429,
+   "hill": 1.8085232269094749,
+   "k_IL6_max": 37975.67756581254,
+   "k_signal_off": 0.5989440356316938,
+   "pred_t_peak_IL6_h": [
+    2.79,
+    2.79
+   ],
+   "max_rel_peak_error": 2.538858012712808e-12,
+   "saturation_peak_at_2ng_kg": 0.2012744514480385
+  },
+  {
+   "DS50": 300.0,
+   "feasible": true,
+   "cost": 0.0012247330282485073,
+   "hill": 1.7139840358229863,
+   "k_IL6_max": 176036.97788087573,
+   "k_signal_off": 0.931943753331294,
+   "pred_t_peak_IL6_h": [
+    2.145,
+    2.145
+   ],
+   "max_rel_peak_error": 2.1781909609330796e-11,
+   "saturation_peak_at_2ng_kg": 0.039570381520025344
+  },
+  {
+   "DS50": 1000.0,
+   "feasible": true,
+   "cost": 0.007403170040836224,
+   "hill": 1.5997113044310274,
+   "k_IL6_max": 792106.0078923218,
+   "k_signal_off": 1.3557817889062576,
+   "pred_t_peak_IL6_h": [
+    1.705,
+    1.705
+   ],
+   "max_rel_peak_error": 0.033163383692171755,
+   "saturation_peak_at_2ng_kg": 0.007371937596750769
+  },
+  {
+   "DS50": 3000.0,
+   "feasible": true,
+   "cost": 0.015744456027966085,
+   "hill": 1.577810486223148,
+   "k_IL6_max": 3990986.1023473176,
+   "k_signal_off": 1.5373811393821148,
+   "pred_t_peak_IL6_h": [
+    1.575,
+    1.575
+   ],
+   "max_rel_peak_error": 0.03905707461861807,
+   "saturation_peak_at_2ng_kg": 0.0014012932250699916
+  },
+  {
+   "DS50": 10000.0,
+   "feasible": true,
+   "cost": 0.02915320470841956,
+   "hill": 1.4697893173919123,
+   "k_IL6_max": 13114729.571020529,
+   "k_signal_off": 1.7191237803301298,
+   "pred_t_peak_IL6_h": [
+    1.47,
+    1.47
+   ],
+   "max_rel_peak_error": 0.0743790628880947,
+   "saturation_peak_at_2ng_kg": 0.000374772982908653
+  }
+ ],
+ "family_between_grid_points": [
+  {
+   "DS50": 50.0,
+   "feasible": true,
+   "cost": 2.8813331471288297e-07,
+   "hill": 2.026822868268866,
+   "k_IL6_max": 13054.701330377635,
+   "k_signal_off": 1.0424546066167482,
+   "pred_t_peak_IL6_h": [
+    1.997861848056872,
+    2.002156073408081
+   ],
+   "max_rel_peak_error": 1.1266935504572473e-06,
+   "saturation_peak_at_2ng_kg": 0.46509777281223846
+  },
+  {
+   "DS50": 100.0,
+   "feasible": true,
+   "cost": 4.138158529809353e-08,
+   "hill": 1.8085281523364285,
+   "k_IL6_max": 32417.05238138436,
+   "k_signal_off": 1.0442383482305995,
+   "pred_t_peak_IL6_h": [
+    1.9991874014981768,
+    2.0008147980883058
+   ],
+   "max_rel_peak_error": 1.2194350362815243e-07,
+   "saturation_peak_at_2ng_kg": 0.2012738479659162
+  },
+  {
+   "DS50": 300.0,
+   "feasible": true,
+   "cost": 1.2571121962320367e-09,
+   "hill": 1.713983879130312,
+   "k_IL6_max": 170975.78746815588,
+   "k_signal_off": 1.0451333074856488,
+   "pred_t_peak_IL6_h": [
+    1.9998585500225174,
+    2.0001421931524743
+   ],
+   "max_rel_peak_error": 1.9467800238537336e-07,
+   "saturation_peak_at_2ng_kg": 0.03957039260087614
+  },
+  {
+   "DS50": 1000.0,
+   "feasible": true,
+   "cost": 1.641893747699517e-11,
+   "hill": 1.6965168681115506,
+   "k_IL6_max": 1241153.1939940797,
+   "k_signal_off": 1.0453081444029937,
+   "pred_t_peak_IL6_h": [
+    1.9999837574582533,
+    2.0000161735829396
+   ],
+   "max_rel_peak_error": 5.9316590528268875e-09,
+   "saturation_peak_at_2ng_kg": 0.005489803412173846
+  },
+  {
+   "DS50": 3000.0,
+   "feasible": true,
+   "cost": 1.907127551438006e-14,
+   "hill": 1.6942018164219863,
+   "k_IL6_max": 7897328.432548811,
+   "k_signal_off": 1.045330328999122,
+   "pred_t_peak_IL6_h": [
+    2.000000546206292,
+    1.999999441487374
+   ],
+   "max_rel_peak_error": 3.1690505775117117e-10,
+   "saturation_peak_at_2ng_kg": 0.0008636026262204819
+  },
+  {
+   "DS50": 10000.0,
+   "feasible": true,
+   "cost": 5.363089997252179e-13,
+   "hill": 1.693827556005712,
+   "k_IL6_max": 60563366.63296313,
+   "k_signal_off": 1.0453391041036237,
+   "pred_t_peak_IL6_h": [
+    1.9999970598788557,
+    2.0000029184881667
+   ],
+   "max_rel_peak_error": 3.2104929825749196e-10,
+   "saturation_peak_at_2ng_kg": 0.00011262907977909919
+  }
+ ],
+ "table1_arms": {
+  "ceftazidime 40%": {
+   "stored": {
+    "AUC_DS_pg_h_mL": 25.15691315638888,
+    "AUC_IL6_excess_pg_h_mL": 4379.449662352216,
+    "IL6_peak_pg_mL": 501.411244724239,
+    "saturation_peak": 0.005833574255123027
+   },
+   "refit": {
+    "AUC_DS_pg_h_mL": 25.156921724005024,
+    "AUC_IL6_excess_pg_h_mL": 4378.37261084993,
+    "IL6_peak_pg_mL": 501.39790799254683,
+    "saturation_peak": 0.005833581404217175
+   }
+  },
+  "meropenem 40%": {
+   "stored": {
+    "AUC_DS_pg_h_mL": 3.863311328608688,
+    "AUC_IL6_excess_pg_h_mL": 243.7994704180583,
+    "IL6_peak_pg_mL": 34.42248494622415,
+    "saturation_peak": 0.0003637550368549612
+   },
+   "refit": {
+    "AUC_DS_pg_h_mL": 3.863311959344169,
+    "AUC_IL6_excess_pg_h_mL": 243.7393931851748,
+    "IL6_peak_pg_mL": 34.42143259133008,
+    "saturation_peak": 0.00036375661619902
+   }
+  },
+  "ceftazidime 60%": {
+   "stored": {
+    "AUC_DS_pg_h_mL": 17.042816673222887,
+    "AUC_IL6_excess_pg_h_mL": 3736.868442953808,
+    "IL6_peak_pg_mL": 480.1766116007838,
+    "saturation_peak": 0.005888208899795317
+   },
+   "refit": {
+    "AUC_DS_pg_h_mL": 17.042853857690424,
+    "AUC_IL6_excess_pg_h_mL": 3735.9589913060795,
+    "IL6_peak_pg_mL": 480.1598731839094,
+    "saturation_peak": 0.005888231405161943
+   }
+  },
+  "meropenem 60%": {
+   "stored": {
+    "AUC_DS_pg_h_mL": 3.214348825000121,
+    "AUC_IL6_excess_pg_h_mL": 225.95916557365098,
+    "IL6_peak_pg_mL": 33.778694777676,
+    "saturation_peak": 0.0003718564894621319
+   },
+   "refit": {
+    "AUC_DS_pg_h_mL": 3.2143424467278563,
+    "AUC_IL6_excess_pg_h_mL": 225.9026979414634,
+    "IL6_peak_pg_mL": 33.77780819678649,
+    "saturation_peak": 0.00037185748877127753
+   }
+  },
+  "ceftazidime 80%": {
+   "stored": {
+    "AUC_DS_pg_h_mL": 16.098006884682324,
+    "AUC_IL6_excess_pg_h_mL": 3616.607892376827,
+    "IL6_peak_pg_mL": 465.9227429140434,
+    "saturation_peak": 0.005965141996023029
+   },
+   "refit": {
+    "AUC_DS_pg_h_mL": 16.097996470085953,
+    "AUC_IL6_excess_pg_h_mL": 3615.707500563944,
+    "IL6_peak_pg_mL": 465.9086651661406,
+    "saturation_peak": 0.005965192346179554
+   }
+  },
+  "meropenem 80%": {
+   "stored": {
+    "AUC_DS_pg_h_mL": 3.144310036738791,
+    "AUC_IL6_excess_pg_h_mL": 223.24491328296784,
+    "IL6_peak_pg_mL": 33.455961321158775,
+    "saturation_peak": 0.00036935938770335985
+   },
+   "refit": {
+    "AUC_DS_pg_h_mL": 3.144305072130639,
+    "AUC_IL6_excess_pg_h_mL": 223.18932358220792,
+    "IL6_peak_pg_mL": 33.45501147635767,
+    "saturation_peak": 0.00036935964746587474
+   }
+  },
+  "ceftazidime 95%": {
+   "stored": {
+    "AUC_DS_pg_h_mL": 15.882099540277581,
+    "AUC_IL6_excess_pg_h_mL": 3566.55353306989,
+    "IL6_peak_pg_mL": 459.58550352942484,
+    "saturation_peak": 0.005799272722668404
+   },
+   "refit": {
+    "AUC_DS_pg_h_mL": 15.882126195743622,
+    "AUC_IL6_excess_pg_h_mL": 3565.6832770639144,
+    "IL6_peak_pg_mL": 459.571579527965,
+    "saturation_peak": 0.005799359690684918
+   }
+  },
+  "meropenem 95%": {
+   "stored": {
+    "AUC_DS_pg_h_mL": 3.130620157454257,
+    "AUC_IL6_excess_pg_h_mL": 222.378312780998,
+    "IL6_peak_pg_mL": 33.34308248261184,
+    "saturation_peak": 0.0003685229001896644
+   },
+   "refit": {
+    "AUC_DS_pg_h_mL": 3.1306197163786993,
+    "AUC_IL6_excess_pg_h_mL": 222.32326025019185,
+    "IL6_peak_pg_mL": 33.34198938141328,
+    "saturation_peak": 0.0003685202125972762
+   }
+  }
+ },
+ "input_sha256": {
+  "phase4_analyses.json": "d40cc4e745a56256f34eb17358d27e202e18e06649dcf2325d922764d19f308f"
+ },
+ "provenance": {
+  "git_head": "459b9a4ff6d8e409de722e61d2b3ffe2a24f1e36",
+  "git_dirty": false,
+  "python": "3.12.4",
+  "numpy": "2.4.6",
+  "scipy": "1.15.3",
+  "numpy_scipy_supported": true,
+  "platform": "win32",
+  "final_yields_fg_per_CFU": {
+   "piperacillin": 5.15,
+   "ceftazidime": 4.93,
+   "isepamicin": 0.28,
+   "imipenem": 0.986,
+   "meropenem": 0.986
+  },
+  "note": "IL-6 calibration ridge: reproducibility and what the grid-read peak decides; no default changed"
+ }
+}

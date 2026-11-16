@@ -39,10 +39,13 @@ slope, trading curvature against saturation. What the data *do* fix is
 (i) the local log-log slope, (ii) the absolute production scale needed to reach
 the observed peak, and (iii) a lower bound on DS50, since a DS50 near the
 observed plasma concentrations would flatten the response below the measured
-ratio. ``calibrate_family`` therefore returns the whole identified family
-rather than a single point estimate, and every downstream conclusion is meant
-to be repeated across it. That is the opposite of what was done with the old
-host-damage layer, whose single unmeasured I50 turned out to decide everything.
+ratio. (Within the 50-10000 pg/mL grid that bound is not reached: with the
+peak time read between grid points every grid value fits; see
+``calibrate_family``.) ``calibrate_family`` therefore returns the whole
+identified family rather than a single point estimate, and every downstream
+conclusion is meant to be repeated across it. That is the opposite of what
+was done with the old host-damage layer, whose single unmeasured I50 turned
+out to decide everything.
 """
 
 from dataclasses import replace
@@ -171,6 +174,18 @@ def calibrate_family(
     human data; the spread across entries IS the Layer-2 uncertainty. Collapsing
     it to a point estimate is what went wrong with the old host-damage layer,
     whose single unmeasured I50 silently decided the entire result.
+
+    Known defect, kept by decision (2026-11-17). ``predict_peaks`` reads the
+    IL-6 time-to-peak off the simulation grid with argmax, so that residual has
+    no gradient and each fit stops somewhere along a ridge of equal cost:
+    refitting moves k_signal_off by about 0.1% at identical cost. Read between
+    grid points with ``interpolated_peak``, as ``calibrate_tnf`` now does,
+    every DS50 on the default grid fits, including 50 and 100, which the
+    ``feasible`` screen below rejects only because their grid-read peak sits
+    at 3.2 and 2.8 h. The lowest-cost entry, used as the reference, is
+    therefore a convention, not an estimate. The fit is left unchanged because
+    the reported endpoint, the endotoxin AUC, is upstream of this layer;
+    scripts/ds_cytokine_ridge.py records both effects.
     """
     from scipy.optimize import least_squares
 
