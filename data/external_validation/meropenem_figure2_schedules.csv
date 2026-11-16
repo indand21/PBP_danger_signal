@@ -1,0 +1,162 @@
+panel,arm,concentration_mgL,time_h,value,lower,upper,quality,note
+A,shared-baseline,,0,4.8,,,overlapping_baseline,as meropenem_figure2a_multiarm.csv
+A,0.25xMIC,0.25,2,5.0,,,readable,as meropenem_figure2a_multiarm.csv
+A,0.25xMIC,0.25,9.6,5.7,,,readable,as meropenem_figure2a_multiarm.csv
+A,1xMIC,1,2,4.5,,,overlap_flagged,as meropenem_figure2a_multiarm.csv
+A,1xMIC,1,9.6,3.5,,,readable,as meropenem_figure2a_multiarm.csv
+A,2xMIC,2,2,3.4,,,readable,as meropenem_figure2a_multiarm.csv
+A,2xMIC,2,9.6,2.8,,,overlap_flagged,as meropenem_figure2a_multiarm.csv
+A,4xMIC,4,2,4.4,,,overlap_flagged,as meropenem_figure2a_multiarm.csv
+A,4xMIC,4,9.6,2.9,,,overlap_flagged,as meropenem_figure2a_multiarm.csv
+A,8xMIC,8,2,3.6,,,overlap_flagged,as meropenem_figure2a_multiarm.csv
+A,8xMIC,8,9.6,2.7,,,overlap_flagged,as meropenem_figure2a_multiarm.csv
+A,16xMIC,16,2,3.8,,,readable,as meropenem_figure2a_multiarm.csv
+A,16xMIC,16,9.6,2.9,,,overlap_flagged,as meropenem_figure2a_multiarm.csv
+A,GC-native,0,2,5.2,,,readable,as meropenem_figure2a_multiarm.csv
+A,GC-native,0,9.6,7.6,,,readable,as meropenem_figure2a_multiarm.csv
+A,GC-centrifuged,0,2,5.5,,,readable,as meropenem_figure2a_multiarm.csv
+A,GC-centrifuged,0,9.6,8.0,,,readable,as meropenem_figure2a_multiarm.csv
+A,16xMIC,16,24,5.55,,,readable,
+A,GC-centrifuged,0,24,7.85,,,readable,
+A,GC-native,0,24,,6.7,7.9,unresolved_cluster,seven arms converge between 6.7 and 7.9; identities not separable
+A,0.25xMIC,0.25,24,,6.7,7.9,unresolved_cluster,seven arms converge between 6.7 and 7.9; identities not separable
+A,0.5xMIC,0.5,24,,6.7,7.9,unresolved_cluster,seven arms converge between 6.7 and 7.9; identities not separable
+A,1xMIC,1,24,,6.7,7.9,unresolved_cluster,seven arms converge between 6.7 and 7.9; identities not separable
+A,2xMIC,2,24,,6.7,7.9,unresolved_cluster,seven arms converge between 6.7 and 7.9; identities not separable
+A,4xMIC,4,24,,6.7,7.9,unresolved_cluster,seven arms converge between 6.7 and 7.9; identities not separable
+A,8xMIC,8,24,,6.7,7.9,unresolved_cluster,seven arms converge between 6.7 and 7.9; identities not separable
+B,shared-baseline,,0,4.1,,,overlapping_baseline,open circle near 4.45 and filled markers near 3.75; midpoint as meropenem_figure2bc_initial.csv
+B,GC-native,0,2,5.1,,,readable,
+B,GC-centrifuged,0,2,5.2,,,readable,
+B,0.5xMIC,0.5,2,4.7,,,readable,
+B,1xMIC,1,2,3.85,,,readable,
+B,2xMIC,2,2,1.7,,,readable,only outgoing segment leaves the plot floor before 2.6 h
+B,4xMIC,4,2,,,1.0,below_axis_floor,line leaves the floor before 1.5 h
+B,8xMIC,8,2,,,1.0,below_axis_floor,line leaves the floor before 1.5 h
+B,16xMIC,16,2,,,1.0,below_axis_floor,line leaves the floor before 1.5 h
+B,GC-native,0,4.3,6.4,,,overlap_flagged,both controls coincide; plotted 0.5 h before the 4.8 h removal
+B,GC-centrifuged,0,4.3,6.4,,,overlap_flagged,both controls coincide
+B,0.5xMIC,0.5,4.3,5.0,,,readable,
+B,1xMIC,1,4.3,1.7,,,readable,
+B,2xMIC,2,4.3,,,1.0,below_axis_floor,
+B,4xMIC,4,4.3,,,1.0,below_axis_floor,
+B,8xMIC,8,4.3,,,1.0,below_axis_floor,
+B,16xMIC,16,4.3,,,1.0,below_axis_floor,
+B,unidentified-diamond,,4.3,4.0,,,unidentified_series,second diamond series; joined to a hidden marker near 4.75 at 2 h; no 0.25xMIC triangle appears in panel B
+B,GC-native,0,12,8.6,,,overlap_flagged,both controls coincide
+B,GC-centrifuged,0,12,8.6,,,overlap_flagged,both controls coincide
+B,0.5xMIC,0.5,12,8.15,,,readable,
+B,unidentified-diamond,,12,7.45,,,unidentified_series,
+B,1xMIC,1,12,6.55,,,readable,
+B,2xMIC,2,12,5.3,,,overlap_flagged,overlaps 4xMIC
+B,4xMIC,4,12,5.3,,,overlap_flagged,overlaps 2xMIC; traced back from 3.95 at 14 h
+B,8xMIC,8,12,4.45,,,readable,
+B,16xMIC,16,12,1.7,,,readable,
+B,GC-native,0,14,8.65,,,overlap_flagged,both controls coincide
+B,GC-centrifuged,0,14,8.65,,,overlap_flagged,both controls coincide
+B,0.5xMIC,0.5,14,7.95,,,readable,
+B,unidentified-diamond,,14,7.15,,,unidentified_series,
+B,1xMIC,1,14,6.5,,,readable,
+B,2xMIC,2,14,5.2,,,readable,
+B,4xMIC,4,14,3.95,,,readable,
+B,8xMIC,8,14,2.6,,,readable,
+B,16xMIC,16,14,,,1.0,below_axis_floor,
+B,GC-native,0,16.3,8.3,,,overlap_flagged,both controls coincide; plotted 0.5 h before the 16.8 h removal
+B,GC-centrifuged,0,16.3,8.3,,,overlap_flagged,both controls coincide
+B,0.5xMIC,0.5,16.3,7.6,,,readable,
+B,unidentified-diamond,,16.3,7.0,,,unidentified_series,
+B,1xMIC,1,16.3,6.5,,,readable,
+B,2xMIC,2,16.3,3.85,,,readable,
+B,4xMIC,4,16.3,1.95,,,readable,
+B,8xMIC,8,16.3,,,1.0,below_axis_floor,line leaves the floor near 15 h
+B,16xMIC,16,16.3,,,1.0,below_axis_floor,
+B,GC-native,0,24,9.05,,,readable,
+B,GC-centrifuged,0,24,8.85,,,readable,
+B,0.5xMIC,0.5,24,,8.5,9.1,hidden_behind_control,line ends under the filled circle
+B,unidentified-diamond,,24,8.35,,,unidentified_series,
+B,1xMIC,1,24,7.55,,,readable,
+B,2xMIC,2,24,6.6,,,overlap_flagged,overlaps 4xMIC
+B,4xMIC,4,24,6.85,,,overlap_flagged,overlaps 2xMIC
+B,8xMIC,8,24,4.0,,,readable,
+B,16xMIC,16,24,3.05,,,readable,
+C,shared-baseline,,0,4.1,,,overlapping_baseline,as meropenem_figure2bc_initial.csv
+C,GC-native,0,2,4.8,,,readable,as meropenem_figure2bc_initial.csv
+C,GC-centrifuged,0,2,4.8,,,readable,as meropenem_figure2bc_initial.csv
+C,0.5xMIC,0.5,2,4.0,,,readable,as meropenem_figure2bc_initial.csv
+C,1xMIC,1,2,3.8,,,readable,as meropenem_figure2bc_initial.csv
+C,2xMIC,2,2,2.9,,,overlap_flagged,as meropenem_figure2bc_initial.csv
+C,4xMIC,4,2,2.8,,,overlap_flagged,as meropenem_figure2bc_initial.csv
+C,8xMIC,8,2,3.0,,,overlap_flagged,as meropenem_figure2bc_initial.csv
+C,16xMIC,16,2,2.7,,,overlap_flagged,as meropenem_figure2bc_initial.csv
+C,GC-native,0,3.3,5.7,,,readable,as meropenem_figure2bc_initial.csv (recorded there at 3.2 h)
+C,GC-centrifuged,0,3.3,6.0,,,readable,as meropenem_figure2bc_initial.csv
+C,0.25xMIC,0.25,3.3,4.7,,,readable,as meropenem_figure2bc_initial.csv
+C,0.5xMIC,0.5,3.3,3.8,,,readable,as meropenem_figure2bc_initial.csv
+C,1xMIC,1,3.3,2.7,,,overlap_flagged,as meropenem_figure2bc_initial.csv
+C,2xMIC,2,3.3,2.2,,,overlap_flagged,as meropenem_figure2bc_initial.csv
+C,4xMIC,4,3.3,2.4,,,overlap_flagged,as meropenem_figure2bc_initial.csv
+C,8xMIC,8,3.3,2.8,,,overlap_flagged,as meropenem_figure2bc_initial.csv
+C,16xMIC,16,3.3,2.5,,,overlap_flagged,as meropenem_figure2bc_initial.csv
+C,GC-native,0,8,7.65,,,readable,
+C,GC-centrifuged,0,8,7.45,,,overlap_flagged,
+C,0.25xMIC,0.25,8,6.95,,,overlap_flagged,overlaps 0.5xMIC
+C,0.5xMIC,0.5,8,6.75,,,overlap_flagged,overlaps 0.25xMIC
+C,1xMIC,1,8,4.6,,,readable,
+C,2xMIC,2,8,3.35,,,overlap_flagged,overlaps 4xMIC
+C,4xMIC,4,8,3.05,,,overlap_flagged,overlaps 2xMIC
+C,8xMIC,8,8,2.0,,,readable,
+C,16xMIC,16,8,1.65,,,readable,
+C,GC-native,0,10,7.3,,,overlap_flagged,
+C,GC-centrifuged,0,10,7.55,,,readable,
+C,0.25xMIC,0.25,10,6.95,,,overlap_flagged,overlaps 0.5xMIC
+C,0.5xMIC,0.5,10,6.95,,,overlap_flagged,overlaps 0.25xMIC
+C,1xMIC,1,10,4.85,,,readable,
+C,2xMIC,2,10,3.05,,,readable,
+C,4xMIC,4,10,,,1.0,below_axis_floor,line leaves the floor near 9 h
+C,8xMIC,8,10,1.75,,,readable,
+C,16xMIC,16,10,,,1.0,below_axis_floor,line leaves the floor near 8.6 h
+C,GC-native,0,11.1,,7.6,8.0,hidden_behind_control,line ends under the filled circle
+C,GC-centrifuged,0,11.1,7.85,,,readable,
+C,0.25xMIC,0.25,11.1,,6.8,7.2,hidden_behind_marker,line ends under the 0.5xMIC triangle
+C,0.5xMIC,0.5,11.1,7.0,,,readable,
+C,1xMIC,1,11.1,3.85,,,readable,
+C,2xMIC,2,11.1,2.65,,,readable,
+C,4xMIC,4,11.1,,,1.0,below_axis_floor,
+C,8xMIC,8,11.1,,,1.0,below_axis_floor,line leaves the floor near 10.3 h
+C,16xMIC,16,11.1,,,1.0,below_axis_floor,
+C,GC-native,0,16,7.65,,,readable,
+C,GC-centrifuged,0,16,8.2,,,readable,
+C,0.25xMIC,0.25,16,7.45,,,overlap_flagged,partly under the open circle
+C,0.5xMIC,0.5,16,6.75,,,readable,
+C,1xMIC,1,16,5.0,,,readable,
+C,2xMIC,2,16,5.65,,,readable,
+C,4xMIC,4,16,3.5,,,overlap_flagged,overlaps 8xMIC
+C,8xMIC,8,16,3.5,,,overlap_flagged,overlaps 4xMIC
+C,16xMIC,16,16,2.75,,,readable,
+C,GC-native,0,18,8.25,,,overlap_flagged,
+C,GC-centrifuged,0,18,8.45,,,overlap_flagged,
+C,0.25xMIC,0.25,18,7.85,,,readable,
+C,0.5xMIC,0.5,18,7.05,,,readable,
+C,1xMIC,1,18,3.95,,,readable,
+C,2xMIC,2,18,6.05,,,readable,
+C,4xMIC,4,18,2.7,,,readable,
+C,8xMIC,8,18,,,1.0,below_axis_floor,line leaves the floor near 17 h
+C,16xMIC,16,18,,,1.0,below_axis_floor,line leaves the floor near 17 h
+C,GC-native,0,19.1,,8.1,8.4,hidden_behind_control,line ends under the filled circle
+C,GC-centrifuged,0,19.1,8.3,,,readable,
+C,0.25xMIC,0.25,19.1,7.85,,,readable,
+C,0.5xMIC,0.5,19.1,7.0,,,readable,
+C,1xMIC,1,19.1,2.95,,,readable,
+C,2xMIC,2,19.1,6.15,,,readable,
+C,4xMIC,4,19.1,2.15,,,readable,
+C,8xMIC,8,19.1,1.75,,,overlap_flagged,overlaps the removal arrow
+C,16xMIC,16,19.1,,,1.0,below_axis_floor,
+C,GC-native,0,24,8.35,,,overlap_flagged,overlaps 0.25xMIC
+C,GC-centrifuged,0,24,8.85,,,readable,
+C,0.25xMIC,0.25,24,,8.1,8.5,hidden_behind_control,line ends under the open circle
+C,0.5xMIC,0.5,24,8.0,,,readable,
+C,1xMIC,1,24,5.45,,,overlap_flagged,overlaps 2xMIC
+C,2xMIC,2,24,5.2,,,overlap_flagged,overlaps 1xMIC
+C,4xMIC,4,24,4.8,,,readable,
+C,8xMIC,8,24,4.05,,,readable,
+C,16xMIC,16,24,2.75,,,readable,

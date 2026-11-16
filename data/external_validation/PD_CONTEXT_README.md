@@ -20,9 +20,30 @@ Each panel has one shared baseline and its own growth nuisance parameter.
 Coincident markers are not independent replicates. Panel B's unresolved
 0.25×MIC arm and off-plot higher-dose markers are excluded rather than
 invented as censored measurements. Panel C's high-dose cluster is flagged;
-an additional fit excludes it. The panel B 2×MIC arm falls then regrows
-before removal. An omission sensitivity is a model-adequacy diagnostic and
-does not establish that the source observations are wrong.
+an additional fit excludes it. An omission sensitivity is a model-adequacy
+diagnostic and does not establish that the source observations are wrong.
+
+Corrected 2026-11-17: an earlier reading had the panel B 2×MIC arm falling to
+1.7 at 2 h and regrowing to 4.0 on drug. Tracing the connecting lines shows
+two series. The 2-h diamond's only outgoing segment leaves the plot floor;
+the diamond at 4.0 is joined to a marker near 4.75 at 2 h, hidden behind the
+0.5×MIC triangle. 2×MIC at the second sampling is below the plot floor, and
+the 4.0 reading is kept as an unidentified diamond series (panel B shows no
+0.25×MIC triangle anywhere). Both rows are flagged `_excluded`; details are in
+`meropenem_figure2bc_initial.provenance.json`. There is no on-drug regrowth.
+
+## Broth full schedules
+
+`meropenem_figure2_schedules.csv` reads panels A-C to 24 h: the regrowth after
+each removal and the response to the second and third exposures. Identities
+are assigned by tracing connecting lines between sampling times. A line that
+leaves the plot floor is recorded as below 10 CFU/mL (`upper` = 1.0 only); a
+marker hidden in a cluster or behind another is an interval (`lower`,
+`upper`); panel B's second diamond series is kept but flagged
+`unidentified_series` and not fitted. Panel A's seven arms at 24 h converge
+between 6.7 and 7.9 and are kept as one interval. Calibration, method and the
+overlay check are in `meropenem_figure2_schedules.provenance.json`. Panels
+D-F are not read. Run `python scripts/ds_broth_replay.py`.
 
 Run `python scripts/ds_joint_broth_refit.py`. It profiles h with other
 parameters reoptimized and reports residuals and omission sensitivities.

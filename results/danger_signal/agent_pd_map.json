@@ -52566,7 +52566,7 @@
   ]
  },
  "numerical_check": {
-  "max_rel_diff_shared_cell_r_star_vs_joint_robustness_trapezoid": 0.001108360305669187,
+  "max_rel_diff_shared_cell_r_star_vs_joint_robustness_trapezoid": 0.0011128882718758337,
   "envelope_twin_of_adopted_pd": "adopted_PD_with_refitted_broth_nuisance",
   "max_rel_diff_envelope_twin_vs_main_map": 0.0,
   "max_rel_diff_mirror_shared_cell_vs_main_shared_cell": 0.0,
@@ -52576,11 +52576,11 @@
  "analysis_script_sha256": "1a8db200669d12fc962c262263e92b06c95495b029fb1812154bf958ef7d18a4",
  "input_sha256": {
   "multiarm_refit.json": "679131bf0ff0348b6a542d55531c41a6c22c3f114d77d9c70908711a6fa3ec23",
-  "joint_robustness.json": "e003e269c01b963bfbc304ff828d095cddc06c3193f6664b00d5574f17f5faba"
+  "joint_robustness.json": "a5a89e31d7815927f72024ead16ca8fda3b2466492718096edb4f784144bcc86"
  },
  "tsuji_data_sha256": "7210c29979bb525bfdbd54f7e947708e44542f374b2a77097b8af2c01e54dbc6",
  "provenance": {
-  "git_head": "ea7c9b817d4aea720ca38d11b51834c09629ab12",
+  "git_head": "61ba44447f5a8792088d275fa4ef38c19cfaf542",
   "git_dirty": true,
   "python": "3.12.4",
   "numpy": "2.4.6",

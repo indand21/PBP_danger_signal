@@ -1,0 +1,71 @@
+{
+  "source": "Nussbaumer-Proll et al. 2022, Figure 2A-C, doi:10.3389/fphar.2022.840692",
+  "licence": "CC BY 4.0; see source_figures/README.md",
+  "source_image": "data/external_validation/source_figures/figure2_embedded0.png",
+  "source_image_sha256": "e51df061dba35f746c06cf0e3384e28ebb1c283cf87a2aedfca607e3ad3ef786",
+  "csv_sha256": "7fb047da863e4fb083d7dfcfa441b29b831c162aa8fe290d5d423d24bd90bba9",
+  "date": "2026-11-17",
+  "scope": "Every readable arm of panels A-C over the full 24 h schedule: first exposure, drug-free regrowth and later exposures. First-window values of A are copied from meropenem_figure2a_multiarm.csv and of B/C from meropenem_figure2bc_initial.csv, except where line tracing reassigned them (panel B 2xMIC; see that file's provenance).",
+  "calibration": {
+    "A": {
+      "t0_x": 131.9,
+      "pixels_per_h": 33.3,
+      "log10_one_y": 319.0,
+      "pixels_per_log10": 32.6
+    },
+    "B": {
+      "t0_x": 136.5,
+      "pixels_per_h": 33.42,
+      "log10_one_y": 700.0,
+      "pixels_per_log10": 32.7
+    },
+    "C": {
+      "t0_x": 134.0,
+      "pixels_per_h": 33.71,
+      "log10_one_y": 1122.0,
+      "pixels_per_log10": 37.5
+    }
+  },
+  "calibration_method": "Axis lines and tick marks located in the raster (2-h x ticks; decade y ticks); log10 = 1 is the plot floor.",
+  "reading_method": "Zoomed strips (4x) with a 0.1-log10 grid at each sampling column; identities assigned by tracing connecting lines between consecutive sampling times, not by marker shape alone. Values to 0.05 log10 with the project's +/-0.3 reading allowance (not an SD). Every reading was overlaid on the source image and checked to land on its marker.",
+  "observation_types": {
+    "value": "point reading",
+    "upper_only": "below the plot floor: the arm's line leaves the axis floor (10 CFU/mL) before the sampling time",
+    "lower_and_upper": "interval: the marker is hidden in a cluster or behind another marker",
+    "unidentified_series": "panel B's second diamond series, which matches no legend arm; excluded from fits"
+  },
+  "sampling_times": "Plotted positions. Panel B's pre-removal samples plot at 4.3 and 16.3 h against removal at 4.8 and 16.8 h; panel C's at 3.3, 11.1 and 19.1 h against 3.2, 11.2 and 19.2 h.",
+  "schedules_h": {
+    "A": [
+      [
+        0,
+        9.6
+      ]
+    ],
+    "B": [
+      [
+        0,
+        4.8
+      ],
+      [
+        12,
+        16.8
+      ]
+    ],
+    "C": [
+      [
+        0,
+        3.2
+      ],
+      [
+        8,
+        11.2
+      ],
+      [
+        16,
+        19.2
+      ]
+    ]
+  },
+  "not_done": "Panels D-F (means of five isolates) are not read. Panel A's seven arms at 24 h converge between 6.7 and 7.9 and are kept as one interval."
+}

@@ -36,7 +36,7 @@ repository.
 | Injury | used only to test whether a ranking is invariant across seven monotone maps; no injury magnitude is ever reported |
 
 **What the headline numbers rest on.** With equal lysis yields and no sub-MIC
-term the agent ratio falls to 1.001-1.040, and the ceftazidime:meropenem yield
+term the agent ratio falls to 1.001-1.039, and the ceftazidime:meropenem yield
 ratio at which release exposure is equal is 0.81-1.00. The ordering therefore
 survives for any true ratio above about one, while the magnitude is the
 assumed 3.5-7-fold range propagating through the model. Run
@@ -161,6 +161,8 @@ python scripts/ds_kill_matched_figure.py # its supplementary figure
 python scripts/ds_cytokine_ridge.py      # what the IL-6 fit's flat ridge moves (no default changed)
 python scripts/ds_joint_uncertainty.py   # ten assumptions together; process pool, --workers N
 python scripts/ds_joint_uncertainty_figure.py # its supplementary figure
+python scripts/ds_broth_replay.py        # broth time-kill replayed over full 24-h schedules
+python scripts/ds_broth_replay_figure.py # its supplementary figure
 python scripts/ds_phase5_tolerance.py    # endotoxin-tolerance term (ships disabled)
 python scripts/ds_phase4_figures.py      # figures, read back from the stored JSON
 ```
@@ -243,7 +245,7 @@ this repository.
 python -m pytest -q
 ```
 
-595 tests pass, with one expected failure marking a known defect in a legacy
+601 tests pass, with one expected failure marking a known defect in a legacy
 pharmacokinetic routine. They cover the pharmacokinetic conventions and the
 conservation of drug mass, the bacterial dynamics, mass conservation across the persister
 and small-colony-variant switches, the release layer and its

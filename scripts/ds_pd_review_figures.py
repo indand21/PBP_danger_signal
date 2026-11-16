@@ -75,7 +75,7 @@ def main():
     fig,axes=plt.subplots(1,2,figsize=(10,5),layout='constrained')
     for panel,ax,limits in zip('BC',axes,[(25,990,760,350),(25,990,1180,755)]):
         ax.imshow(source)
-        rows=[r for r in readings if r['panel']==panel]
+        rows=[r for r in readings if r['panel']==panel and r['pixel_x']]
         ax.scatter([float(r['pixel_x']) for r in rows],[float(r['pixel_y']) for r in rows],
                    s=80,facecolors='none',edgecolors='#e83d34',linewidths=1)
         ax.set(xlim=limits[:2],ylim=limits[2:],title=f'Panel {panel}: recorded reading positions')

@@ -3,7 +3,7 @@
   "licence": "CC BY 4.0; see source_figures/README.md",
   "source_image": "data/external_validation/source_figures/figure2_embedded0.png",
   "source_image_sha256": "e51df061dba35f746c06cf0e3384e28ebb1c283cf87a2aedfca607e3ad3ef786",
-  "csv_sha256": "97d1d1801cd1fb7801a69ea6b9f3db1688b9ff47d8f8b4773d40b94329717445",
+  "csv_sha256": "8f30233afb5a5893db8d2e1027315325b87fa5d3d39b4dc5a972b69a7118fb42",
   "method": "Manual marker-centre readings rounded to 0.1 log10; approximate pixel coordinates retained",
   "initial_exposure_end_h": {
     "B": 4.8,
@@ -21,5 +21,14 @@
   },
   "reading_allowance_log10": 0.3,
   "uncertainty": "Sensitivity allowance, not SD. Cluster assignments and off-plot omissions are flagged; no replicate recovery.",
-  "notes": "Only the first on-drug window. Coincident control markers deduplicated in joint fit. No invented censoring limit. See PD_CONTEXT_README.md."
+  "notes": "Only the first on-drug window. Coincident control markers deduplicated in joint fit. No invented censoring limit. See PD_CONTEXT_README.md.",
+  "corrections": [
+    {
+      "date": "2026-11-17",
+      "row": "B,2xMIC,2,4.8 (formerly value 4.0 at pixel 280,601, quality on_drug_regrowth)",
+      "finding": "Two series had been joined. The 2xMIC diamond at 2 h (pixel 204,678) has one outgoing segment, which leaves the plot floor before about 2.6 h. The diamond at pixel 280,601 is joined to a marker near log10 4.75 at 2 h, hidden behind the 0.5xMIC triangle. Panel B shows no 0.25xMIC triangle at any time, so that series is probably the 0.25xMIC arm drawn with a diamond, but this is not established.",
+      "action": "2xMIC at the second sampling recorded as below the plot floor; the 4.0 reading kept as unidentified-diamond; both rows flagged *_excluded and not fitted. The plotted sampling time of that column is about 4.3 h; the 4.8 h removal time is kept as before.",
+      "previous_csv_sha256": "97d1d1801cd1fb7801a69ea6b9f3db1688b9ff47d8f8b4773d40b94329717445"
+    }
+  ]
 }

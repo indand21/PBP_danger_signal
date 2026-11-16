@@ -2,9 +2,17 @@
 
 Panel-specific growth and baseline, shared kmax/C50/h. This is a model
 adequacy and identification analysis, not adoption of a best optimizer point.
-There is on-drug regrowth in panel B. Adequacy is assessed for the current
-fixed persistence mechanism, not every possible constant-concentration model.
-Missing/off-plot markers are not invented as assay-censored data.
+Adequacy is assessed for the current fixed persistence mechanism, not every
+possible constant-concentration model. Missing/off-plot markers are not
+invented as assay-censored data; rows flagged *_excluded are skipped.
+
+Corrected 2026-11-17. Panel B's 2xMIC arm was read as falling to 1.7 at 2 h
+and regrowing to 4.0 on drug. Tracing the connecting lines shows two series:
+the 2-h diamond's only outgoing segment leaves the plot floor, while the
+diamond at 4.0 is joined to a marker near 4.75 at 2 h, hidden behind the
+0.5xMIC triangle. 2xMIC at the second sampling is therefore below the plot
+floor, and the 4.0 point belongs to an unidentified diamond-marked series
+(panel B shows no 0.25xMIC triangle anywhere). There is no on-drug regrowth.
 """
 from pathlib import Path
 import sys,csv,json,hashlib
@@ -21,7 +29,7 @@ def points():
     with (ROOT/"data/external_validation/meropenem_figure2bc_initial.csv").open(newline="") as f:
         rows=list(csv.DictReader(f))
     for panel in ["B","C"]:
-        use=[r for r in rows if r["panel"]==panel]
+        use=[r for r in rows if r["panel"]==panel and not r["quality"].endswith("_excluded")]
         # Coincident control markers are not two independently digitised data.
         dedup=[];seen=set()
         for r in use:
@@ -30,6 +38,27 @@ def points():
         result[panel]=tuple(np.array([float(r[k]) for r in dedup])
                             for k in ["concentration_mgL","time_h","value"])+([r["arm"] for r in dedup],)
     return result
+
+
+READING_ALLOWANCE=.3
+
+
+def structural_check(predictions):
+    """Where the joint fit misses by more than the reading allowance, from the data."""
+    resid=[(r["predicted_log10"]-r["observed_log10"],r) for r in predictions]
+    worst=max(resid,key=lambda z:abs(z[0]))
+    beyond=[{"panel":r["panel"],"arm":r["arm"],"time_h":r["time_h"],"residual_log10":e}
+            for e,r in resid if abs(e)>READING_ALLOWANCE]
+    by_panel={p:float(np.mean([e for e,r in resid if r["panel"]==p])) for p in "ABC"}
+    return {"reading_allowance_per_point_log10":READING_ALLOWANCE,
+            "n_beyond_allowance":len(beyond),"n_points":len(resid),"beyond_allowance":beyond,
+            "worst":{"panel":worst[1]["panel"],"arm":worst[1]["arm"],"time_h":worst[1]["time_h"],
+                     "observed_log10":worst[1]["observed_log10"],
+                     "predicted_log10":worst[1]["predicted_log10"],"residual_log10":worst[0]},
+            "mean_residual_by_panel_log10":by_panel,
+            "correction_2026_11_17":"Panel B's former 2xMIC reading of 4.0 at the second "
+                                    "sampling belongs to another series (see module docstring); "
+                                    "the on-drug regrowth it implied is not in the source."}
 
 
 def main():
@@ -94,12 +123,7 @@ def main():
                       "max_abs_residual_log10":float(np.max(np.abs(best.fun))),"success":bool(best.success)},
              "hill_profiles":profiles,"predictions":predictions,
              "scenario_sensitivity":sensitivities,
-             "structural_check":{"panel":"B","arm":"2xMIC","observed_growth_2_to_4_8h_log10":2.3,
-                                 "reading_allowance_per_point_log10":.3,
-                                 "interpretation":"The joint best fit fails the stated reading allowance "
-                                                  "under the current fixed persistence mechanism. "
-                                                  "This is model inadequacy, not proof of resistance "
-                                                  "or a general impossibility for all kill models."},
+             "structural_check":structural_check(predictions),
              "uncertainty":"Digitisation and overlap sensitivity; no sampling-error model or confidence interval",
              "source_sha256":{f:hashlib.sha256((ROOT/f).read_bytes()).hexdigest() for f in
                  ["data/external_validation/meropenem_figure2a_multiarm.csv",

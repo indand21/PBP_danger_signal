@@ -9,7 +9,8 @@ B,0.5xMIC,0.5,4.8,5.0,280,569,readable
 B,1xMIC,1,2,3.8,204,607,readable
 B,1xMIC,1,4.8,1.7,280,678,readable
 B,2xMIC,2,2,1.7,204,678,readable
-B,2xMIC,2,4.8,4.0,280,601,on_drug_regrowth
+B,2xMIC,2,4.8,,,,below_axis_floor_excluded
+B,unidentified-diamond,,4.8,4.0,280,601,unidentified_series_excluded
 C,shared-baseline,0,0,4.1,131,1006,overlapping_baseline
 C,GC-native,0,2,4.8,200,981,readable
 C,GC-centrifuged,0,2,4.8,200,979,readable
