@@ -1,11 +1,158 @@
 # Jackson JJ, Kropp H. J Infect Dis 1992;165(6):1033-41 (PMID 1583320)
-# P. aeruginosa, smooth- and rough-LPS mutant isolates; 35 C.
-# HELD OUT from all fitting -- Layer-1 validation set.
-# series: free_lps_ng_mL | log10_cfu_mL | filament_fraction | mouse_mortality_pct
-# isolate: smooth | rough
-# RECORD BEFORE DIGITIZING:
-#   inoculum_cfu_per_mL =
-#   assay_volume_mL     =
-#   lps_assay           =
-#   mic_mg_L            = (ceftazidime, imipenem -- abstract states they are equivalent)
-agent,isolate,concentration_xMIC,time_h,series,value
+# P. aeruginosa, smooth- and rough-LPS isolates; 35 C.
+# HELD OUT from all fitting -- Layer-1 validation set; used here only as a whole-study check.
+# series: free_lps_ng_mL | log10_cfu_mL
+# isolate: strain and LPS phenotype as the table states
+# RECORDED FROM THE FULL TEXT BEFORE TRANSCRIBING:
+#   inoculum_cfu_per_mL = 1e5 (Tables 1-2, MB3286) or about 1e6 (Tables 4-5); each arm's 0-h count is in the data
+#   assay_volume_mL     = not stated in the tables
+#   lps_assay           = chromogenic Limulus amebocyte lysate (QCL-1000), 0.45-um filterable free LPS, ng/mL, cumulative
+#   mic_mg_L            = imipenem 1, ceftazidime 2 (the 2x MIC arms use 2 and 4 mg/L); Table 2 uses 0.5 and 0.8 mg/L
+# Transcribed 2026-11-17 from Tables 1, 2, 4 and 5 (page images of docs/article_pdfs/jackson1992.pdf, gitignored);
+#   every exponent checked against the image, not the OCR text layer. Table 3 summarizes Tables 1-2 and is not repeated.
+# quality: tabulated | approximate (the table prints ~) | not_determined (ND)
+agent,isolate,concentration_xMIC,time_h,series,value,se,table,quality
+control,MB3286 smooth parent,0,0,log10_cfu_mL,5.000,,1,tabulated
+control,MB3286 smooth parent,0,0,free_lps_ng_mL,0.35,,1,tabulated
+control,MB3286 smooth parent,0,2,log10_cfu_mL,6.079,,1,tabulated
+control,MB3286 smooth parent,0,2,free_lps_ng_mL,6.8,,1,tabulated
+control,MB3286 smooth parent,0,3,log10_cfu_mL,6.602,,1,tabulated
+control,MB3286 smooth parent,0,3,free_lps_ng_mL,30,,1,tabulated
+control,MB3286 smooth parent,0,4,log10_cfu_mL,7.000,,1,tabulated
+control,MB3286 smooth parent,0,4,free_lps_ng_mL,46,,1,tabulated
+control,MB3286 smooth parent,0,5.7,log10_cfu_mL,7.477,,1,tabulated
+control,MB3286 smooth parent,0,5.7,free_lps_ng_mL,85,30,1,tabulated
+control,MB3286 smooth parent,0,7,log10_cfu_mL,,,1,not_determined
+control,MB3286 smooth parent,0,7,free_lps_ng_mL,152,,1,tabulated
+control,MB3286 smooth parent,0,24,log10_cfu_mL,10.000,,1,approximate
+control,MB3286 smooth parent,0,24,free_lps_ng_mL,6880,,1,tabulated
+imipenem,MB3286 smooth parent,2,0,log10_cfu_mL,4.740,,1,tabulated
+imipenem,MB3286 smooth parent,2,0,free_lps_ng_mL,0.54,,1,tabulated
+imipenem,MB3286 smooth parent,2,2,log10_cfu_mL,1.477,,1,tabulated
+imipenem,MB3286 smooth parent,2,2,free_lps_ng_mL,7.52,,1,tabulated
+imipenem,MB3286 smooth parent,2,3,log10_cfu_mL,1.301,,1,tabulated
+imipenem,MB3286 smooth parent,2,3,free_lps_ng_mL,12,,1,tabulated
+imipenem,MB3286 smooth parent,2,4,log10_cfu_mL,1.301,,1,tabulated
+imipenem,MB3286 smooth parent,2,4,free_lps_ng_mL,13.5,,1,tabulated
+imipenem,MB3286 smooth parent,2,5.7,log10_cfu_mL,2.875,,1,tabulated
+imipenem,MB3286 smooth parent,2,5.7,free_lps_ng_mL,18.5,,1,tabulated
+imipenem,MB3286 smooth parent,2,7,log10_cfu_mL,,,1,not_determined
+imipenem,MB3286 smooth parent,2,7,free_lps_ng_mL,25,,1,tabulated
+imipenem,MB3286 smooth parent,2,24,log10_cfu_mL,10.000,,1,approximate
+imipenem,MB3286 smooth parent,2,24,free_lps_ng_mL,2180,,1,tabulated
+ceftazidime,MB3286 smooth parent,2,0,log10_cfu_mL,5.301,,1,tabulated
+ceftazidime,MB3286 smooth parent,2,0,free_lps_ng_mL,0.6,0.1,1,tabulated
+ceftazidime,MB3286 smooth parent,2,2,log10_cfu_mL,2.301,,1,tabulated
+ceftazidime,MB3286 smooth parent,2,2,free_lps_ng_mL,20,,1,tabulated
+ceftazidime,MB3286 smooth parent,2,3,log10_cfu_mL,1.000,,1,tabulated
+ceftazidime,MB3286 smooth parent,2,3,free_lps_ng_mL,30,2,1,tabulated
+ceftazidime,MB3286 smooth parent,2,4,log10_cfu_mL,1.000,,1,tabulated
+ceftazidime,MB3286 smooth parent,2,4,free_lps_ng_mL,130,,1,tabulated
+ceftazidime,MB3286 smooth parent,2,5.7,log10_cfu_mL,1.000,,1,tabulated
+ceftazidime,MB3286 smooth parent,2,5.7,free_lps_ng_mL,265,5,1,tabulated
+ceftazidime,MB3286 smooth parent,2,7,log10_cfu_mL,,,1,not_determined
+ceftazidime,MB3286 smooth parent,2,7,free_lps_ng_mL,261,21,1,tabulated
+ceftazidime,MB3286 smooth parent,2,24,log10_cfu_mL,10.000,,1,approximate
+ceftazidime,MB3286 smooth parent,2,24,free_lps_ng_mL,3400,,1,tabulated
+control,MB3286 smooth parent,0,0,log10_cfu_mL,5.000,,2,tabulated
+control,MB3286 smooth parent,0,0,free_lps_ng_mL,0.35,,2,tabulated
+control,MB3286 smooth parent,0,2,log10_cfu_mL,6.079,,2,tabulated
+control,MB3286 smooth parent,0,2,free_lps_ng_mL,6.8,,2,tabulated
+control,MB3286 smooth parent,0,3,log10_cfu_mL,6.602,,2,tabulated
+control,MB3286 smooth parent,0,3,free_lps_ng_mL,30,,2,tabulated
+control,MB3286 smooth parent,0,4,log10_cfu_mL,7.000,,2,tabulated
+control,MB3286 smooth parent,0,4,free_lps_ng_mL,46,,2,tabulated
+control,MB3286 smooth parent,0,5.7,log10_cfu_mL,7.477,,2,tabulated
+control,MB3286 smooth parent,0,5.7,free_lps_ng_mL,85,30,2,tabulated
+control,MB3286 smooth parent,0,7,log10_cfu_mL,,,2,not_determined
+control,MB3286 smooth parent,0,7,free_lps_ng_mL,152,,2,tabulated
+control,MB3286 smooth parent,0,24,log10_cfu_mL,10.000,,2,approximate
+control,MB3286 smooth parent,0,24,free_lps_ng_mL,6880,,2,tabulated
+imipenem,MB3286 smooth parent,0.5,0,log10_cfu_mL,5.146,,2,tabulated
+imipenem,MB3286 smooth parent,0.5,0,free_lps_ng_mL,0.48,0.1,2,tabulated
+imipenem,MB3286 smooth parent,0.5,2,log10_cfu_mL,3.580,,2,tabulated
+imipenem,MB3286 smooth parent,0.5,2,free_lps_ng_mL,6.9,0.1,2,tabulated
+imipenem,MB3286 smooth parent,0.5,3,log10_cfu_mL,4.477,,2,tabulated
+imipenem,MB3286 smooth parent,0.5,3,free_lps_ng_mL,15,,2,tabulated
+imipenem,MB3286 smooth parent,0.5,4,log10_cfu_mL,5.176,,2,tabulated
+imipenem,MB3286 smooth parent,0.5,4,free_lps_ng_mL,24,,2,tabulated
+imipenem,MB3286 smooth parent,0.5,5.7,log10_cfu_mL,6.398,,2,tabulated
+imipenem,MB3286 smooth parent,0.5,5.7,free_lps_ng_mL,74,23,2,tabulated
+imipenem,MB3286 smooth parent,0.5,7,log10_cfu_mL,,,2,not_determined
+imipenem,MB3286 smooth parent,0.5,7,free_lps_ng_mL,265,,2,tabulated
+imipenem,MB3286 smooth parent,0.5,24,log10_cfu_mL,10.000,,2,approximate
+imipenem,MB3286 smooth parent,0.5,24,free_lps_ng_mL,4400,,2,tabulated
+ceftazidime,MB3286 smooth parent,0.5,0,log10_cfu_mL,5.000,,2,tabulated
+ceftazidime,MB3286 smooth parent,0.5,0,free_lps_ng_mL,0.41,,2,tabulated
+ceftazidime,MB3286 smooth parent,0.5,2,log10_cfu_mL,5.477,,2,tabulated
+ceftazidime,MB3286 smooth parent,0.5,2,free_lps_ng_mL,12,,2,tabulated
+ceftazidime,MB3286 smooth parent,0.5,3,log10_cfu_mL,5.699,,2,tabulated
+ceftazidime,MB3286 smooth parent,0.5,3,free_lps_ng_mL,19.5,,2,tabulated
+ceftazidime,MB3286 smooth parent,0.5,4,log10_cfu_mL,6.301,,2,tabulated
+ceftazidime,MB3286 smooth parent,0.5,4,free_lps_ng_mL,100,,2,tabulated
+ceftazidime,MB3286 smooth parent,0.5,5.7,log10_cfu_mL,7.301,,2,tabulated
+ceftazidime,MB3286 smooth parent,0.5,5.7,free_lps_ng_mL,198,16,2,tabulated
+ceftazidime,MB3286 smooth parent,0.5,7,log10_cfu_mL,,,2,not_determined
+ceftazidime,MB3286 smooth parent,0.5,7,free_lps_ng_mL,328,42,2,tabulated
+ceftazidime,MB3286 smooth parent,0.5,24,log10_cfu_mL,10.000,,2,approximate
+ceftazidime,MB3286 smooth parent,0.5,24,free_lps_ng_mL,8500,,2,tabulated
+control,MB5121 rough LPS mutant,0,0,log10_cfu_mL,6.230,,4,tabulated
+control,MB5121 rough LPS mutant,0,0,free_lps_ng_mL,5.4,1.6,4,tabulated
+control,MB5121 rough LPS mutant,0,2,log10_cfu_mL,6.477,,4,tabulated
+control,MB5121 rough LPS mutant,0,2,free_lps_ng_mL,115.5,80,4,tabulated
+control,MB5121 rough LPS mutant,0,5.5,log10_cfu_mL,8.892,,4,tabulated
+control,MB5121 rough LPS mutant,0,5.5,free_lps_ng_mL,250,,4,tabulated
+control,MB5121 rough LPS mutant,0,8.5,log10_cfu_mL,9.602,,4,tabulated
+control,MB5121 rough LPS mutant,0,8.5,free_lps_ng_mL,495,305,4,tabulated
+control,MB5121 rough LPS mutant,0,24,log10_cfu_mL,10.000,,4,approximate
+control,MB5121 rough LPS mutant,0,24,free_lps_ng_mL,803,193,4,tabulated
+imipenem,MB5121 rough LPS mutant,2,0,log10_cfu_mL,6.000,,4,tabulated
+imipenem,MB5121 rough LPS mutant,2,0,free_lps_ng_mL,4.1,,4,tabulated
+imipenem,MB5121 rough LPS mutant,2,2,log10_cfu_mL,3.903,,4,tabulated
+imipenem,MB5121 rough LPS mutant,2,2,free_lps_ng_mL,12,,4,tabulated
+imipenem,MB5121 rough LPS mutant,2,5.5,log10_cfu_mL,3.041,,4,tabulated
+imipenem,MB5121 rough LPS mutant,2,5.5,free_lps_ng_mL,136,39,4,tabulated
+imipenem,MB5121 rough LPS mutant,2,8.5,log10_cfu_mL,1.699,,4,tabulated
+imipenem,MB5121 rough LPS mutant,2,8.5,free_lps_ng_mL,140,,4,tabulated
+imipenem,MB5121 rough LPS mutant,2,24,log10_cfu_mL,8.000,,4,approximate
+imipenem,MB5121 rough LPS mutant,2,24,free_lps_ng_mL,1900,,4,tabulated
+ceftazidime,MB5121 rough LPS mutant,2,0,log10_cfu_mL,6.000,,4,tabulated
+ceftazidime,MB5121 rough LPS mutant,2,0,free_lps_ng_mL,5.7,,4,tabulated
+ceftazidime,MB5121 rough LPS mutant,2,2,log10_cfu_mL,6.176,,4,tabulated
+ceftazidime,MB5121 rough LPS mutant,2,2,free_lps_ng_mL,71,,4,tabulated
+ceftazidime,MB5121 rough LPS mutant,2,5.5,log10_cfu_mL,3.602,,4,tabulated
+ceftazidime,MB5121 rough LPS mutant,2,5.5,free_lps_ng_mL,730,70,4,tabulated
+ceftazidime,MB5121 rough LPS mutant,2,8.5,log10_cfu_mL,2.954,,4,tabulated
+ceftazidime,MB5121 rough LPS mutant,2,8.5,free_lps_ng_mL,2800,,4,tabulated
+ceftazidime,MB5121 rough LPS mutant,2,24,log10_cfu_mL,8.000,,4,approximate
+ceftazidime,MB5121 rough LPS mutant,2,24,free_lps_ng_mL,63000,,4,tabulated
+control,MB5120 smooth parent,0,0,log10_cfu_mL,6.146,,5,tabulated
+control,MB5120 smooth parent,0,0,free_lps_ng_mL,0.19,,5,tabulated
+control,MB5120 smooth parent,0,2,log10_cfu_mL,7.279,,5,tabulated
+control,MB5120 smooth parent,0,2,free_lps_ng_mL,0.68,,5,tabulated
+control,MB5120 smooth parent,0,5.5,log10_cfu_mL,9.000,,5,tabulated
+control,MB5120 smooth parent,0,5.5,free_lps_ng_mL,7.65,,5,tabulated
+control,MB5120 smooth parent,0,8.5,log10_cfu_mL,10.000,,5,tabulated
+control,MB5120 smooth parent,0,8.5,free_lps_ng_mL,16.2,,5,tabulated
+control,MB5120 smooth parent,0,24,log10_cfu_mL,10.000,,5,approximate
+control,MB5120 smooth parent,0,24,free_lps_ng_mL,13,,5,tabulated
+imipenem,MB5120 smooth parent,2,0,log10_cfu_mL,6.000,,5,tabulated
+imipenem,MB5120 smooth parent,2,0,free_lps_ng_mL,0.38,,5,tabulated
+imipenem,MB5120 smooth parent,2,2,log10_cfu_mL,4.301,,5,tabulated
+imipenem,MB5120 smooth parent,2,2,free_lps_ng_mL,12.5,7,5,tabulated
+imipenem,MB5120 smooth parent,2,5.5,log10_cfu_mL,3.602,,5,tabulated
+imipenem,MB5120 smooth parent,2,5.5,free_lps_ng_mL,32,,5,tabulated
+imipenem,MB5120 smooth parent,2,8.5,log10_cfu_mL,1.301,,5,tabulated
+imipenem,MB5120 smooth parent,2,8.5,free_lps_ng_mL,63,22,5,tabulated
+imipenem,MB5120 smooth parent,2,24,log10_cfu_mL,1.000,,5,approximate
+imipenem,MB5120 smooth parent,2,24,free_lps_ng_mL,64,,5,tabulated
+ceftazidime,MB5120 smooth parent,2,0,log10_cfu_mL,6.000,,5,tabulated
+ceftazidime,MB5120 smooth parent,2,0,free_lps_ng_mL,0.2,,5,tabulated
+ceftazidime,MB5120 smooth parent,2,2,log10_cfu_mL,6.477,,5,tabulated
+ceftazidime,MB5120 smooth parent,2,2,free_lps_ng_mL,11.5,,5,tabulated
+ceftazidime,MB5120 smooth parent,2,5.5,log10_cfu_mL,5.602,,5,tabulated
+ceftazidime,MB5120 smooth parent,2,5.5,free_lps_ng_mL,320,,5,tabulated
+ceftazidime,MB5120 smooth parent,2,8.5,log10_cfu_mL,3.954,,5,tabulated
+ceftazidime,MB5120 smooth parent,2,8.5,free_lps_ng_mL,1900,,5,tabulated
+ceftazidime,MB5120 smooth parent,2,24,log10_cfu_mL,8.000,,5,approximate
+ceftazidime,MB5120 smooth parent,2,24,free_lps_ng_mL,22000,,5,tabulated

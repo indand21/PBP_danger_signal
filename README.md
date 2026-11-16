@@ -163,6 +163,7 @@ python scripts/ds_joint_uncertainty.py   # ten assumptions together; process poo
 python scripts/ds_joint_uncertainty_figure.py # its supplementary figure
 python scripts/ds_broth_replay.py        # broth time-kill replayed over full 24-h schedules
 python scripts/ds_broth_replay_figure.py # its supplementary figure
+python scripts/ds_release_bounds.py      # per-killed-cell release bounds from paired published data
 python scripts/ds_phase5_tolerance.py    # endotoxin-tolerance term (ships disabled)
 python scripts/ds_phase4_figures.py      # figures, read back from the stored JSON
 ```
@@ -245,7 +246,7 @@ this repository.
 python -m pytest -q
 ```
 
-601 tests pass, with one expected failure marking a known defect in a legacy
+605 tests pass, with one expected failure marking a known defect in a legacy
 pharmacokinetic routine. They cover the pharmacokinetic conventions and the
 conservation of drug mass, the bacterial dynamics, mass conservation across the persister
 and small-colony-variant switches, the release layer and its

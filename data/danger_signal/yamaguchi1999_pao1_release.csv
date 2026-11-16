@@ -1,11 +1,109 @@
-# Yamaguchi S et al. Jpn J Antibiot 1999;52(1):41-56 (PMID 10202687)
+# Yamaguchi S, Sato S, Toriya M, Tsuji A. Jpn J Antibiot 1999;52(1):41-56 (PMID 10202687)
 # P. aeruginosa PAO1. Free LPS (ng/mL) and matched viable counts.
-# series: free_lps_ng_mL | log10_cfu_mL | filament_fraction
-# concentration_xMIC: use the nominal multiple of MIC; "pksim" for the
-#   pharmacokinetic autosimulation arm.
-# RECORD IN THE COMMENTS BELOW BEFORE DIGITIZING (every per-CFU yield scales off it):
-#   inoculum_cfu_per_mL =
-#   assay_volume_mL     =
-#   lps_assay           =
-#   mic_mg_L            = (per agent)
-agent,concentration_xMIC,time_h,series,value
+# series: free_lps_ng_mL | log10_cfu_mL
+# concentration_xMIC: nominal multiple of MIC; 0 for the untreated control.
+# RECORDED FROM THE FULL TEXT (Methods II.4) BEFORE DIGITIZING:
+#   inoculum_cfu_per_mL = 1e6 (all arms start at log10 6.0 in Figure 2)
+#   assay_volume_mL     = 10 (STB culture); 1 mL sampled at 2, 4 and 6 h
+#   lps_assay           = Limulus colour KY test (Wako), duplicate determinations averaged
+#   mic_mg_L            = isepamicin 3.13, gentamicin 3.13, piperacillin 12.5, ceftazidime 3.13, imipenem 12.5
+# Digitized 2026-11-17 from Figure 2 (viable counts) and Figure 3 (free LPS bars), page images of
+#   docs/article_pdfs/52_41.pdf (gitignored). Method and checks: yamaguchi1999_pao1_release.provenance.json
+# quality: readable | overlap_flagged (two markers coincide) | at_axis_floor (plotted at 0: at or below detection)
+agent,concentration_xMIC,time_h,series,value,quality
+control,0,2,log10_cfu_mL,6.15,readable
+control,0,2,free_lps_ng_mL,15,readable
+control,0,4,log10_cfu_mL,6.15,readable
+control,0,4,free_lps_ng_mL,326.1,readable
+control,0,6,log10_cfu_mL,7.95,readable
+control,0,6,free_lps_ng_mL,6625.3,readable
+isepamicin,0.25,2,log10_cfu_mL,3.4,readable
+isepamicin,0.25,2,free_lps_ng_mL,33.5,readable
+isepamicin,0.25,4,log10_cfu_mL,3,readable
+isepamicin,0.25,4,free_lps_ng_mL,35.9,readable
+isepamicin,0.25,6,log10_cfu_mL,3.5,readable
+isepamicin,0.25,6,free_lps_ng_mL,46.4,readable
+isepamicin,1,2,log10_cfu_mL,1.35,overlap_flagged
+isepamicin,1,2,free_lps_ng_mL,26.6,readable
+isepamicin,1,4,log10_cfu_mL,1.45,readable
+isepamicin,1,4,free_lps_ng_mL,29.9,readable
+isepamicin,1,6,log10_cfu_mL,2.4,readable
+isepamicin,1,6,free_lps_ng_mL,26.1,readable
+isepamicin,4,2,log10_cfu_mL,1,overlap_flagged
+isepamicin,4,2,free_lps_ng_mL,30.3,readable
+isepamicin,4,4,log10_cfu_mL,0,at_axis_floor
+isepamicin,4,4,free_lps_ng_mL,32.1,readable
+isepamicin,4,6,log10_cfu_mL,0.95,readable
+isepamicin,4,6,free_lps_ng_mL,24,readable
+gentamicin,0.25,2,log10_cfu_mL,3.4,readable
+gentamicin,0.25,2,free_lps_ng_mL,33.7,readable
+gentamicin,0.25,4,log10_cfu_mL,3,readable
+gentamicin,0.25,4,free_lps_ng_mL,42.8,readable
+gentamicin,0.25,6,log10_cfu_mL,3.45,readable
+gentamicin,0.25,6,free_lps_ng_mL,34.2,readable
+gentamicin,1,2,log10_cfu_mL,1.35,overlap_flagged
+gentamicin,1,2,free_lps_ng_mL,31.8,readable
+gentamicin,1,4,log10_cfu_mL,1.7,readable
+gentamicin,1,4,free_lps_ng_mL,37.8,readable
+gentamicin,1,6,log10_cfu_mL,2.1,readable
+gentamicin,1,6,free_lps_ng_mL,30.1,readable
+gentamicin,4,2,log10_cfu_mL,1,overlap_flagged
+gentamicin,4,2,free_lps_ng_mL,32.6,readable
+gentamicin,4,4,log10_cfu_mL,0,at_axis_floor
+gentamicin,4,4,free_lps_ng_mL,40,readable
+gentamicin,4,6,log10_cfu_mL,1.2,readable
+gentamicin,4,6,free_lps_ng_mL,42,readable
+piperacillin,0.25,2,log10_cfu_mL,5.65,readable
+piperacillin,0.25,2,free_lps_ng_mL,15.9,readable
+piperacillin,0.25,4,log10_cfu_mL,6.65,readable
+piperacillin,0.25,4,free_lps_ng_mL,552.3,readable
+piperacillin,0.25,6,log10_cfu_mL,6.7,readable
+piperacillin,0.25,6,free_lps_ng_mL,6947.6,readable
+piperacillin,1,2,log10_cfu_mL,5.4,readable
+piperacillin,1,2,free_lps_ng_mL,24.6,readable
+piperacillin,1,4,log10_cfu_mL,3.55,overlap_flagged
+piperacillin,1,4,free_lps_ng_mL,518.8,readable
+piperacillin,1,6,log10_cfu_mL,3.95,overlap_flagged
+piperacillin,1,6,free_lps_ng_mL,806.5,readable
+piperacillin,4,2,log10_cfu_mL,4.5,readable
+piperacillin,4,2,free_lps_ng_mL,19.7,readable
+piperacillin,4,4,log10_cfu_mL,3.4,overlap_flagged
+piperacillin,4,4,free_lps_ng_mL,446,readable
+piperacillin,4,6,log10_cfu_mL,3.95,overlap_flagged
+piperacillin,4,6,free_lps_ng_mL,718.1,readable
+ceftazidime,0.25,2,log10_cfu_mL,5.1,readable
+ceftazidime,0.25,2,free_lps_ng_mL,21.8,readable
+ceftazidime,0.25,4,log10_cfu_mL,5.3,readable
+ceftazidime,0.25,4,free_lps_ng_mL,767.3,readable
+ceftazidime,0.25,6,log10_cfu_mL,6.2,readable
+ceftazidime,0.25,6,free_lps_ng_mL,2970.2,readable
+ceftazidime,1,2,log10_cfu_mL,4.45,overlap_flagged
+ceftazidime,1,2,free_lps_ng_mL,19.8,readable
+ceftazidime,1,4,log10_cfu_mL,3.65,readable
+ceftazidime,1,4,free_lps_ng_mL,495,readable
+ceftazidime,1,6,log10_cfu_mL,3.35,overlap_flagged
+ceftazidime,1,6,free_lps_ng_mL,619.4,readable
+ceftazidime,4,2,log10_cfu_mL,4.45,overlap_flagged
+ceftazidime,4,2,free_lps_ng_mL,30.5,readable
+ceftazidime,4,4,log10_cfu_mL,3.2,readable
+ceftazidime,4,4,free_lps_ng_mL,694.9,readable
+ceftazidime,4,6,log10_cfu_mL,3.2,overlap_flagged
+ceftazidime,4,6,free_lps_ng_mL,832.4,readable
+imipenem,0.25,2,log10_cfu_mL,4,readable
+imipenem,0.25,2,free_lps_ng_mL,18.9,readable
+imipenem,0.25,4,log10_cfu_mL,3,readable
+imipenem,0.25,4,free_lps_ng_mL,27.9,readable
+imipenem,0.25,6,log10_cfu_mL,3.5,readable
+imipenem,0.25,6,free_lps_ng_mL,34.2,readable
+imipenem,1,2,log10_cfu_mL,3.35,overlap_flagged
+imipenem,1,2,free_lps_ng_mL,20.7,readable
+imipenem,1,4,log10_cfu_mL,2.65,overlap_flagged
+imipenem,1,4,free_lps_ng_mL,25,readable
+imipenem,1,6,log10_cfu_mL,2.25,readable
+imipenem,1,6,free_lps_ng_mL,24,readable
+imipenem,4,2,log10_cfu_mL,3.35,overlap_flagged
+imipenem,4,2,free_lps_ng_mL,15.7,readable
+imipenem,4,4,log10_cfu_mL,2.65,overlap_flagged
+imipenem,4,4,free_lps_ng_mL,24.9,readable
+imipenem,4,6,log10_cfu_mL,1.65,readable
+imipenem,4,6,free_lps_ng_mL,25.2,readable

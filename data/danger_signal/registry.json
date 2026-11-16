@@ -13,6 +13,7 @@
     "imipenem"
    ],
    "csv": "yamaguchi1999_pao1_release.csv",
+   "digitized": "2026-11-17: Figures 2 and 3 (static exposures, 2/4/6 h) in the csv; method, calibration and checks against the three values the paper states in yamaguchi1999_pao1_release.provenance.json. Figures 4-7 (pharmacokinetic autosimulation) not digitized. Read per killed cell by scripts/ds_release_bounds.py.",
    "source": "Yamaguchi S, Sato S, Toriya M, Tsuji A. Jpn J Antibiot 1999;52(1):41-56. PMID 10202687 (in Japanese; figures are language-independent).",
    "priority": 1,
    "why": "Paired viable-count and free-LPS trajectories could inform an observation-model fit after digitisation. Published summaries alone do not identify latent per-CFU release yields.",
@@ -69,6 +70,7 @@
     "imipenem"
    ],
    "csv": "jackson1992_pa_release.csv",
+   "digitized": "2026-11-17: Tables 1, 2, 4 and 5 transcribed from the page images (exponents checked against the image, not the OCR). Used only as the held-out check in scripts/ds_release_bounds.py.",
    "source": "Jackson JJ, Kropp H. J Infect Dis 1992;165(6):1033-41. doi:10.1093/infdis/165.6.1033 (PMID 1583320).",
    "priority": 1,
    "why": "Held-out Layer-1 validation: a different laboratory, assay and LPS phenotype from Yamaguchi, and the source of the direct observation that sub-MIC ceftazidime induces filamentation and LPS release WITHOUT significant lysis. Also carries a mouse-lethality readout of the filtrates, which links released danger signal to an in-vivo consequence.",

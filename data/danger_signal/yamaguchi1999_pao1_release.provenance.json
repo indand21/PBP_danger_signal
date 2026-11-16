@@ -1,0 +1,88 @@
+{
+  "source": "Yamaguchi S, Sato S, Toriya M, Tsuji A. Jpn J Antibiot 1999;52(1):41-56, doi:10.11553/antibiotics1968b.52.41 (J-Stage, open access)",
+  "source_pdf_sha256": "a16148ae552c179e99c43bed2d68ed17987e369c0cc20dc3f4d7b975c4655003",
+  "source_pdf_location": "docs/article_pdfs/52_41.pdf (gitignored; this project ships no source PDFs)",
+  "csv_sha256": "1206aac5dea367ed0138bb9fb5842882e4231b59870e69f0376746142b04e1d0",
+  "date": "2026-11-17",
+  "figures": {
+    "viable_counts": "Figure 2, page 4 (journal p. 44)",
+    "free_lps": "Figure 3, page 5 (journal p. 45)"
+  },
+  "scan_rotation_corrected_deg": {
+    "page_4": 0.095,
+    "page_5": 0.493
+  },
+  "figure3_calibration": {
+    "method": "plot frame = 10^4 (top) and 1 (bottom) ng/mL; decade gridlines at 10, 100 and 1000 confirm the log scale",
+    "panels_px": {
+      "2h": [
+        977.5,
+        1855.0
+      ],
+      "4h": [
+        2335.0,
+        3217.5
+      ],
+      "6h": [
+        3715.0,
+        4587.5
+      ]
+    },
+    "bar_reading": "Bars located from their vertical outlines near the baseline; each value read at the midline of the bar's top outline, then 10^((y_bottom - y)/px_per_decade). All 48 bars overlaid on the straightened page and checked."
+  },
+  "figure2_calibration": {
+    "method": "axes from the axis lines and inward ticks (0-10 log10 CFU/mL; 0, 2, 4, 6 h)",
+    "panels": {
+      "ISP": {
+        "axis_y": 1432.754,
+        "per_log": 52.575,
+        "t0_x": 893.5,
+        "per_h": 160.75
+      },
+      "GM": {
+        "axis_y": 1434.264,
+        "per_log": 51.626,
+        "t0_x": 2396.0,
+        "per_h": 156.0
+      },
+      "PIPC": {
+        "axis_y": 2636.851,
+        "per_log": 51.685,
+        "t0_x": 928.75,
+        "per_h": 156.125
+      },
+      "CAZ": {
+        "axis_y": 2639.02,
+        "per_log": 51.802,
+        "t0_x": 2396.0,
+        "per_h": 156.0
+      },
+      "IPM": {
+        "axis_y": 3861.141,
+        "per_log": 52.614,
+        "t0_x": 912.5,
+        "per_h": 157.25
+      }
+    },
+    "marker_reading": "Read from 3x zoomed strips with a 0.1-log10 grid at each sampling time; identities by line style (dotted 1/4 MIC, solid 1 MIC, dashed 4 MIC; filled circles control). Coinciding markers flagged overlap_flagged; markers on the axis floor flagged at_axis_floor."
+  },
+  "checks_against_published_values": [
+    {
+      "quantity": "ceftazidime 1x MIC free LPS at 4 h",
+      "published_ng_mL": 493,
+      "digitized_ng_mL": 495.0
+    },
+    {
+      "quantity": "piperacillin 1x MIC free LPS at 4 h",
+      "published_ng_mL": 515,
+      "digitized_ng_mL": 518.8
+    },
+    {
+      "quantity": "isepamicin 1x MIC free LPS, mean of 2, 4 and 6 h",
+      "published_ng_mL": "28 +/- 2",
+      "digitized_ng_mL": 27.5
+    }
+  ],
+  "not_digitized": "Figures 4-7 (the pharmacokinetic autosimulation arms) and the electron micrographs.",
+  "reading_allowance": "Bar values: about 1% (scan resolution 219 px per decade). Viable counts: +/-0.1 log10; overlapping markers are uncertain to the overlap."
+}
