@@ -236,6 +236,7 @@
     "ceftazidime": 5.7
    },
    "sub_mic_note": "Carbapenems filament at 0.1x MIC in this study and release heavily there, so the kill-independent release term is not a PBP-3-exclusive property as Y_filament currently assumes. Recorded, not yet modelled.",
+   "pd_use": "scripts/ds_agent_pd_map.py uses the 6-h counts as a CHECK on agent-specific PD scenarios, not a fit: three single-time points per agent do not identify kill rate, C50 and Hill exponent (the ceftazidime fit runs to its C50 bound, the meropenem fit to its kill-rate bound), and viable counts cannot separate killing from filamentation.",
    "commercial_interest": "Three of four authors were at Shionogi, which developed doripenem. Stated for the reader; the viable-count and LPS pairs are used here, not the authors' conclusion.",
    "net_change_matched_pairs": [
     {

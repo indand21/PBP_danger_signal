@@ -154,6 +154,8 @@ python scripts/ds_phase3_validate.py     # held-out validation, scale invariance
 python scripts/ds_phase4_analyses.py     # yields, matched exposure, cost indices
 python scripts/ds_endpoint_windows.py    # phase 4 regimens read on shorter windows
 python scripts/ds_release_delay.py       # the same regimens, release delayed after killing
+python scripts/ds_agent_pd_map.py        # agent-specific PD at a fixed MIC reference
+python scripts/ds_agent_pd_figure.py     # its supplementary figure
 python scripts/ds_phase5_tolerance.py    # endotoxin-tolerance term (ships disabled)
 python scripts/ds_phase4_figures.py      # figures, read back from the stored JSON
 ```
@@ -236,7 +238,7 @@ this repository.
 python -m pytest -q
 ```
 
-575 tests pass, with one expected failure marking a known defect in a legacy
+580 tests pass, with one expected failure marking a known defect in a legacy
 pharmacokinetic routine. They cover the pharmacokinetic conventions and the
 conservation of drug mass, the bacterial dynamics, mass conservation across the persister
 and small-colony-variant switches, the release layer and its
