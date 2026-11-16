@@ -159,6 +159,8 @@ python scripts/ds_agent_pd_figure.py     # its supplementary figure
 python scripts/ds_kill_matched.py        # matched on cumulative killing; the ratio factored
 python scripts/ds_kill_matched_figure.py # its supplementary figure
 python scripts/ds_cytokine_ridge.py      # what the IL-6 fit's flat ridge moves (no default changed)
+python scripts/ds_joint_uncertainty.py   # ten assumptions together; process pool, --workers N
+python scripts/ds_joint_uncertainty_figure.py # its supplementary figure
 python scripts/ds_phase5_tolerance.py    # endotoxin-tolerance term (ships disabled)
 python scripts/ds_phase4_figures.py      # figures, read back from the stored JSON
 ```
@@ -241,7 +243,7 @@ this repository.
 python -m pytest -q
 ```
 
-590 tests pass, with one expected failure marking a known defect in a legacy
+595 tests pass, with one expected failure marking a known defect in a legacy
 pharmacokinetic routine. They cover the pharmacokinetic conventions and the
 conservation of drug mass, the bacterial dynamics, mass conservation across the persister
 and small-colony-variant switches, the release layer and its
