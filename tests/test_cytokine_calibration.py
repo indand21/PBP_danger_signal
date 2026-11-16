@@ -12,8 +12,8 @@ import pytest
 
 from src.analysis.cytokine_calibration import (
     DILLINGH_2014, HIJMA_2020, bolus_plasma_ds0, calibrate_family,
-    check_lower_bound_consistency, observed_log_slope, predict_peaks,
-    simulate_endotoxemia,
+    check_lower_bound_consistency, interpolated_peak, observed_log_slope,
+    predict_peaks, simulate_endotoxemia,
 )
 from src.analysis.danger_signal import DangerSignalParameters
 from src.analysis.injury_layer import (
@@ -219,3 +219,27 @@ class TestRankInvariance:
         d = saturation_diagnostics(arms, InjuryParameters(cyto_ref=100.0))["a"]
         assert d["max_x_over_ref"] == pytest.approx(1.0, rel=1e-9)
         assert d["hill1_peak_occupancy"] == pytest.approx(0.5, rel=1e-6)
+
+
+class TestInterpolatedPeak:
+    """The TNF fit stopped 20x short of its optimum because its time-to-peak
+    was read off the grid by argmax: piecewise constant, so a zero gradient."""
+
+    def test_exact_for_a_parabola_off_the_grid(self):
+        t = np.linspace(0.0, 1.0, 11)
+        tp, yp = interpolated_peak(t, 5.0 - 3.0 * (t - 0.437) ** 2)
+        assert tp == pytest.approx(0.437, abs=1e-12)
+        assert yp == pytest.approx(5.0, abs=1e-12)
+
+    def test_moves_continuously_where_argmax_steps(self):
+        t = np.linspace(0.0, 10.0, 2001)
+        peaks = [interpolated_peak(t, np.exp(-(t - c) ** 2))[0]
+                 for c in (1.0001, 1.0002, 1.0003)]
+        assert peaks[0] < peaks[1] < peaks[2]
+        assert peaks == pytest.approx([1.0001, 1.0002, 1.0003], abs=1e-6)
+        assert len({float(t[np.argmax(np.exp(-(t - c) ** 2))])
+                    for c in (1.0001, 1.0002, 1.0003)}) == 1
+
+    def test_falls_back_to_the_grid_at_an_endpoint(self):
+        t = np.linspace(0.0, 1.0, 11)
+        assert interpolated_peak(t, -t) == (0.0, 0.0)

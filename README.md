@@ -236,8 +236,9 @@ this repository.
 python -m pytest -q
 ```
 
-559 tests pass, covering the pharmacokinetic conventions and the conservation
-of drug mass, the bacterial dynamics, mass conservation across the persister
+575 tests pass, with one expected failure marking a known defect in a legacy
+pharmacokinetic routine. They cover the pharmacokinetic conventions and the
+conservation of drug mass, the bacterial dynamics, mass conservation across the persister
 and small-colony-variant switches, the release layer and its
 mass-balance identity, the immune layer's units, fixed points and
 immune-free invariant, the unbound-fraction convention, the held-out

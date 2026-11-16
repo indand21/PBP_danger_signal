@@ -237,6 +237,31 @@ def observed_log_slope() -> float:
     return float(np.log(r2 / r1) / np.log(d2 / d1))
 
 
+def interpolated_peak(t: np.ndarray, y: np.ndarray) -> Tuple[float, float]:
+    """Time and height of a peak, from the parabola through the grid maximum
+    and its two neighbours.
+
+    A peak read off the grid by ``argmax`` is piecewise constant in the model
+    parameters, so a finite-difference optimizer sees a zero gradient for any
+    residual built on it and cannot fit a time-to-peak at all. The vertex of
+    the interpolating parabola moves continuously with the parameters. Falls
+    back to the grid value at either end of the grid.
+    """
+    i = int(np.argmax(y))
+    if i == 0 or i == len(y) - 1:
+        return float(t[i]), float(y[i])
+    t0, t1, t2 = (float(v) for v in t[i - 1:i + 2])
+    y0, y1, y2 = (float(v) for v in y[i - 1:i + 2])
+    denom = (t0 - t1) * (t0 - t2) * (t1 - t2)
+    a = (t2 * (y1 - y0) + t1 * (y0 - y2) + t0 * (y2 - y1)) / denom
+    b = (t2 * t2 * (y0 - y1) + t1 * t1 * (y2 - y0) + t0 * t0 * (y1 - y2)) / denom
+    if a >= 0.0:
+        return float(t1), float(y1)
+    tv = -b / (2.0 * a)
+    c = y1 - a * t1 * t1 - b * t1
+    return float(tv), float(a * tv * tv + b * tv + c)
+
+
 def calibrate_tnf(entry: Dict) -> Dict[str, object]:
     """Calibrate the TNF arm against the same human endotoxemia data.
 
@@ -245,6 +270,14 @@ def calibrate_tnf(entry: Dict) -> Dict[str, object]:
     249.35 pg/mL at **1 h**, i.e. comparable in magnitude to IL-6 but about an
     hour earlier. Two parameters are fitted: the production ratio relative to
     IL-6 and the TNF elimination rate (which sets how much earlier it peaks).
+
+    The two peak heights fix only the product of the two parameters: refitting
+    the ratio for any elimination rate reproduces them equally well. The
+    time-to-peak is therefore the only thing that identifies the elimination
+    rate, and it must be read with ``interpolated_peak``. Read off the grid by
+    argmax, as it was until 2026-11-16, its gradient is zero, and the fit
+    stopped at k_TNF_clear = 0.214 /h, with TNF peaking at 2.09 h instead of 1 h
+    and a cost 20 times the attainable one.
     """
     from scipy.optimize import least_squares
 
@@ -262,9 +295,9 @@ def calibrate_tnf(entry: Dict) -> Dict[str, object]:
         r = []
         for d, o in zip(doses, obs):
             sim = simulate_endotoxemia(d, q)
-            i = int(np.argmax(sim["TNF"]))
-            r.append(np.log(max(float(sim["TNF"][i]), 1e-12) / o))
-            r.append(0.5 * np.log(max(float(sim["t"][i]), 1e-3) / t_obs))
+            tp, yp = interpolated_peak(sim["t"], sim["TNF"])
+            r.append(np.log(max(yp, 1e-12) / o))
+            r.append(0.5 * np.log(max(tp, 1e-3) / t_obs))
         return r
 
     sol = least_squares(resid, np.log([0.3, 0.3]), method="trf",
@@ -274,9 +307,9 @@ def calibrate_tnf(entry: Dict) -> Dict[str, object]:
     pred, tpk = [], []
     for d in doses:
         sim = simulate_endotoxemia(d, q)
-        i = int(np.argmax(sim["TNF"]))
-        pred.append(float(sim["TNF"][i]))
-        tpk.append(float(sim["t"][i]))
+        tp, yp = interpolated_peak(sim["t"], sim["TNF"])
+        pred.append(yp)
+        tpk.append(tp)
     return {
         "TNF_IL6_ratio": float(np.exp(sol.x[0])),
         "k_TNF_clear": float(np.exp(sol.x[1])),
