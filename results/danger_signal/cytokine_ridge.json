@@ -5,15 +5,27 @@
   "cost_refit": 0.0012247330282485073,
   "cost_rel_diff": 0.0,
   "param_rel_diff_refit_vs_stored": {
-   "hill": -5.5584777558514986e-08,
-   "k_IL6_max": -0.0002473757957432987,
-   "k_signal_off": 0.0009422519185766642
+   "hill": 0.0,
+   "k_IL6_max": 0.0,
+   "k_signal_off": 0.0
   },
   "table1_max_rel_diff_refit_vs_stored": {
-   "AUC_DS_pg_h_mL": 2.1818264110962104e-06,
-   "AUC_IL6_excess_pg_h_mL": 0.00024990193269758265,
-   "IL6_peak_pg_mL": 3.485887581788916e-05,
-   "saturation_peak": 1.4996366039854436e-05
+   "AUC_DS_pg_h_mL": 0.0,
+   "AUC_IL6_excess_pg_h_mL": 0.0,
+   "IL6_peak_pg_mL": 0.0,
+   "saturation_peak": 0.0
+  },
+  "cost_rel_diff_earlier": 0.0,
+  "param_rel_diff_earlier_vs_stored": {
+   "hill": 5.558478077816176e-08,
+   "k_IL6_max": 0.0002474370056695374,
+   "k_signal_off": -0.0009413649156787551
+  },
+  "table1_max_rel_diff_earlier_vs_stored": {
+   "AUC_DS_pg_h_mL": 0.0,
+   "AUC_IL6_excess_pg_h_mL": 0.00025073133157915706,
+   "IL6_peak_pg_mL": 3.4793336036731404e-05,
+   "saturation_peak": 4.3911290592557606e-07
   },
   "grid_read": {
    "n_feasible": 4,
@@ -52,15 +64,15 @@
  },
  "stored_reference": {
   "DS50": 300.0,
-  "hill": 1.713984131094413,
-  "k_IL6_max": 176080.53594356967,
-  "k_signal_off": 0.931066454178522,
+  "hill": 1.7139840358229863,
+  "k_IL6_max": 176036.97788087573,
+  "k_signal_off": 0.931943753331294,
   "cost": 0.0012247330282485073,
   "pred_t_peak_IL6_h": [
    2.145,
    2.145
   ],
-  "saturation_peak_at_2ng_kg": 0.03957037478270822
+  "saturation_peak_at_2ng_kg": 0.039570381520025344
  },
  "family_grid_read": [
   {
@@ -237,122 +249,170 @@
  "table1_arms": {
   "ceftazidime 40%": {
    "stored": {
-    "AUC_DS_pg_h_mL": 25.15691315638888,
-    "AUC_IL6_excess_pg_h_mL": 4379.449662352216,
-    "IL6_peak_pg_mL": 501.411244724239,
-    "saturation_peak": 0.005833574255123027
+    "AUC_DS_pg_h_mL": 25.12706284643965,
+    "AUC_IL6_excess_pg_h_mL": 4382.390715360153,
+    "IL6_peak_pg_mL": 502.49266822542893,
+    "saturation_peak": 0.0059121937550318925
    },
    "refit": {
-    "AUC_DS_pg_h_mL": 25.156921724005024,
-    "AUC_IL6_excess_pg_h_mL": 4378.37261084993,
-    "IL6_peak_pg_mL": 501.39790799254683,
-    "saturation_peak": 0.005833581404217175
+    "AUC_DS_pg_h_mL": 25.12706284643965,
+    "AUC_IL6_excess_pg_h_mL": 4382.390715360153,
+    "IL6_peak_pg_mL": 502.49266822542893,
+    "saturation_peak": 0.0059121937550318925
+   },
+   "earlier": {
+    "AUC_DS_pg_h_mL": 25.12706284643965,
+    "AUC_IL6_excess_pg_h_mL": 4383.481191423436,
+    "IL6_peak_pg_mL": 502.50936015804086,
+    "saturation_peak": 0.005912192080833621
    }
   },
   "meropenem 40%": {
    "stored": {
-    "AUC_DS_pg_h_mL": 3.863311328608688,
-    "AUC_IL6_excess_pg_h_mL": 243.7994704180583,
-    "IL6_peak_pg_mL": 34.42248494622415,
-    "saturation_peak": 0.0003637550368549612
+    "AUC_DS_pg_h_mL": 3.8709252976626143,
+    "AUC_IL6_excess_pg_h_mL": 244.07504625089678,
+    "IL6_peak_pg_mL": 34.467167961193134,
+    "saturation_peak": 0.00037331190283271736
    },
    "refit": {
-    "AUC_DS_pg_h_mL": 3.863311959344169,
-    "AUC_IL6_excess_pg_h_mL": 243.7393931851748,
-    "IL6_peak_pg_mL": 34.42143259133008,
-    "saturation_peak": 0.00036375661619902
+    "AUC_DS_pg_h_mL": 3.8709252976626143,
+    "AUC_IL6_excess_pg_h_mL": 244.07504625089678,
+    "IL6_peak_pg_mL": 34.467167961193134,
+    "saturation_peak": 0.00037331190283271736
+   },
+   "earlier": {
+    "AUC_DS_pg_h_mL": 3.8709252976626143,
+    "AUC_IL6_excess_pg_h_mL": 244.13556631499222,
+    "IL6_peak_pg_mL": 34.468049882399235,
+    "saturation_peak": 0.0003733117391162605
    }
   },
   "ceftazidime 60%": {
    "stored": {
-    "AUC_DS_pg_h_mL": 17.042816673222887,
-    "AUC_IL6_excess_pg_h_mL": 3736.868442953808,
-    "IL6_peak_pg_mL": 480.1766116007838,
-    "saturation_peak": 0.005888208899795317
+    "AUC_DS_pg_h_mL": 17.071009664442055,
+    "AUC_IL6_excess_pg_h_mL": 3739.680252219779,
+    "IL6_peak_pg_mL": 480.6998121347211,
+    "saturation_peak": 0.0060255494341042645
    },
    "refit": {
-    "AUC_DS_pg_h_mL": 17.042853857690424,
-    "AUC_IL6_excess_pg_h_mL": 3735.9589913060795,
-    "IL6_peak_pg_mL": 480.1598731839094,
-    "saturation_peak": 0.005888231405161943
+    "AUC_DS_pg_h_mL": 17.071009664442055,
+    "AUC_IL6_excess_pg_h_mL": 3739.680252219779,
+    "IL6_peak_pg_mL": 480.6998121347211,
+    "saturation_peak": 0.0060255494341042645
+   },
+   "earlier": {
+    "AUC_DS_pg_h_mL": 17.071009664442055,
+    "AUC_IL6_excess_pg_h_mL": 3740.6043135715568,
+    "IL6_peak_pg_mL": 480.7145693617474,
+    "saturation_peak": 0.006025547734361328
    }
   },
   "meropenem 60%": {
    "stored": {
-    "AUC_DS_pg_h_mL": 3.214348825000121,
-    "AUC_IL6_excess_pg_h_mL": 225.95916557365098,
-    "IL6_peak_pg_mL": 33.778694777676,
-    "saturation_peak": 0.0003718564894621319
+    "AUC_DS_pg_h_mL": 3.2207191045201355,
+    "AUC_IL6_excess_pg_h_mL": 225.88809694644067,
+    "IL6_peak_pg_mL": 33.77608525184068,
+    "saturation_peak": 0.0003743217173300135
    },
    "refit": {
-    "AUC_DS_pg_h_mL": 3.2143424467278563,
-    "AUC_IL6_excess_pg_h_mL": 225.9026979414634,
-    "IL6_peak_pg_mL": 33.77780819678649,
-    "saturation_peak": 0.00037185748877127753
+    "AUC_DS_pg_h_mL": 3.2207191045201355,
+    "AUC_IL6_excess_pg_h_mL": 225.88809694644067,
+    "IL6_peak_pg_mL": 33.77608525184068,
+    "saturation_peak": 0.0003743217173300135
+   },
+   "earlier": {
+    "AUC_DS_pg_h_mL": 3.2207191045201355,
+    "AUC_IL6_excess_pg_h_mL": 225.94390831128703,
+    "IL6_peak_pg_mL": 33.77698420599111,
+    "saturation_peak": 0.0003743215532270729
    }
   },
   "ceftazidime 80%": {
    "stored": {
-    "AUC_DS_pg_h_mL": 16.098006884682324,
-    "AUC_IL6_excess_pg_h_mL": 3616.607892376827,
-    "IL6_peak_pg_mL": 465.9227429140434,
-    "saturation_peak": 0.005965141996023029
+    "AUC_DS_pg_h_mL": 16.12748976180242,
+    "AUC_IL6_excess_pg_h_mL": 3615.5680215354237,
+    "IL6_peak_pg_mL": 465.89037537501923,
+    "saturation_peak": 0.005973658550126532
    },
    "refit": {
-    "AUC_DS_pg_h_mL": 16.097996470085953,
-    "AUC_IL6_excess_pg_h_mL": 3615.707500563944,
-    "IL6_peak_pg_mL": 465.9086651661406,
-    "saturation_peak": 0.005965192346179554
+    "AUC_DS_pg_h_mL": 16.12748976180242,
+    "AUC_IL6_excess_pg_h_mL": 3615.5680215354237,
+    "IL6_peak_pg_mL": 465.89037537501923,
+    "saturation_peak": 0.005973658550126532
+   },
+   "earlier": {
+    "AUC_DS_pg_h_mL": 16.12748976180242,
+    "AUC_IL6_excess_pg_h_mL": 3616.468215253777,
+    "IL6_peak_pg_mL": 465.9055757665264,
+    "saturation_peak": 0.0059736568620615245
    }
   },
   "meropenem 80%": {
    "stored": {
-    "AUC_DS_pg_h_mL": 3.144310036738791,
-    "AUC_IL6_excess_pg_h_mL": 223.24491328296784,
-    "IL6_peak_pg_mL": 33.455961321158775,
-    "saturation_peak": 0.00036935938770335985
+    "AUC_DS_pg_h_mL": 3.1503876677879403,
+    "AUC_IL6_excess_pg_h_mL": 222.93537949756913,
+    "IL6_peak_pg_mL": 33.42222824658505,
+    "saturation_peak": 0.00037108507579650064
    },
    "refit": {
-    "AUC_DS_pg_h_mL": 3.144305072130639,
-    "AUC_IL6_excess_pg_h_mL": 223.18932358220792,
-    "IL6_peak_pg_mL": 33.45501147635767,
-    "saturation_peak": 0.00036935964746587474
+    "AUC_DS_pg_h_mL": 3.1503876677879403,
+    "AUC_IL6_excess_pg_h_mL": 222.93537949756913,
+    "IL6_peak_pg_mL": 33.42222824658505,
+    "saturation_peak": 0.00037108507579650064
+   },
+   "earlier": {
+    "AUC_DS_pg_h_mL": 3.1503876677879403,
+    "AUC_IL6_excess_pg_h_mL": 222.99010877836565,
+    "IL6_peak_pg_mL": 33.423084658978,
+    "saturation_peak": 0.0003710849129328514
    }
   },
   "ceftazidime 95%": {
    "stored": {
-    "AUC_DS_pg_h_mL": 15.882099540277581,
-    "AUC_IL6_excess_pg_h_mL": 3566.55353306989,
-    "IL6_peak_pg_mL": 459.58550352942484,
-    "saturation_peak": 0.005799272722668404
+    "AUC_DS_pg_h_mL": 15.905699343145741,
+    "AUC_IL6_excess_pg_h_mL": 3562.7056718035064,
+    "IL6_peak_pg_mL": 459.19468003223375,
+    "saturation_peak": 0.0059099093733180515
    },
    "refit": {
-    "AUC_DS_pg_h_mL": 15.882126195743622,
-    "AUC_IL6_excess_pg_h_mL": 3565.6832770639144,
-    "IL6_peak_pg_mL": 459.571579527965,
-    "saturation_peak": 0.005799359690684918
+    "AUC_DS_pg_h_mL": 15.905699343145741,
+    "AUC_IL6_excess_pg_h_mL": 3562.7056718035064,
+    "IL6_peak_pg_mL": 459.19468003223375,
+    "saturation_peak": 0.0059099093733180515
+   },
+   "earlier": {
+    "AUC_DS_pg_h_mL": 15.905699343145741,
+    "AUC_IL6_excess_pg_h_mL": 3563.598953740622,
+    "IL6_peak_pg_mL": 459.2106569470424,
+    "saturation_peak": 0.005909907699635867
    }
   },
   "meropenem 95%": {
    "stored": {
-    "AUC_DS_pg_h_mL": 3.130620157454257,
-    "AUC_IL6_excess_pg_h_mL": 222.378312780998,
-    "IL6_peak_pg_mL": 33.34308248261184,
-    "saturation_peak": 0.0003685229001896644
+    "AUC_DS_pg_h_mL": 3.1375764989504233,
+    "AUC_IL6_excess_pg_h_mL": 222.0020527059406,
+    "IL6_peak_pg_mL": 33.30397777707249,
+    "saturation_peak": 0.00036957067309128844
    },
    "refit": {
-    "AUC_DS_pg_h_mL": 3.1306197163786993,
-    "AUC_IL6_excess_pg_h_mL": 222.32326025019185,
-    "IL6_peak_pg_mL": 33.34198938141328,
-    "saturation_peak": 0.0003685202125972762
+    "AUC_DS_pg_h_mL": 3.1375764989504233,
+    "AUC_IL6_excess_pg_h_mL": 222.0020527059406,
+    "IL6_peak_pg_mL": 33.30397777707249,
+    "saturation_peak": 0.00036957067309128844
+   },
+   "earlier": {
+    "AUC_DS_pg_h_mL": 3.1375764989504233,
+    "AUC_IL6_excess_pg_h_mL": 222.05765083034663,
+    "IL6_peak_pg_mL": 33.30493670901907,
+    "saturation_peak": 0.0003695705108080362
    }
   }
  },
  "input_sha256": {
-  "phase4_analyses.json": "7515f7083f1d9b0e99952a29a8eebe3e750d1ecdcf3ec659f582521c5ad3c4fc"
+  "phase4_analyses.json": "ad791828dbfba53f101ca352696ddc6ba7f9d2f9d367fe121aef06fcfba17a3c"
  },
  "provenance": {
-  "git_head": "459b9a4ff6d8e409de722e61d2b3ffe2a24f1e36",
+  "git_head": "10bcefff08fbe14016340eeef90237d5465294d5",
   "git_dirty": false,
   "python": "3.12.4",
   "numpy": "2.4.6",
@@ -365,6 +425,125 @@
    "isepamicin": 0.28,
    "imipenem": 0.986,
    "meropenem": 0.986
+  },
+  "default_parameters": {
+   "danger_signal": {
+    "Y_lysis": 1.0,
+    "Y_filament": 0.0,
+    "filament_window": [
+     0.0625,
+     1.0
+    ],
+    "V_focus_mL": 10.0,
+    "V_ds_L": 3.0,
+    "k_ds_clear": 13.9,
+    "translocation_fraction": 1.0,
+    "DS50": 300.0,
+    "hill_ds": 1.714,
+    "k_signal_off": 0.93,
+    "k_IL6_max": 176148.0,
+    "k_tol_on": 0.0,
+    "k_tol_off": 0.35,
+    "tol_max": 0.0,
+    "tol_shift": 0.0,
+    "T0": 0.0,
+    "DS_baseline": 0.0,
+    "k_IL6_clear": 0.2,
+    "IL6_baseline": 5.0,
+    "TNF_IL6_ratio": 0.3,
+    "k_TNF_clear": 0.3
+   },
+   "bacterial_pd": {
+    "bacteria": {
+     "k_growth": 0.5,
+     "B_max": 1000000000.0,
+     "k_pers": 0.01,
+     "mu_mut": 1e-06,
+     "k_repair": 0.3,
+     "MIC_baseline": 1.0,
+     "scv_switch_midpoint": 0.3,
+     "scv_switch_width": 0.05,
+     "k_kill_max": 1.5874010519681996,
+     "kill_C50": 0.936,
+     "kill_hill": 4.0,
+     "static_kill_max": 0.0,
+     "static_pamp_fraction": 0.0
+    },
+    "immune": {
+     "N_eff_0": 10000000.0,
+     "recruit_fold_max": 3.0,
+     "EC50_immune": 100000.0,
+     "k_deg_immune": 0.05,
+     "k_kill_base": 1e-08
+    },
+    "cytokine": {
+     "k_IL6_prod": 4.0,
+     "alpha_static": 1.0,
+     "alpha_cidal": 3.0,
+     "k_IL6_clear": 0.2,
+     "TNF_IL6_ratio": 0.3
+    },
+    "damage": {
+     "k_path": 0.08,
+     "B50": 10000000.0,
+     "k_infl": 0.03,
+     "k_heal": 0.1,
+     "w_TNF": 0.5,
+     "IL6_ref": 10.0,
+     "TNF_ref": 5.0,
+     "I50": 5.0
+    }
+   },
+   "pk": {
+    "ceftazidime": {
+     "CL": 7.0,
+     "Vc": 0.226551,
+     "Vp": 0.09,
+     "Q": 5.0,
+     "Ka": 0.0,
+     "Kp": 0.5
+    },
+    "meropenem": {
+     "CL": 12.156785,
+     "Vc": 0.270308,
+     "Vp": 0.15,
+     "Q": 8.0,
+     "Ka": 0.0,
+     "Kp": 0.4
+    }
+   },
+   "drug_pd": {
+    "ceftazidime": {
+     "drug_class": "cidal",
+     "effect_mode": "time_dependent",
+     "mic": 1.0,
+     "fraction_unbound": 0.9,
+     "k_kill_max": 3.0,
+     "ec50_mic_ratio": 1.0,
+     "hill": 4.0,
+     "growth_dependence": 1.0,
+     "signal_on": 1.0,
+     "signal_decay": 0.3,
+     "signal50": 3.0,
+     "static_ec50_mic_ratio": 0.1,
+     "static_hill": 1.2
+    },
+    "meropenem": {
+     "drug_class": "cidal",
+     "effect_mode": "time_dependent",
+     "mic": 1.0,
+     "fraction_unbound": 0.98,
+     "k_kill_max": 3.0,
+     "ec50_mic_ratio": 1.0,
+     "hill": 4.0,
+     "growth_dependence": 1.0,
+     "signal_on": 1.0,
+     "signal_decay": 0.3,
+     "signal50": 3.0,
+     "static_ec50_mic_ratio": 0.1,
+     "static_hill": 1.2
+    }
+   }
   },
   "note": "IL-6 calibration ridge: reproducibility and what the grid-read peak decides; no default changed"
  }

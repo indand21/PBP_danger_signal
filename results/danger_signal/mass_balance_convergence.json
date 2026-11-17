@@ -5,46 +5,53 @@
   {
    "n_points": 300,
    "dt_h": 0.0802675585284281,
-   "abs_relative_residual": 0.0001410656331849751
+   "abs_relative_residual": 0.00014103303317085483,
+   "abs_relative_residual_exact": 2.2067218139019973e-15
   },
   {
    "n_points": 600,
    "dt_h": 0.04006677796327212,
-   "abs_relative_residual": 3.56529039300884e-05,
-   "reduction_vs_previous": 3.9566379631120654
+   "abs_relative_residual": 3.5647090707385606e-05,
+   "abs_relative_residual_exact": 3.3070973077978444e-15,
+   "reduction_vs_previous": 3.9563686789630395
   },
   {
    "n_points": 1200,
    "dt_h": 0.020016680567139282,
-   "abs_relative_residual": 8.930348660199244e-06,
-   "reduction_vs_previous": 3.992330567000835
+   "abs_relative_residual": 8.927271767014633e-06,
+   "abs_relative_residual_exact": 2.644488278362097e-15,
+   "reduction_vs_previous": 3.993055396733636
   },
   {
    "n_points": 2400,
    "dt_h": 0.010004168403501459,
-   "abs_relative_residual": 2.1903080777079497e-06,
-   "reduction_vs_previous": 4.077211215668079
+   "abs_relative_residual": 2.231612897627885e-06,
+   "abs_relative_residual_exact": 1.56430432783926e-14,
+   "reduction_vs_previous": 4.000367526332172
   },
   {
    "n_points": 4800,
    "dt_h": 0.005001041883725776,
-   "abs_relative_residual": 5.487748612547202e-07,
-   "reduction_vs_previous": 3.991268974493518
+   "abs_relative_residual": 5.577429589625822e-07,
+   "abs_relative_residual_exact": 1.8505186728867485e-14,
+   "reduction_vs_previous": 4.0011493856932745
   },
   {
    "n_points": 9600,
    "dt_h": 0.0025002604437962287,
-   "abs_relative_residual": 1.2295618880937394e-07,
-   "reduction_vs_previous": 4.463173969270611
+   "abs_relative_residual": 1.3940729398379523e-07,
+   "abs_relative_residual_exact": 1.9605586818821698e-14,
+   "reduction_vs_previous": 4.00081619134946
   }
  ],
- "coarsest_residual": 0.0001410656331849751,
- "finest_residual": 1.2295618880937394e-07,
+ "coarsest_residual": 0.00014103303317085483,
+ "finest_residual": 1.3940729398379523e-07,
+ "max_residual_exact_auc": 1.9605586818821698e-14,
  "refinement_factor": 32.0,
- "interpretation": "The residual falls by about four per doubling, i.e. at second order, which is the expected behaviour of the trapezoidal quadrature used for the areas. The residual is therefore discretization error, not a defect in the identity.",
+ "interpretation": "With the AUC taken by a trapezoid over the sampled signal (the method before plan item 8) the residual falls by about four per doubling, i.e. at second order: it was discretization error, not a defect in the identity. With the exact AUC now used it is rounding on every grid.",
  "provenance": {
-  "git_head": "f4db0725e50d6cba80ed1906daacd8876aa6d913",
-  "git_dirty": true,
+  "git_head": "70abd2a2890a79ec1a258c4f5dcd4029de9a7f10",
+  "git_dirty": false,
   "python": "3.12.4",
   "numpy": "2.4.6",
   "scipy": "1.15.3",
@@ -57,8 +64,133 @@
    "imipenem": 0.986,
    "meropenem": 0.986
   },
+  "default_parameters": {
+   "danger_signal": {
+    "Y_lysis": 1.0,
+    "Y_filament": 0.0,
+    "filament_window": [
+     0.0625,
+     1.0
+    ],
+    "V_focus_mL": 10.0,
+    "V_ds_L": 3.0,
+    "k_ds_clear": 13.9,
+    "translocation_fraction": 1.0,
+    "DS50": 300.0,
+    "hill_ds": 1.714,
+    "k_signal_off": 0.93,
+    "k_IL6_max": 176148.0,
+    "k_tol_on": 0.0,
+    "k_tol_off": 0.35,
+    "tol_max": 0.0,
+    "tol_shift": 0.0,
+    "T0": 0.0,
+    "DS_baseline": 0.0,
+    "k_IL6_clear": 0.2,
+    "IL6_baseline": 5.0,
+    "TNF_IL6_ratio": 0.3,
+    "k_TNF_clear": 0.3
+   },
+   "bacterial_pd": {
+    "bacteria": {
+     "k_growth": 0.5,
+     "B_max": 1000000000.0,
+     "k_pers": 0.01,
+     "mu_mut": 1e-06,
+     "k_repair": 0.3,
+     "MIC_baseline": 1.0,
+     "scv_switch_midpoint": 0.3,
+     "scv_switch_width": 0.05,
+     "k_kill_max": 1.5874010519681996,
+     "kill_C50": 0.936,
+     "kill_hill": 4.0,
+     "static_kill_max": 0.0,
+     "static_pamp_fraction": 0.0
+    },
+    "immune": {
+     "N_eff_0": 10000000.0,
+     "recruit_fold_max": 3.0,
+     "EC50_immune": 100000.0,
+     "k_deg_immune": 0.05,
+     "k_kill_base": 1e-08
+    },
+    "cytokine": {
+     "k_IL6_prod": 4.0,
+     "alpha_static": 1.0,
+     "alpha_cidal": 3.0,
+     "k_IL6_clear": 0.2,
+     "TNF_IL6_ratio": 0.3
+    },
+    "damage": {
+     "k_path": 0.08,
+     "B50": 10000000.0,
+     "k_infl": 0.03,
+     "k_heal": 0.1,
+     "w_TNF": 0.5,
+     "IL6_ref": 10.0,
+     "TNF_ref": 5.0,
+     "I50": 5.0
+    }
+   },
+   "pk": {
+    "ceftazidime": {
+     "CL": 7.0,
+     "Vc": 0.226551,
+     "Vp": 0.09,
+     "Q": 5.0,
+     "Ka": 0.0,
+     "Kp": 0.5
+    },
+    "meropenem": {
+     "CL": 12.156785,
+     "Vc": 0.270308,
+     "Vp": 0.15,
+     "Q": 8.0,
+     "Ka": 0.0,
+     "Kp": 0.4
+    }
+   },
+   "drug_pd": {
+    "ceftazidime": {
+     "drug_class": "cidal",
+     "effect_mode": "time_dependent",
+     "mic": 1.0,
+     "fraction_unbound": 0.9,
+     "k_kill_max": 3.0,
+     "ec50_mic_ratio": 1.0,
+     "hill": 4.0,
+     "growth_dependence": 1.0,
+     "signal_on": 1.0,
+     "signal_decay": 0.3,
+     "signal50": 3.0,
+     "static_ec50_mic_ratio": 0.1,
+     "static_hill": 1.2
+    },
+    "meropenem": {
+     "drug_class": "cidal",
+     "effect_mode": "time_dependent",
+     "mic": 1.0,
+     "fraction_unbound": 0.98,
+     "k_kill_max": 3.0,
+     "ec50_mic_ratio": 1.0,
+     "hill": 4.0,
+     "growth_dependence": 1.0,
+     "signal_on": 1.0,
+     "signal_decay": 0.3,
+     "signal50": 3.0,
+     "static_ec50_mic_ratio": 0.1,
+     "static_hill": 1.2
+    }
+   }
+  },
   "solver": {
-   "danger_signal": "LSODA rtol 1e-6 atol 1e-9 max_step 0.1 h"
+   "bacterial": "RK45 rtol 1e-6 atol 1e-8 max_step 0.1 h, continuous interpolant kept",
+   "release_rates": "exact at 8 sub-steps per solver step (interpolant + analytical PK)",
+   "danger_signal": "closed-form update of D' = src - kD for src linear per sub-step; AUC, released amount and cumulative killing exact for that src",
+   "cytokines": "LSODA rtol 1e-6 atol 1e-9 max_step 0.1 h; its DS state checked against the closed form",
+   "fT_above_MIC": "analytical PK, crossings by Brent root finding (1e-12 h)",
+   "fAUC_fCmax": "analytical PK: Gauss-Legendre between dosing breakpoints; peak at infusion ends",
+   "dose_solving": "PK-only %fT>MIC, Brent to 1e-6 mg"
   }
  }
 }

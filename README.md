@@ -36,7 +36,7 @@ repository.
 | Injury | used only to test whether a ranking is invariant across seven monotone maps; no injury magnitude is ever reported |
 
 **What the headline numbers rest on.** With equal lysis yields and no sub-MIC
-term the agent ratio falls to 1.001-1.039, and the ceftazidime:meropenem yield
+term the agent ratio falls to 1.002-1.039, and the ceftazidime:meropenem yield
 ratio at which release exposure is equal is 0.81-1.00. The ordering therefore
 survives for any true ratio above about one, while the magnitude is the
 assumed 3.5-7-fold range propagating through the model. Run
@@ -146,6 +146,9 @@ supported ranges.
 
 Each stage writes a JSON file to `results/danger_signal/`. The files are
 committed, so the figures can be regenerated without rerunning the pipeline.
+`python scripts/run_pipeline.py` regenerates all of them and the figures in
+dependency order, running independent scripts side by side (`--jobs N`).
+Individually, in order:
 
 ```bash
 python scripts/ds_pilot_acceptance.py    # feasibility and acceptance screen
@@ -246,7 +249,7 @@ this repository.
 python -m pytest -q
 ```
 
-607 tests pass, with one expected failure marking a known defect in a legacy
+621 tests pass, with one expected failure marking a known defect in a legacy
 pharmacokinetic routine. They cover the pharmacokinetic conventions and the
 conservation of drug mass, the bacterial dynamics, mass conservation across the persister
 and small-colony-variant switches, the release layer and its

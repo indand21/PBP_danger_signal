@@ -5,9 +5,12 @@ The compartment satisfies, exactly,
     k_ds * integral(D dt) = integral(src dt) - [D(T) - D(0)]
 
 so the discrepancy between the two sides measures integration error alone.
-The manuscript attributes the residual seen across the regimen library to
-quadrature rather than to a defect in the relation; this script is the
-evidence for that attribution, and writes the numbers the manuscript quotes.
+Since plan item 8 the AUC is the exact integral for the piecewise-linear
+release, and the residual is rounding on every grid. Until then it was a
+trapezoid over the sampled signal, which left a residual of up to 4e-3
+across the regimen library; this script keeps both, so the attribution of
+that old residual to quadrature (second-order convergence) stays on record
+beside the exact result that replaced it.
 
 A deliberately transient-rich driver is used (killing switched on and off on
 an eight-hourly cycle, as dosing does), because a smooth driver would
@@ -41,10 +44,13 @@ def run():
         on = (np.sin(2 * np.pi * t / INTERVAL_H) > 0).astype(float)
         out = simulate_danger_signal(t, np.full(n, 1e7), 0.8 * on,
                                      4.0 * on + 0.1, 1.0, p)
-        mb = check_release_mass_balance(out, p)
+        trap = check_release_mass_balance(out, p, use_exact=False)
+        exact = check_release_mass_balance(out, p)
         cells.append({"n_points": n, "dt_h": float(T_END / (n - 1)),
                       "abs_relative_residual":
-                          abs(float(mb["relative_residual"]))})
+                          abs(float(trap["relative_residual"])),
+                      "abs_relative_residual_exact":
+                          abs(float(exact["relative_residual"]))})
     for prev, cur in zip(cells, cells[1:]):
         cur["reduction_vs_previous"] = (prev["abs_relative_residual"]
                                         / cur["abs_relative_residual"])
@@ -55,12 +61,14 @@ def run():
         "grids": cells,
         "coarsest_residual": cells[0]["abs_relative_residual"],
         "finest_residual": cells[-1]["abs_relative_residual"],
+        "max_residual_exact_auc": max(c["abs_relative_residual_exact"] for c in cells),
         "refinement_factor": GRIDS[-1] / GRIDS[0],
         "interpretation":
-            "The residual falls by about four per doubling, i.e. at second "
-            "order, which is the expected behaviour of the trapezoidal "
-            "quadrature used for the areas. The residual is therefore "
-            "discretization error, not a defect in the identity.",
+            "With the AUC taken by a trapezoid over the sampled signal (the "
+            "method before plan item 8) the residual falls by about four per "
+            "doubling, i.e. at second order: it was discretization error, "
+            "not a defect in the identity. With the exact AUC now used it is "
+            "rounding on every grid.",
     }
 
 
@@ -75,9 +83,9 @@ def main():
               f"{('-' if r is None else f'{r:.2f}'):>8s}")
     print(f"\n{payload['interpretation']}")
     from src.utils.provenance import provenance
-    payload["provenance"] = provenance(
-        solver={"danger_signal": "LSODA rtol 1e-6 atol 1e-9 max_step 0.1 h"})
-    with open(OUT, "w", encoding="utf-8") as fh:
+    from src.analysis.exact_release import NUMERICS
+    payload["provenance"] = provenance(solver=NUMERICS)
+    with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(payload, fh, indent=1)
     print(f"\nwrote {OUT}")
 

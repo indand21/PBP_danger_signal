@@ -148,7 +148,7 @@ def main():
         exposure_index="%fT>MIC for the dose-response; plasma mg/L for the PK",
         solver={"pk": "adopted one-compartment plasma with effect site",
                 "bacterial": "LSODA rtol 1e-6 atol 1e-8 max_step 0.2 h"})
-    with open(OUT, "w", encoding="utf-8") as fh:
+    with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(payload, fh, indent=1, default=str)
 
     print("curve-level validation against registry targets")

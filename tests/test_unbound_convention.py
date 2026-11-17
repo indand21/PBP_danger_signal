@@ -113,9 +113,14 @@ class TestReportedIndicesUseFreeDrug:
         from src.core.simulation import SimulationResult
         t = sim["t"]
         free = fu * sim["C_eff_total"]
-        expected = 100.0 * SimulationResult._time_above_threshold(t, free, mic) \
-            / (t[-1] - t[0])
-        assert sim["fT"] == pytest.approx(expected, abs=1e-9)
+        span = t[-1] - t[0]
+        # The reported index is exact (root finding on the analytical PK);
+        # crossing interpolation on the sampled grid agrees to its own error,
+        # about 1e-4 points, while the total-drug index is far away.
+        on_free = 100.0 * SimulationResult._time_above_threshold(t, free, mic) / span
+        on_total = 100.0 * SimulationResult._time_above_threshold(t, sim["C_eff_total"], mic) / span
+        assert sim["fT"] == pytest.approx(on_free, abs=1e-3)
+        assert abs(on_total - on_free) > 100 * 1e-3
 
     def test_free_index_is_lower_than_the_total_one(self):
         """fu < 1, so the honest index must be smaller than the one the study

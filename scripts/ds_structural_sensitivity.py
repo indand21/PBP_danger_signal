@@ -306,7 +306,7 @@ def main():
     from src.utils.provenance import provenance
     payload["provenance"] = provenance(
         endpoint="AUC_DS_pg_h_mL", note="structural sensitivity for R7 and R10")
-    with open(OUT, "w", encoding="utf-8") as fh:
+    with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(payload, fh, indent=1)
     print(f"\nwrote {OUT}")
 

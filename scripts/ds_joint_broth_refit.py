@@ -130,7 +130,7 @@ def main():
                   "data/external_validation/meropenem_figure2bc_initial.csv"]},
              "analysis_script_sha256":hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
              "provenance":provenance(note="Joint first-exposure broth windows, per-panel baseline and growth")}
-    (ROOT/"results/danger_signal/joint_broth_refit.json").write_text(json.dumps(payload,indent=2)+"\n",encoding="utf-8")
+    (ROOT/"results/danger_signal/joint_broth_refit.json").write_text(json.dumps(payload,indent=2)+"\n",encoding="utf-8", newline="\n")
     print(json.dumps(payload["best"],indent=2),flush=True)
 
 

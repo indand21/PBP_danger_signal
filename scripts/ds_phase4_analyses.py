@@ -48,8 +48,11 @@ from src.core.parameters import (  # noqa: E402
     immune_free_parameters,
 )
 from src.core.pd_model import create_ode_system  # noqa: E402
+from src.analysis.exact_release import (  # noqa: E402
+    concentration_exposure, dosing_breakpoints, refined_trajectory, time_above,
+)
 from src.core.pk_models import DosingRegimen, TwoCompartmentPKModel  # noqa: E402
-from src.core.simulation import SimulationResult, run_simulation  # noqa: E402
+from src.core.simulation import effect_site_concentration, run_simulation  # noqa: E402
 
 OUT = os.path.join("results", "danger_signal", "phase4_analyses.json")
 
@@ -99,16 +102,49 @@ def effect_site_mic(params=None):
                         rtol=1e-6, atol=1e-8)
         return np.log10(max(sol.y[:3, -1].sum(), 1e-6) / y0[:3].sum())
 
-    return float(brentq(net, 1e-4, 200.0, xtol=1e-4))
+    # Solved to rounding rather than 1e-4 mg/L: the susceptibility sweep
+    # re-derives this root at every MIC level, and a loose root was the
+    # last source of spread between levels that are one simulation.
+    return float(brentq(net, 1e-4, 200.0, xtol=1e-12, rtol=1e-10))
 
 
-def simulate(agent, dose_mg, interval_h, n_doses, params=None, mic=None,
-             inf_min=30, t_end=T_END):
+def _regimen(agent, dose_mg, interval_h, n_doses, inf_min):
     p = get_drug_pk_parameters(AGENT_PK[agent])
     pkm = TwoCompartmentPKModel(CL=p.CL, Vc=p.Vc, Vp=p.Vp, Q=p.Q, Ka=p.Ka,
                                 Kp=p.Kp, effect_site_model=True)
     reg = DosingRegimen(dose_mg=dose_mg, interval_hours=interval_h, start_time=0,
                         n_doses=n_doses, infusion_duration_min=inf_min)
+    return p, pkm, reg
+
+
+def free_concentration_fn(agent, dose_mg, interval_h, n_doses, inf_min=30):
+    """Vectorized free effect-site concentration of a regimen, from PK alone."""
+    p, _, reg = _regimen(agent, dose_mg, interval_h, n_doses, inf_min)
+    fu = get_drug_pd_parameters(AGENT_PK[agent]).fraction_unbound
+    return reg, (lambda tt: fu * effect_site_concentration(
+        tt, reg, p.CL, p.Vc * WEIGHT, p.Kp, p.Ka))
+
+
+def exact_ft(agent, dose_mg, interval_h, n_doses, mic=None, inf_min=30, t_end=T_END):
+    """%fT>MIC over [0, t_end] from the analytical PK, crossings by root finding.
+
+    Depends on the drug alone, so solving a dose for a target needs no
+    bacterial simulation, and the result no longer moves with the solver grid
+    (the crossing interpolation it replaces was off by up to 0.006 points).
+    """
+    reg, conc = free_concentration_fn(agent, dose_mg, interval_h, n_doses, inf_min)
+    m = mic if mic is not None else MIC_EFFECT
+    return 100.0 * time_above(conc, m, 0.0, t_end, dosing_breakpoints(reg, t_end)) / t_end
+
+
+def simulate(agent, dose_mg, interval_h, n_doses, params=None, mic=None,
+             inf_min=30, t_end=T_END, keep_solution=False, refine=None):
+    """One regimen, with release-driving quantities on the refined grid.
+
+    ``keep_solution`` also returns the solver result and PD model (for the
+    numerical checks); ``refine`` overrides the sub-step count.
+    """
+    p, pkm, reg = _regimen(agent, dose_mg, interval_h, n_doses, inf_min)
     pd = create_ode_system(params or get_default_parameters())
     # Kp is a total-concentration partition, so only the unbound fraction
     # acts. Binding is applied once, inside run_simulation; C_eff below is
@@ -116,42 +152,76 @@ def simulate(agent, dose_mg, interval_h, n_doses, params=None, mic=None,
     fu = get_drug_pd_parameters(AGENT_PK[agent]).fraction_unbound
     r = run_simulation(pkm, reg, pd, dict(IC), t_span=(0, t_end),
                        drug_class="cidal", weight_kg=WEIGHT,
-                       fraction_unbound=fu)
-    C_eff_total = r.get_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
-    C_eff = r.get_free_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
+                       fraction_unbound=fu, dense_output=True)
     m = mic if mic is not None else MIC_EFFECT
-    # Interpolate each MIC crossing rather than count grid points above it.
-    # Counting is first-order in the solver's step size, so the doses solved
-    # to hit a %fT>MIC target used to move whenever the solver's grid did.
-    ft = float(100.0 * SimulationResult._time_above_threshold(r.t, C_eff, m)
-               / (r.t[-1] - r.t[0]))
+    # Release-driving quantities on the refined grid: exact at every point
+    # (the solver's interpolant and the analytical PK), so cumulative killing
+    # and every danger-signal integral are exact for one piecewise-linear
+    # rate (src/analysis/exact_release.py).
+    fine = refined_trajectory(r, pd) if refine is None else refined_trajectory(r, pd, refine)
+    t, B_rep, C_eff, kill = fine["t"], fine["B_rep"], fine["C_eff"], fine["kill"]
+    C_eff_total = C_eff / fu
+    ft = 100.0 * time_above(r.free_concentration_at, m, 0.0, t_end,
+                            dosing_breakpoints(reg, t_end)) / t_end
     _, B_total = r.get_bacterial_burden()
-    B_rep = r.y[:, r.state_names.index("B_rep")]
-    kill = np.asarray(pd.cidal_kill_rate(C_eff), dtype=float)
     # Cumulative killed biomass: the quantity danger-signal release is
     # proportional to, and the basis of the computable surrogate index tested
-    # in analysis 4.
+    # in analysis 4. The trapezoid over the refined grid is the exact integral
+    # of the same piecewise-linear rate the danger-signal layer integrates.
     from scipy.integrate import trapezoid
-    killed = float(trapezoid(kill * B_rep, r.t))
-    return dict(t=r.t, B_rep=B_rep, C_eff=C_eff, C_eff_total=C_eff_total,
-                fraction_unbound=fu, kill=kill, mic=m,
-                fT=ft, cum_killed_cfu_per_mL=killed,
-                net_log10=float(np.log10(max(B_total[-1], 1e-6) / B_total[0])),
-                fAUC_MIC=float(trapezoid(C_eff, r.t) / m / (t_end / 24.0)),
-                fCmax_MIC=float(np.max(C_eff) / m))
+    killed = float(trapezoid(kill * B_rep, t))
+    # fAUC and fCmax from the analytical PK too: quadrature between dosing
+    # breakpoints, and the peak at an infusion end rather than a grid point.
+    f_auc, f_cmax = concentration_exposure(r.free_concentration_at, 0.0, t_end,
+                                           dosing_breakpoints(reg, t_end))
+    out = dict(t=t, B_rep=B_rep, C_eff=C_eff, C_eff_total=C_eff_total,
+               fraction_unbound=fu, kill=kill, mic=m,
+               fT=ft, cum_killed_cfu_per_mL=killed,
+               net_log10=float(np.log10(max(B_total[-1], 1e-6) / B_total[0])),
+               fAUC_MIC=float(f_auc / m / (t_end / 24.0)),
+               fCmax_MIC=float(f_cmax / m),
+               solver_grid_points=int(len(r.t)))
+    if keep_solution:
+        out["_solution"], out["_pd"] = r, pd
+    return out
 
 
-def ds_cost(sim, agent=None, Y=None, Yf=None, v_focus=V_FOCUS):
+def ds_cost(sim, agent=None, Y=None, Yf=None, v_focus=V_FOCUS, cytokines=True):
     y = AGENT_YIELD[agent] if Y is None else Y
     yf = AGENT_FILAMENT[agent] if Yf is None else Yf
     q = replace(P_REF, Y_lysis=y, Y_filament=yf, V_focus_mL=v_focus)
     out = simulate_danger_signal(sim["t"], sim["B_rep"], sim["kill"],
-                                 sim["C_eff"], sim["mic"], q)
+                                 sim["C_eff"], sim["mic"], q, cytokines=cytokines)
     return out, summarize(out)
 
 
+def unit_auc_ds(sim, v_focus=V_FOCUS):
+    """48-h attributable danger-signal AUC per unit lysis yield and per unit
+    filament yield (pg.h/mL per fg/CFU, per fg/CFU/h).
+
+    The compartment is linear in the release, so any yields combine these
+    two numbers linearly; computed once per trajectory and cached on it.
+    """
+    key = ("_unit_auc", v_focus, P_REF.k_ds_clear, P_REF.V_ds_L,
+           P_REF.translocation_fraction, tuple(P_REF.filament_window))
+    if key not in sim:
+        lys = summarize(ds_cost(sim, Y=1.0, Yf=0.0, v_focus=v_focus, cytokines=False)[0])
+        fil = summarize(ds_cost(sim, Y=0.0, Yf=1.0, v_focus=v_focus, cytokines=False)[0])
+        sim[key] = (lys["AUC_DS_excess_pg_h_mL"], fil["AUC_DS_excess_pg_h_mL"])
+    return sim[key]
+
+
+def auc_ds(sim, agent=None, Y=None, Yf=None, v_focus=V_FOCUS):
+    """Total danger-signal AUC (the reported AUC_DS) for any yields, without
+    the cytokine solve: baseline exposure plus the unit-yield combination."""
+    y = AGENT_YIELD[agent] if Y is None else Y
+    yf = AGENT_FILAMENT[agent] if Yf is None else Yf
+    a_l, a_f = unit_auc_ds(sim, v_focus)
+    return float(P_REF.DS_baseline * (sim["t"][-1] - sim["t"][0]) + y * a_l + yf * a_f)
+
+
 def dose_for_target_ft(agent, target_ft, interval_h, n_doses, mic=None,
-                       lo=10.0, hi=60000.0):
+                       lo=10.0, hi=60000.0, inf_min=30):
     """Solve for the dose achieving a target %fT>MIC.
 
     ``hi`` is a search bracket, not a clinical limit. It was 16 g, which
@@ -162,13 +232,17 @@ def dose_for_target_ft(agent, target_ft, interval_h, n_doses, mic=None,
     enough to contain any dose the targets can require; whether a dose is
     administrable is a separate judgement, made in the dose table itself,
     where rows above the 6 g/day usual maximum are marked.
+
+    %fT>MIC is computed from the PK alone (``exact_ft``), so the search runs
+    no bacterial simulation and is solved to 1e-6 mg; it was solved to 1 mg
+    on a full simulation per evaluation.
     """
     def err(d):
-        return simulate(agent, d, interval_h, n_doses, mic=mic)["fT"] - target_ft
+        return exact_ft(agent, d, interval_h, n_doses, mic=mic, inf_min=inf_min) - target_ft
     try:
         if err(lo) > 0 or err(hi) < 0:
             return None
-        return float(brentq(err, lo, hi, xtol=1.0))
+        return float(brentq(err, lo, hi, xtol=1e-6, rtol=1e-12))
     except ValueError:
         return None
 
@@ -423,7 +497,7 @@ def analysis4_cost_index():
     regimen library spanning both agents, four intervals and a range of doses.
     """
     lib = []
-    residuals = []
+    residuals, residuals_trapezoid = [], []
     for agent in ("ceftazidime", "meropenem"):
         for interval, n in ((6.0, 8), (8.0, 6), (12.0, 4), (24.0, 2)):
             for dose in (125.0, 250.0, 500.0, 1000.0, 2000.0, 4000.0):
@@ -431,11 +505,16 @@ def analysis4_cost_index():
                 out, s = ds_cost(sim, agent=agent)
                 # The identity that explains the proposed index's near-perfect
                 # correlation, checked on every regimen rather than asserted.
+                # With the exact AUC it holds to rounding; the trapezoid over
+                # the sampled signal (the method before plan item 8) is kept
+                # to record the error that method carried.
                 q = replace(P_REF, Y_lysis=AGENT_YIELD[agent],
                             Y_filament=AGENT_FILAMENT[agent],
                             V_focus_mL=V_FOCUS)
                 residuals.append(
                     abs(check_release_mass_balance(out, q)["relative_residual"]))
+                residuals_trapezoid.append(abs(check_release_mass_balance(
+                    out, q, use_exact=False)["relative_residual"]))
                 lib.append({
                     "agent": agent, "dose_mg": dose, "interval_h": interval,
                     "fT_pct": sim["fT"], "fAUC_MIC": sim["fAUC_MIC"],
@@ -530,6 +609,7 @@ def analysis4_cost_index():
                          "with D the attributable danger signal and a the "
                          "common focus/translocation conversion factor",
             "max_abs_relative_residual": float(max(residuals)),
+            "max_abs_relative_residual_trapezoid_auc": float(max(residuals_trapezoid)),
             "n_regimens_checked": len(residuals),
             "consequence": "The proposed yield-weighted killed-biomass index "
                            "is the leading term of the right-hand side, so "
@@ -977,13 +1057,21 @@ def main():
         "analysis6_predictions": a6,
         "stasis_thresholds": st,
     }
-    from src.utils.provenance import provenance
+    from src.analysis.exact_release import NUMERICS
+    from src.utils.provenance import provenance, snapshot
     payload["provenance"] = provenance(
         endpoint="AUC_DS_pg_h_mL (attributable danger-signal exposure)",
-        exposure_index="%fT>MIC by crossing interpolation on the solver grid",
-        solver={"bacterial": "RK45 rtol 1e-6 atol 1e-8 max_step 0.1 h",
-                "danger_signal": "LSODA rtol 1e-6 atol 1e-9 max_step 0.1 h"})
-    with open(OUT, "w", encoding="utf-8") as fh:
+        exposure_index="%fT>MIC from the analytical PK, crossings by root finding",
+        solver=NUMERICS,
+        parameters={
+            "danger_signal": snapshot(P_REF),
+            "bacterial_pd": snapshot(get_default_parameters()),
+            "pk": {a: snapshot(get_drug_pk_parameters(a)) for a in AGENT_PK.values()},
+            "pd_drug": {a: snapshot(get_drug_pd_parameters(a)) for a in AGENT_PK.values()},
+            "initial_conditions": dict(IC), "weight_kg": WEIGHT, "t_end_h": T_END,
+            "mic_effect_site_mgL": MIC_EFFECT, "Y_filament_ceftazidime": Y_FILAMENT_CAZ,
+        })
+    with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(payload, fh, indent=1, default=str)
     print(f"\nwrote {OUT}")
 

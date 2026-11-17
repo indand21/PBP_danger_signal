@@ -55,9 +55,12 @@ sub-MIC activity in those data may not be killing at all.
 
 Writes results/danger_signal/agent_pd_map.json.
 """
+import argparse
 import hashlib
 import json
+import os
 import sys
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
 import numpy as np
@@ -287,6 +290,33 @@ class Runner:
                 "targets": per_target}
 
 
+#: Per-process state for the cell pool: each worker builds its own Runner.
+_W = {}
+
+
+def init_worker(p_ref, doses, tsuji, growth):
+    p4 = load_phase4()
+    p4.MIC_EFFECT = MIC_REF
+    p4.P_REF = p_ref
+    _W["run"] = Runner(p4, doses, tsuji, growth)
+
+
+def cell_task(args):
+    """One map cell. Depends only on its arguments (the meropenem cache only
+    avoids repeat work), so the pool reproduces the serial output exactly."""
+    return _W["run"].cell(*args)
+
+
+def n_redosed(cells, doses):
+    """Simulations whose dose had to be re-solved off the shared matched dose
+    (meropenem counted once per distinct PD, as it is simulated once)."""
+    caz = sum(1 for c in cells for t in TARGETS
+              if c["targets"][f"{t:g}"]["ceftazidime"]["dose_mg_q8h"] != doses[t]["ceftazidime"])
+    mero = {(tuple(sorted(c["meropenem_pd"].items())), t) for c in cells for t in TARGETS
+            if c["targets"][f"{t:g}"]["meropenem"]["dose_mg_q8h"] != doses[t]["meropenem"]}
+    return caz + len(mero)
+
+
 def scaled(base, kill=1.0, c50=1.0, hill=None, kpers=1.0):
     return {"k_kill_max": base["k_kill_max"] * kill, "kill_C50": base["kill_C50"] * c50,
             "kill_hill": base["kill_hill"] if hill is None else hill,
@@ -327,6 +357,9 @@ def summarise_map(cells, shared_misfit):
 
 # --------------------------------------------------------------------------
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--workers", type=int, default=max(1, (os.cpu_count() or 2) - 1))
+    args = ap.parse_args()
     p4 = load_phase4()
     p4.MIC_EFFECT = MIC_REF
     family = [x for x in calibrate_family() if x["feasible"]]
@@ -342,37 +375,46 @@ def main():
 
     doses = {t: {a: p4.dose_for_target_ft(a, t, 8.0, 6, mic=MIC_REF)
                  for a in ("ceftazidime", "meropenem")} for t in TARGETS}
-    run = Runner(p4, doses, tsuji, growth)
 
-    main_map = []
-    for fk in FACTORS:
-        for fc in FACTORS:
-            main_map.append(run.cell(scaled(adopted, fk, fc), adopted,
-                                     f"kill x{fk:.3g}, C50 x{fc:.3g}"))
-        print(f"  main map: kill x{fk:.3g} done", flush=True)
-    mirror_map = []
-    for fk in FACTORS:
-        for fc in FACTORS:
-            mirror_map.append(run.cell(adopted, scaled(adopted, fk, fc),
-                                       f"MERO kill x{fk:.3g}, C50 x{fc:.3g}"))
-        print(f"  mirror map: MERO kill x{fk:.3g} done", flush=True)
-    hill_sweep = [run.cell(scaled(adopted, hill=h), adopted, f"CAZ hill {h:g}") for h in HILL_SWEEP]
-    kpers_sweep = [run.cell(scaled(adopted, kpers=f), adopted, f"CAZ k_pers x{f:g}")
-                   for f in KPERS_FACTORS]
-    print("  sweeps done", flush=True)
-
+    # Every cell of every map is independent: build the whole task list, run
+    # it in a process pool (--workers; 1 runs serially), and split it back.
     refit = json.loads(REFIT.read_text(encoding="utf-8"))
+    bases = {name: {"k_kill_max": sc["parameters"]["k_kill_max"],
+                    "kill_C50": sc["parameters"]["kill_C50"],
+                    "kill_hill": sc["parameters"]["kill_hill"], "k_pers": adopted["k_pers"]}
+             for name, sc in refit["scenarios"].items()}
+    groups = {
+        "main": [(scaled(adopted, fk, fc), adopted, f"kill x{fk:.3g}, C50 x{fc:.3g}")
+                 for fk in FACTORS for fc in FACTORS],
+        "mirror": [(adopted, scaled(adopted, fk, fc), f"MERO kill x{fk:.3g}, C50 x{fc:.3g}")
+                   for fk in FACTORS for fc in FACTORS],
+        "hill": [(scaled(adopted, hill=h), adopted, f"CAZ hill {h:g}") for h in HILL_SWEEP],
+        "kpers": [(scaled(adopted, kpers=f), adopted, f"CAZ k_pers x{f:g}") for f in KPERS_FACTORS],
+        **{f"env:{name}": [(scaled(base, fk, fc), base, f"{name}: kill x{fk:.3g}, C50 x{fc:.3g}")
+                           for fk in COARSE for fc in COARSE] for name, base in bases.items()},
+    }
+    tasks = [(g, a) for g, items in groups.items() for a in items]
+    print(f"  {len(tasks)} cells on {args.workers} worker(s)", flush=True)
+    if args.workers > 1:
+        with ProcessPoolExecutor(max_workers=args.workers, initializer=init_worker,
+                                 initargs=(p4.P_REF, doses, tsuji, growth)) as ex:
+            results = list(ex.map(cell_task, [a for _, a in tasks], chunksize=1))
+    else:
+        init_worker(p4.P_REF, doses, tsuji, growth)
+        results = [cell_task(a) for _, a in tasks]
+    done = {g: [] for g in groups}
+    for (g, _), c in zip(tasks, results):
+        done[g].append(c)
+    main_map, mirror_map = done["main"], done["mirror"]
+    hill_sweep, kpers_sweep = done["hill"], done["kpers"]
     envelope = {}
-    for name, sc in refit["scenarios"].items():
-        base = {"k_kill_max": sc["parameters"]["k_kill_max"], "kill_C50": sc["parameters"]["kill_C50"],
-                "kill_hill": sc["parameters"]["kill_hill"], "k_pers": adopted["k_pers"]}
-        cells = [run.cell(scaled(base, fk, fc), base, f"{name}: kill x{fk:.3g}, C50 x{fc:.3g}")
-                 for fk in COARSE for fc in COARSE]
+    for name, base in bases.items():
+        cells = done[f"env:{name}"]
         # With equal PD the predicted difference is zero, so the shared-PD
         # misfit is the same for every meropenem base.
-        envelope[name] = {"meropenem_pd": base, "refit_rmse": sc.get("rmse"),
+        envelope[name] = {"meropenem_pd": base, "refit_rmse": refit["scenarios"][name].get("rmse"),
                           "summary": summarise_map(cells, shared_misfit), "cells": cells}
-        print(f"  envelope: {name} done", flush=True)
+    print("  all maps done", flush=True)
 
     # ---- checks ---------------------------------------------------------
     shared = next(c for c in main_map if c["label"] == "kill x1, C50 x1")
@@ -493,7 +535,7 @@ def main():
             "envelope_twin_of_adopted_pd": twin,
             "max_rel_diff_envelope_twin_vs_main_map": twin_gap,
             "max_rel_diff_mirror_shared_cell_vs_main_shared_cell": mirror_gap,
-            "n_doses_resolved_for_grid_residual": run.n_redosed,
+            "n_doses_resolved_for_grid_residual": n_redosed(every, doses),
             "ft_tolerance_pct": FT_TOL,
         },
         "analysis_script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
@@ -504,7 +546,7 @@ def main():
         "tsuji_data_sha256": tsuji_digest(tsuji),
         "provenance": provenance(note="Agent-specific PD map at a fixed MIC reference"),
     }
-    OUT.write_text(json.dumps(payload, indent=1, allow_nan=False) + "\n", encoding="utf-8")
+    OUT.write_text(json.dumps(payload, indent=1, allow_nan=False) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({"headline": headline,
                       "numerical_check": payload["numerical_check"],
                       "tsuji": {"identifiable": payload["tsuji_check"]["identifiable"],

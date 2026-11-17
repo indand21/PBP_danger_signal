@@ -312,7 +312,7 @@ def main():
         shifted[1] += np.log(2)
         result["thigh_diagnostic"]["multiarm_C50_doubled"] = diagnostic_thigh(shifted)
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(result, indent=2, allow_nan=False)+"\n", encoding="utf-8")
+    OUT.write_text(json.dumps(result, indent=2, allow_nan=False)+"\n", encoding="utf-8", newline="\n")
 
     colors = dict(zip(["0.25xMIC","1xMIC","2xMIC","4xMIC","8xMIC","16xMIC","GC-native","GC-centrifuged"],
                       plt.get_cmap("tab10").colors[:8]))

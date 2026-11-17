@@ -129,6 +129,17 @@ class SimulationResult:
         return fu * self.get_effect_site_concentration(pk_model=pk_model,
                                                        weight_kg=weight_kg)
 
+    def free_concentration_at(self, t) -> np.ndarray:
+        """Unbound effect-site concentration, mg/L, at arbitrary times.
+
+        The same analytical one-compartment solution that drove killing,
+        evaluated off the solver grid (vectorized). Used for exact %fT>MIC and
+        for quadrature of the kill rate between grid points.
+        """
+        return self.params.get('_fraction_unbound', 1.0) * effect_site_concentration(
+            t, self.params['_regimen'], self.params['_CL_val'], self.params['_Vc_val'],
+            self.params['_Kp_val'], self.params.get('_Ka_val', 0.0))
+
     @staticmethod
     def _time_above_threshold(t: np.ndarray, values: np.ndarray, threshold: float) -> float:
         """Integrate time above a threshold with linear crossing interpolation.
@@ -185,6 +196,42 @@ class SimulationResult:
             'fAUC_MIC': auc / mic,
             'fCmax_MIC': float(np.max(concentration)) / mic,
         }
+
+
+def effect_site_concentration(t, regimen, CL: float, Vc_L: float, Kp: float,
+                              Ka: float = 0.0) -> np.ndarray:
+    """Total effect-site concentration, mg/L, at times ``t`` (vectorized).
+
+    The one-compartment solution of ``run_simulation`` (elimination CL/Vc,
+    effect site Kp times central), written over arrays so it can be evaluated
+    at quadrature nodes and in root finding. ``Vc_L`` is the weight-scaled
+    volume in litres. ``tests/test_exact_release.py`` holds it equal to the
+    scalar version that drives killing.
+    """
+    t = np.asarray(t, dtype=float)
+    k = CL / Vc_L
+    inf_h = regimen.infusion_duration_min / 60.0
+    C = np.zeros_like(t)
+    for td in regimen.get_dose_times():
+        tau = t - td
+        on = tau > 0
+        if not np.any(on):
+            continue
+        ta = np.where(on, tau, 0.0)
+        if Ka > 0:
+            if abs(Ka - k) > 0.001:
+                c = regimen.dose_mg / Vc_L * Ka / (Ka - k) * (np.exp(-k * ta) - np.exp(-Ka * ta))
+            else:
+                c = regimen.dose_mg / Vc_L * Ka * ta * np.exp(-Ka * ta)
+        elif inf_h > 0.001:
+            R0 = regimen.dose_mg / inf_h
+            c_end = R0 / (k * Vc_L) * (1 - np.exp(-k * inf_h))
+            c = np.where(ta <= inf_h, R0 / (k * Vc_L) * (1 - np.exp(-k * ta)),
+                         c_end * np.exp(-k * (ta - inf_h)))
+        else:
+            c = regimen.dose_mg / Vc_L * np.exp(-k * ta)
+        C += np.where(on, c, 0.0)
+    return Kp * C
 
 
 def check_integration(sol, t_end: float, where: str,
@@ -442,4 +489,10 @@ def run_simulation(
     if pd_parameters is not None:
         result_params['_mic'] = getattr(pd_parameters, 'mic', None)
 
-    return SimulationResult(t, y, state_names, result_params)
+    result = SimulationResult(t, y, state_names, result_params)
+    # The solver's continuous interpolant between grid points (RK45: 4th
+    # order). Requesting it does not change the steps taken, so the trajectory
+    # is identical; it lets cumulative killing and release be integrated
+    # between grid points instead of by trapezoids on the grid.
+    result.dense = sol.sol if dense_output else None
+    return result

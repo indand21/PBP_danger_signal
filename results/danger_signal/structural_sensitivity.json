@@ -7,35 +7,35 @@
   "baseline": {
    "note": "the study as reported: the refitted bacterial layer, k_kill_max 1.587, kill_C50 0.936, kill_hill 4",
    "overrides": {},
-   "effective_mic_mgL": 0.770456832246574,
+   "effective_mic_mgL": 0.7704811637589509,
    "rows": [
     {
      "target_fT_pct": 40.0,
      "evaluated": true,
-     "dose_ceftazidime_mg": 102.44089340790983,
-     "dose_meropenem_mg": 256.6459951128865,
-     "kill_difference_log10": 0.10812875992119375,
-     "net_log10_ceftazidime": -2.5070387844033335,
-     "net_log10_meropenem": -2.6151675443245272,
-     "cost_ratio_low": 4.558226209394379,
-     "cost_ratio_high": 9.116451127212212
+     "dose_ceftazidime_mg": 102.6125975603049,
+     "dose_meropenem_mg": 256.7207848122919,
+     "kill_difference_log10": 0.10568161878084803,
+     "net_log10_ceftazidime": -2.509766916941742,
+     "net_log10_meropenem": -2.61544853572259,
+     "cost_ratio_low": 4.543860353783754,
+     "cost_ratio_high": 9.087720707567508
     },
     {
      "target_fT_pct": 80.0,
      "evaluated": true,
-     "dose_ceftazidime_mg": 402.7945067346825,
-     "dose_meropenem_mg": 1923.7931720800586,
-     "kill_difference_log10": 0.01739305378906897,
-     "net_log10_ceftazidime": -3.221554785335187,
-     "net_log10_meropenem": -3.238947839124256,
-     "cost_ratio_low": 3.583815507125323,
-     "cost_ratio_high": 7.1676255031677005
+     "dose_ceftazidime_mg": 402.72856265793445,
+     "dose_meropenem_mg": 1924.6643824820148,
+     "kill_difference_log10": 0.017460539696712907,
+     "net_log10_ceftazidime": -3.2215304467777504,
+     "net_log10_meropenem": -3.2389909864744633,
+     "cost_ratio_low": 3.583445602168863,
+     "cost_ratio_high": 7.166891204337726
     }
    ],
-   "max_abs_kill_difference": 0.10812875992119375,
+   "max_abs_kill_difference": 0.10568161878084803,
    "cost_ratio_span": [
-    3.583815507125323,
-    9.116451127212212
+    3.583445602168863,
+    9.087720707567508
    ],
    "ordinal_holds": true
   },
@@ -48,35 +48,35 @@
      "kill_hill": 4.0
     }
    },
-   "effective_mic_mgL": 0.4011072678341848,
+   "effective_mic_mgL": 0.40112351618502046,
    "rows": [
     {
      "target_fT_pct": 40.0,
      "evaluated": true,
-     "dose_ceftazidime_mg": 53.48354128249194,
-     "dose_meropenem_mg": 133.52067861640558,
-     "kill_difference_log10": 0.1026811207471039,
-     "net_log10_ceftazidime": -3.0221398298839577,
-     "net_log10_meropenem": -3.1248209506310616,
-     "cost_ratio_low": 3.942807611035531,
-     "cost_ratio_high": 7.8856091709858385
+     "dose_ceftazidime_mg": 53.421586265399995,
+     "dose_meropenem_mg": 133.6525131637111,
+     "kill_difference_log10": 0.10408431961127773,
+     "net_log10_ceftazidime": -3.021139953054025,
+     "net_log10_meropenem": -3.1252242726653026,
+     "cost_ratio_low": 3.9432158960105976,
+     "cost_ratio_high": 7.886431792021195
     },
     {
      "target_fT_pct": 80.0,
      "evaluated": true,
-     "dose_ceftazidime_mg": 209.7556992195995,
-     "dose_meropenem_mg": 1001.6038121429829,
-     "kill_difference_log10": 0.036297209974794686,
-     "net_log10_ceftazidime": -3.4746319825927143,
-     "net_log10_meropenem": -3.510929192567509,
-     "cost_ratio_low": 3.588966710167912,
-     "cost_ratio_high": 7.17794405569535
+     "dose_ceftazidime_mg": 209.66625107324236,
+     "dose_meropenem_mg": 1002.0078113409631,
+     "kill_difference_log10": 0.03640474866125176,
+     "net_log10_ceftazidime": -3.474563068032111,
+     "net_log10_meropenem": -3.5109678166933627,
+     "cost_ratio_low": 3.5917473961539486,
+     "cost_ratio_high": 7.183494792307897
     }
    ],
-   "max_abs_kill_difference": 0.1026811207471039,
+   "max_abs_kill_difference": 0.10408431961127773,
    "cost_ratio_span": [
-    3.588966710167912,
-    7.8856091709858385
+    3.5917473961539486,
+    7.886431792021195
    ],
    "ordinal_holds": true
   },
@@ -89,35 +89,35 @@
      "kill_hill": 8.0
     }
    },
-   "effective_mic_mgL": 0.9270806705540924,
+   "effective_mic_mgL": 0.9270802323066296,
    "rows": [
     {
      "target_fT_pct": 40.0,
      "evaluated": true,
-     "dose_ceftazidime_mg": 123.62203482590171,
-     "dose_meropenem_mg": 308.8425322121026,
-     "kill_difference_log10": 0.047742866720100086,
-     "net_log10_ceftazidime": -2.4055189111060367,
-     "net_log10_meropenem": -2.4532617778261367,
-     "cost_ratio_low": 4.432208745808432,
-     "cost_ratio_high": 8.864417967930072
+     "dose_ceftazidime_mg": 123.46844453217633,
+     "dose_meropenem_mg": 308.89887516599674,
+     "kill_difference_log10": 0.049920802869862335,
+     "net_log10_ceftazidime": -2.4035306784906387,
+     "net_log10_meropenem": -2.453451481360501,
+     "cost_ratio_low": 4.439212121870896,
+     "cost_ratio_high": 8.878424243741792
     },
     {
      "target_fT_pct": 80.0,
      "evaluated": true,
-     "dose_ceftazidime_mg": 484.4974446801619,
-     "dose_meropenem_mg": 2314.8640307184382,
-     "kill_difference_log10": 0.011958614607283202,
-     "net_log10_ceftazidime": -3.142125982426345,
-     "net_log10_meropenem": -3.1540845970336284,
-     "cost_ratio_low": 3.579934127971094,
-     "cost_ratio_high": 7.15987112262712
+     "dose_ceftazidime_mg": 484.58250114744357,
+     "dose_meropenem_mg": 2315.84935057707,
+     "kill_difference_log10": 0.01197400899878609,
+     "net_log10_ceftazidime": -3.1421537003868347,
+     "net_log10_meropenem": -3.154127709385621,
+     "cost_ratio_low": 3.5765683206813392,
+     "cost_ratio_high": 7.1531366413626785
     }
    ],
-   "max_abs_kill_difference": 0.047742866720100086,
+   "max_abs_kill_difference": 0.049920802869862335,
    "cost_ratio_span": [
-    3.579934127971094,
-    8.864417967930072
+    3.5765683206813392,
+    8.878424243741792
    ],
    "ordinal_holds": true
   },
@@ -128,35 +128,35 @@
      "N_eff_0": 0.0
     }
    },
-   "effective_mic_mgL": 0.770456832246574,
+   "effective_mic_mgL": 0.7704811637589509,
    "rows": [
     {
      "target_fT_pct": 40.0,
      "evaluated": true,
-     "dose_ceftazidime_mg": 102.4404831977097,
-     "dose_meropenem_mg": 256.6457056574194,
-     "kill_difference_log10": 0.36659429133252086,
-     "net_log10_ceftazidime": -1.2711229748009338,
-     "net_log10_meropenem": -1.6377172661334547,
-     "cost_ratio_low": 5.45228336741513,
-     "cost_ratio_high": 10.904562251193818
+     "dose_ceftazidime_mg": 102.6125975603049,
+     "dose_meropenem_mg": 256.7207848122919,
+     "kill_difference_log10": 0.35675711414314293,
+     "net_log10_ceftazidime": -1.281975970322794,
+     "net_log10_meropenem": -1.638733084465937,
+     "cost_ratio_low": 5.413769689194881,
+     "cost_ratio_high": 10.827539378389762
     },
     {
      "target_fT_pct": 80.0,
      "evaluated": true,
-     "dose_ceftazidime_mg": 402.7941879354134,
-     "dose_meropenem_mg": 1923.839702458959,
-     "kill_difference_log10": 0.02109244192412163,
-     "net_log10_ceftazidime": -2.981046009339005,
-     "net_log10_meropenem": -3.002138451263127,
-     "cost_ratio_low": 3.587953687107281,
-     "cost_ratio_high": 7.175903258339596
+     "dose_ceftazidime_mg": 402.72856265793445,
+     "dose_meropenem_mg": 1924.6643824820148,
+     "kill_difference_log10": 0.02117994578809057,
+     "net_log10_ceftazidime": -2.9810133901447675,
+     "net_log10_meropenem": -3.002193335932858,
+     "cost_ratio_low": 3.587616981918361,
+     "cost_ratio_high": 7.175233963836722
     }
    ],
-   "max_abs_kill_difference": 0.36659429133252086,
+   "max_abs_kill_difference": 0.35675711414314293,
    "cost_ratio_span": [
-    3.587953687107281,
-    10.904562251193818
+    3.587616981918361,
+    10.827539378389762
    ],
    "ordinal_holds": true
   },
@@ -167,35 +167,35 @@
      "recruit_fold_max": 1.0
     }
    },
-   "effective_mic_mgL": 0.770456832246574,
+   "effective_mic_mgL": 0.7704811637589509,
    "rows": [
     {
      "target_fT_pct": 40.0,
      "evaluated": true,
-     "dose_ceftazidime_mg": 102.44097122511175,
-     "dose_meropenem_mg": 256.62686857808103,
-     "kill_difference_log10": 0.22480597896574572,
-     "net_log10_ceftazidime": -1.9830497756581598,
-     "net_log10_meropenem": -2.2078557546239055,
-     "cost_ratio_low": 4.936043099309456,
-     "cost_ratio_high": 9.872089485923915
+     "dose_ceftazidime_mg": 102.6125975603049,
+     "dose_meropenem_mg": 256.7207848122919,
+     "kill_difference_log10": 0.21911409324775977,
+     "net_log10_ceftazidime": -1.9894696031740342,
+     "net_log10_meropenem": -2.208583696421794,
+     "cost_ratio_low": 4.913369670977296,
+     "cost_ratio_high": 9.826739341954593
     },
     {
      "target_fT_pct": 80.0,
      "evaluated": true,
-     "dose_ceftazidime_mg": 402.7946803327482,
-     "dose_meropenem_mg": 1924.4666680231207,
-     "kill_difference_log10": 0.020460129769824142,
-     "net_log10_ceftazidime": -3.1268687785689075,
-     "net_log10_meropenem": -3.1473289083387317,
-     "cost_ratio_low": 3.5861971632912963,
-     "cost_ratio_high": 7.172388919309563
+     "dose_ceftazidime_mg": 402.72856265793445,
+     "dose_meropenem_mg": 1924.6643824820148,
+     "kill_difference_log10": 0.02049913948981441,
+     "net_log10_ceftazidime": -3.126840802763809,
+     "net_log10_meropenem": -3.1473399422536232,
+     "cost_ratio_low": 3.5858049126920823,
+     "cost_ratio_high": 7.171609825384165
     }
    ],
-   "max_abs_kill_difference": 0.22480597896574572,
+   "max_abs_kill_difference": 0.21911409324775977,
    "cost_ratio_span": [
-    3.5861971632912963,
-    9.872089485923915
+    3.5858049126920823,
+    9.826739341954593
    ],
    "ordinal_holds": true
   },
@@ -206,35 +206,35 @@
      "recruit_fold_max": 5.0
     }
    },
-   "effective_mic_mgL": 0.770456832246574,
+   "effective_mic_mgL": 0.7704811637589509,
    "rows": [
     {
      "target_fT_pct": 40.0,
      "evaluated": true,
-     "dose_ceftazidime_mg": 102.43824682670551,
-     "dose_meropenem_mg": 256.66846126421297,
-     "kill_difference_log10": 0.07198710782147355,
-     "net_log10_ceftazidime": -2.785429928620318,
-     "net_log10_meropenem": -2.8574170364417917,
-     "cost_ratio_low": 4.370634819640597,
-     "cost_ratio_high": 8.741259714256639
+     "dose_ceftazidime_mg": 102.6125975603049,
+     "dose_meropenem_mg": 256.7207848122919,
+     "kill_difference_log10": 0.07037261412585627,
+     "net_log10_ceftazidime": -2.7871725384415478,
+     "net_log10_meropenem": -2.857545152567404,
+     "cost_ratio_low": 4.359668359224727,
+     "cost_ratio_high": 8.719336718449455
     },
     {
      "target_fT_pct": 80.0,
      "evaluated": true,
-     "dose_ceftazidime_mg": 402.8004477193341,
-     "dose_meropenem_mg": 1923.8769392014156,
-     "kill_difference_log10": 0.014903310116890278,
-     "net_log10_ceftazidime": -3.308543499779101,
-     "net_log10_meropenem": -3.3234468098959913,
-     "cost_ratio_low": 3.5818545030302746,
-     "cost_ratio_high": 7.163731083945477
+     "dose_ceftazidime_mg": 402.72856265793445,
+     "dose_meropenem_mg": 1924.6643824820148,
+     "kill_difference_log10": 0.014962107788957457,
+     "net_log10_ceftazidime": -3.3085199101828224,
+     "net_log10_meropenem": -3.32348201797178,
+     "cost_ratio_low": 3.58144113399933,
+     "cost_ratio_high": 7.16288226799866
     }
    ],
-   "max_abs_kill_difference": 0.07198710782147355,
+   "max_abs_kill_difference": 0.07037261412585627,
    "cost_ratio_span": [
-    3.5818545030302746,
-    8.741259714256639
+    3.58144113399933,
+    8.719336718449455
    ],
    "ordinal_holds": true
   },
@@ -245,35 +245,35 @@
      "k_kill_base": 0.0
     }
    },
-   "effective_mic_mgL": 0.7704571668857038,
+   "effective_mic_mgL": 0.7704814978129091,
    "rows": [
     {
      "target_fT_pct": 40.0,
      "evaluated": true,
-     "dose_ceftazidime_mg": 102.4406694475036,
-     "dose_meropenem_mg": 256.64944507102996,
-     "kill_difference_log10": 0.4503111774712083,
-     "net_log10_ceftazidime": -0.6639715618886024,
-     "net_log10_meropenem": -1.1142827393598107,
-     "cost_ratio_low": 6.762607745738642,
-     "cost_ratio_high": 13.525218912259668
+     "dose_ceftazidime_mg": 102.61264204957475,
+     "dose_meropenem_mg": 256.72089611753586,
+     "kill_difference_log10": 0.43876856452468527,
+     "net_log10_ceftazidime": -0.6767563658678484,
+     "net_log10_meropenem": -1.1155249303925336,
+     "cost_ratio_low": 6.6882298797594135,
+     "cost_ratio_high": 13.376459759518827
     },
     {
      "target_fT_pct": 80.0,
      "evaluated": true,
-     "dose_ceftazidime_mg": 402.80765065138417,
-     "dose_meropenem_mg": 1924.423386453601,
-     "kill_difference_log10": 0.022376643505030103,
-     "net_log10_ceftazidime": -2.865852796805919,
-     "net_log10_meropenem": -2.888229440310949,
-     "cost_ratio_low": 3.602353197313701,
-     "cost_ratio_high": 7.204715286645886
+     "dose_ceftazidime_mg": 402.7287372670964,
+     "dose_meropenem_mg": 1924.6652169498584,
+     "kill_difference_log10": 0.022435923048251816,
+     "net_log10_ceftazidime": -2.8658105918361954,
+     "net_log10_meropenem": -2.888246514884447,
+     "cost_ratio_low": 3.601832859040374,
+     "cost_ratio_high": 7.203665718080748
     }
    ],
-   "max_abs_kill_difference": 0.4503111774712083,
+   "max_abs_kill_difference": 0.43876856452468527,
    "cost_ratio_span": [
-    3.602353197313701,
-    13.525218912259668
+    3.601832859040374,
+    13.376459759518827
    ],
    "ordinal_holds": true
   }
@@ -281,15 +281,15 @@
  "summary": {
   "ordinal_holds_in_every_variant": true,
   "cost_ratio_range_across_variants": [
-   3.579934127971094,
-   13.525218912259668
+   3.5765683206813392,
+   13.376459759518827
   ],
-  "max_abs_kill_difference_across_variants": 0.4503111774712083,
-  "interpretation": "The ordinal claim -- the PBP-3 agent costs several-fold more danger signal at matched exposure while killing within a small fraction of a log10 -- holds in every variant run here (7 of them), including the bacterial layer as it stood before the refit, the refit's own formal optimum, and 4 immune structures spanning no immune killing at all to the top of the recruited band. What the bacterial parameters move is the dose scale, not the comparison: because matching is at equal %fT>MIC, a change in the effective MIC multiplies both agents' doses by the same factor, exactly the MIC ratio, so the cost ratio and the kill difference are almost untouched by it. At the values in use the kill difference is 0.108 log10 and the cost ratio tops out at 9.12. The one unidentified parameter of the repaired immune layer, the recruited plateau, moves the kill difference only over 0.072-0.225 log10 and the top of the cost ratio over 8.74-9.87 across its whole admissible band, so the choice of a mid-band default is not load-bearing. The immune layer is what the kill difference is most sensitive to: removing immune killing entirely takes it to 0.450 log10 and the cost ratio to 13.53, which is the neutropenic limit rather than a plausible host. The residual kill difference also depends on the Hill exponent, which the kill data cannot identify: 0.048 log10 at the fit's preferred exponent of 8 against 0.108 at the 4 in use."
+  "max_abs_kill_difference_across_variants": 0.43876856452468527,
+  "interpretation": "The ordinal claim -- the PBP-3 agent costs several-fold more danger signal at matched exposure while killing within a small fraction of a log10 -- holds in every variant run here (7 of them), including the bacterial layer as it stood before the refit, the refit's own formal optimum, and 4 immune structures spanning no immune killing at all to the top of the recruited band. What the bacterial parameters move is the dose scale, not the comparison: because matching is at equal %fT>MIC, a change in the effective MIC multiplies both agents' doses by the same factor, exactly the MIC ratio, so the cost ratio and the kill difference are almost untouched by it. At the values in use the kill difference is 0.106 log10 and the cost ratio tops out at 9.09. The one unidentified parameter of the repaired immune layer, the recruited plateau, moves the kill difference only over 0.070-0.219 log10 and the top of the cost ratio over 8.72-9.83 across its whole admissible band, so the choice of a mid-band default is not load-bearing. The immune layer is what the kill difference is most sensitive to: removing immune killing entirely takes it to 0.439 log10 and the cost ratio to 13.38, which is the neutropenic limit rather than a plausible host. The residual kill difference also depends on the Hill exponent, which the kill data cannot identify: 0.050 log10 at the fit's preferred exponent of 8 against 0.106 at the 4 in use."
  },
  "provenance": {
-  "git_head": "f4db0725e50d6cba80ed1906daacd8876aa6d913",
-  "git_dirty": true,
+  "git_head": "70abd2a2890a79ec1a258c4f5dcd4029de9a7f10",
+  "git_dirty": false,
   "python": "3.12.4",
   "numpy": "2.4.6",
   "scipy": "1.15.3",
@@ -301,6 +301,125 @@
    "isepamicin": 0.28,
    "imipenem": 0.986,
    "meropenem": 0.986
+  },
+  "default_parameters": {
+   "danger_signal": {
+    "Y_lysis": 1.0,
+    "Y_filament": 0.0,
+    "filament_window": [
+     0.0625,
+     1.0
+    ],
+    "V_focus_mL": 10.0,
+    "V_ds_L": 3.0,
+    "k_ds_clear": 13.9,
+    "translocation_fraction": 1.0,
+    "DS50": 300.0,
+    "hill_ds": 1.714,
+    "k_signal_off": 0.93,
+    "k_IL6_max": 176148.0,
+    "k_tol_on": 0.0,
+    "k_tol_off": 0.35,
+    "tol_max": 0.0,
+    "tol_shift": 0.0,
+    "T0": 0.0,
+    "DS_baseline": 0.0,
+    "k_IL6_clear": 0.2,
+    "IL6_baseline": 5.0,
+    "TNF_IL6_ratio": 0.3,
+    "k_TNF_clear": 0.3
+   },
+   "bacterial_pd": {
+    "bacteria": {
+     "k_growth": 0.5,
+     "B_max": 1000000000.0,
+     "k_pers": 0.01,
+     "mu_mut": 1e-06,
+     "k_repair": 0.3,
+     "MIC_baseline": 1.0,
+     "scv_switch_midpoint": 0.3,
+     "scv_switch_width": 0.05,
+     "k_kill_max": 1.5874010519681996,
+     "kill_C50": 0.936,
+     "kill_hill": 4.0,
+     "static_kill_max": 0.0,
+     "static_pamp_fraction": 0.0
+    },
+    "immune": {
+     "N_eff_0": 10000000.0,
+     "recruit_fold_max": 3.0,
+     "EC50_immune": 100000.0,
+     "k_deg_immune": 0.05,
+     "k_kill_base": 1e-08
+    },
+    "cytokine": {
+     "k_IL6_prod": 4.0,
+     "alpha_static": 1.0,
+     "alpha_cidal": 3.0,
+     "k_IL6_clear": 0.2,
+     "TNF_IL6_ratio": 0.3
+    },
+    "damage": {
+     "k_path": 0.08,
+     "B50": 10000000.0,
+     "k_infl": 0.03,
+     "k_heal": 0.1,
+     "w_TNF": 0.5,
+     "IL6_ref": 10.0,
+     "TNF_ref": 5.0,
+     "I50": 5.0
+    }
+   },
+   "pk": {
+    "ceftazidime": {
+     "CL": 7.0,
+     "Vc": 0.226551,
+     "Vp": 0.09,
+     "Q": 5.0,
+     "Ka": 0.0,
+     "Kp": 0.5
+    },
+    "meropenem": {
+     "CL": 12.156785,
+     "Vc": 0.270308,
+     "Vp": 0.15,
+     "Q": 8.0,
+     "Ka": 0.0,
+     "Kp": 0.4
+    }
+   },
+   "drug_pd": {
+    "ceftazidime": {
+     "drug_class": "cidal",
+     "effect_mode": "time_dependent",
+     "mic": 1.0,
+     "fraction_unbound": 0.9,
+     "k_kill_max": 3.0,
+     "ec50_mic_ratio": 1.0,
+     "hill": 4.0,
+     "growth_dependence": 1.0,
+     "signal_on": 1.0,
+     "signal_decay": 0.3,
+     "signal50": 3.0,
+     "static_ec50_mic_ratio": 0.1,
+     "static_hill": 1.2
+    },
+    "meropenem": {
+     "drug_class": "cidal",
+     "effect_mode": "time_dependent",
+     "mic": 1.0,
+     "fraction_unbound": 0.98,
+     "k_kill_max": 3.0,
+     "ec50_mic_ratio": 1.0,
+     "hill": 4.0,
+     "growth_dependence": 1.0,
+     "signal_on": 1.0,
+     "signal_decay": 0.3,
+     "signal50": 3.0,
+     "static_ec50_mic_ratio": 0.1,
+     "static_hill": 1.2
+    }
+   }
   },
   "endpoint": "AUC_DS_pg_h_mL",
   "note": "structural sensitivity for R7 and R10"

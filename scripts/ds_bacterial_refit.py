@@ -478,7 +478,7 @@ def main():
         endpoint="log10 CFU RMSE across two datasets",
         note="bacterial-layer refit with kill_C50 identified (review R7)")
 
-    with open(OUT, "w", encoding="utf-8") as fh:
+    with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(payload, fh, indent=1)
 
     print()

@@ -44,6 +44,7 @@ from src.core.parameters import (  # noqa: E402
 )
 from src.core.pd_model import create_ode_system  # noqa: E402
 from src.core.pk_models import DosingRegimen, TwoCompartmentPKModel  # noqa: E402
+from src.analysis.exact_release import driver_from_result  # noqa: E402
 from src.core.simulation import run_simulation  # noqa: E402
 
 OUT = os.path.join("results", "danger_signal", "phase2_build.json")
@@ -83,17 +84,10 @@ def solve_bacteria(spec):
     fu = get_drug_pd_parameters(spec["drug"]).fraction_unbound
     r = run_simulation(pkm, reg, pd, dict(IC), t_span=(0, T_END),
                        drug_class="cidal", weight_kg=WEIGHT,
-                       fraction_unbound=fu)
-    t = r.t
-    C_eff = r.get_free_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
-    above = (C_eff > MIC_EFFECT).astype(float)
-    dt = np.diff(t)
-    ft = float(np.sum(0.5 * (above[:-1] + above[1:]) * dt) / (t[-1] - t[0]) * 100)
-    _, B_total = r.get_bacterial_burden()
-    return dict(t=t, B_rep=r.y[:, r.state_names.index("B_rep")], C_eff=C_eff,
-                kill=np.asarray(pd.cidal_kill_rate(C_eff), dtype=float),
-                net_log10=float(np.log10(max(B_total[-1], 1e-6) / B_total[0])),
-                fT=ft)
+                       fraction_unbound=fu, dense_output=True)
+    # Release-driving quantities exact at 8 sub-steps per solver step, and
+    # %fT>MIC from the analytical PK (src/analysis/exact_release.py).
+    return driver_from_result(r, pd, mic=MIC_EFFECT)
 
 
 def run_ds(driver, p, y_lysis, y_filament):
@@ -353,7 +347,7 @@ def main():
     from src.utils.provenance import provenance
     payload["provenance"] = provenance(
         note="historical phase; retained for the record")
-    with open(OUT, "w", encoding="utf-8") as fh:
+    with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(payload, fh, indent=1, default=str)
     print(f"\nwrote {OUT}")
 

@@ -18,11 +18,11 @@ Nothing is re-solved. The doses are phase 4's stored ones, and each arm's 48-h
 AUC must reproduce the stored value before anything else is reported, so these
 are the same simulations the paper already rests on, read differently.
 
-Window AUCs are computed two ways: trapezoid on the integrated trajectory (as
-every other endpoint here), and exactly, by integrating the linear endotoxin
-compartment D' = src(t) - k D in closed form over the same piecewise-linear
-release input the ODE solver interpolates. Their disagreement is reported as
-the numerical error of the window endpoints.
+Window AUCs are exact: the linear endotoxin compartment D' = src(t) - k D is
+integrated in closed form over the release rate, which is evaluated exactly
+at eight sub-steps per solver step (src/analysis/exact_release.py). The
+trapezoid over the sampled trajectory is kept as a check, and its
+disagreement is reported as that rule's error.
 
 Writes results/danger_signal/endpoint_windows.json.
 """
@@ -47,13 +47,10 @@ AGENTS = ("ceftazidime", "meropenem")
 WINDOWS_H = (1.0, 2.0, 4.0, 8.0, 24.0, 48.0)
 INTERVAL_H, N_DOSES = 8.0, 6
 REFERENCE_TARGET = 40.0   # lowest exposure that controls the infection
-# The endotoxin state shares one LSODA system with the cytokine states, whose
-# calibration steers the step sizes, so a recomputation agrees with the stored
-# value to about the solver's rtol (observed <= 2e-6), not to the last bit.
-# 1e-5 is still two orders below the endpoint's own quadrature error on the
-# 0.1-h grid (0.04-0.3% against the exact integral), so a pass means "the same
-# simulation", and a genuine change of model or dose fails it.
-REPRODUCTION_RTOL = 1e-5
+# The endotoxin AUC is a closed-form function of a deterministic bacterial
+# solve, so a recomputation at the stored dose reproduces the stored value to
+# rounding; any real change of model or dose fails this.
+REPRODUCTION_RTOL = 1e-9
 
 
 def load_phase4_module():
@@ -72,26 +69,17 @@ def exact_window_aucs(t, src, k, windows):
     and the exact integral of D over the step is
         D0 (1 - e^{-kh})/k + a (h/k - (1 - e^{-kh})/k^2)
           + b (h^2/(2k) - h/k^2 + (1 - e^{-kh})/k^3).
-    Window ends are inserted into the grid, so no step straddles one.
+    Window ends are inserted into the grid, so no step straddles one. The
+    update itself is src/analysis/exact_release.linear_source_ds.
     """
+    from src.analysis.exact_release import linear_source_ds
+
     t = np.asarray(t, float)
     src = np.asarray(src, float)
     grid = np.unique(np.concatenate([t, [w for w in windows if t[0] < w <= t[-1]]]))
-    s = np.interp(grid, t, src)
-    D, area, out = 0.0, 0.0, {}
-    for i in range(len(grid) - 1):
-        h = grid[i + 1] - grid[i]
-        a, b = s[i], (s[i + 1] - s[i]) / h
-        e = np.exp(-k * h)
-        g1 = (1 - e) / k
-        g2 = h / k - (1 - e) / k ** 2
-        g3 = h * h / (2 * k) - h / k ** 2 + (1 - e) / k ** 3
-        area += D * g1 + a * g2 + b * g3
-        D = D * e + a * g1 + b * g2
-        for w in windows:
-            if abs(grid[i + 1] - w) < 1e-12:
-                out[w] = area
-    return out
+    _, area, _ = linear_source_ds(grid, np.interp(grid, t, src), k)
+    return {w: float(area[int(np.argmin(np.abs(grid - w)))]) for w in windows
+            if t[0] < w <= t[-1] + 1e-12}
 
 
 def window_auc(t, y, T):
@@ -106,7 +94,7 @@ def endpoints(p4, agent, cell):
     """Every endpoint of one stored arm, plus its reproduction check."""
     sim = p4.simulate(agent, cell[agent]["dose_mg"], INTERVAL_H, N_DOSES,
                       mic=cell["mic_mgL"])
-    out, summ = p4.ds_cost(sim, agent=agent)
+    out, summ = p4.ds_cost(sim, agent=agent, cytokines=False)
     t = np.asarray(out["t"], float)
     D = np.asarray(out["DS"], float) - out["DS"][0]
     q = p4.P_REF
@@ -129,13 +117,13 @@ def endpoints(p4, agent, cell):
         "achieved_fT_pct": sim["fT"],
         "net_log10_change": sim["net_log10"],
         "controlled": bool(sim["net_log10"] < 0.0),
-        "window_AUC": {f"0-{w:g}h": trap[w] for w in WINDOWS_H},
-        "window_AUC_exact": {f"0-{w:g}h": exact[w] for w in WINDOWS_H},
+        "window_AUC": {f"0-{w:g}h": exact[w] for w in WINDOWS_H},
+        "window_AUC_trapezoid": {f"0-{w:g}h": trap[w] for w in WINDOWS_H},
         "peak_excess": float(D[k_pk]),
         "t_peak_h": float(t[k_pk]),
         "max_release_rate_ng_per_h": float(rate_ng_h[k_rt]),
         "t_max_release_h": float(t[k_rt]),
-        "fraction_of_48h_AUC_in_first_hour": trap[1.0] / trap[48.0],
+        "fraction_of_48h_AUC_in_first_hour": exact[1.0] / exact[48.0],
         "stored_48h_AUC_reproduced_rel_diff": rel,
         "n_grid_points_first_hour": int(np.sum(t <= 1.0)),
     }
@@ -193,8 +181,8 @@ def main():
     # Each exposure step within an agent, read on every endpoint. A step is
     # "divergent" on an endpoint when net killing improved and the endpoint
     # rose: the trade-off the study set out to look for.
-    # Every direction is re-read on the exact window integrals; a step whose
-    # sign depends on the quadrature would not be a result.
+    # Every direction is re-read on the trapezoid window integrals; a step
+    # whose sign depends on the quadrature would not be a result.
     steps, divergent = [], {k: 0 for k in ENDPOINT_KEYS}
     worst_fold_gap, sign_disagreements = 0.0, []
     for agent in AGENTS:
@@ -202,10 +190,10 @@ def main():
             a, b = arms[(agent, lo)], arms[(agent, hi)]
             better = b["net_log10_change"] < a["net_log10_change"]
             fold = {k: value(b, k) / value(a, k) for k in ENDPOINT_KEYS}
-            for k in a["window_AUC_exact"]:
-                fe = b["window_AUC_exact"][k] / a["window_AUC_exact"][k]
-                worst_fold_gap = max(worst_fold_gap, abs(fe - fold[k]))
-                if (fe > 1.0) != (fold[k] > 1.0):
+            for k in a["window_AUC_trapezoid"]:
+                ft = b["window_AUC_trapezoid"][k] / a["window_AUC_trapezoid"][k]
+                worst_fold_gap = max(worst_fold_gap, abs(ft - fold[k]))
+                if (ft > 1.0) != (fold[k] > 1.0):
                     sign_disagreements.append(f"{agent} {lo:g}->{hi:g}% {k}")
             for k in ENDPOINT_KEYS:
                 divergent[k] += int(better and fold[k] > 1.0)
@@ -246,8 +234,8 @@ def main():
         }
 
     inv_rows, inv_worst = susceptibility_invariance(a5["cells"])
-    numerical = max(abs(arm["window_AUC"][k] - arm["window_AUC_exact"][k])
-                    / arm["window_AUC_exact"][k]
+    numerical = max(abs(arm["window_AUC_trapezoid"][k] - arm["window_AUC"][k])
+                    / arm["window_AUC"][k]
                     for arm in arms.values() for k in arm["window_AUC"])
 
     fl = [arms[(a, t)]["fraction_of_48h_AUC_in_first_hour"]
@@ -307,8 +295,9 @@ def main():
                            "effective MIC is proportional to kill_C50; with "
                            "linear PK the re-solved dose scales by the same "
                            "factor, so every MIC level reproduces one "
-                           "trajectory. Residual spread is the dose solver's "
-                           "1-mg tolerance (brentq xtol).",
+                           "trajectory. Residual spread is the tolerance of "
+                           "the effective-MIC root (the dose is solved to "
+                           "1e-6 mg from the PK alone).",
         },
         "numerical_check": {
             "max_rel_diff_trapezoid_vs_exact_window_AUC": numerical,
@@ -319,8 +308,10 @@ def main():
             "step_directions_agree_with_exact": True,
             "min_grid_points_first_hour": min(a["n_grid_points_first_hour"]
                                               for a in arms.values()),
-            "method": "exact integration of D' = src - k D over the same "
-                      "piecewise-linear release input the ODE solver uses",
+            "method": "reported windows integrate D' = src - k D exactly over "
+                      "the release rate evaluated at 8 sub-steps per solver "
+                      "step; the trapezoid over the sampled trajectory is the "
+                      "check",
         },
         "caveat": "Release is lysis-coupled and immediate in this model, so "
                   "short-window results depend on that assumption. A delay "
@@ -332,7 +323,7 @@ def main():
         "provenance": provenance(note="Endpoint and observation-window re-reading "
                                       "of phase 4 regimens"),
     }
-    OUT.write_text(json.dumps(payload, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    OUT.write_text(json.dumps(payload, indent=2, allow_nan=False) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({k: payload[k] for k in
                       ["divergent_steps_by_endpoint", "n_steps",
                        "agent_ratio_range_controlled_targets",

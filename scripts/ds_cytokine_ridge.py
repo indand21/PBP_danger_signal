@@ -11,11 +11,14 @@ the reported endpoint, the 48-h endotoxin AUC, is upstream of the cytokine
 layer. The reference parameterization, DS50 = 300 pg/mL, is therefore kept as
 a convention, and this script records what that convention leaves open.
 
-1. Reproducibility. The family is refitted and its reference compared with
-   the one stored in phase4_analyses.json: equal cost, slightly different
-   parameters. Both are then run through the Table 1 arms, to measure how far
-   the ridge moves the cytokine-layer outputs and, as a check, the endotoxin
-   AUC.
+1. Reproducibility, and how far the ridge reaches. The family is refitted
+   and its reference compared with the one stored in phase4_analyses.json;
+   with the same code the fit is deterministic and they agree exactly. The
+   reference stored there until plan item 8 came from an earlier,
+   uncommitted state of the code and sits elsewhere on the ridge at the same
+   cost (EARLIER_REFERENCE). All three are run through the Table 1 arms, to
+   measure how far a move along the ridge shifts the cytokine-layer outputs
+   and, as a check, the endotoxin AUC, which is upstream of them.
 
 2. What the grid-read peak decides. The family is refitted with the peak
    located between grid points instead, in this process only. Every DS50 then
@@ -83,6 +86,13 @@ def summary(e):
             "saturation_peak_at_2ng_kg": e["saturation_peak_at_2ng_kg"]}
 
 
+#: The Layer-2 reference phase4_analyses.json carried until plan item 8
+#: (commit d429b32), written from an uncommitted state of the code: the same
+#: DS50 and cost as the current reference, another point on the ridge.
+EARLIER_REFERENCE = {"hill": 1.713984131094413, "k_IL6_max": 176080.53594356967,
+                     "k_signal_off": 0.931066454178522, "cost": 0.0012247330282485073}
+
+
 def main():
     phase4 = json.loads(PHASE4.read_text(encoding="utf-8"))
     stored = phase4["meta"]["layer2_reference"]
@@ -93,8 +103,10 @@ def main():
     if today["DS50"] != stored["DS50"]:
         raise RuntimeError("the refit chose a different reference DS50")
     stored_params = replace(today["params"], **{FIELD[k]: float(stored[k]) for k in FITTED})
+    earlier_params = replace(today["params"], **{FIELD[k]: float(EARLIER_REFERENCE[k]) for k in FITTED})
     refs = {"stored": cc.calibrate_tnf({"params": stored_params})["params"],
-            "refit": cc.calibrate_tnf(today)["params"]}
+            "refit": cc.calibrate_tnf(today)["params"],
+            "earlier": cc.calibrate_tnf({"params": earlier_params})["params"]}
 
     p4 = load_phase4_module()
     p4.MIC_EFFECT = phase4["meta"]["mic_effect_site_mgL"]
@@ -112,6 +124,8 @@ def main():
             arms[f"{agent} {row['target_fT_pct']:g}%"] = per
     table1_rel = {k: max(abs(v["refit"][k] / v["stored"][k] - 1.0) for v in arms.values())
                   for k in OUTPUTS}
+    table1_rel_earlier = {k: max(abs(v["earlier"][k] / v["stored"][k] - 1.0) for v in arms.values())
+                          for k in OUTPUTS}
 
     # ---- 2. the peak located between grid points ---------------------------
     between = family_between_grid_points()
@@ -124,6 +138,10 @@ def main():
         "cost_rel_diff": abs(today["cost"] / stored["cost"] - 1.0),
         "param_rel_diff_refit_vs_stored": {k: today[k] / stored[k] - 1.0 for k in FITTED},
         "table1_max_rel_diff_refit_vs_stored": table1_rel,
+        "cost_rel_diff_earlier": abs(EARLIER_REFERENCE["cost"] / stored["cost"] - 1.0),
+        "param_rel_diff_earlier_vs_stored": {k: EARLIER_REFERENCE[k] / stored[k] - 1.0
+                                             for k in FITTED},
+        "table1_max_rel_diff_earlier_vs_stored": table1_rel_earlier,
         "grid_read": {
             "n_feasible": sum(e["feasible"] for e in grid_read),
             "rejected_DS50": rejected,
@@ -156,7 +174,7 @@ def main():
         "provenance": provenance(note="IL-6 calibration ridge: reproducibility and "
                                       "what the grid-read peak decides; no default changed"),
     }
-    OUT.write_text(json.dumps(payload, indent=1, allow_nan=False) + "\n", encoding="utf-8")
+    OUT.write_text(json.dumps(payload, indent=1, allow_nan=False) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(headline, indent=1))
 
 

@@ -44,6 +44,7 @@ from src.core.parameters import (  # noqa: E402
 )
 from src.core.pd_model import create_ode_system  # noqa: E402
 from src.core.pk_models import DosingRegimen, TwoCompartmentPKModel  # noqa: E402
+from src.analysis.exact_release import driver_from_result  # noqa: E402
 from src.core.simulation import run_simulation  # noqa: E402
 
 OUT = os.path.join("results", "danger_signal", "pilot_acceptance.json")
@@ -170,21 +171,12 @@ def solve_bacteria(spec, params=None):
     fu = get_drug_pd_parameters(spec["drug"]).fraction_unbound
     r = run_simulation(pkm, reg, pd, dict(IC), t_span=(0, T_END),
                        drug_class="cidal", weight_kg=WEIGHT,
-                       fraction_unbound=fu)
-    t = r.t
-    B_rep = r.y[:, r.state_names.index("B_rep")]
-    C_eff = r.get_free_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
-    kill = np.asarray(pd.cidal_kill_rate(C_eff), dtype=float)
-    _, B_total = r.get_bacterial_burden()
-    mic = spec.get("mic", MIC_EFFECT)
-    # Time-weighted %fT>MIC (the solver's time grid is non-uniform, so an
-    # unweighted point fraction would over-weight the fast post-dose phase).
-    above = (C_eff > mic).astype(float)
-    dt = np.diff(t)
-    ft = float(np.sum(0.5 * (above[:-1] + above[1:]) * dt) / (t[-1] - t[0]) * 100.0)
-    return dict(t=t, B_rep=B_rep, C_eff=C_eff, kill=kill,
-                net_log10=float(np.log10(max(B_total[-1], 1e-6) / B_total[0])),
-                fT_above_mic_pct=ft)
+                       fraction_unbound=fu, dense_output=True)
+    # Release-driving quantities exact at 8 sub-steps per solver step, and
+    # %fT>MIC from the analytical PK (src/analysis/exact_release.py).
+    d = driver_from_result(r, pd, mic=spec.get("mic", MIC_EFFECT))
+    d["fT_above_mic_pct"] = d.pop("fT")
+    return d
 
 
 def effect_site_mic():
@@ -468,7 +460,7 @@ def main():
     from src.utils.provenance import provenance
     payload["provenance"] = provenance(
         note="historical phase; retained for the record")
-    with open(OUT, "w", encoding="utf-8") as fh:
+    with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(payload, fh, indent=1)
     print(f"\nwrote {OUT}")
 

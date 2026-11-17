@@ -6,45 +6,45 @@
  "datasets": {
   "meropenem_pk_1g": {
    "rmse_log10": {
-    "value": 0.047915102717173245,
+    "value": 0.04791511392489926,
     "target": "< 0.15",
     "met": true
    },
    "cmax_relative_error": {
-    "value": -0.17980049764452455,
+    "value": -0.17980036392183407,
     "target": "within +/-0.20",
     "met": true
    },
    "auc_0_8h_relative_error": {
-    "value": -0.024505842446942983,
+    "value": -0.024505611365104207,
     "target": "within +/-0.15",
     "met": true
    },
    "terminal_half_life_h": {
     "observed": 1.1522963379567348,
-    "model": 1.0786273739315118,
+    "model": 1.0786273739315115,
     "note": "not a registry target; recorded because the two targets above both follow from it"
    },
    "predicted_over_observed": [
     null,
-    0.8201995023554755,
-    0.9557756216687162,
-    1.056705797353281,
-    1.1124780456666763,
-    1.1480720236655197,
-    1.109432407909925,
-    0.9427302097176229,
-    0.9128546347666231
+    0.8201996360781659,
+    0.9557758744674938,
+    1.0567060768476815,
+    1.1124783399126101,
+    1.1480723273259166,
+    1.1094327013503003,
+    0.942730459065942,
+    0.9128548762129741
    ]
   },
   "meropenem_neutropenic_thigh": {
    "effective_mic_mgL": 0.7704817512908506,
-   "model_stasis_fT_pct": 37.14774043464559,
+   "model_stasis_fT_pct": 37.147740434759605,
    "published_stasis_fT_pct": 17.3,
-   "gap_percentage_points": 19.84774043464559,
+   "gap_percentage_points": 19.847740434759604,
    "target": "within 5-10 percentage points of 17.3",
    "met": false,
-   "model_1log_fT_pct": 45.202087740594145,
+   "model_1log_fT_pct": 45.20208773151825,
    "published_1log_fT_pct": 26.0,
    "monotone": true,
    "published_source": "Sabet M et al. Antimicrob Agents Chemother 2020; stasis, 1-log and 2-log at 17.3, 26.0 and 41.7 %24-h fT>MIC"
@@ -61,51 +61,51 @@
   "status": "context and transport sensitivity, not validated murine reconstruction",
   "summaries": {
    "control_low": {
-    "mean_predicted_stasis_ft_pct": 14.627493827332572,
+    "mean_predicted_stasis_ft_pct": 14.627494993865056,
     "mean_published_stasis_ft_pct": 17.349999999999998,
-    "mean_predicted_one_log_ft_pct": 22.395941282494707,
+    "mean_predicted_one_log_ft_pct": 22.395941554139082,
     "n_strains_with_stasis": 6
    },
    "control_mid": {
-    "mean_predicted_stasis_ft_pct": 22.175527017538794,
+    "mean_predicted_stasis_ft_pct": 22.17518488351854,
     "mean_published_stasis_ft_pct": 17.349999999999998,
-    "mean_predicted_one_log_ft_pct": 30.69356213298521,
+    "mean_predicted_one_log_ft_pct": 30.693396501949547,
     "n_strains_with_stasis": 6
    },
    "control_high": {
-    "mean_predicted_stasis_ft_pct": 30.620669430376214,
+    "mean_predicted_stasis_ft_pct": 30.620600685150034,
     "mean_published_stasis_ft_pct": 17.349999999999998,
-    "mean_predicted_one_log_ft_pct": 37.583180946039995,
+    "mean_predicted_one_log_ft_pct": 37.58301765120259,
     "n_strains_with_stasis": 6
    },
    "hill_0.9": {
-    "mean_predicted_stasis_ft_pct": 6.390754361977669,
+    "mean_predicted_stasis_ft_pct": 6.3905541662690055,
     "mean_published_stasis_ft_pct": 17.349999999999998,
-    "mean_predicted_one_log_ft_pct": 19.160365620174048,
+    "mean_predicted_one_log_ft_pct": 19.160244234012936,
     "n_strains_with_stasis": 6
    },
    "hill_8.0": {
-    "mean_predicted_stasis_ft_pct": 22.37015002734056,
+    "mean_predicted_stasis_ft_pct": 22.370150016832582,
     "mean_published_stasis_ft_pct": 17.349999999999998,
-    "mean_predicted_one_log_ft_pct": 30.655606125075867,
+    "mean_predicted_one_log_ft_pct": 30.65560495301311,
     "n_strains_with_stasis": 6
    },
    "hill_29.49": {
-    "mean_predicted_stasis_ft_pct": 22.310659703558784,
+    "mean_predicted_stasis_ft_pct": 22.310659497867533,
     "mean_published_stasis_ft_pct": 17.349999999999998,
-    "mean_predicted_one_log_ft_pct": 30.582161791139573,
+    "mean_predicted_one_log_ft_pct": 30.582161555003932,
     "n_strains_with_stasis": 6
    },
    "interval_2.0": {
-    "mean_predicted_stasis_ft_pct": 8.94748896274088,
+    "mean_predicted_stasis_ft_pct": 8.947612619643872,
     "mean_published_stasis_ft_pct": 17.349999999999998,
-    "mean_predicted_one_log_ft_pct": 30.812436559400286,
+    "mean_predicted_one_log_ft_pct": 30.812753974252146,
     "n_strains_with_stasis": 6
    },
    "interval_4.0": {
-    "mean_predicted_stasis_ft_pct": 20.902603628285004,
+    "mean_predicted_stasis_ft_pct": 20.90252180082472,
     "mean_published_stasis_ft_pct": 17.349999999999998,
-    "mean_predicted_one_log_ft_pct": 30.96781177422812,
+    "mean_predicted_one_log_ft_pct": 30.96719551876841,
     "n_strains_with_stasis": 6
    }
   },
@@ -113,8 +113,8 @@
   "control_elapsed_h": 10.0
  },
  "provenance": {
-  "git_head": "5153480c83985a0d22899929c1b547489b258dd5",
-  "git_dirty": true,
+  "git_head": "70abd2a2890a79ec1a258c4f5dcd4029de9a7f10",
+  "git_dirty": false,
   "python": "3.12.4",
   "numpy": "2.4.6",
   "scipy": "1.15.3",
@@ -126,6 +126,125 @@
    "isepamicin": 0.28,
    "imipenem": 0.986,
    "meropenem": 0.986
+  },
+  "default_parameters": {
+   "danger_signal": {
+    "Y_lysis": 1.0,
+    "Y_filament": 0.0,
+    "filament_window": [
+     0.0625,
+     1.0
+    ],
+    "V_focus_mL": 10.0,
+    "V_ds_L": 3.0,
+    "k_ds_clear": 13.9,
+    "translocation_fraction": 1.0,
+    "DS50": 300.0,
+    "hill_ds": 1.714,
+    "k_signal_off": 0.93,
+    "k_IL6_max": 176148.0,
+    "k_tol_on": 0.0,
+    "k_tol_off": 0.35,
+    "tol_max": 0.0,
+    "tol_shift": 0.0,
+    "T0": 0.0,
+    "DS_baseline": 0.0,
+    "k_IL6_clear": 0.2,
+    "IL6_baseline": 5.0,
+    "TNF_IL6_ratio": 0.3,
+    "k_TNF_clear": 0.3
+   },
+   "bacterial_pd": {
+    "bacteria": {
+     "k_growth": 0.5,
+     "B_max": 1000000000.0,
+     "k_pers": 0.01,
+     "mu_mut": 1e-06,
+     "k_repair": 0.3,
+     "MIC_baseline": 1.0,
+     "scv_switch_midpoint": 0.3,
+     "scv_switch_width": 0.05,
+     "k_kill_max": 1.5874010519681996,
+     "kill_C50": 0.936,
+     "kill_hill": 4.0,
+     "static_kill_max": 0.0,
+     "static_pamp_fraction": 0.0
+    },
+    "immune": {
+     "N_eff_0": 10000000.0,
+     "recruit_fold_max": 3.0,
+     "EC50_immune": 100000.0,
+     "k_deg_immune": 0.05,
+     "k_kill_base": 1e-08
+    },
+    "cytokine": {
+     "k_IL6_prod": 4.0,
+     "alpha_static": 1.0,
+     "alpha_cidal": 3.0,
+     "k_IL6_clear": 0.2,
+     "TNF_IL6_ratio": 0.3
+    },
+    "damage": {
+     "k_path": 0.08,
+     "B50": 10000000.0,
+     "k_infl": 0.03,
+     "k_heal": 0.1,
+     "w_TNF": 0.5,
+     "IL6_ref": 10.0,
+     "TNF_ref": 5.0,
+     "I50": 5.0
+    }
+   },
+   "pk": {
+    "ceftazidime": {
+     "CL": 7.0,
+     "Vc": 0.226551,
+     "Vp": 0.09,
+     "Q": 5.0,
+     "Ka": 0.0,
+     "Kp": 0.5
+    },
+    "meropenem": {
+     "CL": 12.156785,
+     "Vc": 0.270308,
+     "Vp": 0.15,
+     "Q": 8.0,
+     "Ka": 0.0,
+     "Kp": 0.4
+    }
+   },
+   "drug_pd": {
+    "ceftazidime": {
+     "drug_class": "cidal",
+     "effect_mode": "time_dependent",
+     "mic": 1.0,
+     "fraction_unbound": 0.9,
+     "k_kill_max": 3.0,
+     "ec50_mic_ratio": 1.0,
+     "hill": 4.0,
+     "growth_dependence": 1.0,
+     "signal_on": 1.0,
+     "signal_decay": 0.3,
+     "signal50": 3.0,
+     "static_ec50_mic_ratio": 0.1,
+     "static_hill": 1.2
+    },
+    "meropenem": {
+     "drug_class": "cidal",
+     "effect_mode": "time_dependent",
+     "mic": 1.0,
+     "fraction_unbound": 0.98,
+     "k_kill_max": 3.0,
+     "ec50_mic_ratio": 1.0,
+     "hill": 4.0,
+     "growth_dependence": 1.0,
+     "signal_on": 1.0,
+     "signal_decay": 0.3,
+     "signal50": 3.0,
+     "static_ec50_mic_ratio": 0.1,
+     "static_hill": 1.2
+    }
+   }
   },
   "endpoint": "curve-level validation against registry acceptance targets",
   "exposure_index": "%fT>MIC for the dose-response; plasma mg/L for the PK",

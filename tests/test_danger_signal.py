@@ -261,24 +261,20 @@ class TestReleaseMassBalance:
         mb = check_release_mass_balance(out, p)
         assert abs(mb["boundary_term"]) < 0.01 * abs(mb["released"])
 
-    def test_residual_converges_at_second_order(self):
-        """The manuscript attributes the 4e-3 library residual to quadrature
-        rather than to a defect in the identity. That attribution is only
-        honest if refining the grid shrinks it at the expected rate."""
+    def test_residual_is_rounding_on_any_grid(self):
+        """The danger signal and its AUC are the exact solution for the
+        piecewise-linear release, so the identity holds to rounding however
+        coarse the grid. (It used to leave a 3e-3 residual from a trapezoid
+        over the sampled signal, which shrank only at second order.)"""
         from src.analysis.danger_signal import check_release_mass_balance
         p = DangerSignalParameters(Y_lysis=4.93, Y_filament=1.5,
                                    V_focus_mL=10.0)
-        res = []
-        for n in (300, 600, 1200, 2400):
+        for n in (30, 300, 2400):
             t = np.linspace(0.0, 24.0, n)
             on = (np.sin(2 * np.pi * t / 8.0) > 0).astype(float)
             out = simulate_danger_signal(t, np.full(n, 1e7), 0.8 * on,
                                          4.0 * on + 0.1, 1.0, p)
-            res.append(abs(check_release_mass_balance(out, p)
-                           ["relative_residual"]))
-        # Each doubling of the grid should cut the residual by about four.
-        for coarse, fine in zip(res, res[1:]):
-            assert coarse / fine > 3.0, f"convergence stalled: {res}"
+            assert abs(check_release_mass_balance(out, p)["relative_residual"]) < 1e-12
 
     def test_attributable_auc_is_proportional_to_yield(self):
         """The identity's immediate consequence, and the reason the ratio of

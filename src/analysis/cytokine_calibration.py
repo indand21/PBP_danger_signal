@@ -177,8 +177,10 @@ def calibrate_family(
 
     Known defect, kept by decision (2026-11-17). ``predict_peaks`` reads the
     IL-6 time-to-peak off the simulation grid with argmax, so that residual has
-    no gradient and each fit stops somewhere along a ridge of equal cost:
-    refitting moves k_signal_off by about 0.1% at identical cost. Read between
+    no gradient and each fit stops somewhere along a ridge of equal cost. With
+    the same code the fit is deterministic, but where it stops depends on the
+    path: the reference stored until 2026-11-17, from an earlier state of the
+    code, sat 0.09% lower in k_signal_off at identical cost. Read between
     grid points with ``interpolated_peak``, as ``calibrate_tnf`` now does,
     every DS50 on the default grid fits, including 50 and 100, which the
     ``feasible`` screen below rejects only because their grid-read peak sits

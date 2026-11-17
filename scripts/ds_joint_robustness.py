@@ -62,7 +62,7 @@ def main():
                     sims[a] = p4.simulate(a,dose[a],8.,6,params=params,mic=1.)
             assert all(abs(s['fT']-target)<.15 for s in sims.values())
             def coefficient(agent, y, yf):
-                return p4.ds_cost(sims[agent],Y=y,Yf=yf)[1]['AUC_DS_pg_h_mL']
+                return p4.auc_ds(sims[agent],Y=y,Yf=yf)
             ca = coefficient('ceftazidime',1.,0.)
             cf = coefficient('ceftazidime',0.,1.)
             me = coefficient('meropenem',1.,0.)
@@ -107,7 +107,7 @@ def main():
                'input_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [fit_path,joint_path]},
                'provenance':provenance(note='Fixed-MIC joint PD and latent-yield stress tests')}
     out = ROOT/'results/danger_signal/joint_robustness.json'
-    out.write_text(json.dumps(payload,indent=2,allow_nan=False)+'\n',encoding='utf-8')
+    out.write_text(json.dumps(payload,indent=2,allow_nan=False)+'\n',encoding='utf-8', newline="\n")
     print(json.dumps(payload['summary'],indent=2),flush=True)
 
 

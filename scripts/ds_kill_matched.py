@@ -75,17 +75,19 @@ AGENTS = ("ceftazidime", "meropenem")
 INTERVAL_H, N_DOSES = 8.0, 6
 SCAN_MG = tuple(float(d) for d in np.geomspace(1.0, 60000.0, 161))
 DOSE_RTOL = 1e-10
-#: Cumulative killing is the trapezoid of kill rate x burden on the solver's
-#: adaptive output grid (max_step 0.1 h, rtol 1e-6), and that grid moves with
-#: the dose. On the high-dose plateau, where killing changes by a few parts in
-#: 10^5 per percent of dose, the value jitters by up to 2e-4 between
-#: neighbouring doses (measured). Equal killing is therefore resolved to 1e-3,
-#: and scan extrema less prominent than that are solver jitter, not shape.
-MATCH_RTOL = 1e-3
-EXTREMUM_MIN_PROMINENCE = 1e-3
-#: The stored Table 1 ratios come from trapezoid quadrature; the exact
-#: integration here differs from them by that quadrature error only.
-STORED_RATIO_RTOL = 5e-3
+#: Cumulative killing is exact for the release rate sampled at 8 points per
+#: solver step (src/analysis/exact_release.py), within about 1e-5 of the true
+#: integral. It used to be a trapezoid on the solver's own grid, which moves
+#: with the dose and made killing jitter by up to 2e-4 between neighbouring
+#: doses, so matches were resolved only to 1e-3. Now the largest mismatch at
+#: a solution is 3e-6 and the 161-dose scan has no spurious extrema at all;
+#: matches are resolved to 1e-5, and extrema less prominent than that would
+#: be numerical, not shape.
+MATCH_RTOL = 1e-5
+EXTREMUM_MIN_PROMINENCE = 1e-5
+#: The stored Table 1 ratios and the integration here are the same exact
+#: computation, so they must agree to rounding.
+STORED_RATIO_RTOL = 1e-9
 FACTORS = ("yield", "killing", "timing", "sub_mic")
 IMMEDIATE = {"label": "immediate", "mtt_h": 0.0, "n": 0, "delay_filament": False}
 
@@ -120,7 +122,7 @@ class Arms:
         if key in self.arms:
             return self.arms[key]
         p4, sim = self.p4, self.sim(agent, dose)
-        out, summ = p4.ds_cost(sim, agent=agent)
+        out, summ = p4.ds_cost(sim, agent=agent, cytokines=False)
         b = np.asarray(sim["B_rep"], float)
         scale = p4.V_FOCUS * self.to_conc
         lys = np.asarray(sim["kill"], float) * b * scale
@@ -417,7 +419,7 @@ def main():
         "max_mass_balance_rel_residual": max(d["mass_balance_rel_residual"] for d in every_dec
                                              if "mass_balance_rel_residual" in d),
         "max_rel_diff_zero_delay_vs_exact_window_aucs": zero_delay_gap,
-        "max_rel_diff_table1_ratio_vs_stored_trapezoid": stored_gap,
+        "max_rel_diff_table1_ratio_vs_stored": stored_gap,
         "max_rel_killing_mismatch_at_solutions": worst_match,
         "n_scan_extrema": {a: len(sc["extrema"]) for a, sc in scans.items()},
         "scan_jitter_extrema": {a: sc["jitter_extrema"] for a, sc in scans.items()},
@@ -573,7 +575,7 @@ def main():
         "provenance": provenance(note="Comparison matched on cumulative killing, and an "
                                       "exact decomposition of the agent ratio"),
     }
-    OUT.write_text(json.dumps(payload, indent=1, allow_nan=False) + "\n", encoding="utf-8")
+    OUT.write_text(json.dumps(payload, indent=1, allow_nan=False) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(headline, indent=1), flush=True)
     print(json.dumps(numerical_check, indent=1), flush=True)
 

@@ -1,7 +1,8 @@
 """Numerical assurance for the danger-signal study (external review R11).
 
-Two checks, each written to a results file so the claims made about them in
-the supplement trace to stored numbers:
+Three checks, each written to a results file so the claims made about them
+in the supplement trace to stored numbers (the third, release sampling, is in
+release_sampling_check below):
 
 1. ANALYTICAL BENCHMARK. The danger-signal compartment is linear,
    D' = src(t) - k_ds * D, so for a piecewise-constant source it has an exact
@@ -117,16 +118,9 @@ def tightened(factor):
 
 
 def tolerance_check():
-    spec = importlib.util.spec_from_file_location(
-        "p4", os.path.join("scripts", "ds_phase4_analyses.py"))
-    p4 = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(p4)
+    p4 = _phase4()
     with open(P4_IN, encoding="utf-8") as fh:
         stored = json.load(fh)
-    p4.MIC_EFFECT = stored["meta"]["mic_effect_site_mgL"]
-    from src.analysis.cytokine_calibration import calibrate_family, calibrate_tnf
-    fam = [e for e in calibrate_family() if e["feasible"]]
-    p4.P_REF = calibrate_tnf(min(fam, key=lambda e: e["cost"]))["params"]
 
     def evaluate():
         rows = []
@@ -175,6 +169,128 @@ def tolerance_check():
     }
 
 
+def release_sampling_check():
+    """How exact are the reported release integrals? (plan item 8)
+
+    At every matched-exposure arm of Table 1, at its stored dose: cumulative
+    killing and the 48-h endotoxin AUC with the release rate sampled at 1, 4,
+    8 (production) and 16 points per solver step, against an independent
+    reference -- 8-point Gauss-Legendre quadrature of the true rate on the
+    solver's interpolant, with the exact exponential kernel. Also recorded:
+    what the previous method (trapezoid over the endotoxin trajectory sampled
+    on the solver grid) gave, the cytokine solver's own endotoxin state
+    against the closed form, and the exposure the PK-only dose solve hit.
+    """
+    from scipy.integrate import trapezoid
+
+    from src.analysis.danger_signal import filamentation_activity
+    from src.analysis.exact_release import REFINE, gauss_release_reference
+
+    p4 = _phase4()
+    with open(P4_IN, encoding="utf-8") as fh:
+        stored = json.load(fh)
+    q = p4.P_REF
+    conv = q.V_ds_L and 1e-6 / q.V_ds_L * q.translocation_fraction * p4.V_FOCUS
+    rows = []
+    for e in stored["analysis3_matched_exposure"]["rows"]:
+        for agent in ("ceftazidime", "meropenem"):
+            dose = e["arms"][agent]["dose_mg"]
+            Y, Yf = p4.AGENT_YIELD[agent], p4.AGENT_FILAMENT[agent]
+            ref = None
+            row = {"target_fT_pct": e["target_fT_pct"], "agent": agent, "dose_mg": dose,
+                   "dose_solve_fT_residual_pct_points":
+                       abs(p4.exact_ft(agent, dose, 8.0, 6) - e["target_fT_pct"])}
+            for m in (1, 4, 8, 16):
+                sim = p4.simulate(agent, dose, 8.0, 6, keep_solution=(m == 1), refine=m)
+                if ref is None:
+                    ref = gauss_release_reference(
+                        sim["_solution"], sim["_pd"],
+                        lambda C: filamentation_activity(C, sim["mic"], q.filament_window),
+                        q.k_ds_clear)
+                    auc_ref = conv * (Y * ref["auc_lys"] + Yf * ref["auc_fil"])
+                out, s = p4.ds_cost(sim, agent=agent, cytokines=(m == REFINE))
+                row[f"killing_rel_error_m{m}"] = sim["cum_killed_cfu_per_mL"] / ref["cum_killed"] - 1.0
+                row[f"auc_rel_error_m{m}"] = s["AUC_DS_pg_h_mL"] / auc_ref - 1.0
+                if m == 1:
+                    # The method this replaced: trapezoid over the sampled signal.
+                    row["auc_rel_error_previous_method"] = (
+                        float(trapezoid(out["DS"], out["t"])) / auc_ref - 1.0)
+                if m == REFINE:
+                    row["cytokine_solver_ds_max_dev_over_peak"] = out["ds_solver_check"]
+            rows.append(row)
+
+    def worst(key):
+        return max(abs(r[key]) for r in rows)
+
+    return {
+        "production_substeps": REFINE,
+        "reference": "8-point Gauss-Legendre per solver step on the RK45 interpolant, "
+                     "exact exponential kernel for the endotoxin compartment",
+        "rows": rows,
+        "max_abs_rel_error": {
+            **{f"killing_m{m}": worst(f"killing_rel_error_m{m}") for m in (1, 4, 8, 16)},
+            **{f"auc_m{m}": worst(f"auc_rel_error_m{m}") for m in (1, 4, 8, 16)},
+            "auc_previous_method": worst("auc_rel_error_previous_method"),
+        },
+        "max_cytokine_solver_ds_dev_over_peak": worst("cytokine_solver_ds_max_dev_over_peak"),
+        "max_dose_solve_fT_residual_pct_points": worst("dose_solve_fT_residual_pct_points"),
+    }
+
+
+def previous_exposure_method():
+    """What the exposure matching replaced in plan item 8 got wrong.
+
+    At every Table 1 arm, the previous method is re-run exactly: %fT>MIC by
+    interpolating MIC crossings between solver time points, and the dose
+    solved to 1 mg (brentq xtol) on a full simulation per evaluation. Records
+    how far that %fT>MIC is from the exact value at the current dose, and how
+    far the dose it found misses the target when its exposure is computed
+    exactly.
+    """
+    from scipy.optimize import brentq
+
+    from src.core.simulation import SimulationResult
+
+    p4 = _phase4()
+    with open(P4_IN, encoding="utf-8") as fh:
+        stored = json.load(fh)
+
+    def grid_ft(agent, dose):
+        sim = p4.simulate(agent, dose, 8.0, 6, keep_solution=True, refine=1)
+        r = sim["_solution"]
+        C = r.get_free_effect_site_concentration(weight_kg=p4.WEIGHT)
+        return 100.0 * SimulationResult._time_above_threshold(r.t, C, sim["mic"]) / (r.t[-1] - r.t[0])
+
+    rows = []
+    for e in stored["analysis3_matched_exposure"]["rows"]:
+        target = e["target_fT_pct"]
+        for agent in ("ceftazidime", "meropenem"):
+            dose = e["arms"][agent]["dose_mg"]
+            old = float(brentq(lambda d: grid_ft(agent, d) - target, 10.0, 60000.0, xtol=1.0))
+            rows.append({"target_fT_pct": target, "agent": agent, "dose_mg": dose,
+                         "grid_fT_error_pct_points": grid_ft(agent, dose) - p4.exact_ft(agent, dose, 8.0, 6),
+                         "previous_dose_mg": old,
+                         "previous_dose_fT_miss_pct_points": p4.exact_ft(agent, old, 8.0, 6) - target})
+    return {"rows": rows,
+            "max_abs_grid_fT_error_pct_points": max(abs(r["grid_fT_error_pct_points"]) for r in rows),
+            "max_abs_previous_dose_fT_miss_pct_points":
+                max(abs(r["previous_dose_fT_miss_pct_points"]) for r in rows)}
+
+
+def _phase4():
+    spec = importlib.util.spec_from_file_location(
+        "p4", os.path.join("scripts", "ds_phase4_analyses.py"))
+    p4 = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(p4)
+    with open(P4_IN, encoding="utf-8") as fh:
+        stored = json.load(fh)
+    p4.MIC_EFFECT = stored["meta"]["mic_effect_site_mgL"]
+    from src.analysis.cytokine_calibration import calibrate_family, calibrate_tnf
+    fam = [e for e in calibrate_family() if e["feasible"]]
+    p4.P_REF = calibrate_tnf(min(fam, key=lambda e: e["cost"]))["params"]
+    return p4
+
+
 def main():
     payload = {"analytical_benchmark": analytical_benchmark()}
     for name, r in payload["analytical_benchmark"].items():
@@ -187,10 +303,21 @@ def main():
     print(f"\ntolerances x{TIGHTEN:g}: kill difference moves by at most "
           f"{tt['max_abs_change_kill_difference']:.2e} log10; cost ratio by "
           f"at most {tt['max_rel_change_cost_ratio']:.2e} relative")
+    payload["release_sampling"] = rs = release_sampling_check()
+    print("\nrelease sampling, max |relative error| against Gauss quadrature:")
+    for k, v in rs["max_abs_rel_error"].items():
+        print(f"  {k:24s} {v:.2e}")
+    print(f"  cytokine solver DS vs closed form {rs['max_cytokine_solver_ds_dev_over_peak']:.2e} of peak;"
+          f" dose-solve fT residual {rs['max_dose_solve_fT_residual_pct_points']:.1e} points")
+    payload["previous_exposure_method"] = pe = previous_exposure_method()
+    print(f"  previous method: grid %fT>MIC off by up to {pe['max_abs_grid_fT_error_pct_points']:.4f} "
+          f"points; its 1-mg doses missed targets by up to "
+          f"{pe['max_abs_previous_dose_fT_miss_pct_points']:.4f} points")
+    from src.analysis.exact_release import NUMERICS
     from src.utils.provenance import provenance
     payload["provenance"] = provenance(solver_note="see 'default' and "
-                                       "'tightening_factor' above")
-    with open(OUT, "w", encoding="utf-8") as fh:
+                                       "'tightening_factor' above", solver=NUMERICS)
+    with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(payload, fh, indent=1)
     print(f"\nwrote {OUT}")
 

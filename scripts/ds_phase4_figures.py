@@ -83,7 +83,13 @@ def fig1_yield_table(d):
     pairs = a1['net_change_matched_ratios']
     labels = [f"vs {p['comparator'][:4].upper()}\n{p['concentration_xMIC']:g}×MIC\n"
               f"Δnet {p['net_change_difference_log10']:.2f}" for p in pairs]
-    ratios = [p['lps_ratio'] for p in pairs]
+    # Recomputed from the source observations rather than read back: the
+    # stored lps_ratio is rounded to two decimals, and rounding that again for
+    # the label turned 6.554 into "6.5" where the text, correctly, says 6.6.
+    from src.analysis.yield_observations import net_change_matched_ratio, observations
+    obs = observations()
+    ratios = [net_change_matched_ratio(obs[p['numerator']], obs[p['denominator']])[0]
+              for p in pairs]
     xs = np.arange(len(pairs))
     kill_ax.bar(xs, ratios, color=CAZ_C, width=.6)
     kill_ax.axhspan(3.5, 7.0, color='#7f8c8d', alpha=.18, zorder=0)
@@ -372,7 +378,9 @@ def _save(fig, name):
     written = []
     for ext in ("png", "pdf"):
         path = os.path.join(OUT_DIR, f"{name}.{ext}")
-        fig.savefig(path)
+        # No creation timestamp in the PDF, so an unchanged figure is
+        # rewritten byte for byte and a diff shows only real changes.
+        fig.savefig(path, metadata={"CreationDate": None} if ext == "pdf" else None)
         written.append(path)
     plt.close(fig)
     print(f"  wrote {written[0]} and {written[1]}")

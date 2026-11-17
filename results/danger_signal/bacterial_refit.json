@@ -193,8 +193,8 @@
     "g_vitro": 0.9,
     "g_vivo": 0.15,
     "rmse_timekill": 0.11570562399513254,
-    "rmse_thigh": 0.8638608265102328,
-    "objective": 0.48978322525268264
+    "rmse_thigh": 0.8652203684044111,
+    "objective": 0.4904629961997718
    },
    {
     "k_kill_max": 1.5944,
@@ -203,8 +203,8 @@
     "g_vitro": 0.9,
     "g_vivo": 0.15,
     "rmse_timekill": 0.11587370059203578,
-    "rmse_thigh": 0.8644985256809916,
-    "objective": 0.4901861131365137
+    "rmse_thigh": 0.865352461750259,
+    "objective": 0.49061308117114744
    },
    {
     "k_kill_max": 1.351,
@@ -213,8 +213,8 @@
     "g_vitro": 0.7,
     "g_vivo": 0.15,
     "rmse_timekill": 0.11581108146637402,
-    "rmse_thigh": 0.8646101074257452,
-    "objective": 0.4902105944460596
+    "rmse_thigh": 0.865712290585172,
+    "objective": 0.49076168602577297
    },
    {
     "k_kill_max": 1.351,
@@ -223,8 +223,8 @@
     "g_vitro": 0.7,
     "g_vivo": 0.15,
     "rmse_timekill": 0.11581108146641146,
-    "rmse_thigh": 0.8646101074257452,
-    "objective": 0.49021059444607834
+    "rmse_thigh": 0.865712290585172,
+    "objective": 0.49076168602579173
    },
    {
     "k_kill_max": 1.351,
@@ -233,8 +233,8 @@
     "g_vitro": 0.7,
     "g_vivo": 0.15,
     "rmse_timekill": 0.11581108146641167,
-    "rmse_thigh": 0.8646101074257452,
-    "objective": 0.4902105944460784
+    "rmse_thigh": 0.865712290585172,
+    "objective": 0.49076168602579184
    },
    {
     "k_kill_max": 1.351,
@@ -243,8 +243,8 @@
     "g_vitro": 0.7,
     "g_vivo": 0.15,
     "rmse_timekill": 0.11581108146641257,
-    "rmse_thigh": 0.8646101074257452,
-    "objective": 0.4902105944460789
+    "rmse_thigh": 0.865712290585172,
+    "objective": 0.4907616860257923
    },
    {
     "k_kill_max": 1.351,
@@ -253,8 +253,8 @@
     "g_vitro": 0.7,
     "g_vivo": 0.15,
     "rmse_timekill": 0.1158110814664188,
-    "rmse_thigh": 0.8646101074257452,
-    "objective": 0.490210594446082
+    "rmse_thigh": 0.865712290585172,
+    "objective": 0.4907616860257954
    },
    {
     "k_kill_max": 1.351,
@@ -263,8 +263,8 @@
     "g_vitro": 0.7,
     "g_vivo": 0.15,
     "rmse_timekill": 0.11581108146645418,
-    "rmse_thigh": 0.8646101074257452,
-    "objective": 0.49021059444609966
+    "rmse_thigh": 0.865712290585172,
+    "objective": 0.49076168602581305
    }
   ],
   "n_rows": 4176
@@ -279,19 +279,8 @@
     "g_vivo": 0.15,
     "stasis_ratio": 1.0071789115740222,
     "rmse_timekill": 0.11581114028675883,
-    "rmse_thigh": 0.8646101074257452,
-    "objective": 0.490210623856252
-   },
-   {
-    "k_kill_max": 1.59,
-    "kill_hill": 8.0,
-    "kill_C50": 0.9674717457403756,
-    "g_vitro": 0.9,
-    "g_vivo": 0.15,
-    "stasis_ratio": 1.033621916508509,
-    "rmse_timekill": 0.11916536666270351,
-    "rmse_thigh": 0.8638608265102328,
-    "objective": 0.49151309658646813
+    "rmse_thigh": 0.865712290585172,
+    "objective": 0.4907617154359654
    },
    {
     "k_kill_max": 1.8816,
@@ -301,8 +290,19 @@
     "g_vivo": 0.15,
     "stasis_ratio": 1.098606302291539,
     "rmse_timekill": 0.1176002417139343,
-    "rmse_thigh": 0.8661732065634901,
-    "objective": 0.49188672413871215
+    "rmse_thigh": 0.8667682237048926,
+    "objective": 0.49218423270941347
+   },
+   {
+    "k_kill_max": 1.59,
+    "kill_hill": 8.0,
+    "kill_C50": 0.9674717457403756,
+    "g_vitro": 0.9,
+    "g_vivo": 0.15,
+    "stasis_ratio": 1.033621916508509,
+    "rmse_timekill": 0.11916536666270351,
+    "rmse_thigh": 0.8652203684044111,
+    "objective": 0.4921928675335573
    },
    {
     "k_kill_max": 1.5944,
@@ -312,8 +312,8 @@
     "g_vivo": 0.15,
     "stasis_ratio": 1.0328013032493402,
     "rmse_timekill": 0.12011668323330732,
-    "rmse_thigh": 0.8644985256809916,
-    "objective": 0.4923076044571495
+    "rmse_thigh": 0.865352461750259,
+    "objective": 0.4927345724917832
    },
    {
     "k_kill_max": 1.351,
@@ -323,8 +323,8 @@
     "g_vivo": 0.15,
     "stasis_ratio": 1.008981521893882,
     "rmse_timekill": 0.11581201564012922,
-    "rmse_thigh": 0.8717989150897303,
-    "objective": 0.49380546536492975
+    "rmse_thigh": 0.8728761165404789,
+    "objective": 0.49434406609030407
    },
    {
     "k_kill_max": 1.59,
@@ -334,8 +334,8 @@
     "g_vivo": 0.2,
     "stasis_ratio": 1.0268079968215598,
     "rmse_timekill": 0.11916938881185553,
-    "rmse_thigh": 0.8714357199120767,
-    "objective": 0.49530255436196613
+    "rmse_thigh": 0.8741063336748018,
+    "objective": 0.4966378612433287
    },
    {
     "k_kill_max": 1.5944,
@@ -345,8 +345,8 @@
     "g_vivo": 0.2,
     "stasis_ratio": 1.026155866688434,
     "rmse_timekill": 0.12012118411424806,
-    "rmse_thigh": 0.8713269271383679,
-    "objective": 0.495724055626308
+    "rmse_thigh": 0.874008453173647,
+    "objective": 0.4970648186439475
    },
    {
     "k_kill_max": 1.59,
@@ -356,8 +356,8 @@
     "g_vivo": 0.15,
     "stasis_ratio": 1.0450785066152966,
     "rmse_timekill": 0.11910317685375146,
-    "rmse_thigh": 0.8759800205161783,
-    "objective": 0.4975415986849649
+    "rmse_thigh": 0.877561538967101,
+    "objective": 0.49833235791042624
    }
   ],
   "n_rows": 144
@@ -366,462 +366,462 @@
   "fit_a_over_kill_C50": [
    {
     "kill_C50": 0.1,
-    "objective": 0.49021059444607834,
+    "objective": 0.49076168602579173,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.0004273691933956991
+    "excess_over_best": 0.00029868982601993777
    },
    {
     "kill_C50": 0.1194,
-    "objective": 0.4902105944460596,
+    "objective": 0.49076168602577297,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.00042736919337693635
+    "excess_over_best": 0.000298689826001175
    },
    {
     "kill_C50": 0.1426,
-    "objective": 0.4902105944460784,
+    "objective": 0.49076168602579184,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.00042736919339575463
+    "excess_over_best": 0.0002986898260200488
    },
    {
     "kill_C50": 0.1702,
-    "objective": 0.4902105944460789,
+    "objective": 0.4907616860257923,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.00042736919339625423
+    "excess_over_best": 0.0002986898260204929
    },
    {
     "kill_C50": 0.2032,
-    "objective": 0.490210594446082,
+    "objective": 0.4907616860257954,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.00042736919339936286
+    "excess_over_best": 0.0002986898260236015
    },
    {
     "kill_C50": 0.2427,
-    "objective": 0.49021059444609966,
+    "objective": 0.49076168602581305,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.0004273691934170154
+    "excess_over_best": 0.00029868982604125405
    },
    {
     "kill_C50": 0.2898,
-    "objective": 0.4902105944463916,
+    "objective": 0.4907616860261049,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.00042736919370894855
+    "excess_over_best": 0.0002986898263331317
    },
    {
     "kill_C50": 0.346,
-    "objective": 0.4902105944468169,
+    "objective": 0.4907616860265303,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.000427369194134275
+    "excess_over_best": 0.00029868982675851363
    },
    {
     "kill_C50": 0.4131,
-    "objective": 0.49021059445042553,
+    "objective": 0.4907616860301389,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.0004273691977428884
+    "excess_over_best": 0.00029868983036712704
    },
    {
     "kill_C50": 0.4932,
-    "objective": 0.4902105944716579,
+    "objective": 0.49076168605137127,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.0004273692189752376
+    "excess_over_best": 0.00029868985159947625
    },
    {
     "kill_C50": 0.5889,
-    "objective": 0.4902105945969535,
+    "objective": 0.4907616861766669,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.00042736934427084483
+    "excess_over_best": 0.0002986899768950835
    },
    {
     "kill_C50": 0.6,
-    "objective": 0.49021059462770256,
+    "objective": 0.49076168620741595,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.0004273693750199148
+    "excess_over_best": 0.00029869000764415343
    },
    {
     "kill_C50": 0.7032,
-    "objective": 0.4902105953341555,
+    "objective": 0.4907616869138689,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.0004273700814728665
+    "excess_over_best": 0.0002986907140971051
    },
    {
     "kill_C50": 0.8396,
-    "objective": 0.49021059967476727,
+    "objective": 0.49076169125448066,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.0004273744220846254
+    "excess_over_best": 0.00029869505470886404
    },
    {
     "kill_C50": 1.0025,
-    "objective": 0.4902106252479495,
+    "objective": 0.4907617168276629,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.0004273999952668639
+    "excess_over_best": 0.00029872062789110254
    },
    {
     "kill_C50": 1.197,
-    "objective": 0.49021077594288526,
+    "objective": 0.49076186752259865,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.00042755069020261605
+    "excess_over_best": 0.0002988713228268547
    },
    {
     "kill_C50": 1.4292,
-    "objective": 0.49021166635729135,
+    "objective": 0.49076275793700475,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.0004284411046087122
+    "excess_over_best": 0.00029976173723295085
    },
    {
     "kill_C50": 1.7065,
-    "objective": 0.4902170195378386,
+    "objective": 0.490768111117552,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.00043379428515594176
+    "excess_over_best": 0.0003051149177801804
    },
    {
     "kill_C50": 2.0376,
-    "objective": 0.49025230127952635,
+    "objective": 0.49080339285923974,
     "k_kill_max": 1.351,
     "kill_hill": 10.0,
-    "excess_over_best": 0.00046907602684370664
+    "excess_over_best": 0.0003403966594679453
    },
    {
     "kill_C50": 2.4329,
-    "objective": 0.48978322525268264,
+    "objective": 0.4904629961997718,
     "k_kill_max": 1.59,
     "kill_hill": 8.0,
     "excess_over_best": 0.0
    },
    {
     "kill_C50": 2.9049,
-    "objective": 0.49438938936449334,
+    "objective": 0.49512722634322825,
     "k_kill_max": 2.2206,
     "kill_hill": 5.0,
-    "excess_over_best": 0.0046061641118106955
+    "excess_over_best": 0.00466423014345646
    },
    {
     "kill_C50": 3.4684,
-    "objective": 0.4933223120334264,
-    "k_kill_max": 1.59,
-    "kill_hill": 8.0,
-    "excess_over_best": 0.003539086780743772
+    "objective": 0.49381566574124786,
+    "k_kill_max": 1.8816,
+    "kill_hill": 6.0,
+    "excess_over_best": 0.003352669541476061
    },
    {
     "kill_C50": 4.1413,
-    "objective": 0.4957089473440155,
+    "objective": 0.49624201912456484,
     "k_kill_max": 2.2206,
     "kill_hill": 6.0,
-    "excess_over_best": 0.005925722091332852
+    "excess_over_best": 0.0057790229247930425
    },
    {
     "kill_C50": 4.9448,
-    "objective": 0.5051461092153058,
+    "objective": 0.5052486960633771,
     "k_kill_max": 3.6502,
     "kill_hill": 5.0,
-    "excess_over_best": 0.015362883962623142
+    "excess_over_best": 0.014785699863605284
    },
    {
     "kill_C50": 5.9041,
-    "objective": 0.5149766468880248,
+    "objective": 0.5155360384222604,
     "k_kill_max": 5.084,
     "kill_hill": 4.0,
-    "excess_over_best": 0.02519342163534216
+    "excess_over_best": 0.025073042222488573
    },
    {
     "kill_C50": 7.0495,
-    "objective": 0.5356325185683882,
+    "objective": 0.5362388845144498,
     "k_kill_max": 6.0,
     "kill_hill": 3.0,
-    "excess_over_best": 0.045849293315705586
+    "excess_over_best": 0.04577588831467799
    },
    {
     "kill_C50": 8.4172,
-    "objective": 0.6323054398447839,
+    "objective": 0.6332116292485581,
     "k_kill_max": 6.0,
     "kill_hill": 2.0,
-    "excess_over_best": 0.1425222145921013
+    "excess_over_best": 0.14274863304878632
    },
    {
     "kill_C50": 10.0502,
-    "objective": 0.6627323779617088,
+    "objective": 0.663638567365483,
     "k_kill_max": 6.0,
     "kill_hill": 2.0,
-    "excess_over_best": 0.17294915270902617
+    "excess_over_best": 0.1731755711657112
    },
    {
     "kill_C50": 12.0,
-    "objective": 0.8252658530814169,
+    "objective": 0.8262586815885687,
     "k_kill_max": 6.0,
     "kill_hill": 1.0,
-    "excess_over_best": 0.3354826278287342
+    "excess_over_best": 0.33579568538879695
    }
   ],
   "fit_a_over_k_kill_max": [
    {
     "k_kill_max": 0.5,
-    "objective": 1.0819300314936329,
+    "objective": 1.0824669135880218,
     "kill_hill": 10.0,
     "kill_C50": 0.1,
-    "excess_over_best": 0.5921468062409503
+    "excess_over_best": 0.5920039173882501
    },
    {
     "k_kill_max": 0.5901,
-    "objective": 0.916034634910728,
+    "objective": 0.9165579393435672,
     "kill_hill": 10.0,
     "kill_C50": 0.1,
-    "excess_over_best": 0.42625140965804537
+    "excess_over_best": 0.4260949431437954
    },
    {
     "k_kill_max": 0.6964,
-    "objective": 0.7526543136802959,
+    "objective": 0.7531297329291846,
     "kill_hill": 10.0,
     "kill_C50": 0.1,
-    "excess_over_best": 0.26287108842761325
+    "excess_over_best": 0.2626667367294128
    },
    {
     "k_kill_max": 0.8219,
-    "objective": 0.6111836924914441,
+    "objective": 0.6115998520786716,
     "kill_hill": 10.0,
     "kill_C50": 0.1,
-    "excess_over_best": 0.12140046723876147
+    "excess_over_best": 0.12113685587889983
    },
    {
     "k_kill_max": 0.97,
-    "objective": 0.5303647686596339,
+    "objective": 0.530752016295765,
     "kill_hill": 10.0,
     "kill_C50": 2.4329,
-    "excess_over_best": 0.04058154340695125
+    "excess_over_best": 0.04028902009599317
    },
    {
     "k_kill_max": 1.1447,
-    "objective": 0.5016459765576065,
+    "objective": 0.502076557065708,
     "kill_hill": 10.0,
     "kill_C50": 0.1,
-    "excess_over_best": 0.011862751304923813
+    "excess_over_best": 0.011613560865936179
    },
    {
     "k_kill_max": 1.351,
-    "objective": 0.4902105944460596,
+    "objective": 0.49076168602577297,
     "kill_hill": 10.0,
     "kill_C50": 0.1194,
-    "excess_over_best": 0.00042736919337693635
+    "excess_over_best": 0.000298689826001175
    },
    {
     "k_kill_max": 1.59,
-    "objective": 0.48978322525268264,
+    "objective": 0.4904629961997718,
     "kill_hill": 8.0,
     "kill_C50": 2.4329,
     "excess_over_best": 0.0
    },
    {
     "k_kill_max": 1.5944,
-    "objective": 0.4901861131365137,
+    "objective": 0.49061308117114744,
     "kill_hill": 8.0,
     "kill_C50": 2.4329,
-    "excess_over_best": 0.0004028878838310823
+    "excess_over_best": 0.00015008497137564136
    },
    {
     "k_kill_max": 1.8816,
-    "objective": 0.49103928818089726,
+    "objective": 0.49133679675159847,
     "kill_hill": 6.0,
     "kill_C50": 2.0376,
-    "excess_over_best": 0.0012560629282146185
+    "excess_over_best": 0.0008738005518266756
    },
    {
     "k_kill_max": 2.2206,
-    "objective": 0.49340895291983455,
+    "objective": 0.4939420247003839,
     "kill_hill": 6.0,
     "kill_C50": 3.4684,
-    "excess_over_best": 0.0036257276671519123
+    "excess_over_best": 0.0034790285006121024
    },
    {
     "k_kill_max": 2.6207,
-    "objective": 0.4963650420647228,
+    "objective": 0.4970002468700193,
     "kill_hill": 5.0,
     "kill_C50": 4.1413,
-    "excess_over_best": 0.0065818168120401754
+    "excess_over_best": 0.006537250670247519
    },
    {
     "k_kill_max": 3.0,
-    "objective": 0.4968542727330088,
+    "objective": 0.49740683958044724,
     "kill_hill": 5.0,
     "kill_C50": 4.1413,
-    "excess_over_best": 0.007071047480326165
+    "excess_over_best": 0.006943843380675441
    },
    {
     "k_kill_max": 3.0929,
-    "objective": 0.5025687697220012,
+    "objective": 0.502719478006541,
     "kill_hill": 5.0,
     "kill_C50": 4.1413,
-    "excess_over_best": 0.01278554446931851
+    "excess_over_best": 0.012256481806769248
    },
    {
     "k_kill_max": 3.6502,
-    "objective": 0.5051461092153058,
+    "objective": 0.5052486960633771,
     "kill_hill": 5.0,
     "kill_C50": 4.9448,
-    "excess_over_best": 0.015362883962623142
+    "excess_over_best": 0.014785699863605284
    },
    {
     "k_kill_max": 4.3078,
-    "objective": 0.5120916310925829,
+    "objective": 0.5126908165694286,
     "kill_hill": 4.0,
     "kill_C50": 4.9448,
-    "excess_over_best": 0.02230840583990029
+    "excess_over_best": 0.022227820369656814
    },
    {
     "k_kill_max": 5.084,
-    "objective": 0.5067917263484123,
+    "objective": 0.507351117882648,
     "kill_hill": 4.0,
     "kill_C50": 4.9448,
-    "excess_over_best": 0.017008501095729656
+    "excess_over_best": 0.016888121682876178
    },
    {
     "k_kill_max": 6.0,
-    "objective": 0.5130667846752052,
+    "objective": 0.5135891826076033,
     "kill_hill": 4.0,
     "kill_C50": 4.9448,
-    "excess_over_best": 0.023283559422522526
+    "excess_over_best": 0.02312618640783154
    }
   ],
   "fit_b_over_k_kill_max": [
    {
     "k_kill_max": 0.5,
-    "objective": 1.0819304512706278,
+    "objective": 1.0824673333650168,
     "kill_hill": 10.0,
     "kill_C50": 0.9603846504080299,
-    "excess_over_best": 0.5917198274143758
+    "excess_over_best": 0.5917056179290514
    },
    {
     "k_kill_max": 0.5901,
-    "objective": 0.9160351808462494,
+    "objective": 0.9165584852790885,
     "kill_hill": 10.0,
     "kill_C50": 0.996751146944729,
-    "excess_over_best": 0.4258245569899973
+    "excess_over_best": 0.42579676984312304
    },
    {
     "k_kill_max": 0.6964,
-    "objective": 0.7526552311142619,
+    "objective": 0.7531306503631506,
     "kill_hill": 10.0,
     "kill_C50": 1.028346347291861,
-    "excess_over_best": 0.2624446072580099
+    "excess_over_best": 0.2623689349271852
    },
    {
     "k_kill_max": 0.8219,
-    "objective": 0.6111846653801947,
+    "objective": 0.6116008249674222,
     "kill_hill": 10.0,
     "kill_C50": 1.0570141061520708,
-    "excess_over_best": 0.12097404152394264
+    "excess_over_best": 0.12083910953145677
    },
    {
     "k_kill_max": 0.97,
-    "objective": 0.5305784812040105,
+    "objective": 0.5309657288401416,
     "kill_hill": 10.0,
     "kill_C50": 1.0837440904242732,
-    "excess_over_best": 0.040367857347758496
+    "excess_over_best": 0.040204013404176175
    },
    {
     "k_kill_max": 1.1447,
-    "objective": 0.5016460627695755,
+    "objective": 0.5020766432776771,
     "kill_hill": 10.0,
     "kill_C50": 1.0258343918403638,
-    "excess_over_best": 0.011435438913323437
+    "excess_over_best": 0.011314927841711675
    },
    {
     "k_kill_max": 1.351,
-    "objective": 0.490210623856252,
+    "objective": 0.4907617154359654,
     "kill_hill": 10.0,
     "kill_C50": 0.9928722578565481,
     "excess_over_best": 0.0
    },
    {
     "k_kill_max": 1.59,
-    "objective": 0.49151309658646813,
+    "objective": 0.4921928675335573,
     "kill_hill": 8.0,
     "kill_C50": 0.9674717457403756,
-    "excess_over_best": 0.0013024727302161088
+    "excess_over_best": 0.0014311520975918701
    },
    {
     "k_kill_max": 1.5944,
-    "objective": 0.4923076044571495,
+    "objective": 0.4927345724917832,
     "kill_hill": 8.0,
     "kill_C50": 0.9682404513374039,
-    "excess_over_best": 0.002096980600897469
+    "excess_over_best": 0.0019728570558177894
    },
    {
     "k_kill_max": 1.8816,
-    "objective": 0.49188672413871215,
+    "objective": 0.49218423270941347,
     "kill_hill": 6.0,
     "kill_C50": 0.9102441865790682,
-    "excess_over_best": 0.0016761002824601245
+    "excess_over_best": 0.001422517273448054
    },
    {
     "k_kill_max": 2.2206,
-    "objective": 0.5750887727812619,
+    "objective": 0.5756218445618112,
     "kill_hill": 6.0,
     "kill_C50": 0.9735491272219298,
-    "excess_over_best": 0.08487814892500989
+    "excess_over_best": 0.08486012912584578
    },
    {
     "k_kill_max": 2.6207,
-    "objective": 0.6769782215846802,
+    "objective": 0.6776134263899768,
     "kill_hill": 5.0,
     "kill_C50": 1.0345330539114446,
-    "excess_over_best": 0.18676759772842821
+    "excess_over_best": 0.18685171095401137
    },
    {
     "k_kill_max": 3.0,
-    "objective": 0.7682763011846893,
+    "objective": 0.7688288680321277,
     "kill_hill": 5.0,
     "kill_C50": 1.084652517686848,
-    "excess_over_best": 0.27806567732843723
+    "excess_over_best": 0.27806715259616227
    },
    {
     "k_kill_max": 3.0929,
-    "objective": 0.7900206259790026,
+    "objective": 0.7901713342635426,
     "kill_hill": 5.0,
     "kill_C50": 1.0956208912908725,
-    "excess_over_best": 0.29981000212275055
+    "excess_over_best": 0.29940961882757716
    },
    {
     "k_kill_max": 3.6502,
-    "objective": 0.8338814433420825,
+    "objective": 0.8348141025431668,
     "kill_hill": 1.0,
     "kill_C50": 11.173419220723801,
-    "excess_over_best": 0.34367081948583045
+    "excess_over_best": 0.3440523871072014
    },
    {
     "k_kill_max": 4.3078,
-    "objective": 0.8963687339301316,
+    "objective": 0.8972844597628281,
     "kill_hill": 1.0,
     "kill_C50": 7.6199115709569325,
-    "excess_over_best": 0.4061581100738796
+    "excess_over_best": 0.4065227443268627
    },
    {
     "k_kill_max": 5.084,
-    "objective": 0.90958968920203,
+    "objective": 0.9105724274943225,
     "kill_hill": 1.0,
     "kill_C50": 9.173089320986437,
-    "excess_over_best": 0.41937906534577796
+    "excess_over_best": 0.4198107120583571
    },
    {
     "k_kill_max": 6.0,
-    "objective": 0.9217652620641363,
+    "objective": 0.9227580905712882,
     "kill_hill": 1.0,
     "kill_C50": 11.006004900626413,
-    "excess_over_best": 0.4315546382078843
+    "excess_over_best": 0.4319963751353228
    }
   ]
  },
@@ -920,10 +920,10 @@
    "g_vitro": 1.2,
    "g_vivo": 0.15,
    "rmse_timekill": 0.6605571725607586,
-   "rmse_thigh": 0.8963306631903966,
-   "objective": 0.7784439178755775
+   "rmse_thigh": 0.8977445555142988,
+   "objective": 0.7791508640375286
   },
-  "excess_over_fit_a_best": 0.2886606926228949
+  "excess_over_fit_a_best": 0.28868786783775685
  },
  "inputs": {
   "timekill": {
@@ -1026,8 +1026,8 @@
   ]
  },
  "provenance": {
-  "git_head": "f4db0725e50d6cba80ed1906daacd8876aa6d913",
-  "git_dirty": true,
+  "git_head": "70abd2a2890a79ec1a258c4f5dcd4029de9a7f10",
+  "git_dirty": false,
   "python": "3.12.4",
   "numpy": "2.4.6",
   "scipy": "1.15.3",
@@ -1039,6 +1039,125 @@
    "isepamicin": 0.28,
    "imipenem": 0.986,
    "meropenem": 0.986
+  },
+  "default_parameters": {
+   "danger_signal": {
+    "Y_lysis": 1.0,
+    "Y_filament": 0.0,
+    "filament_window": [
+     0.0625,
+     1.0
+    ],
+    "V_focus_mL": 10.0,
+    "V_ds_L": 3.0,
+    "k_ds_clear": 13.9,
+    "translocation_fraction": 1.0,
+    "DS50": 300.0,
+    "hill_ds": 1.714,
+    "k_signal_off": 0.93,
+    "k_IL6_max": 176148.0,
+    "k_tol_on": 0.0,
+    "k_tol_off": 0.35,
+    "tol_max": 0.0,
+    "tol_shift": 0.0,
+    "T0": 0.0,
+    "DS_baseline": 0.0,
+    "k_IL6_clear": 0.2,
+    "IL6_baseline": 5.0,
+    "TNF_IL6_ratio": 0.3,
+    "k_TNF_clear": 0.3
+   },
+   "bacterial_pd": {
+    "bacteria": {
+     "k_growth": 0.5,
+     "B_max": 1000000000.0,
+     "k_pers": 0.01,
+     "mu_mut": 1e-06,
+     "k_repair": 0.3,
+     "MIC_baseline": 1.0,
+     "scv_switch_midpoint": 0.3,
+     "scv_switch_width": 0.05,
+     "k_kill_max": 1.5874010519681996,
+     "kill_C50": 0.936,
+     "kill_hill": 4.0,
+     "static_kill_max": 0.0,
+     "static_pamp_fraction": 0.0
+    },
+    "immune": {
+     "N_eff_0": 10000000.0,
+     "recruit_fold_max": 3.0,
+     "EC50_immune": 100000.0,
+     "k_deg_immune": 0.05,
+     "k_kill_base": 1e-08
+    },
+    "cytokine": {
+     "k_IL6_prod": 4.0,
+     "alpha_static": 1.0,
+     "alpha_cidal": 3.0,
+     "k_IL6_clear": 0.2,
+     "TNF_IL6_ratio": 0.3
+    },
+    "damage": {
+     "k_path": 0.08,
+     "B50": 10000000.0,
+     "k_infl": 0.03,
+     "k_heal": 0.1,
+     "w_TNF": 0.5,
+     "IL6_ref": 10.0,
+     "TNF_ref": 5.0,
+     "I50": 5.0
+    }
+   },
+   "pk": {
+    "ceftazidime": {
+     "CL": 7.0,
+     "Vc": 0.226551,
+     "Vp": 0.09,
+     "Q": 5.0,
+     "Ka": 0.0,
+     "Kp": 0.5
+    },
+    "meropenem": {
+     "CL": 12.156785,
+     "Vc": 0.270308,
+     "Vp": 0.15,
+     "Q": 8.0,
+     "Ka": 0.0,
+     "Kp": 0.4
+    }
+   },
+   "drug_pd": {
+    "ceftazidime": {
+     "drug_class": "cidal",
+     "effect_mode": "time_dependent",
+     "mic": 1.0,
+     "fraction_unbound": 0.9,
+     "k_kill_max": 3.0,
+     "ec50_mic_ratio": 1.0,
+     "hill": 4.0,
+     "growth_dependence": 1.0,
+     "signal_on": 1.0,
+     "signal_decay": 0.3,
+     "signal50": 3.0,
+     "static_ec50_mic_ratio": 0.1,
+     "static_hill": 1.2
+    },
+    "meropenem": {
+     "drug_class": "cidal",
+     "effect_mode": "time_dependent",
+     "mic": 1.0,
+     "fraction_unbound": 0.98,
+     "k_kill_max": 3.0,
+     "ec50_mic_ratio": 1.0,
+     "hill": 4.0,
+     "growth_dependence": 1.0,
+     "signal_on": 1.0,
+     "signal_decay": 0.3,
+     "signal50": 3.0,
+     "static_ec50_mic_ratio": 0.1,
+     "static_hill": 1.2
+    }
+   }
   },
   "endpoint": "log10 CFU RMSE across two datasets",
   "note": "bacterial-layer refit with kill_C50 identified (review R7)"

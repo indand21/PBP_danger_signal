@@ -315,6 +315,7 @@ def simulate_danger_signal(
     C_effect: np.ndarray,
     mic: float,
     params: Optional[DangerSignalParameters] = None,
+    cytokines: bool = True,
 ) -> Dict[str, np.ndarray]:
     """Integrate the DS and cytokine layers on a solved bacterial trajectory.
 
@@ -327,13 +328,26 @@ def simulate_danger_signal(
         are excluded because they are not drug-induced lysis).
     C_effect : effect-site concentration at each time, mg/L.
     mic : isolate MIC, mg/L.
+    cytokines : integrate the cytokine layer. Analyses that report only
+        danger-signal endpoints pass False and skip its ODE solve.
+
+    The release rate is taken as linear between the points of ``t`` and the
+    danger signal is the exact solution for it (``exact_release``), so DS,
+    its AUC and the released amount agree by construction. When the cytokine
+    layer is solved, its own DS state is an independent numerical check of
+    that solution, reported as ``ds_solver_check`` (largest deviation over
+    the peak).
 
     Returns
     -------
-    dict with ``t``, ``DS`` (pg/mL plasma), ``IL6`` and ``TNF`` (pg/mL),
-    ``saturation`` (the Hill occupancy DS^h/(DS50^h+DS^h), dimensionless),
-    ``release_lysis`` and ``release_filament`` (ng/h into plasma).
+    dict with ``t``, ``DS`` (pg/mL plasma), ``DS_area`` (cumulative AUC of DS,
+    pg.h/mL), ``AUC_DS_exact``, ``released`` (cumulative attributable
+    release, pg/mL), ``release_lysis`` and ``release_filament`` (ng/h into
+    plasma) and, with cytokines, ``IL6`` and ``TNF`` (pg/mL), ``saturation``
+    (the Hill occupancy DS^h/(DS50^h+DS^h)) and ``tolerance``.
     """
+    from src.analysis.exact_release import linear_source_ds
+
     p = params or DangerSignalParameters()
     t = np.asarray(t, dtype=float)
 
@@ -350,25 +364,38 @@ def simulate_danger_signal(
     to_conc = 1e-6 / p.V_ds_L * p.translocation_fraction
     src = (lysis_fg_per_h + fila_fg_per_h) * to_conc
 
-    DS, IL6, TNF, occ, tol = integrate_ds_cytokine(t, src, p)
-
-    return {
-        "tolerance": tol,
+    # Attributable signal above the baseline the untreated infection holds.
+    D, area, released = linear_source_ds(t, src, p.k_ds_clear)
+    DS = p.DS_baseline + np.maximum(D, 0.0)
+    out = {
         "t": t,
         "DS": DS,
-        "IL6": np.maximum(IL6, 0.0),
-        # The DS-attributable IL-6, i.e. the rise over the healthy baseline.
-        # This -- not total IL-6 -- is the inflammatory cost attributable to
-        # therapy, and it is the quantity the acceptance tests must be run on:
-        # a constant baseline integrated over a multi-day window otherwise
-        # dominates the AUC at low yields and masks the dose-response.
-        "IL6_excess": np.maximum(IL6 - p.IL6_baseline, 0.0),
-        "TNF": np.maximum(TNF, 0.0),
-        "saturation": occ,
+        "DS_area": p.DS_baseline * (t - t[0]) + area,
+        "AUC_DS_exact": float(p.DS_baseline * (t[-1] - t[0]) + area[-1]),
+        "AUC_DS_excess_exact": float(area[-1]),
+        "released": released,
         "phi": phi,
         "release_lysis": lysis_fg_per_h * 1e-6,   # ng/h
         "release_filament": fila_fg_per_h * 1e-6,  # ng/h
     }
+    if cytokines:
+        DS_solver, IL6, TNF, _, tol = integrate_ds_cytokine(t, src, p)
+        out.update({
+            "tolerance": tol,
+            "IL6": np.maximum(IL6, 0.0),
+            # The DS-attributable IL-6, i.e. the rise over the healthy
+            # baseline. This -- not total IL-6 -- is the inflammatory cost
+            # attributable to therapy, and it is the quantity the acceptance
+            # tests must be run on: a constant baseline integrated over a
+            # multi-day window otherwise dominates the AUC at low yields and
+            # masks the dose-response.
+            "IL6_excess": np.maximum(IL6 - p.IL6_baseline, 0.0),
+            "TNF": np.maximum(TNF, 0.0),
+            "saturation": hill_occupancy(DS, p),
+            "ds_solver_check": float(np.max(np.abs(DS_solver - DS))
+                                     / max(float(np.max(DS)), 1e-300)),
+        })
+    return out
 
 
 def _occupancy(DS, ds50: float, hill: float):
@@ -461,8 +488,13 @@ def _interp(t: np.ndarray, y: np.ndarray) -> Callable[[float], float]:
 def check_release_mass_balance(
     out: Dict[str, np.ndarray],
     params: Optional["DangerSignalParameters"] = None,
+    use_exact: bool = True,
 ) -> Dict[str, float]:
     """Verify the danger-signal compartment's mass balance on a simulation.
+
+    ``use_exact=False`` measures the AUC by a trapezoid over the sampled DS
+    instead of the exact integral -- the method used before plan item 8,
+    kept so its error can still be quantified.
 
     With ``D = DS - DS_baseline`` the therapy-attributable signal, the
     compartment obeys ``D' = src(t) - k_ds * D``, so over ``[0, T]``
@@ -491,7 +523,12 @@ def check_release_mass_balance(
     src = (np.asarray(out["release_lysis"], dtype=float)
            + np.asarray(out["release_filament"], dtype=float)) * 1e6 * to_conc
 
-    cleared = float(p.k_ds_clear * trapezoid(D, t))
+    # The exact AUC when the simulation carries it; a trapezoid over DS
+    # samples otherwise (it under-reads a signal that relaxes within a step).
+    if use_exact and "AUC_DS_excess_exact" in out:
+        cleared = float(p.k_ds_clear * out["AUC_DS_excess_exact"])
+    else:
+        cleared = float(p.k_ds_clear * trapezoid(D, t))
     released = float(trapezoid(src, t))
     boundary = float(D[-1] - D[0])
     residual = released - boundary - cleared
@@ -506,27 +543,37 @@ def check_release_mass_balance(
 
 
 def summarize(out: Dict[str, np.ndarray]) -> Dict[str, float]:
-    """Scalar summaries of a danger-signal simulation."""
+    """Scalar summaries of a danger-signal simulation.
+
+    Danger-signal AUCs are the exact integrals carried by the simulation;
+    cytokine entries appear only when the cytokine layer was solved.
+    """
     from scipy.integrate import trapezoid
     t = out["t"]
-    return {
+    s = {
         "DS_peak_pg_mL": float(np.max(out["DS"])),
-        "AUC_DS_pg_h_mL": float(trapezoid(out["DS"], t)),
+        "AUC_DS_pg_h_mL": float(out["AUC_DS_exact"]) if "AUC_DS_exact" in out
+        else float(trapezoid(out["DS"], t)),
         # Therapy-ATTRIBUTABLE danger signal: the rise over the level the
         # untreated infection already sustains. With a septic baseline load the
         # total AUC is dominated by that shared background and stops
         # discriminating agents at all, exactly as total IL-6 did in Phase 2.
-        "AUC_DS_excess_pg_h_mL": float(trapezoid(
-            np.maximum(out["DS"] - out["DS"][0], 0.0), t)),
+        "AUC_DS_excess_pg_h_mL": float(out["AUC_DS_excess_exact"])
+        if "AUC_DS_excess_exact" in out
+        else float(trapezoid(np.maximum(out["DS"] - out["DS"][0], 0.0), t)),
         "DS_excess_peak_pg_mL": float(np.max(out["DS"] - out["DS"][0])),
-        "IL6_peak_pg_mL": float(np.max(out["IL6"])),
-        "AUC_IL6_pg_h_mL": float(trapezoid(out["IL6"], t)),
-        "AUC_IL6_excess_pg_h_mL": float(trapezoid(out["IL6_excess"], t)),
-        "TNF_peak_pg_mL": float(np.max(out["TNF"])),
-        "saturation_peak": float(np.max(out["saturation"])),
-        "saturation_mean": float(np.mean(out["saturation"])),
         "filament_fraction_of_release": _filament_fraction(out),
     }
+    if "IL6" in out:
+        s.update({
+            "IL6_peak_pg_mL": float(np.max(out["IL6"])),
+            "AUC_IL6_pg_h_mL": float(trapezoid(out["IL6"], t)),
+            "AUC_IL6_excess_pg_h_mL": float(trapezoid(out["IL6_excess"], t)),
+            "TNF_peak_pg_mL": float(np.max(out["TNF"])),
+            "saturation_peak": float(np.max(out["saturation"])),
+            "saturation_mean": float(np.mean(out["saturation"])),
+        })
+    return s
 
 
 def _filament_fraction(out: Dict[str, np.ndarray]) -> float:

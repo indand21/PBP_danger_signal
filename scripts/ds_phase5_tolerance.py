@@ -59,6 +59,7 @@ from src.core.parameters import (  # noqa: E402
 )
 from src.core.pd_model import create_ode_system  # noqa: E402
 from src.core.pk_models import DosingRegimen, TwoCompartmentPKModel  # noqa: E402
+from src.analysis.exact_release import driver_from_result  # noqa: E402
 from src.core.simulation import run_simulation  # noqa: E402
 
 OUT = os.path.join("results", "danger_signal", "phase5_tolerance.json")
@@ -87,10 +88,10 @@ def solve_bacteria(spec):
     fu = get_drug_pd_parameters(spec["drug"]).fraction_unbound
     r = run_simulation(pkm, reg, pd, dict(IC), t_span=(0, T_END),
                        drug_class="cidal", weight_kg=WEIGHT,
-                       fraction_unbound=fu)
-    C = r.get_free_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
-    return dict(t=r.t, B_rep=r.y[:, r.state_names.index("B_rep")], C_eff=C,
-                kill=np.asarray(pd.cidal_kill_rate(C), dtype=float))
+                       fraction_unbound=fu, dense_output=True)
+    # Release-driving quantities exact at 8 sub-steps per solver step
+    # (src/analysis/exact_release.py).
+    return driver_from_result(r, pd)
 
 
 def run(driver, p, agent):
@@ -383,7 +384,7 @@ def main():
     from src.utils.provenance import provenance
     payload["provenance"] = provenance(
         note="historical phase; retained for the record")
-    with open(OUT, "w", encoding="utf-8") as fh:
+    with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(payload, fh, indent=1, default=str)
     print(f"\nwrote {OUT}")
 

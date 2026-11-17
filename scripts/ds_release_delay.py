@@ -187,7 +187,7 @@ def value(s, key):
 def arm_inputs(p4, agent, dose, interval, n_doses, mic, stored_auc, where):
     """Re-simulate one stored arm and split its release into per-yield inputs."""
     sim = p4.simulate(agent, dose, interval, n_doses, mic=mic)
-    out, summ = p4.ds_cost(sim, agent=agent)
+    out, summ = p4.ds_cost(sim, agent=agent, cytokines=False)
     rel = abs(summ["AUC_DS_pg_h_mL"] - stored_auc) / stored_auc
     if rel > REPRODUCTION_RTOL:
         raise RuntimeError(f"{where}: reproduces the stored 48-h AUC only to "
@@ -617,7 +617,7 @@ def main():
         "provenance": provenance(note="Delay between killing and endotoxin release, "
                                       "re-reading phase 4 regimens"),
     }
-    OUT.write_text(json.dumps(payload, indent=1, allow_nan=False) + "\n", encoding="utf-8")
+    OUT.write_text(json.dumps(payload, indent=1, allow_nan=False) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(headline, indent=1), flush=True)
     print(json.dumps(payload["numerical_check"], indent=1), flush=True)
 

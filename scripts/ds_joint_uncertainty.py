@@ -641,7 +641,7 @@ def main():
                          for p in (PHASE4, KILL_MATCHED)},
         "provenance": provenance(note="Joint uncertainty: Morris screening and interaction maps"),
     }
-    OUT.write_text(json.dumps(payload, indent=1, allow_nan=False) + "\n", encoding="utf-8")
+    OUT.write_text(json.dumps(payload, indent=1, allow_nan=False) + "\n", encoding="utf-8", newline="\n")
     log(json.dumps({"headline": headline, "numerical_check": numerical_check}, indent=1))
     # Not written to the file: neither affects a result, and the file should
     # reproduce byte for byte whatever the machine or pool size.

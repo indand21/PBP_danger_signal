@@ -407,7 +407,7 @@ def main():
         "input_sha256": {DATA.name: hashlib.sha256(DATA.read_bytes()).hexdigest()},
         "provenance": provenance(note="Full-schedule replay of Figure 2A-C; diagnostic, nothing adopted"),
     }
-    OUT.write_text(json.dumps(payload, indent=1, allow_nan=False) + "\n", encoding="utf-8")
+    OUT.write_text(json.dumps(payload, indent=1, allow_nan=False) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(headline, indent=1), flush=True)
     print(f"elapsed {time.time() - t0:.0f} s on {args.workers} worker(s)", flush=True)
 

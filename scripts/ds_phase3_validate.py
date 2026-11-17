@@ -45,6 +45,7 @@ from src.core.parameters import (  # noqa: E402
 )
 from src.core.pd_model import create_ode_system  # noqa: E402
 from src.core.pk_models import DosingRegimen, TwoCompartmentPKModel  # noqa: E402
+from src.analysis.exact_release import driver_from_result  # noqa: E402
 from src.core.simulation import run_simulation  # noqa: E402
 
 OUT = os.path.join("results", "danger_signal", "phase3_validation.json")
@@ -96,12 +97,10 @@ def solve_bacteria(spec):
     fu = get_drug_pd_parameters(spec["drug"]).fraction_unbound
     r = run_simulation(pkm, reg, pd, dict(IC), t_span=(0, T_END),
                        drug_class="cidal", weight_kg=WEIGHT,
-                       fraction_unbound=fu)
-    _, B_total = r.get_bacterial_burden()
-    C_eff = r.get_free_effect_site_concentration(pk_model=pkm, weight_kg=WEIGHT)
-    return dict(t=r.t, B_rep=r.y[:, r.state_names.index("B_rep")], C_eff=C_eff,
-                kill=np.asarray(pd.cidal_kill_rate(C_eff), dtype=float),
-                net_log10=float(np.log10(max(B_total[-1], 1e-6) / B_total[0])))
+                       fraction_unbound=fu, dense_output=True)
+    # Release-driving quantities exact at 8 sub-steps per solver step
+    # (src/analysis/exact_release.py).
+    return driver_from_result(r, pd)
 
 
 def ds_run(driver, p, Y, Yf, v_focus=V_FOCUS, translocation=1.0):
@@ -535,7 +534,7 @@ def main():
         endpoint="AUC_DS_pg_h_mL (attributable danger-signal exposure)",
         solver={"bacterial": "RK45 rtol 1e-6 atol 1e-8 max_step 0.1 h",
                 "danger_signal": "LSODA rtol 1e-6 atol 1e-9 max_step 0.1 h"})
-    with open(OUT, "w", encoding="utf-8") as fh:
+    with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(payload, fh, indent=1, default=str)
     print(f"\nwrote {OUT}")
 

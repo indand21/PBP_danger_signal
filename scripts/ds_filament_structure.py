@@ -47,7 +47,7 @@ def matched_exposure(fraction):
                 break
             sim = p4.simulate(agent, dose, 8.0, 6)
             yf = yf_mero if agent == "meropenem" else p4.AGENT_FILAMENT[agent]
-            _, summary = p4.ds_cost(sim, agent=agent, Yf=yf)
+            _, summary = p4.ds_cost(sim, agent=agent, Yf=yf, cytokines=False)
             doses[agent] = dose
             costs[agent] = summary["AUC_DS_pg_h_mL"]
             kills[agent] = sim["net_log10"]
@@ -139,7 +139,7 @@ def main():
         "provenance": provenance(),
     }
     path = ROOT / "results" / "danger_signal" / "filament_structure.json"
-    path.write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(f"wrote {path}")
     print("matched-exposure cost ratio, f=0:", out["summary"]["matched_exposure_cost_ratio_range_at_f0"])
     print("matched-exposure cost ratio, f=1:", out["summary"]["matched_exposure_cost_ratio_range_at_f1"])

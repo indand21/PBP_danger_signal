@@ -27,43 +27,260 @@
   "rows": [
    {
     "target_fT_pct": 40.0,
-    "kill_difference_default": 0.10812875992119375,
-    "kill_difference_tight": 0.10812829748524555,
-    "abs_change_kill_difference": 4.6243594820083445e-07,
-    "rel_change_ratio_low": 0.0007779126033531559,
-    "rel_change_ratio_high": 0.0007777718426116232
+    "kill_difference_default": 0.10568161878084803,
+    "kill_difference_tight": 0.1056805576866644,
+    "abs_change_kill_difference": 1.0610941836297627e-06,
+    "rel_change_ratio_low": 6.918162781016576e-07,
+    "rel_change_ratio_high": 6.918162781016576e-07
    },
    {
     "target_fT_pct": 60.0,
-    "kill_difference_default": 0.032616023275946926,
-    "kill_difference_tight": 0.032616060686041504,
-    "abs_change_kill_difference": 3.741009457769451e-08,
-    "rel_change_ratio_low": 0.00030917777574421154,
-    "rel_change_ratio_high": 0.00030831345442875846
+    "kill_difference_default": 0.03253028608588737,
+    "kill_difference_tight": 0.032530287543066194,
+    "abs_change_kill_difference": 1.4571788220507642e-09,
+    "rel_change_ratio_low": 5.447919234036436e-06,
+    "rel_change_ratio_high": 5.447919234036436e-06
    },
    {
     "target_fT_pct": 80.0,
-    "kill_difference_default": 0.01739305378906897,
-    "kill_difference_tight": 0.01739298752431795,
-    "abs_change_kill_difference": 6.626475101967344e-08,
-    "rel_change_ratio_low": 8.378124925627697e-05,
-    "rel_change_ratio_high": 8.301067799674198e-05
+    "kill_difference_default": 0.017460539696712907,
+    "kill_difference_tight": 0.017460488267446284,
+    "abs_change_kill_difference": 5.142926662315972e-08,
+    "rel_change_ratio_low": 6.651936384822816e-06,
+    "rel_change_ratio_high": 6.651936384822816e-06
    },
    {
     "target_fT_pct": 95.0,
-    "kill_difference_default": 0.014827507877493762,
-    "kill_difference_tight": 0.014827549277762309,
-    "abs_change_kill_difference": 4.140026854670964e-08,
-    "rel_change_ratio_low": 0.0006485996155730885,
-    "rel_change_ratio_high": 0.0006474132729004003
+    "kill_difference_default": 0.01479499012359442,
+    "kill_difference_tight": 0.014794965125293214,
+    "abs_change_kill_difference": 2.499830120683555e-08,
+    "rel_change_ratio_low": 4.03345121702776e-06,
+    "rel_change_ratio_high": 4.03345121702776e-06
    }
   ],
-  "max_abs_change_kill_difference": 4.6243594820083445e-07,
-  "max_rel_change_cost_ratio": 0.0007779126033531559
+  "max_abs_change_kill_difference": 1.0610941836297627e-06,
+  "max_rel_change_cost_ratio": 6.651936384822816e-06
+ },
+ "release_sampling": {
+  "production_substeps": 8,
+  "reference": "8-point Gauss-Legendre per solver step on the RK45 interpolant, exact exponential kernel for the endotoxin compartment",
+  "rows": [
+   {
+    "target_fT_pct": 40.0,
+    "agent": "ceftazidime",
+    "dose_mg": 102.6125975603049,
+    "dose_solve_fT_residual_pct_points": 4.760636329592671e-13,
+    "killing_rel_error_m1": -0.0008578733835582497,
+    "auc_rel_error_m1": -0.000537063366749968,
+    "auc_rel_error_previous_method": -0.0013073227826282396,
+    "killing_rel_error_m4": -5.4506888845340384e-05,
+    "auc_rel_error_m4": -3.401910023204113e-05,
+    "killing_rel_error_m8": -1.3824450557087253e-05,
+    "auc_rel_error_m8": -8.755253276260255e-06,
+    "cytokine_solver_ds_max_dev_over_peak": 5.128117300326794e-06,
+    "killing_rel_error_m16": -3.5291328853714887e-06,
+    "auc_rel_error_m16": -2.2526861641614104e-06
+   },
+   {
+    "target_fT_pct": 40.0,
+    "agent": "meropenem",
+    "dose_mg": 256.7207848122919,
+    "dose_solve_fT_residual_pct_points": 2.2737367544323206e-13,
+    "killing_rel_error_m1": -0.0002776830327337887,
+    "auc_rel_error_m1": -0.00027768303371566994,
+    "auc_rel_error_previous_method": -0.0021145965771410813,
+    "killing_rel_error_m4": -1.903310104900413e-05,
+    "auc_rel_error_m4": -1.903310111461831e-05,
+    "killing_rel_error_m8": -4.917509319413149e-06,
+    "auc_rel_error_m8": -4.9175093386200075e-06,
+    "cytokine_solver_ds_max_dev_over_peak": 3.2623560050679467e-06,
+    "killing_rel_error_m16": -1.3353987367015208e-06,
+    "auc_rel_error_m16": -1.3353987409203683e-06
+   },
+   {
+    "target_fT_pct": 60.0,
+    "agent": "ceftazidime",
+    "dose_mg": 201.77979187497638,
+    "dose_solve_fT_residual_pct_points": 2.1527881699512363e-08,
+    "killing_rel_error_m1": -0.00029515604728092004,
+    "auc_rel_error_m1": -0.00010397051917609978,
+    "auc_rel_error_previous_method": -0.001686986370838861,
+    "killing_rel_error_m4": -1.99657309495338e-05,
+    "auc_rel_error_m4": -7.741540057892848e-06,
+    "killing_rel_error_m8": -5.051473870087975e-06,
+    "auc_rel_error_m8": -1.9715186168056675e-06,
+    "cytokine_solver_ds_max_dev_over_peak": 3.781898029688034e-06,
+    "killing_rel_error_m16": -1.318954993889676e-06,
+    "auc_rel_error_m16": -5.193095663491576e-07
+   },
+   {
+    "target_fT_pct": 60.0,
+    "agent": "meropenem",
+    "dose_mg": 696.1859541141671,
+    "dose_solve_fT_residual_pct_points": 1.8829382497642655e-12,
+    "killing_rel_error_m1": 0.0003030583110108509,
+    "auc_rel_error_m1": 0.00030305830157573155,
+    "auc_rel_error_previous_method": -0.002005456948954265,
+    "killing_rel_error_m4": 1.7286921203174543e-05,
+    "auc_rel_error_m4": 1.7286920599879352e-05,
+    "killing_rel_error_m8": 4.2980326055985785e-06,
+    "auc_rel_error_m8": 4.298032455940515e-06,
+    "cytokine_solver_ds_max_dev_over_peak": 4.3579506788999755e-06,
+    "killing_rel_error_m16": 1.072815819513906e-06,
+    "auc_rel_error_m16": 1.0728157788797432e-06
+   },
+   {
+    "target_fT_pct": 80.0,
+    "agent": "ceftazidime",
+    "dose_mg": 402.72856265793445,
+    "dose_solve_fT_residual_pct_points": 3.2532909699511947e-10,
+    "killing_rel_error_m1": 0.00019400735378738432,
+    "auc_rel_error_m1": 0.00031756533651483565,
+    "auc_rel_error_previous_method": -0.0018209651144012184,
+    "killing_rel_error_m4": 1.0559352208838746e-05,
+    "auc_rel_error_m4": 1.8551502386054963e-05,
+    "killing_rel_error_m8": 2.615255554783147e-06,
+    "auc_rel_error_m8": 4.617966393283268e-06,
+    "cytokine_solver_ds_max_dev_over_peak": 1.2929339956010006e-05,
+    "killing_rel_error_m16": 6.522498250394193e-07,
+    "auc_rel_error_m16": 1.153233496253847e-06
+   },
+   {
+    "target_fT_pct": 80.0,
+    "agent": "meropenem",
+    "dose_mg": 1924.6643824820148,
+    "dose_solve_fT_residual_pct_points": 7.176481631177012e-12,
+    "killing_rel_error_m1": 0.0007784837571276348,
+    "auc_rel_error_m1": 0.0007784836090956038,
+    "auc_rel_error_previous_method": -0.0019268648538001143,
+    "killing_rel_error_m4": 4.832817449118565e-05,
+    "auc_rel_error_m4": 4.8328165012989643e-05,
+    "killing_rel_error_m8": 1.2076918366243916e-05,
+    "auc_rel_error_m8": 1.2076915987702108e-05,
+    "cytokine_solver_ds_max_dev_over_peak": 5.395551122827951e-06,
+    "killing_rel_error_m16": 3.018518700548256e-06,
+    "auc_rel_error_m16": 3.0185181001396444e-06
+   },
+   {
+    "target_fT_pct": 95.0,
+    "agent": "ceftazidime",
+    "dose_mg": 679.8058557364972,
+    "dose_solve_fT_residual_pct_points": 1.906954594232957e-10,
+    "killing_rel_error_m1": 0.0005709127566191352,
+    "auc_rel_error_m1": 0.0006411220421445041,
+    "auc_rel_error_previous_method": -0.0014899951881353068,
+    "killing_rel_error_m4": 3.496930109059271e-05,
+    "auc_rel_error_m4": 3.9510332086933886e-05,
+    "killing_rel_error_m8": 8.731306224918356e-06,
+    "auc_rel_error_m8": 9.86870593067124e-06,
+    "cytokine_solver_ds_max_dev_over_peak": 5.625282695685989e-06,
+    "killing_rel_error_m16": 2.1870553965630535e-06,
+    "auc_rel_error_m16": 2.470536238918797e-06
+   },
+   {
+    "target_fT_pct": 95.0,
+    "agent": "meropenem",
+    "dose_mg": 4147.019146609764,
+    "dose_solve_fT_residual_pct_points": 1.30569333123276e-10,
+    "killing_rel_error_m1": 0.0009230829110187244,
+    "auc_rel_error_m1": 0.000923083065156094,
+    "auc_rel_error_previous_method": -0.0022073348267557247,
+    "killing_rel_error_m4": 5.7559703502185755e-05,
+    "auc_rel_error_m4": 5.755971231979906e-05,
+    "killing_rel_error_m8": 1.4388092801187469e-05,
+    "auc_rel_error_m8": 1.4388094992989764e-05,
+    "cytokine_solver_ds_max_dev_over_peak": 5.065217074013755e-06,
+    "killing_rel_error_m16": 3.5965618112587805e-06,
+    "auc_rel_error_m16": 3.5965623619294007e-06
+   }
+  ],
+  "max_abs_rel_error": {
+   "killing_m1": 0.0009230829110187244,
+   "killing_m4": 5.7559703502185755e-05,
+   "killing_m8": 1.4388092801187469e-05,
+   "killing_m16": 3.5965618112587805e-06,
+   "auc_m1": 0.000923083065156094,
+   "auc_m4": 5.755971231979906e-05,
+   "auc_m8": 1.4388094992989764e-05,
+   "auc_m16": 3.5965623619294007e-06,
+   "auc_previous_method": 0.0022073348267557247
+  },
+  "max_cytokine_solver_ds_dev_over_peak": 1.2929339956010006e-05,
+  "max_dose_solve_fT_residual_pct_points": 2.1527881699512363e-08
+ },
+ "previous_exposure_method": {
+  "rows": [
+   {
+    "target_fT_pct": 40.0,
+    "agent": "ceftazidime",
+    "dose_mg": 102.6125975603049,
+    "grid_fT_error_pct_points": 0.004931756191588477,
+    "previous_dose_mg": 102.44191785458013,
+    "previous_dose_fT_miss_pct_points": -0.05006968679708024
+   },
+   {
+    "target_fT_pct": 40.0,
+    "agent": "meropenem",
+    "dose_mg": 256.7207848122919,
+    "grid_fT_error_pct_points": 0.004372846876989911,
+    "previous_dose_mg": 256.66450887637643,
+    "previous_dose_fT_miss_pct_points": -0.004473590766963298
+   },
+   {
+    "target_fT_pct": 60.0,
+    "agent": "ceftazidime",
+    "dose_mg": 201.77979187497638,
+    "grid_fT_error_pct_points": 0.0034082216330162396,
+    "previous_dose_mg": 201.68096802764728,
+    "previous_dose_fT_miss_pct_points": -0.014297622567454482
+   },
+   {
+    "target_fT_pct": 60.0,
+    "agent": "meropenem",
+    "dose_mg": 696.1859541141671,
+    "grid_fT_error_pct_points": 0.007975019515299664,
+    "previous_dose_mg": 695.8827757920759,
+    "previous_dose_fT_miss_pct_points": -0.008622533713541713
+   },
+   {
+    "target_fT_pct": 80.0,
+    "agent": "ceftazidime",
+    "dose_mg": 402.72856265793445,
+    "grid_fT_error_pct_points": 0.004470761102382426,
+    "previous_dose_mg": 402.81669707434367,
+    "previous_dose_fT_miss_pct_points": 0.0062903061387658
+   },
+   {
+    "target_fT_pct": 80.0,
+    "agent": "meropenem",
+    "dose_mg": 1924.6643824820148,
+    "grid_fT_error_pct_points": 0.007274300218199414,
+    "previous_dose_mg": 1923.8935376492216,
+    "previous_dose_fT_miss_pct_points": -0.007842453284823137
+   },
+   {
+    "target_fT_pct": 95.0,
+    "agent": "ceftazidime",
+    "dose_mg": 679.8058557364972,
+    "grid_fT_error_pct_points": 0.012101859853743235,
+    "previous_dose_mg": 679.2645598589264,
+    "previous_dose_fT_miss_pct_points": -0.022758607289119936
+   },
+   {
+    "target_fT_pct": 95.0,
+    "agent": "meropenem",
+    "dose_mg": 4147.019146609764,
+    "grid_fT_error_pct_points": 0.01212186109087554,
+    "previous_dose_mg": 4145.085568660933,
+    "previous_dose_fT_miss_pct_points": -0.009099727588861128
+   }
+  ],
+  "max_abs_grid_fT_error_pct_points": 0.01212186109087554,
+  "max_abs_previous_dose_fT_miss_pct_points": 0.05006968679708024
  },
  "provenance": {
-  "git_head": "f4db0725e50d6cba80ed1906daacd8876aa6d913",
-  "git_dirty": true,
+  "git_head": "10bcefff08fbe14016340eeef90237d5465294d5",
+  "git_dirty": false,
   "python": "3.12.4",
   "numpy": "2.4.6",
   "scipy": "1.15.3",
@@ -76,6 +293,134 @@
    "imipenem": 0.986,
    "meropenem": 0.986
   },
-  "solver_note": "see 'default' and 'tightening_factor' above"
+  "default_parameters": {
+   "danger_signal": {
+    "Y_lysis": 1.0,
+    "Y_filament": 0.0,
+    "filament_window": [
+     0.0625,
+     1.0
+    ],
+    "V_focus_mL": 10.0,
+    "V_ds_L": 3.0,
+    "k_ds_clear": 13.9,
+    "translocation_fraction": 1.0,
+    "DS50": 300.0,
+    "hill_ds": 1.714,
+    "k_signal_off": 0.93,
+    "k_IL6_max": 176148.0,
+    "k_tol_on": 0.0,
+    "k_tol_off": 0.35,
+    "tol_max": 0.0,
+    "tol_shift": 0.0,
+    "T0": 0.0,
+    "DS_baseline": 0.0,
+    "k_IL6_clear": 0.2,
+    "IL6_baseline": 5.0,
+    "TNF_IL6_ratio": 0.3,
+    "k_TNF_clear": 0.3
+   },
+   "bacterial_pd": {
+    "bacteria": {
+     "k_growth": 0.5,
+     "B_max": 1000000000.0,
+     "k_pers": 0.01,
+     "mu_mut": 1e-06,
+     "k_repair": 0.3,
+     "MIC_baseline": 1.0,
+     "scv_switch_midpoint": 0.3,
+     "scv_switch_width": 0.05,
+     "k_kill_max": 1.5874010519681996,
+     "kill_C50": 0.936,
+     "kill_hill": 4.0,
+     "static_kill_max": 0.0,
+     "static_pamp_fraction": 0.0
+    },
+    "immune": {
+     "N_eff_0": 10000000.0,
+     "recruit_fold_max": 3.0,
+     "EC50_immune": 100000.0,
+     "k_deg_immune": 0.05,
+     "k_kill_base": 1e-08
+    },
+    "cytokine": {
+     "k_IL6_prod": 4.0,
+     "alpha_static": 1.0,
+     "alpha_cidal": 3.0,
+     "k_IL6_clear": 0.2,
+     "TNF_IL6_ratio": 0.3
+    },
+    "damage": {
+     "k_path": 0.08,
+     "B50": 10000000.0,
+     "k_infl": 0.03,
+     "k_heal": 0.1,
+     "w_TNF": 0.5,
+     "IL6_ref": 10.0,
+     "TNF_ref": 5.0,
+     "I50": 5.0
+    }
+   },
+   "pk": {
+    "ceftazidime": {
+     "CL": 7.0,
+     "Vc": 0.226551,
+     "Vp": 0.09,
+     "Q": 5.0,
+     "Ka": 0.0,
+     "Kp": 0.5
+    },
+    "meropenem": {
+     "CL": 12.156785,
+     "Vc": 0.270308,
+     "Vp": 0.15,
+     "Q": 8.0,
+     "Ka": 0.0,
+     "Kp": 0.4
+    }
+   },
+   "drug_pd": {
+    "ceftazidime": {
+     "drug_class": "cidal",
+     "effect_mode": "time_dependent",
+     "mic": 1.0,
+     "fraction_unbound": 0.9,
+     "k_kill_max": 3.0,
+     "ec50_mic_ratio": 1.0,
+     "hill": 4.0,
+     "growth_dependence": 1.0,
+     "signal_on": 1.0,
+     "signal_decay": 0.3,
+     "signal50": 3.0,
+     "static_ec50_mic_ratio": 0.1,
+     "static_hill": 1.2
+    },
+    "meropenem": {
+     "drug_class": "cidal",
+     "effect_mode": "time_dependent",
+     "mic": 1.0,
+     "fraction_unbound": 0.98,
+     "k_kill_max": 3.0,
+     "ec50_mic_ratio": 1.0,
+     "hill": 4.0,
+     "growth_dependence": 1.0,
+     "signal_on": 1.0,
+     "signal_decay": 0.3,
+     "signal50": 3.0,
+     "static_ec50_mic_ratio": 0.1,
+     "static_hill": 1.2
+    }
+   }
+  },
+  "solver_note": "see 'default' and 'tightening_factor' above",
+  "solver": {
+   "bacterial": "RK45 rtol 1e-6 atol 1e-8 max_step 0.1 h, continuous interpolant kept",
+   "release_rates": "exact at 8 sub-steps per solver step (interpolant + analytical PK)",
+   "danger_signal": "closed-form update of D' = src - kD for src linear per sub-step; AUC, released amount and cumulative killing exact for that src",
+   "cytokines": "LSODA rtol 1e-6 atol 1e-9 max_step 0.1 h; its DS state checked against the closed form",
+   "fT_above_MIC": "analytical PK, crossings by Brent root finding (1e-12 h)",
+   "fAUC_fCmax": "analytical PK: Gauss-Legendre between dosing breakpoints; peak at infusion ends",
+   "dose_solving": "PK-only %fT>MIC, Brent to 1e-6 mg"
+  }
  }
 }

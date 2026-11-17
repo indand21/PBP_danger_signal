@@ -186,7 +186,7 @@ def main():
         endpoint="plasma concentration, mg/L",
         exposure_index="log10 RMSE against the digitised curve",
         solver={"pk": "analytic one-compartment with effect site"})
-    with open(OUT, "w", encoding="utf-8") as fh:
+    with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(payload, fh, indent=1, default=str)
 
     print("PK refit -- meropenem, fitted to %s" % DATASET)

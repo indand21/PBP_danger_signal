@@ -31,11 +31,16 @@ def test_ridge_results_were_made_from_the_current_inputs():
 @pytest.mark.skipif(not OUT.exists(), reason="cytokine_ridge.json not generated")
 def test_the_ridge_is_flat_and_the_endpoint_does_not_see_it():
     h = json.loads(OUT.read_text(encoding="utf-8"))["headline"]
-    # Same cost, different parameters: a ridge, not a different optimum.
+    # With the same code the fit is deterministic: the refit is the stored reference.
     assert h["cost_rel_diff"] < 1e-12
-    assert abs(h["param_rel_diff_refit_vs_stored"]["k_signal_off"]) > 1e-5
-    # The endotoxin AUC is upstream of the cytokine layer.
-    assert h["table1_max_rel_diff_refit_vs_stored"]["AUC_DS_pg_h_mL"] < 1e-5
+    assert all(abs(v) < 1e-12 for v in h["param_rel_diff_refit_vs_stored"].values())
+    # The earlier reference: same cost, different parameters -- a ridge, not
+    # a different optimum.
+    assert h["cost_rel_diff_earlier"] < 1e-12
+    assert abs(h["param_rel_diff_earlier_vs_stored"]["k_signal_off"]) > 1e-5
+    # The endotoxin AUC is upstream of the cytokine layer and computed in
+    # closed form, so moving along the ridge leaves it exactly unchanged.
+    assert h["table1_max_rel_diff_earlier_vs_stored"]["AUC_DS_pg_h_mL"] == 0.0
     # Read between grid points, every DS50 fits; the grid-read screen rejects two.
     assert h["between_grid_points"]["n_feasible"] == h["between_grid_points"]["n_grid"]
     assert h["grid_read"]["n_feasible"] < h["between_grid_points"]["n_grid"]

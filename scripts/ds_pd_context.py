@@ -76,7 +76,7 @@ def main():
                 ["data/external_validation/sabet2020_strains.csv","data/external_validation/sabet2020_strain_points.csv"]},
              "provenance":provenance(note="Fixed measured strain MIC; source-timed control constraints")}
     out=ROOT/"results/danger_signal/pd_context.json"
-    out.write_text(json.dumps(payload,indent=2,allow_nan=False)+"\n",encoding="utf-8")
+    out.write_text(json.dumps(payload,indent=2,allow_nan=False)+"\n",encoding="utf-8", newline="\n")
     print(json.dumps(summaries,indent=2),flush=True)
 
 

@@ -285,7 +285,7 @@ def main():
         "input_sha256": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in (YAM, JACK)},
         "provenance": provenance(note="Bounds on per-killed-cell free LPS release from paired published data"),
     }
-    OUT.write_text(json.dumps(payload, indent=1, allow_nan=False) + "\n", encoding="utf-8")
+    OUT.write_text(json.dumps(payload, indent=1, allow_nan=False) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(headline, indent=1))
 
 

@@ -7,7 +7,7 @@ import numpy as np
 import pytest
 from scipy.integrate import trapezoid
 
-from scripts.ds_kill_matched import (EXTREMUM_MIN_PROMINENCE, IMMEDIATE, MATCH_RTOL,
+from scripts.ds_kill_matched import (EXTREMUM_MIN_PROMINENCE, IMMEDIATE, MATCH_RTOL, STORED_RATIO_RTOL,
                                      SCAN_MG, Arms, decompose, scan, solve_equal_killing)
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -106,7 +106,8 @@ def test_a_pair_of_roots_between_scan_points_is_found_by_the_extremum():
 
 def test_jitter_below_the_prominence_floor_is_not_shape():
     rng = np.random.default_rng(0)
-    noise = {float(x): 1.0 + 1e-5 * rng.standard_normal() for x in SCAN_MG}
+    # Noise two orders below the floor, as numerical jitter would be.
+    noise = {float(x): 1.0 + EXTREMUM_MIN_PROMINENCE / 100 * rng.standard_normal() for x in SCAN_MG}
     fn = lambda d: (1.3 + 80.0 * np.exp(-((np.log(d) - np.log(40.0)) / 1.0) ** 2)) * noise.get(float(d), 1.0)
     sc = scan(CurveArms(fn), "x")
     assert len(sc["extrema"]) == 1
@@ -131,7 +132,7 @@ def test_results_carry_their_checks():
     assert num["max_identity_rel_residual"] < 1e-12
     assert num["max_mass_balance_rel_residual"] < 1e-10
     assert num["max_rel_diff_zero_delay_vs_exact_window_aucs"] < 1e-10
-    assert num["max_rel_diff_table1_ratio_vs_stored_trapezoid"] < 5e-3
+    assert num["max_rel_diff_table1_ratio_vs_stored"] < STORED_RATIO_RTOL
     assert num["max_rel_killing_mismatch_at_solutions"] < MATCH_RTOL
     assert num["abs_diff_pct_table1_delay_change_vs_release_delay"] < 1e-9
     assert num["n_scan_extrema"] == {"ceftazidime": 1, "meropenem": 1}

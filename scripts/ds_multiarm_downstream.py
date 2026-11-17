@@ -99,7 +99,7 @@ def main():
                    "effective_mic_range_mgL":[min(reading_mics),max(reading_mics)],
                    "dose_multiplier_range":[float(scale.min()),float(scale.max())]},
                "provenance":provenance(note="Conditional downstream propagation of multiarm fits")}
-    OUT.write_text(json.dumps(payload,indent=2,allow_nan=False)+"\n",encoding="utf-8")
+    OUT.write_text(json.dumps(payload,indent=2,allow_nan=False)+"\n",encoding="utf-8", newline="\n")
     print("SAVED",OUT,flush=True)
 
 
