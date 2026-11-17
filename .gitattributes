@@ -1,0 +1,5 @@
+# Check out every text file with LF on every platform. Results record SHA-256
+# fingerprints of their input files' bytes; Git for Windows would otherwise
+# check text out as CRLF, so a fingerprint taken on one machine would fail in
+# a fresh clone on another. Git still detects binaries (docx, pdf, png) itself.
+* text=auto eol=lf

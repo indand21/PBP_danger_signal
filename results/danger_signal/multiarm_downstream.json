@@ -1,7 +1,7 @@
 {
   "status": "conditional sensitivity; no defaults or Table 1 replaced",
   "analysis_script_sha256": "6d4b5bee7ba5838f407cd146da5336317324abf01d455bec551e383b0a358a6c",
-  "input_fit_sha256": "679131bf0ff0348b6a542d55531c41a6c22c3f114d77d9c70908711a6fa3ec23",
+  "input_fit_sha256": "edde9a4c2284850dc015646b7fb2fdd3ba7080bc72abf5c430f8bead004ac92b",
   "reference_results_sha256": "8410109d381191934ae8ea2a577e84421ac6adbc2d9c8723d564ebd65b1a367a",
   "reference_effective_mic_mgL": 0.770456832246574,
   "fixed": "Adopted in-vivo growth, immune recruitment, PK, signal model and yield range",

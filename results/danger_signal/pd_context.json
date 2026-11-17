@@ -2723,7 +2723,7 @@
   "script_sha256": "a787e0fef2374587153e113ddb6af0d69713fd318ab031676ee84067c62b9333",
   "input_sha256": {
     "data/external_validation/sabet2020_strains.csv": "ff867baf927e3fb6dd3e2c68da583956a1d76c971681273e59d307235aae22f6",
-    "data/external_validation/sabet2020_strain_points.csv": "b699d096364cee7c679803d2d0552bb98746cec4c321e26e983c975dd684b271"
+    "data/external_validation/sabet2020_strain_points.csv": "ad186c32f263a4b3d34a6f541db70d13e658dd373806b4571df972dc00a107f9"
   },
   "provenance": {
     "git_head": "5153480c83985a0d22899929c1b547489b258dd5",
