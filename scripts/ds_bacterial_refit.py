@@ -384,6 +384,52 @@ def within(prof, key, thresholds=(0.02, 0.05, 0.10, DIGITISATION_LOG10)):
     return out
 
 
+def quoted_in_text(a, b, prof_a_k, prof_b_k):
+    """The supplement S2.2 values that are otherwise not stored by name.
+
+    Three sat inside the profile lists, where no check reached them, and one
+    (the anchored stasis concentration) was computed once by hand and never
+    recorded. One of the four had gone stale unnoticed. Recording them here
+    lets the consistency audit bind each to the sentence that quotes it.
+    """
+    from src.core.parameters import get_default_parameters
+
+    bact = get_default_parameters()["bacteria"]
+    k, h, c50 = float(bact.k_kill_max), float(bact.kill_hill), float(bact.kill_C50)
+    g = float(a[0]["g_vitro"])     # the broth growth the time-kill itself prefers
+    _, r = w_stasis_ratio((k, h, g))
+
+    def at(prof, k_kill=3.0):
+        return next(e for e in prof if abs(e["k_kill_max"] - k_kill) < 1e-12)
+
+    free, pinned = at(prof_a_k), at(prof_b_k)
+    return {
+        "anchor_check": {
+            "note": "the adopted parameters, at the broth growth the time-kill "
+                    "prefers: the stasis concentration their (rounded) C50 "
+                    "implies, against the measured MIC it was anchored to",
+            "adopted": {"k_kill_max": k, "kill_hill": h, "kill_C50": c50},
+            "g_vitro": g,
+            "stasis_over_C50": r,
+            "stasis_concentration_mgL": c50 * r,
+            "measured_mic_mgL": MIC_OBSERVED_MGL,
+            "anchor_cost_log10_rmse": b[0]["objective"] - a[0]["objective"],
+        },
+        "k_kill_max_3_c50_free": {
+            "note": "fit A profile at the old kill rate 3.0/h: the best C50 and "
+                    "how far its objective is above the overall optimum",
+            "kill_C50": free["kill_C50"], "kill_hill": free["kill_hill"],
+            "objective": free["objective"], "excess_over_best": free["excess_over_best"],
+        },
+        "k_kill_max_3_c50_pinned": {
+            "note": "fit B profile at 3.0/h: C50 forced by the measured MIC, "
+                    "and the objective there",
+            "kill_C50": pinned["kill_C50"], "kill_hill": pinned["kill_hill"],
+            "objective": pinned["objective"], "excess_over_best": pinned["excess_over_best"],
+        },
+    }
+
+
 def main():
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
 
@@ -451,6 +497,7 @@ def main():
             "nearest_grid_row": in_use_row,
             "excess_over_fit_a_best": in_use_row["objective"] - a[0]["objective"],
         },
+        "quoted_in_text": quoted_in_text(a, b, prof_a_k, prof_b_k),
         "inputs": {
             "timekill": {
                 "id": TIMEKILL_ID, "used_in": "absolute mg/L",

@@ -249,7 +249,7 @@ this repository.
 python -m pytest -q
 ```
 
-621 tests pass, with one expected failure marking a known defect in a legacy
+624 tests pass, with one expected failure marking a known defect in a legacy
 pharmacokinetic routine. They cover the pharmacokinetic conventions and the
 conservation of drug mass, the bacterial dynamics, mass conservation across the persister
 and small-colony-variant switches, the release layer and its
